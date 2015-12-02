@@ -1,5 +1,5 @@
 {
-    "name":"react-ui-lib",
+    "name":"react-component",
     "author":"darkty2009@gmail.com",
     "version":"0.1.0",
     "description":"a full base ui library to reactjs",
@@ -14,10 +14,10 @@
     ],
     "repository":{
         "type":"git",
-        "url":"https://github.com/darkty2009/react-ui-lib.git"
+        "url":"https://github.com/cd-fe/react-component.git"
     },
     "bugs":{
-        "url":"https://github.com/darkty2009/react-ui-lib/issues"
+        "url":"https://github.com/cd-fe/react-component/issues"
     },
     "scripts":{
         "build":"webpack -p --config webpack.product.js",
