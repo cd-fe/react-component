@@ -5,12 +5,19 @@ var react = path.resolve(node_modules, 'react/dict/react.js');
 
 module.exports = {
     entry:{
-        'example':'./src/example.jsx'
+        'bundle':'./src/js/bundle.jsx',
+        'example':'./example/example.jsx'
     },
     output:{
         path:"./",
         filename:'dist/[name].js',
         chunkFilename:'dist/js/[hash:8].chunk.js'
+    },
+    externals: {
+        "jquery": "jQuery",
+        "react": "React",
+        "react-dom": "ReactDOM",
+        "zepto": "Zepto"
     },
     module:{
         loaders:[
