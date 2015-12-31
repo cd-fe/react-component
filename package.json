@@ -21,7 +21,7 @@
     },
     "scripts":{
         "build":"webpack -p --config webpack.product.js",
-        "dev":"webpack-dev-server --devtool eval --progress --colors --hot --port 8007 --host 127.0.0.1"
+        "dev":"webpack-dev-server --devtool eval --progress --colors --inline --hot --port 8007 --host 127.0.0.1"
     },
     "devDependencies":{
         "webpack":"~1.12.6",
