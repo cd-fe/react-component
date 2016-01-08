@@ -60,42 +60,11 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var Test = React.createClass({
-	    displayName: 'Test',
-
-	    getInitialState: function getInitialState() {
-	        return {
-	            input_value: "123"
-	        };
-	    },
-	    inputChange: function inputChange() {
-	        console.log('input change');
-	    },
-	    componentDidMount: function componentDidMount() {
-	        setTimeout((function () {
-	            this.setState({
-	                input_value: 999
-	            });
-	        }).bind(this), 3000);
-	    },
-	    render: function render() {
-	        return React.createElement(
-	            'div',
-	            null,
-	            React.createElement(
-	                _Button2.default,
-	                null,
-	                '测试'
-	            ),
-	            React.createElement('br', null),
-	            React.createElement(_Input2.default, { value: this.state.input_value, onChange: this.inputChange }),
-	            React.createElement('br', null),
-	            React.createElement(_Pagination2.default, { pageSize: '10', currentPage: '5', totalNum: '78' })
-	        );
-	    }
-	});
-
-	ReactDOM.render(React.createElement(Test, null), document.getElementById('wrapper'));
+	module.exports = {
+	    Button: _Button2.default,
+	    Input: _Input2.default,
+	    Pagination: _Pagination2.default
+	};
 
 /***/ },
 /* 1 */

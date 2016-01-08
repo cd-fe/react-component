@@ -5,13 +5,12 @@ var react = path.resolve(node_modules, 'react/dict/react.js');
 
 module.exports = {
     entry:{
-        'bundle':'./src/js/bundle.jsx',
+        'bundle':'./src/js/rui.jsx',
         'example':'./example/example.jsx'
     },
     output:{
         path:"./",
-        filename:'dist/[name].js',
-        chunkFilename:'dist/js/[hash:8].chunk.js'
+        filename:'dist/[name].js'
     },
     externals: {
         "jquery": "jQuery",
