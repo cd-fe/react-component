@@ -45,8 +45,5 @@
   "homepage": "https://github.com/cd-fe/react-component#readme",
   "directories": {
     "example": "example"
-  },
-  "dependencies": {
-    "babel-core": "^6.0.20"
   }
 }
