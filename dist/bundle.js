@@ -1,4 +1,14 @@
-/******/ (function(modules) { // webpackBootstrap
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else if(typeof exports === 'object')
+		exports["react-component-lib"] = factory();
+	else
+		root["react-component-lib"] = factory();
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 
@@ -60,11 +70,18 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	module.exports = {
+	var RUI = {
 	    Button: _Button2.default,
 	    Input: _Input2.default,
 	    Pagination: _Pagination2.default
 	};
+
+	debugger;
+	(function (t) {
+	    t.RUI = RUI;
+	})(window || undefined);
+
+	module.exports = RUI;
 
 /***/ },
 /* 1 */
@@ -368,4 +385,6 @@
 	});
 
 /***/ }
-/******/ ]);
+/******/ ])
+});
+;

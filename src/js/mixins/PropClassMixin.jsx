@@ -4,8 +4,18 @@ module.exports = {
     getPropClass:function() {
         var classes = [];
 
-        classes.push(constant.classPrefix + this.props.cname);
+        classes.push(this.getDefaultClass());
 
-        return classes;
+        if(this.props.shadow) {
+            classes.push('shadow');
+        }
+        if(this.props.radius) {
+            classes.push('radius');
+        }
+
+        return classes.join(' ');
+    },
+    getDefaultClass:function() {
+        return constant.classPrefix + this.props.cname;
     }
 };
