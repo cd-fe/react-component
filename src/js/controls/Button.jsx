@@ -6,7 +6,7 @@ import EventDispatcher from '../mixins/EventDispatcher.jsx';
 import '../../css/button.scss';
 
 module.exports = React.createClass({
-    mixins:[PropClassMixin, EventDispatcher, ComponentBase],
+    mixins:[ComponentBase],
     getDefaultProps:function() {
         return {
             cname:'button'

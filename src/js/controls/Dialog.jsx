@@ -2,17 +2,14 @@
  * Created by rikohan on 16-1-10.
  */
 import className from '../util/className.jsx';
-import PropClassMixin from '../mixins/PropClassMixin.jsx';
-import EventDispatcher from '../mixins/EventDispatcher.jsx';
-import ComponentBase from '../mixins/ComponentBase.jsx';
 import OverlayMixin from '../mixins/OverlayMixin.jsx';
-
+import ComponentBase from '../mixins/ComponentBase.jsx';
 import Button from './Button.jsx';
 
 import '../../css/dialog.scss';
 
 var Dialog = React.createClass({
-    mixins:[PropClassMixin, EventDispatcher, ComponentBase, OverlayMixin],
+    mixins:[ComponentBase, OverlayMixin],
     getInitialState:function() {
         return {
             show:false,
@@ -57,7 +54,7 @@ var Dialog = React.createClass({
         }
     },
     componentDidMount:function() {
-        window.addEventListener('resize', this.resize.bind(this));
+        window.addEventListener('resize', this.resize);
     },
     componentWillReceiveProps:function(nextProps) {
         this.setState({
@@ -88,8 +85,8 @@ var Dialog = React.createClass({
             <div className={prefix+"-content"}>
                 {!this.props.hideTitle && (
                     <div className={prefix+"-header"}>
-                        <button type="button" className="close" onClick={this.closeHandler}>×</button>
                         <h4 className={prefix+"-title"}>{this.state.title}</h4>
+                        <Button className={prefix+"-close"} onClick={this.closeHandler}>×</Button>
                     </div>
                 )}
                 <div className={prefix+"-body"}>

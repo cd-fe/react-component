@@ -1,12 +1,10 @@
 import className from '../util/className.jsx';
-import PropClassMixin from '../mixins/PropClassMixin.jsx';
-import EventDispatcher from '../mixins/EventDispatcher.jsx';
 import ComponentBase from '../mixins/ComponentBase.jsx';
 
 import '../../css/pagination.scss';
 
 module.exports = React.createClass({
-    mixins:[PropClassMixin, EventDispatcher, ComponentBase],
+    mixins:[ComponentBase],
     getInitialState:function() {
         return {
             pageSize:this.props.pageSize || 20,
