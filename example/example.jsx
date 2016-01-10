@@ -52,14 +52,13 @@ var Test = React.createClass({
             <br/>
             <RUI.Dialog ref="dialog" title="测试标题" buttons="submit,cancel" onCancel={this.dialogCancel} onSubmit={this.dialogSubmit}>
                 <div style={{width:'240px', wordWrap:'break-word'}}>
-                    12345678901234567890123456789012345678901234567890123456789012345678901234567890
-                    1234567890123456789012345678901234567890123456789012345678901234567890
+                    qqqqqqqqqqqqq
                 </div>
             </RUI.Dialog>
             <br/>
             <RUI.Button>
                 <span>上方Tooltip</span>
-                <RUI.Tooltip ref="tooltip" align="top,center">上方示例</RUI.Tooltip>
+                <RUI.Tooltip align="top-center">上方示例</RUI.Tooltip>
             </RUI.Button>
         </div>;
     }
