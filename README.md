@@ -2,7 +2,7 @@
 
 ## todolist
 
-* Pagination
+* Pagination Done
 * Table
 * List
 * QRCode
@@ -16,7 +16,7 @@
 * Message
 * Form
 * DataSource
-* Dialog
+* Dialog Done
 * Upload
 * Tab
 * Accordion
@@ -24,4 +24,4 @@
 * Progress
 * Tooltip
 * Slider
-* Button
+* Button Done
