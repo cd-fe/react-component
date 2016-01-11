@@ -12,6 +12,9 @@ module.exports = {
         if(this.props.radius) {
             classes.push('radius');
         }
+        if(this.props.disable) {
+            classes.push('disable');
+        }
 
         return classes.join(' ');
     },

@@ -1,0 +1,72 @@
+@import './setting';
+
+@mixin prefixer-value($property, $value, $prefixes: webkit moz) {
+  @each $prefix in $prefixes {
+    @if $prefix == webkit and $prefixForWebkit == true {
+      -webkit-#{$property}: #{$value};
+    }
+    @else if $prefix == moz and $prefixForMozilla == true {
+      -moz-#{$property}: #{$value};
+    }
+    @else if $prefix == o and $prefixForMozilla == true {
+      -o-#{$property}: #{$value};
+    }
+    @else if $prefix == ms and $prefixForMicrosoft == true {
+      -ms-#{$property}: #{$value};
+    }
+  }
+  @if $prefixNo {
+    #{$property}: $value;
+  }
+}
+
+@mixin float($float:left) {
+  float:$float;
+  @if $lte7 {
+    display:inline;
+  }
+}
+%float {
+  @include float;
+}
+
+@mixin inline-block ($extend:true) {
+  @if $extend {
+    @extend %inline-block;
+  } @else {
+    display: inline-block;
+    @if $lte7 {
+      *display: inline;*zoom:1;
+    }
+  }
+}
+%inline-block{
+  @include inline-block(false);
+}
+
+// btn
+// @include simple-btn;
+// @include simple-btn(true);
+// @include simple-btn($bgColor:$green);
+@mixin simple-btn($formbtn:false, $bgColor: $white, $textColor:$text1){
+  @include inline-block;
+  vertical-align: middle;
+  cursor: pointer;
+  text-align: center;
+
+  font-size: 14px;
+  padding:0  20px;
+  @if $formbtn {
+    height: 36px;
+  }@else{
+    line-height: 36px;
+  }
+  color: $textColor;
+  background-color: $bgColor;
+  border:0 none;
+
+  &:hover{
+    color: $textColor;
+    background-color: darken($bgColor,5%);
+  }
+}
