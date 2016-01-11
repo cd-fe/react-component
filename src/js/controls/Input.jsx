@@ -2,6 +2,8 @@ import className from '../util/className.jsx';
 import omit from '../util/omit.jsx';
 import ComponentBase from '../mixins/ComponentBase.jsx';
 
+import '../../css/input.scss';
+
 module.exports = React.createClass({
     mixins:[ComponentBase],
     getDefaultProps:function() {

@@ -1,9 +1,26 @@
-@import './common';
+@import './function';
 
 .rui-button {
   @include simple-btn(false, #ededed, $text1);
 
   &.primary {
     @include simple-btn(false, $primary, $white);
+    background:#2ea3dd;
+
+    :hover {
+      background:#30abe8;
+    }
+
+    &.active {
+      background:#2ea3dd;
+    }
+  }
+
+  &:hover {
+    background:#e1e1e1;
+  }
+
+  &.active {
+    background:#cecece;
   }
 }

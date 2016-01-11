@@ -4,6 +4,7 @@ import Pagination from './controls/Pagination.jsx';
 import Dialog from './controls/Dialog.jsx';
 import DialogManager from './managers/DialogManager.jsx';
 import Tooltip from './controls/Tooltip.jsx';
+import Checkbox from './controls/Checkbox.jsx';
 
 var RUI = {
     Button:Button,
@@ -11,7 +12,8 @@ var RUI = {
     Pagination:Pagination,
     Dialog:Dialog,
     DialogManager:DialogManager,
-    Tooltip:Tooltip
+    Tooltip:Tooltip,
+    Checkout:Checkbox
 };
 
 try {

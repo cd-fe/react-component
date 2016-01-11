@@ -36,6 +36,10 @@ module.exports = {
             {
                 test:/\.css?$/,
                 loader:'style!css'
+            },
+            {
+                test:/\.(jpg|png|gif|jpeg)?$/,
+                loader:'url'
             }
         ],
         noParse:[react]
