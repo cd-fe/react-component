@@ -5,7 +5,6 @@ module.exports = {
     __eventDispatcher:null,
     registryEvent:function() {
         this.__eventDispatcher = new EventDispatcher();
-        console.log(this.__eventDispatcher.count);
     },
     addEventListener:function(event, callback) {
         this.__eventDispatcher.addEventListener(event, callback);

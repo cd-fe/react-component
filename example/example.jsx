@@ -43,15 +43,24 @@ var Test = React.createClass({
     valueChange:function(event) {
         console.log(event);
     },
+    groupChange:function(event) {
+        console.log(event);
+    },
     render:function() {
         return <div>
+            <RUI.CheckboxGroup ref="checkboxGroup" onChange={this.groupChange}>
+                <RUI.Checkbox value={1}>初始已选</RUI.Checkbox>
+                <RUI.Checkbox value={0}>初始未选</RUI.Checkbox>
+                <RUI.Checkbox value={1} onChange={this.valueChange}>自身含事件</RUI.Checkbox>
+            </RUI.CheckboxGroup>
+            <br/>
             <RUI.Radio value={1} onChange={this.valueChange}>初始已选</RUI.Radio>
             <RUI.Radio value={0}>初始未选</RUI.Radio>
             <RUI.Radio value={0} disable={true}>禁用状态</RUI.Radio>
             <br/>
-            <RUI.Checkout value={1} onChange={this.valueChange}>初始已选</RUI.Checkout>
-            <RUI.Checkout value={0}>初始未选</RUI.Checkout>
-            <RUI.Checkout value={0} disable={true}>禁用状态</RUI.Checkout>
+            <RUI.Checkbox value={1} onChange={this.valueChange}>初始已选</RUI.Checkbox>
+            <RUI.Checkbox value={0}>初始未选</RUI.Checkbox>
+            <RUI.Checkbox value={0} disable={true}>禁用状态</RUI.Checkbox>
             <br/>
             <RUI.Button className="primary" onClick={this.showDialog}>测试Dialog</RUI.Button>
             <RUI.Button onClick={this.showAlert}>测试Alert</RUI.Button>

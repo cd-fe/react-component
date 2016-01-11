@@ -10,7 +10,11 @@ var EventDispatcher = function() {
     this.addEventListener = function(event, callback) {
         var list = this.__map.get(event);
         !list && (list = []);
-        list.push(callback);
+        if(callback instanceof Array) {
+            list = list.concat(callback);
+        }else {
+            list.push(callback);
+        }
 
         this.__map.set(event, list);
     };

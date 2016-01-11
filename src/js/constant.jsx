@@ -1,3 +1,4 @@
 module.exports = {
-    classPrefix:'rui-'
+    classPrefix:'rui-',
+    selected:'selected'
 };
