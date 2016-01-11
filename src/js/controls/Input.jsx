@@ -1,11 +1,9 @@
 import className from '../util/className.jsx';
 import omit from '../util/omit.jsx';
-import PropClassMixin from '../mixins/PropClassMixin.jsx';
 import ComponentBase from '../mixins/ComponentBase.jsx';
-import EventDispatcher from '../mixins/EventDispatcher.jsx';
 
 module.exports = React.createClass({
-    mixins:[PropClassMixin, EventDispatcher, ComponentBase],
+    mixins:[ComponentBase],
     getDefaultProps:function() {
         return {
             cname:'input'

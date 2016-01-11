@@ -8,7 +8,36 @@
 <div id="wrapper">
 
 </div>
+<div id="test">
+    <a href="#" id="test-tooltip">
+        <span>测试tooltip</span>
+        <div class="tooltip" style="display:none;">
+            adfdsafsafsda
+        </div>
+    </a>
+</div>
 <script type="text/javascript" src="http://5doe.com/custom/website.js"></script>
-<script type="text/javascript" src="http://127.0.0.1:8007/dist/example.js"></script>
+<script type="text/javascript" src="http://127.0.0.1:8007/dist/bundle.js"></script>
+<script type="text/javascript" src="http://127.0.0.1:8008/dist/example.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $('#test-tooltip').on('mouseenter', function() {
+            var timer = $(this).data('timer');
+            if(timer) {
+                clearTimeout(timer);
+            }
+            $(this).find('.tooltip').show();
+        }).on('mouseleave', function() {
+            var timer = $(this).data('timer');
+            if(timer) {
+                clearTimeout(timer);
+            }
+            timer = setTimeout(function() {
+                $(this).find('.tooltip').hide();
+            }.bind(this), 150);
+            $(this).data('timer', timer);
+        });
+    });
+</script>
 </body>
 </html>

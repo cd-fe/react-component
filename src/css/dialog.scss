@@ -1,0 +1,41 @@
+@import './common';
+
+.rui-dialog {
+  position:fixed;
+  top:50%;
+  left:50%;
+  background:$white;
+  box-sizing: border-box;
+  padding:20px;
+  z-index:$zindexModal+1;
+
+  &-header {
+    clear:both;
+    height:36px;
+  }
+
+  &-close {
+    position:absolute;
+    right:5px;
+    top:10px;
+    background:transparent;
+  }
+
+  &-title {
+    float:left;
+    font-size:14px;
+  }
+
+  &-body {
+    min-width:120px;
+  }
+
+  &-footer {
+    padding-top:20px;
+    text-align:center;
+
+    .rui-button:first-child {
+      margin-right:10px;
+    }
+  }
+}

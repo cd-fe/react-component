@@ -1,0 +1,9 @@
+@import './common';
+
+.rui-button {
+  @include simple-btn(false, #ededed, $text1);
+
+  &.primary {
+    @include simple-btn(false, $primary, $white);
+  }
+}

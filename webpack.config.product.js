@@ -5,12 +5,13 @@ var react = path.resolve(node_modules, 'react/dict/react.js');
 
 module.exports = {
     entry:{
-        'bundle':'./src/js/rui.jsx',
-        'example':'./example/example.jsx'
+        'bundle':'./src/js/rui.jsx'
     },
     output:{
         path:"./",
-        filename:'dist/[name].js'
+        library: 'react-component-lib',
+        libraryTarget: 'umd',
+        filename:'dist/bundle.js'
     },
     externals: {
         "jquery": "jQuery",
