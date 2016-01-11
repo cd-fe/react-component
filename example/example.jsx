@@ -40,9 +40,16 @@ var Test = React.createClass({
     onPage:function(index) {
         alert(index);
     },
+    valueChange:function(event) {
+        console.log(event);
+    },
     render:function() {
         return <div>
-            <RUI.Checkout value={1}>初始已选</RUI.Checkout>
+            <RUI.Radio value={1} onChange={this.valueChange}>初始已选</RUI.Radio>
+            <RUI.Radio value={0}>初始未选</RUI.Radio>
+            <RUI.Radio value={0} disable={true}>禁用状态</RUI.Radio>
+            <br/>
+            <RUI.Checkout value={1} onChange={this.valueChange}>初始已选</RUI.Checkout>
             <RUI.Checkout value={0}>初始未选</RUI.Checkout>
             <RUI.Checkout value={0} disable={true}>禁用状态</RUI.Checkout>
             <br/>
