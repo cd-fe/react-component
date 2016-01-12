@@ -18,7 +18,7 @@ var RUI = {
     Dialog:Dialog,
     DialogManager:DialogManager,
     Tooltip:Tooltip,
-    Select:Select
+    Select:Select,
     Tooltip:Tooltip,
     Checkbox:Checkbox,
     CheckboxGroup:CheckboxGroup,
