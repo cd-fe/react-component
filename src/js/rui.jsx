@@ -4,6 +4,7 @@ import Pagination from './controls/Pagination.jsx';
 import Dialog from './controls/Dialog.jsx';
 import DialogManager from './managers/DialogManager.jsx';
 import Tooltip from './controls/Tooltip.jsx';
+import Select from './controls/Select.jsx';
 import Checkbox from './controls/Checkbox.jsx';
 import CheckboxGroup from './controls/CheckboxGroup.jsx';
 import Radio from './controls/Radio.jsx';
@@ -16,6 +17,8 @@ var RUI = {
     Pagination:Pagination,
     Dialog:Dialog,
     DialogManager:DialogManager,
+    Tooltip:Tooltip,
+    Select:Select
     Tooltip:Tooltip,
     Checkbox:Checkbox,
     CheckboxGroup:CheckboxGroup,
