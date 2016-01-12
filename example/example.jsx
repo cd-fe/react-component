@@ -37,6 +37,9 @@ var Test = React.createClass({
             }
         })
     },
+    selectCallback : function() {
+        console.log('it is select');
+    },
     onPage:function(index) {
         alert(index);
     },
@@ -56,10 +59,26 @@ var Test = React.createClass({
                 </div>
             </RUI.Dialog>
             <br/>
-            <RUI.Button>
+            <RUI.Button hello="mmmmm">
                 <span>上方Tooltip</span>
                 <RUI.Tooltip align="top-center">上方示例</RUI.Tooltip>
             </RUI.Button>
+
+            <br/>
+            <br/>
+            <RUI.Select refs="select" data={["查看", "编辑", "解雇"]} value={["查看"]} event={'click'} className="rui-theme-1"></RUI.Select>
+            <br/>
+            <br/>
+
+            <RUI.Select refs="select" data={["查看", "编辑", "解雇"]} value={["查看"]} className="rui-theme-2" offset={'0'}></RUI.Select>
+            <br/>
+            <br/>
+
+            <RUI.Select refs="select" data={["查看", "编辑", "解雇"]} value={["全部"]} className="rui-theme-3" stuff={true} callback={this.selectCallback}></RUI.Select>
+            <br/>
+            <br/>
+            <RUI.Select refs="select" data={["查看", "编辑", "解雇"]} filter={true} value={["全部"]} className="rui-theme-3" stuff={true} ></RUI.Select>
+
         </div>;
     }
 });
