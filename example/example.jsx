@@ -53,10 +53,23 @@ var Test = React.createClass({
         return <div>
             <div style={{width:'400px'}}>
                 <RUI.Table data={[]}>
-                    <RUI.Column title={111} dataField={"id"} sort={true}/>
-                    <RUI.Column title={111} dataField={"id"} />
-                    <RUI.Column title={111} dataField={"id"} />
-                    <RUI.Column title={111} dataField={"id"} />
+                    <RUI.Column checkbox={true}>
+                        <RUI.Table.TitleRender>
+                            <RUI.Checkbox value={0} />
+                        </RUI.Table.TitleRender>
+                        <RUI.Table.ItemRender>
+                            <RUI.Checkbox value={0} />
+                        </RUI.Table.ItemRender>
+                    </RUI.Column>
+                    <RUI.Column title={"商品名称"} dataField={"name"}/>
+                    <RUI.Column title={"所属分类"} dataField={"category"} />
+                    <RUI.Column title={"销售价"} dataField={"price"} />
+                    <RUI.Column title={"返佣比例"} dataField={"percent"} />
+                    <RUI.Column title={"操作"}>
+                        <RUI.Table.ItemRender>
+                            <RUI.Button>删除</RUI.Button>
+                        </RUI.Table.ItemRender>
+                    </RUI.Column>
                 </RUI.Table>
             </div>
             <br/>
