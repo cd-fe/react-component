@@ -18,8 +18,20 @@ module.exports = React.createClass({
     },
     render:function() {
         var classes = className(this.props.className, this.getPropClass());
+
+        var columnTitles = this.props.children.map(function(column) {
+
+        });
+
         return <table {...this.props} className={classes}>
-            {this.props.children}
+            <thead>
+                <tr>
+                    {columnTitles}
+                </tr>
+            </thead>
+            <tbody>
+                {this.props.children}
+            </tbody>
         </table>
     }
 });
