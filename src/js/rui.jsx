@@ -8,6 +8,7 @@ import Checkbox from './controls/Checkbox.jsx';
 import CheckboxGroup from './controls/CheckboxGroup.jsx';
 import Radio from './controls/Radio.jsx';
 import Table from './containers/Table.jsx';
+import Column from './containers/table/Column.jsx';
 
 var RUI = {
     Button:Button,
@@ -19,7 +20,8 @@ var RUI = {
     Checkbox:Checkbox,
     CheckboxGroup:CheckboxGroup,
     Radio:Radio,
-    Table:Table
+    Table:Table,
+    Column:Column
 };
 
 try {

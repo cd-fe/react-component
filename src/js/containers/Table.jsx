@@ -1,5 +1,6 @@
 import className from '../util/className.jsx';
 import ComponentBase from '../mixins/ComponentBase.jsx';
+import Column from './table/Column.jsx';
 
 import '../../css/table.scss';
 

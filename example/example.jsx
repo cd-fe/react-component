@@ -49,17 +49,11 @@ var Test = React.createClass({
     render:function() {
         return <div>
             <div style={{width:'400px'}}>
-                <RUI.Table>
-                    <thead>
-                    <tr>
-                        <th>123213</th><th>123213</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>qqqqqqqqq</td><td>qqqqqqqqq</td>
-                    </tr>
-                    </tbody>
+                <RUI.Table data={[]}>
+                    <RUI.Column title={111} dataField={"id"} sort={true}/>
+                    <RUI.Column title={111} dataField={"id"} />
+                    <RUI.Column title={111} dataField={"id"} />
+                    <RUI.Column title={111} dataField={"id"} />
                 </RUI.Table>
             </div>
             <br/>
