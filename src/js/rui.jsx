@@ -7,6 +7,7 @@ import Tooltip from './controls/Tooltip.jsx';
 import Checkbox from './controls/Checkbox.jsx';
 import CheckboxGroup from './controls/CheckboxGroup.jsx';
 import Radio from './controls/Radio.jsx';
+import Table from './containers/Table.jsx';
 
 var RUI = {
     Button:Button,
@@ -17,7 +18,8 @@ var RUI = {
     Tooltip:Tooltip,
     Checkbox:Checkbox,
     CheckboxGroup:CheckboxGroup,
-    Radio:Radio
+    Radio:Radio,
+    Table:Table
 };
 
 try {
