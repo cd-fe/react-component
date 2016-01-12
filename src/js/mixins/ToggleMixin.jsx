@@ -27,6 +27,10 @@ module.exports = {
     toggle:function() {
         if(!this.props.disable) {
             this.toggleOption.value = !this.toggleOption.value ? 1 : 0;
+
+            if(this.dispatchEvent) {
+                this.dispatchEvent('change', this.toggleOption.value);
+            }
         }
         return this.getToggleResult();
     },

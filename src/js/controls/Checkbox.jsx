@@ -1,3 +1,4 @@
+import constant from '../constant.jsx';
 import className from '../util/className.jsx';
 import ComponentBase from '../mixins/ComponentBase.jsx';
 import ToggleMixin from '../mixins/ToggleMixin.jsx';
@@ -12,7 +13,10 @@ module.exports = React.createClass({
         };
     },
     componentDidMount:function() {
-        this.toggleAction(this, 'click', 'selected');
+        this.toggleAction(this, 'click', constant.selected);
+    },
+    getValue:function() {
+        return this.getToggleResult() == constant.selected ? 1 : 0;
     },
     render:function() {
         var classes = className(this.props.className, this.getPropClass());

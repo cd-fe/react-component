@@ -1,7 +1,10 @@
 import PropClassMixin from '../mixins/PropClassMixin.jsx';
-import EventDispatcher from '../mixins/EventDispatcher.jsx';
+import EventMixin from '../mixins/EventMixin.jsx';
 import TooltipMixin from '../mixins/ToolTipMixin.jsx';
 
 module.exports = {
-    mixins:[PropClassMixin, EventDispatcher, TooltipMixin]
+    mixins:[PropClassMixin, EventMixin, TooltipMixin],
+    componentWillMount:function() {
+        this.bindEvent();
+    }
 };

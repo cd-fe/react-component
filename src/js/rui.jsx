@@ -5,6 +5,8 @@ import Dialog from './controls/Dialog.jsx';
 import DialogManager from './managers/DialogManager.jsx';
 import Tooltip from './controls/Tooltip.jsx';
 import Checkbox from './controls/Checkbox.jsx';
+import CheckboxGroup from './controls/CheckboxGroup.jsx';
+import Radio from './controls/Radio.jsx';
 
 var RUI = {
     Button:Button,
@@ -13,7 +15,9 @@ var RUI = {
     Dialog:Dialog,
     DialogManager:DialogManager,
     Tooltip:Tooltip,
-    Checkout:Checkbox
+    Checkbox:Checkbox,
+    CheckboxGroup:CheckboxGroup,
+    Radio:Radio
 };
 
 try {
