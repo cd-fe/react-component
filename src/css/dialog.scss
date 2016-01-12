@@ -6,36 +6,51 @@
   left:50%;
   background:$white;
   box-sizing: border-box;
-  padding:20px;
+  padding:0 14px;
   z-index:$zindexModal+1;
 
   &-header {
     clear:both;
-    height:36px;
+    height:50px;
+    border-bottom:1px solid #e2e2e2;
   }
 
   &-close {
     position:absolute;
-    right:5px;
-    top:10px;
-    background:transparent;
+    right:8px;
+    top:14px;
+    background:url(../img/close.png) no-repeat;
+    width:24px;
+    height:24px;
+    padding:0;
+    line-height:9999px;
+    overflow:hidden;
+
+    &:hover {
+      background:url(../img/close.png) no-repeat;
+    }
   }
 
   &-title {
     float:left;
     font-size:14px;
+    line-height:50px;
   }
 
   &-body {
     min-width:120px;
+    margin-top:10px;
   }
 
   &-footer {
-    padding-top:20px;
+    margin:10px 0;
     text-align:center;
 
     .rui-button:first-child {
       margin-right:10px;
+    }
+    .rui-button:last-child {
+      margin-right:0px;
     }
   }
 }

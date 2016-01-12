@@ -44,7 +44,7 @@ var Test = React.createClass({
         console.log(event);
     },
     groupChange:function(event) {
-        console.log(event);
+        alert(event.data);
     },
     render:function() {
         return <div>
