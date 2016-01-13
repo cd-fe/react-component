@@ -50,8 +50,14 @@ var Test = React.createClass({
         alert(event.data);
     },
     render:function() {
+        var tableData = [
+            {id:1, name:"商品测试1", category:"爆品", price:"199", percent:'10'},
+            {id:2, name:"商品测试2", category:"热销", price:"399", percent:'10'},
+            {id:3, name:"商品测试3", category:"预热", price:"299", percent:'10'},
+            {id:4, name:"商品测试4", category:"当季推荐", price:"99", percent:'10'}
+        ];
         return <div>
-            <RUI.Table data={[]}>
+            <RUI.Table dataSource={tableData}>
                 <RUI.Column checkbox={true}>
                     <RUI.Table.TitleRender>
                         <RUI.Checkbox value={0} />

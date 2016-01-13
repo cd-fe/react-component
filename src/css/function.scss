@@ -49,13 +49,12 @@
 // @include simple-btn(true);
 // @include simple-btn($bgColor:$green);
 @mixin simple-btn($formbtn:false, $bgColor: $white, $textColor:$text1){
-  @include inline-block;
   vertical-align: middle;
   cursor: pointer;
   text-align: center;
 
   font-size: 14px;
-  padding:0  20px;
+  padding:10px 20px;
   @if $formbtn {
     height: 36px;
   }@else{

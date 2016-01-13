@@ -8,7 +8,7 @@ var Table = React.createClass({
     mixins:[ComponentBase],
     getInitialState:function() {
         return {
-
+            dataSource:this.props.dataSource || []
         };
     },
     getDefaultProps:function() {
@@ -27,8 +27,9 @@ var Table = React.createClass({
                 styles.width = widthPercent + "%";
             }
             column.props.style = styles;
+            column.props.source = this.props.dataSource;
             return column;
-        });
+        }.bind(this));
 
         return <div {...this.props} className={classes}>
             {children}

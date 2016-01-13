@@ -15,7 +15,7 @@ module.exports = React.createClass({
         var classes = className(this.props.className, this.getPropClass());
 
         return <li {...this.props} className={classes}>
-
+            {this.props.value}
         </li>;
     }
 });

@@ -13,9 +13,8 @@ module.exports = React.createClass({
     },
     render:function() {
         var classes = className(this.props.className, this.getPropClass());
-
-        return <span {...this.props} className={classes}>
-            {this.props.data[this.props.dataField]}
-        </span>;
+        return <li {...this.props} className={classes}>
+            {this.props.children ? this.props.children : this.props.value}
+        </li>;
     }
 });
