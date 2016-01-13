@@ -1,7 +1,8 @@
 var Test = React.createClass({
     getInitialState:function() {
         return {
-            input_value:"123"
+            input_value:"123",
+            initData:1
         };
     },
     inputChange:function() {
@@ -10,7 +11,8 @@ var Test = React.createClass({
     componentDidMount:function() {
         setTimeout(function() {
             this.setState({
-                input_value:999
+                input_value:999,
+                initData:0
             });
         }.bind(this), 3000);
     },
@@ -60,10 +62,10 @@ var Test = React.createClass({
             <RUI.Table dataSource={tableData}>
                 <RUI.Column checkbox={true}>
                     <RUI.Table.TitleRender>
-                        <RUI.Checkbox value={0} />
+                        <RUI.Checkbox selected={0} />
                     </RUI.Table.TitleRender>
                     <RUI.Table.ItemRender>
-                        <RUI.Checkbox value={0} />
+                        <RUI.Checkbox selected={0} />
                     </RUI.Table.ItemRender>
                 </RUI.Column>
                 <RUI.Column title={"商品名称"} dataField={"name"}/>
@@ -78,18 +80,18 @@ var Test = React.createClass({
             </RUI.Table>
             <br/>
             <RUI.CheckboxGroup ref="checkboxGroup" onChange={this.groupChange}>
-                <RUI.Checkbox value={1}>初始已选</RUI.Checkbox>
-                <RUI.Checkbox value={0}>初始未选</RUI.Checkbox>
-                <RUI.Checkbox value={1} onChange={this.valueChange}>自身含事件</RUI.Checkbox>
+                <RUI.Checkbox value="type_1" selected={this.state.initData}>初始已选</RUI.Checkbox>
+                <RUI.Checkbox value="type_2" selected={0}>初始未选</RUI.Checkbox>
+                <RUI.Checkbox value="type_3" selected={1} onChange={this.valueChange}>自身含事件</RUI.Checkbox>
             </RUI.CheckboxGroup>
             <br/>
-            <RUI.Radio value={1} onChange={this.valueChange}>初始已选</RUI.Radio>
-            <RUI.Radio value={0}>初始未选</RUI.Radio>
-            <RUI.Radio value={0} disable={true}>禁用状态</RUI.Radio>
+            <RUI.Radio value="type_1" selected={1} onChange={this.valueChange}>初始已选</RUI.Radio>
+            <RUI.Radio value="type_2" selected={0}>初始未选</RUI.Radio>
+            <RUI.Radio value="type_3" selected={0} disable={true}>禁用状态</RUI.Radio>
             <br/>
-            <RUI.Checkbox value={1} onChange={this.valueChange}>初始已选</RUI.Checkbox>
-            <RUI.Checkbox value={0}>初始未选</RUI.Checkbox>
-            <RUI.Checkbox value={0} disable={true}>禁用状态</RUI.Checkbox>
+            <RUI.Checkbox value="type_1" selected={1} onChange={this.valueChange}>初始已选</RUI.Checkbox>
+            <RUI.Checkbox value="type_2" selected={0}>初始未选</RUI.Checkbox>
+            <RUI.Checkbox value="type_3" selected={0} disable={true}>禁用状态</RUI.Checkbox>
             <br/>
             <RUI.Button className="primary" onClick={this.showDialog}>测试Dialog</RUI.Button>
             <RUI.Button onClick={this.showAlert}>测试Alert</RUI.Button>

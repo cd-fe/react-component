@@ -15,7 +15,7 @@ module.exports = {
             }
 
             this.toggleOption.values = values;
-            this.toggleOption.value = (this.props.value || 0);
+            this.toggleOption.value = (this.props.selected || 0);
 
             this.forceUpdate();
         }
@@ -29,7 +29,10 @@ module.exports = {
             this.toggleOption.value = !this.toggleOption.value ? 1 : 0;
 
             if(this.dispatchEvent) {
-                this.dispatchEvent('change', this.toggleOption.value);
+                this.dispatchEvent('change', {
+                    value:this.props.value,
+                    selected:this.toggleOption.value
+                });
             }
         }
         return this.getToggleResult();
