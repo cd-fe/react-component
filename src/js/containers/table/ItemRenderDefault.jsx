@@ -8,14 +8,14 @@ module.exports = React.createClass({
     },
     getDefaultProps:function() {
         return {
-            cname:'table-title-render'
+            cname:'table-column-item'
         };
     },
     render:function() {
         var classes = className(this.props.className, this.getPropClass());
 
-        return <li {...this.props} className={classes}>
-
-        </li>;
+        return <span {...this.props} className={classes}>
+            {this.props.data[this.props.dataField]}
+        </span>;
     }
 });
