@@ -2,6 +2,7 @@
 
 .rui-button {
   @include simple-btn(false, #ededed, $text1);
+  @include prefixer-value('border-radius', '2px 2px');
 
   &.primary {
     @include simple-btn(false, $primary, $white);
