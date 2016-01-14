@@ -28,10 +28,10 @@ module.exports = React.createClass({
             classes += ' range';
         }
 
-        var props = omit(this.props, 'value', 'className');
+        var props = omit(this.props, 'value', 'className', 'cname');
 
         return <div className={classes}>
-            <Input className={defaultClass+"-inputer"} value={this.props.value || ""} {...props} />
+            <Input value={this.props.value || ""}/>
             <div className={defaultClass+'-popup'}>
                 {this.props.range && (<div className={defaultClass+'-row'}>
 

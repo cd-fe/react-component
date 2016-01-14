@@ -10,7 +10,6 @@ module.exports = function(obj) {
             }
         }
     }
-
     //keys.forEach(function(key) {
     //    delete obj[key];
     //});
