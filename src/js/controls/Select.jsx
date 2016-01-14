@@ -62,23 +62,33 @@ module.exports = React.createClass({
    handleClick : function(e) {
        var _this = this;
        _this.close();
-       _this.props.stuff && (_this.refs.choose.innerHTML = e);
+       _this.props.stuff && (_this.refs.choose.innerHTML = e.key);
        this.props.callback && this.props.callback(e);
+   },
+   handleFilter : function(source) {
+       var _this = this, res;
+       if(_this.props.filter) {
+           res =  _this.props.filterCallback();
+       }
+       _this.setState({
+           data : res
+       });
    },
    options : function() {
 
    },
    render : function() {
-       var _this = this;
-       var active = this.state.active;
-       var deClass = className(this.props.className, this.getPropClass());
-       var final = active ? deClass + ' active' : deClass;
-       var filter;
-       var filterAble = this.props.filter;
-       var offset = this.props.offset ? this.props.offset : '100%';
-       if(filterAble) {
+      var _this = this,
+      active = this.state.active,
+      data = this.state.data,
+      deClass = className(this.props.className, this.getPropClass()),
+      final = active ? deClass + ' active' : deClass,
+      filter,
+      filterAble = this.props.filter,
+      offset = this.props.offset ? this.props.offset : '100%';
+      if(filterAble) {
            filter = (
-               <div className="filter">
+               <div className="filter" ref="filter" onChange={this.handleFilter}>
                    <input type="text" />
                </div>
            );
@@ -87,14 +97,14 @@ module.exports = React.createClass({
 
             <div ref="container" className={final}>
                 <i className="arrow"></i>
-                <span ref="choose" className="placeholder">{this.props.value}</span>
+                <span ref="choose" className="placeholder">{this.props.value.key}</span>
                 <div className="rui-select-options-wrap" style={{top:offset}}>
                     <div ref="options" className="rui-select-options">
                         {filter}
                         <ul>
                             {
-                                this.props.data.map(function(item, index) {
-                                    return <li onClick={_this.handleClick.bind(_this,item)}><a href="javascript:;">{item}</a></li>
+                               data.map(function(item, index) {
+                                    return <li onClick={_this.handleClick.bind(_this,item)}><a href="javascript:;">{item.key}</a></li>
                                 })
                             }
                         </ul>
