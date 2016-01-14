@@ -53,10 +53,10 @@ var Test = React.createClass({
         return <div>
             <div style={{width:'400px'}}>
                 <RUI.Table data={[]}>
-                    <RUI.Column title={111} dataField={"id"} sort={true}/>
+                {/*<RUI.Column title={111} dataField={"id"} sort={true}/>
                     <RUI.Column title={111} dataField={"id"} />
                     <RUI.Column title={111} dataField={"id"} />
-                    <RUI.Column title={111} dataField={"id"} />
+                    <RUI.Column title={111} dataField={"id"} />*/}
                 </RUI.Table>
             </div>
             <br/>
