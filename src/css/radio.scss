@@ -1,12 +1,13 @@
 @import './function';
 
 .rui-radio {
-  text-indent:25px;
+  padding-left:25px;
   background:url("../img/radio.png") no-repeat;
   background-position:0px 0px;
   line-height:36px;
   @include inline-block;
   margin-right:20px;
+  min-height:36px;
 
   &.selected {
     background-position:0px -36px;

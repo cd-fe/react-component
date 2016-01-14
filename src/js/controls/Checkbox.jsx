@@ -16,7 +16,7 @@ module.exports = React.createClass({
         this.toggleAction(this, 'click', constant.selected);
     },
     getValue:function() {
-        return this.getToggleResult() == constant.selected ? 1 : 0;
+        return this.getToggleResult() == constant.selected ? this.props.value : '';
     },
     render:function() {
         var classes = className(this.props.className, this.getPropClass());
