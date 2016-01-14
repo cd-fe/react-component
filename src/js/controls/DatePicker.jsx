@@ -30,8 +30,12 @@ module.exports = React.createClass({
 
         var props = omit(this.props, 'value', 'className', 'cname');
 
+        if(!props.formatter) {
+            props.formatter = new DateFormatter('Y-m-d');
+        }
+
         return <div className={classes}>
-            <Input value={this.props.value || ""}/>
+            <Input value={this.props.value || ""} className={defaultClass+"-input-icon"}/>
             <div className={defaultClass+'-popup'}>
                 {this.props.range && (<div className={defaultClass+'-row'}>
 
