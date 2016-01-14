@@ -39,8 +39,16 @@ var Test = React.createClass({
             }
         })
     },
-    selectCallback : function() {
-        console.log('it is select');
+    selectCallback : function(e) {
+        console.log(e[1]);
+    },
+    filterHandle : function() {
+        return [
+            {
+                key : '新的',
+                value : 'new'
+            }
+        ];
     },
     onPage:function(index) {
         alert(index);
@@ -118,19 +126,23 @@ var Test = React.createClass({
 
             <br/>
             <br/>
-            <RUI.Select refs="select" data={["查看", "编辑", "解雇"]} value={["查看"]} event={'click'} className="rui-theme-1"></RUI.Select>
+            <RUI.Select refs="select" data={[{key:'查看',value:'1'}]} value={{key:'查看',value:'1'}} event={'click'} className="rui-theme-1"></RUI.Select>
             <br/>
             <br/>
 
-            <RUI.Select refs="select" data={["查看", "编辑", "解雇"]} value={["查看"]} className="rui-theme-2" offset={'0'}></RUI.Select>
+            <RUI.Select refs="select" data={[{key:'查看',value:'1'}]} value={{key:'查看',value:'1'}} className="rui-theme-2" offset={'0'}></RUI.Select>
             <br/>
             <br/>
-
-            <RUI.Select refs="select" data={["查看", "编辑", "解雇"]} value={["全部"]} className="rui-theme-3" stuff={true} callback={this.selectCallback}></RUI.Select>
+            <RUI.Select refs="select" data={[{key:'查看',value:'1'}]} value={{key:'查看',value:'1'}} filter={true}  className="rui-theme-3" stuff={true} filterCallback={this.filterHandle}></RUI.Select>
             <br/>
             <br/>
-            <RUI.Select refs="select" data={["查看", "编辑", "解雇"]} filter={true} value={["全部"]} className="rui-theme-3" stuff={true} ></RUI.Select>
-
+            <br/>
+            <RUI.Select refs="select" data={[{key:'查看',value:'1'}]} value={{key:'查看',value:'1'}} className="rui-theme-3" stuff={true} callback={this.selectCallback}></RUI.Select>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
         </div>;
     }
 });
