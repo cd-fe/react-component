@@ -16,6 +16,38 @@
     width:262px;
     height:235px;
     border:1px solid #eceaea;
+
+    &-title {
+      border-bottom:1px solid #eceaea;
+      text-align:center;
+      line-height:36px;
+    }
+
+    &-left {
+      background:url(../img/arrow.png) no-repeat;
+      background-position:6px -72px;
+      display:block;
+      width:36px;
+      height:36px;
+      float:left;
+
+      &:hover {
+        background-position:6px -108px;
+      }
+    }
+
+    &-right {
+      background:url(../img/arrow.png) no-repeat;
+      background-position:6px -0px;
+      display:block;
+      width:36px;
+      height:36px;
+      float:right;
+
+      &:hover {
+        background-position:6px -36px;
+      }
+    }
   }
 
   &-popup {
