@@ -26,15 +26,33 @@ module.exports = React.createClass({
    componentDidMount:function() {
        var _this = this;
        var node = ReactDOM.findDOMNode(this);
-       $(node).bind('mouseleave', this.onMouseLeave);
-       $(node).bind(this.props.event, function() {
-           if(_this.state.active) {
-               _this.close();
-           }else {
-               _this.open();
-           }
+       if(this.props.event == 'mouseenter') {
+           $(node).bind(this.props.event, function() {
+               _this.startTimer(function() {
+                   if(_this.state.active) {
+                       _this.close();
+                   }else {
+                       _this.open();
+                   }
+               },200);
+           });
+           $(node).bind('mouseleave', function() {
+               if(_this.__timer) {
+                   _this.stopTimer();
+                   _this.onMouseLeave();
+               }
+           });
+       }else {
+           $(node).bind('mouseleave', this.onMouseLeave);
+           $(node).bind(this.props.event, function() {
+               if(_this.state.active) {
+                   _this.close();
+               }else {
+                   _this.open();
+               }
+           });
+       }
 
-       });
    },
    onMouseLeave : function() {
        this.close();
