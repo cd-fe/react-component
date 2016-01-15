@@ -84,6 +84,16 @@ module.exports = React.createClass({
                     if(index == currentIndex) {
                         classes.push('selected');
                     }
+                    if(_this.props.range == 'start') {
+                        if(date.getTime() > monthValue.getTime()) {
+                            classes.push('ranged');
+                        }
+                    }
+                    if(_this.props.range == 'end') {
+                        if(date.getTime() < monthValue.getTime()) {
+                            classes.push('ranged');
+                        }
+                    }
 
                     return <CalendarItem value={date.getTime()} className={classes.join(" ")} onClick={_this.onItemClick} />;
                 })}

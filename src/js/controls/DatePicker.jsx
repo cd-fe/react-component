@@ -3,6 +3,7 @@ import omit from '../util/omit.jsx';
 import ComponentBase from '../mixins/ComponentBase.jsx';
 import Input from './Input.jsx';
 import Calendar from './datepicker/Calendar.jsx';
+import Button from './Button.jsx';
 
 import DateFormatter from '../formatters/DateFormatter.jsx';
 
@@ -13,7 +14,11 @@ module.exports = React.createClass({
     getInitialState:function() {
         return {
             popup:false,
-            value:this.props.value
+            value:this.props.value,
+            startValue:this.props.startValue || this.props.value,
+            endValue:this.props.endValue || this.props.value + 86400 * 1000,
+            startValuePreview:this.props.startValue || this.props.value,
+            endValuePreview:this.props.endValue || this.props.value + 86400 * 1000
         };
     },
     getDefaultProps:function() {
@@ -70,6 +75,44 @@ module.exports = React.createClass({
             });
         }
     },
+    startCalendarChange:function(event) {
+        this.setState({
+            startValuePreview:event.data
+        });
+    },
+    endCalendarChange:function(event) {
+        this.setState({
+            endValuePreview:event.data
+        });
+    },
+    rangeCalendarCancel:function() {
+        this.setState({
+            popup:false
+        });
+    },
+    rangeCalendarSave:function() {
+        this.setState({
+            startValue:this.state.startValuePreview,
+            endValue:this.state.endValuePreview,
+            popup:false
+        });
+    },
+    display:function(type) {
+        var formatter = (this.props.formatter || new DateFormatter("Y-m-d"));
+        if(type) {
+            if(type == 'start') {
+                return formatter.format(this.state.startValuePreview);
+            }
+            if(type == 'end') {
+                return formatter.format(this.state.endValuePreview);
+            }
+        }
+        else if(this.props.range) {
+            return formatter.format(this.state.startValue) + '  -  ' + formatter.format(this.state.endValue);
+        }else {
+            return formatter.format(this.state.value);
+        }
+    },
     render:function() {
         var defaultClass = this.getDefaultClass();
         var classes = className(this.props.className, this.getPropClass());
@@ -80,24 +123,27 @@ module.exports = React.createClass({
             classes += ' range';
         }
 
-        var props = omit(this.props, 'value', 'className', 'cname');
-
-        if(!props.formatter) {
-            props.formatter = new DateFormatter('Y-m-d');
-        }
-
         return <div className={classes}>
-            <Input mode="static" value={props.formatter.format(this.state.value)} className={defaultClass+"-input-icon"} onClick={this.togglePopup}/>
+            <Input mode="static" value={this.display()} className={defaultClass+"-input-icon"} onClick={this.togglePopup}/>
             <div className={defaultClass+'-popup'}>
                 <div className={defaultClass+'-popup-arrow'} />
                 {this.props.range && (<div className={defaultClass+'-row'}>
-
+                    <div className={"range-container"}>
+                        <div className={"left"}>
+                            <span>开始时间： </span><Input value={this.display('start')} />
+                            <span className="end">结束时间： </span><Input value={this.display('end')} />
+                        </div>
+                        <div className={"right"}>
+                            <Button onClick={this.rangeCalendarCancel}>取消</Button>
+                            <Button onClick={this.rangeCalendarSave}className="primary">保存</Button>
+                        </div>
+                    </div>
                 </div>)}
                 <div className={defaultClass+'-row'}>
                     {this.props.range ? (
-                        <div>
-                            <Calendar value={this.state.value} />
-                            <Calendar value={this.state.value} />
+                        <div className={defaultClass+'-row-range'}>
+                            <Calendar value={this.state.startValuePreview} onChange={this.startCalendarChange} range={"start"} />
+                            <Calendar value={this.state.endValuePreview} onChange={this.endCalendarChange} range={"end"} />
                         </div>
                     ) : (
                         <Calendar value={this.state.value} onChange={this.onCalendarChange} />

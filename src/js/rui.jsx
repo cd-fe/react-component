@@ -14,6 +14,8 @@ import DatePicker from './controls/DatePicker.jsx';
 
 import DateFormatter from './formatters/DateFormatter.jsx';
 
+import '../css/common.scss';
+
 var RUI = {
     Button:Button,
     Input:Input,

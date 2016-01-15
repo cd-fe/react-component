@@ -25,3 +25,11 @@
 .full {
   width:100%;
 }
+
+.left {
+  @include float();
+}
+
+.right {
+  @include float(right);
+}

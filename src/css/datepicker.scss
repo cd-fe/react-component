@@ -2,9 +2,19 @@
 
 .rui-datepicker {
   position:relative;
+  width:110px;
+  font-size:12px;
+
+  &.range {
+    width:190px;
+
+    >.rui-input {
+      width:190px;
+    }
+  }
 
   >.rui-input {
-    width:120px;
+    width:110px;
   }
 
   &-input-icon {
@@ -12,10 +22,38 @@
     background-position:right 9px;
   }
 
+  @at-root .range &-calendar {
+    float:left;
+  }
+
+  @at-root .range &-popup {
+    width:540px;
+
+    .range-container {
+      margin-bottom:10px;
+      padding-left:10px;
+      clear:both;
+      height:38px;
+      input {
+        width:86px;
+        margin-right:20px;
+      }
+
+      .right .rui-button:last-child {
+        margin-left:10px;
+      }
+    }
+  }
+
+  &-calendar:first-child {
+    margin-left:0;
+  }
+
   &-calendar {
     width:262px;
     height:235px;
     border:1px solid #eceaea;
+    margin-left:12px;
 
     &-title {
       border-bottom:1px solid #eceaea;
