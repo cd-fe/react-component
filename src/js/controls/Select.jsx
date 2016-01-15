@@ -3,7 +3,8 @@ import ComponentBase from '../mixins/ComponentBase.jsx';
 import TimerMixin from '../mixins/TimerMixin.jsx';
 import '../../css/select.scss';
 module.exports = React.createClass({
-   mixins:[ComponentBase,TimerMixin],
+   mixins: [ComponentBase,TimerMixin],
+   _choose: null,
    getInitialState:function() {
         return {
             active : false,
@@ -63,6 +64,7 @@ module.exports = React.createClass({
        var _this = this;
        _this.close();
        _this.props.stuff && (_this.refs.choose.innerHTML = e.key);
+       _this._choose = e;
        this.props.callback && this.props.callback(e);
    },
    handleFilter : function(source) {
@@ -74,8 +76,9 @@ module.exports = React.createClass({
            data : res
        });
    },
-   options : function() {
-
+   _getChoose : function() {
+       var _this = this;
+       return _this._choose ? _this._choose : _this.props.value;
    },
    render : function() {
       var _this = this,

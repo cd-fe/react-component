@@ -40,7 +40,9 @@ var Test = React.createClass({
         })
     },
     selectCallback : function(e) {
-        console.log(e[1]);
+        console.dir(this.refs.selectBody._getChoose());
+        console.dir(this.refs.selectBody._choose);
+        console.dir(this.refs.selectBody);
     },
     filterHandle : function() {
         return [
@@ -126,18 +128,42 @@ var Test = React.createClass({
 
             <br/>
             <br/>
-            <RUI.Select refs="select" data={[{key:'查看',value:'1'}]} value={{key:'查看',value:'1'}} event={'click'} className="rui-theme-1"></RUI.Select>
+            <RUI.Select
+                data={[{key:'查看',value:'1'}]}
+                value={{key:'查看',value:'1'}}
+                event={'click'}
+                className="rui-theme-1">
+            </RUI.Select>
             <br/>
             <br/>
 
-            <RUI.Select refs="select" data={[{key:'查看',value:'1'}]} value={{key:'查看',value:'1'}} className="rui-theme-2" offset={'0'}></RUI.Select>
+            <RUI.Select
+                data={[{key:'查看',value:'1'}]}
+                value={{key:'查看',value:'1'}}
+                className="rui-theme-2"
+                offset={'0'}>
+            </RUI.Select>
             <br/>
             <br/>
-            <RUI.Select refs="select" data={[{key:'查看',value:'1'}]} value={{key:'查看',value:'1'}} filter={true}  className="rui-theme-3" stuff={true} filterCallback={this.filterHandle}></RUI.Select>
+            <RUI.Select
+                data={[{key:'查看',value:'1'}]}
+                value={{key:'查看',value:'1'}}
+                filter={true}
+                className="rui-theme-3"
+                stuff={true}
+                filterCallback={this.filterHandle}>
+            </RUI.Select>
             <br/>
             <br/>
             <br/>
-            <RUI.Select refs="select" data={[{key:'查看',value:'1'}]} value={{key:'查看',value:'1'}} className="rui-theme-3" stuff={true} callback={this.selectCallback}></RUI.Select>
+            <RUI.Select
+                ref="selectBody"
+                data={[{key:'查看',value:'1'},{key:'你好',value:'2'}]}
+                value={{key:'查看',value:'1'}}
+                className="rui-theme-3"
+                stuff={true}
+                callback={this.selectCallback}>
+            </RUI.Select>
             <br/>
             <br/>
             <br/>
