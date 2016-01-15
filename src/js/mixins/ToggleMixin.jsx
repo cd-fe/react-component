@@ -1,6 +1,14 @@
 module.exports = {
     toggleOption:{},
+    toggleUnbind:function() {
+        if(this.toggleOption.target && this.toggleOption.action) {
+            var node = ReactDOM.findDOMNode(this.toggleOption.target);
+            node.removeEventListener(this.toggleOption.action, this.toggleHandler);
+        }
+    },
     toggleAction:function(target, action, values) {
+        this.toggleUnbind();
+
         if(target && action) {
             var node = ReactDOM.findDOMNode(target);
             node.addEventListener(action, this.toggleHandler);
@@ -15,14 +23,16 @@ module.exports = {
             }
 
             this.toggleOption.values = values;
-            this.toggleOption.value = (this.props.selected || 0);
+            this.toggleOption.value = this.props.selected ? 1 : 0;
 
             this.forceUpdate();
         }
     },
     toggleHandler:function() {
-        this.toggle();
-        this.forceUpdate();
+        if(!this.__isLock__) {
+            this.toggle();
+            this.forceUpdate();
+        }
     },
     toggle:function() {
         if(!this.props.disable) {
@@ -43,10 +53,14 @@ module.exports = {
         }
         return '';
     },
-    componentWillUnmount:function() {
-        if(this.toggleOption.target && this.toggleOption.action) {
-            var node = ReactDOM.findDOMNode(this.toggleOption.target);
-            node.addEventListener(this.toggleOption.action, this.toggleHandler);
+    componentWillReceiveProps:function(newProps) {
+        console.log('recieve', newProps.selected);
+        if(newProps.selected) {
+            this.toggleOption.value = newProps.selected ? 1 : 0;
+            this.forceUpdate();
         }
+    },
+    componentWillUnmount:function() {
+        this.toggleUnbind();
     }
 };

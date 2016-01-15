@@ -48,7 +48,7 @@ var EventDispatcher = function() {
         var list = this.__map.get(event.type);
 
         if(list && list instanceof Array) {
-            list.forEach((callback)=>callback.call(this, event));
+            list.forEach((callback)=>(callback && callback.call(this, event)));
         }
     };
 };
