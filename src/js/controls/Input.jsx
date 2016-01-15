@@ -8,7 +8,8 @@ module.exports = React.createClass({
     mixins:[ComponentBase],
     getDefaultProps:function() {
         return {
-            cname:'input'
+            cname:'input',
+            mode:'dynamic'
         };
     },
     getInitialState:function() {
@@ -18,11 +19,13 @@ module.exports = React.createClass({
         }
     },
     changeHandler:function(e) {
-        this.setState({
-            value:e.target.value
-        });
+        if(this.props.mode == 'dynamic') {
+            this.setState({
+                value: e.target.value
+            });
 
-        this.state.change && this.state.change.call(null, e);
+            this.state.change && this.state.change.call(null, e);
+        }
     },
     componentWillReceiveProps:function(props) {
         this.setState({
@@ -31,7 +34,12 @@ module.exports = React.createClass({
         });
     },
     render:function() {
-        var props = omit(this.props, 'type', 'onChange', 'value');
-        return <input {...props} type="text" value={this.state.value} onChange={this.changeHandler} className={className(this.props.className, this.getPropClass())}></input>
+        var props = omit(this.props, 'type', 'onChange', 'value', 'readonly');
+        return <input {...props}
+            type="text"
+            value={this.state.value}
+            onChange={this.changeHandler}
+            className={className(this.props.className, this.getPropClass())}
+        ></input>
     }
 });

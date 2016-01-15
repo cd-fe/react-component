@@ -10,6 +10,9 @@ import CheckboxGroup from './controls/CheckboxGroup.jsx';
 import Radio from './controls/Radio.jsx';
 import Table from './containers/Table.jsx';
 import Column from './containers/table/Column.jsx';
+import DatePicker from './controls/DatePicker.jsx';
+
+import DateFormatter from './formatters/DateFormatter.jsx';
 
 var RUI = {
     Button:Button,
@@ -23,7 +26,10 @@ var RUI = {
     CheckboxGroup:CheckboxGroup,
     Radio:Radio,
     Table:Table,
-    Column:Column
+    Column:Column,
+    DatePicker:DatePicker,
+
+    DateFormatter:DateFormatter
 };
 
 try {

@@ -12,6 +12,12 @@
       line-height:36px;
       padding:18px 0;
     }
+
+    .rui-checkbox {
+      line-height:14px;
+      background-position:0px -2px;
+      min-height:23px;
+    }
   }
 
   &-column:last-child &-title {

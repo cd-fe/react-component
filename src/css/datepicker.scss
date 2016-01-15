@@ -1,5 +1,46 @@
 @import './function';
 
 .rui-datepicker {
+  position:relative;
 
+  >.rui-input {
+    width:120px;
+  }
+
+  &-input-icon {
+    background:#fff url(../img/datepicker.png) no-repeat;
+    background-position:right 9px;
+  }
+
+  &-calendar {
+    width:262px;
+    height:235px;
+    border:1px solid #eceaea;
+  }
+
+  &-popup {
+    display:none;
+    border:1px solid #74c5ee;
+    padding:10px;
+    position:absolute;
+    top:37px;
+    left:0px;
+    background:#fff;
+    z-index:$zindexModal;
+
+    &-arrow {
+      position:absolute;
+      top:-8px;
+      left:13px;
+      width:14px;
+      height:8px;
+      background:url(../img/datepicker-arrow.png) no-repeat;
+    }
+  }
+
+  &.active {
+    .rui-datepicker-popup {
+      display:block;
+    }
+  }
 }
