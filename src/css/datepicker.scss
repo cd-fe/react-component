@@ -38,14 +38,52 @@
 
     &-right {
       background:url(../img/arrow.png) no-repeat;
-      background-position:6px -0px;
+      background-position:15px -0px;
       display:block;
       width:36px;
       height:36px;
       float:right;
 
       &:hover {
-        background-position:6px -36px;
+        background-position:15px -36px;
+      }
+    }
+
+    &-table {
+      width:100%;
+      line-height:28px;
+      thead {
+        color:#999;
+
+        tr {
+          border-bottom:1px solid #eceaea;
+        }
+      }
+
+      tbody {
+        tr {
+          text-align: center;
+        }
+
+        td {
+          cursor:pointer;
+          @include prefixer-value('border-radius', '2px 2px');
+
+          &:hover,&.selected,&.ranged:hover {
+            background:#2ea3dd;
+            color:#fff;
+          }
+
+          &.ranged {
+            background:#eff8fc;
+            color:#666;
+          }
+
+          &.disabled,&.disabled:hover {
+            color:#cacaca;
+            background:#fff;
+          }
+        }
       }
     }
   }

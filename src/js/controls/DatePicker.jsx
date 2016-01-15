@@ -21,6 +21,12 @@ module.exports = React.createClass({
             cname:'datepicker'
         };
     },
+    componentDidUpdate:function() {
+        document.body.removeEventListener('mousedown', this.hidePopup);
+        if(this.state.popup) {
+            document.body.addEventListener('mousedown', this.hidePopup);
+        }
+    },
     componentWillReceiveProps:function(newProps) {
         if(newProps.value) {
             this.setState({
@@ -32,6 +38,37 @@ module.exports = React.createClass({
         this.setState({
             popup:!this.state.popup
         });
+    },
+    hidePopup:function(e) {
+        var target = e.target;
+        var sameParent = false;
+        var parent = ReactDOM.findDOMNode(this);
+
+        while(target) {
+            if(target === parent) {
+                sameParent = true;
+                break;
+            }
+            target = target.parentNode;
+        }
+
+        if(!sameParent) {
+            this.setState({
+                popup: false
+            });
+        }
+    },
+    onCalendarChange:function(event) {
+        if(this.props.range) {
+            this.setState({
+                value: event.data
+            });
+        }else {
+            this.setState({
+                value: event.data,
+                popup: false
+            });
+        }
     },
     render:function() {
         var defaultClass = this.getDefaultClass();
@@ -63,7 +100,7 @@ module.exports = React.createClass({
                             <Calendar value={this.state.value} />
                         </div>
                     ) : (
-                        <Calendar value={this.state.value} />
+                        <Calendar value={this.state.value} onChange={this.onCalendarChange} />
                     )}
                 </div>
             </div>

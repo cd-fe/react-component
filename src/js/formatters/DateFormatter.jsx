@@ -53,6 +53,15 @@ DateFormatter.prototype = {
     getTime:function() {
         return this.getSource().getTime();
     },
+    getCurrentMonthDays:function(offset) {
+        return [31, this.isLeapYear() ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][(12 + this._source.getMonth() + (offset || 0)) % 12];
+    },
+    getDate:function() {
+        return this.getSource().getDate();
+    },
+    getDay:function() {
+        return this.getSource().getDay();
+    },
     format:function(time) {
         if(typeof time == 'number') {
             this.setTime(time);

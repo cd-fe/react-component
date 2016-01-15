@@ -18,6 +18,9 @@
       background-position:0px -2px;
       min-height:23px;
     }
+    .rui-checkbox.selected {
+      background-position: 0px -38px;
+    }
   }
 
   &-column:last-child &-title {
