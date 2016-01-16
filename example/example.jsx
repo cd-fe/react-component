@@ -3,7 +3,9 @@ var Test = React.createClass({
         return {
             input_value:"123",
             initData:1,
-            dialogContent:<p>pppppppppppppppppppppp</p>
+            dialogContent:<p>pppppppppppppppppppppp</p>,
+            dynamicCheckbox:0,
+            dynamicCheckboxValue:"type_2"
         };
     },
     inputChange:function() {
@@ -16,7 +18,9 @@ var Test = React.createClass({
                 initData:0,
                 dialogContent:[1,2,3,4,5].map(function() {
                     return <p>pppppppppppppppppppppp</p>;
-                })
+                }),
+                dynamicCheckbox:1,
+                dynamicCheckboxValue:"dynamicCheckboxValue"
             });
         }.bind(this), 1000);
     },
@@ -84,6 +88,9 @@ var Test = React.createClass({
     radioGroupChange:function(event) {
         alert(event.data);
     },
+    checkboxDynamicChange:function(event) {
+        alert(JSON.stringify(event.data));
+    },
     render:function() {
         var tableData = [
             {id:1, name:"商品测试1", category:"爆品", price:"199", percent:'10'},
@@ -135,7 +142,7 @@ var Test = React.createClass({
             <RUI.Radio value="type_3" selected={0} disable={true}>禁用状态</RUI.Radio>
             <br/>
             <RUI.Checkbox value="type_1" selected={1} onChange={this.valueChange}>初始已选</RUI.Checkbox>
-            <RUI.Checkbox value="type_2" selected={0}>初始未选</RUI.Checkbox>
+            <RUI.Checkbox value={this.state.dynamicCheckboxValue} selected={this.state.dynamicCheckbox} onChange={this.checkboxDynamicChange}>初始未选</RUI.Checkbox>
             <RUI.Checkbox value="type_3" selected={0} disable={true}>禁用状态</RUI.Checkbox>
             <br/>
             <RUI.Button className="primary" onClick={this.showDialog}>测试Dialog</RUI.Button>

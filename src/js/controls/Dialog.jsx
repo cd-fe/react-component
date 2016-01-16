@@ -60,7 +60,8 @@ var Dialog = React.createClass({
         this.setState({
             title:nextProps.title || '',
             cancelText:nextProps.cancelText || '取消',
-            submitText:nextProps.submitText || '确认'
+            submitText:nextProps.submitText || '确认',
+            show:this.state.show
         });
     },
     componentDidUpdate:function(changes) {
