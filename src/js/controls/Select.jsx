@@ -14,7 +14,10 @@ module.exports = React.createClass({
             value : this.props.value,//默认值
             stuff : this.props.stuff,//选中值填充
             callback : this.props.callback,//回调
-            offset : this.props.offset
+            offset : this.props.offset,
+            reg : this.props.reg,
+            placeholder : this.props.placeholder,
+            result : this.props.result
         };
    },
    getDefaultProps:function() {
@@ -23,7 +26,12 @@ module.exports = React.createClass({
             event : "mouseenter"
         };
    },
-   componentDidMount:function() {
+    componentWillReceiveProps: function(nextProps) {
+        this.setState({
+            data: nextProps.data
+        });
+    },
+    componentDidMount:function() {
        var _this = this;
        var node = ReactDOM.findDOMNode(this);
        if(this.props.event == 'mouseenter') {
@@ -87,12 +95,26 @@ module.exports = React.createClass({
    },
    handleFilter : function(source) {
        var _this = this, res;
-       if(_this.props.filter) {
-           res =  _this.props.filterCallback();
+       var reg = _this.props.reg;
+       var value = _this.refs.filter.value;
+       var result;
+       if(_this.props.filter && reg) {
+          if(reg.test(value)) {
+              if(_this.props.filterCallback) {
+                    result = _this.props.filterCallback();
+                    if(result) {
+                        _this.setState({
+                            data : result
+                        })
+                    }else {
+                        _this.setState({
+                            data : [{key:this.props.result,value:'error'}]
+                        })
+                    }
+              }
+          }
        }
-       _this.setState({
-           data : res
-       });
+
    },
    _getChoose : function() {
        var _this = this;
@@ -109,8 +131,8 @@ module.exports = React.createClass({
       offset = this.props.offset ? this.props.offset : '100%';
       if(filterAble) {
            filter = (
-               <div className="filter" ref="filter" onChange={this.handleFilter}>
-                   <input type="text" />
+               <div className="filter">
+                   <input type="text" ref="filter" onChange={this.handleFilter} placeholder={this.props.placeholder}/>
                </div>
            );
        }

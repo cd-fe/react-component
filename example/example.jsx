@@ -51,6 +51,10 @@ var Test = React.createClass({
     closeLoading:function() {
         this.refs.myLoading.close();
     },
+    filterCallback : function() {
+        return false;
+        //return [{key:'查看',value:'1'},{key:'你好',value:'2'}];
+    },
     selectCallback : function(e) {
         console.dir(this.refs.selectBody._getChoose());
         console.dir(this.refs.selectBody._choose);
@@ -218,7 +222,29 @@ var Test = React.createClass({
                 size={'s-middle'}>
             </RUI.Loading>
             <RUI.Button onClick={this.fullShowLoading}>全屏</RUI.Button>
-
+            <br/>
+            <br/>
+            <RUI.Select
+                ref="selectBody"
+                data={[{key:'查看',value:'1'},{key:'你好',value:'2'}]}
+                value={{key:'查看',value:'1'}}
+                className="rui-theme-3"
+                filter={true}
+                reg={/^[0-9]+$/}
+                placeholder={'请输入手机号'}
+                filterCallback={this.filterCallback}
+                stuff={true}
+                result={'找不到结果'}
+                callback={this.selectCallback}>
+            </RUI.Select>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
         </div>;
     }
 });
