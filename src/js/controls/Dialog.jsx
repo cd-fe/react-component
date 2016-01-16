@@ -73,7 +73,6 @@ var Dialog = React.createClass({
             var width = node.clientWidth;
             var height = node.clientHeight;
             node.style.width = width + 'px';
-            node.style.height = height + 'px';
             node.style.marginTop = -1 * (height / 2) + 'px';
             node.style.marginLeft = -1 * (width / 2) + 'px';
         }
