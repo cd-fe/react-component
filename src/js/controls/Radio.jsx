@@ -12,7 +12,26 @@ module.exports = React.createClass({
         };
     },
     componentDidMount:function() {
-        this.toggleAction(this, 'click', 'selected');
+        this.toggleValues = ['', 'selected'];
+        this.toggleValue = this.props.selected ? 1 : 0;
+
+        var node = ReactDOM.findDOMNode(this);
+        node.addEventListener('click', this.clickHandler);
+
+        this.forceUpdate();
+    },
+    componentWillUnmount:function() {
+        var node = ReactDOM.findDOMNode(this);
+        node.removeEventListener('click', this.clickHandler);
+    },
+    clickHandler:function(event) {
+        var change;
+        if(this.props.groupValidate) {
+            change = this.props.groupValidate.call(null, event, this);
+        }else {
+            this.toggle();
+            this.forceUpdate();
+        }
     },
     render:function() {
         var classes = className(this.props.className, this.getPropClass());
@@ -28,8 +47,6 @@ module.exports = React.createClass({
 
         classes += ' ' + this.getToggleResult();
 
-        console.log(this.props.value, classes);
-
-        return <label className={classes}>{this.props.children}</label>
+        return <label className={classes} selected={this.props.selected}>{this.props.children}</label>
     }
 });

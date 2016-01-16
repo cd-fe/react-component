@@ -1,66 +1,63 @@
 module.exports = {
-    toggleOption:{},
-    toggleUnbind:function() {
-        if(this.toggleOption.target && this.toggleOption.action) {
-            var node = ReactDOM.findDOMNode(this.toggleOption.target);
-            node.removeEventListener(this.toggleOption.action, this.toggleHandler);
+    toggleValues: [],
+    toggleValue: null,
+    toggleEvent: "click",
+    toggleUnbind: function () {
+        if (this.toggleEvent) {
+            var node = ReactDOM.findDOMNode(this);
+            node.removeEventListener(this.toggleEvent, this.toggleHandler);
         }
     },
-    toggleAction:function(target, action, values) {
+    toggleAction: function (target, action, values) {
         this.toggleUnbind();
 
-        if(target && action) {
+        if (target && action) {
             var node = ReactDOM.findDOMNode(target);
             node.addEventListener(action, this.toggleHandler);
 
-            this.toggleOption = {
-                target:target,
-                action:action
-            };
+            this.toggleEvent = action;
 
-            if(typeof values == 'string') {
+            if (typeof values == 'string') {
                 values = ['', values];
             }
 
-            this.toggleOption.values = values;
-            this.toggleOption.value = this.props.selected ? 1 : 0;
+            this.toggleValues = values;
+            this.toggleValue = this.props.selected ? 1 : 0;
 
             this.forceUpdate();
         }
     },
-    toggleHandler:function() {
-        if(!this.__isLock__) {
+    toggleHandler: function () {
+        if (!this.__isLock__) {
             this.toggle();
             this.forceUpdate();
         }
     },
-    toggle:function() {
-        if(!this.props.disable) {
-            this.toggleOption.value = !this.toggleOption.value ? 1 : 0;
+    toggle: function () {
+        if (!this.props.disable) {
+            this.toggleValue = !this.toggleValue ? 1 : 0;
 
-            if(this.dispatchEvent) {
+            if (this.dispatchEvent) {
                 this.dispatchEvent('change', {
-                    value:this.props.value,
-                    selected:this.toggleOption.value
+                    value: this.props.value,
+                    selected: this.toggleValue
                 });
             }
         }
         return this.getToggleResult();
     },
-    getToggleResult:function() {
-        if(this.toggleOption.target && typeof this.toggleOption.values != 'undefined') {
-            return this.toggleOption.values[this.toggleOption.value] || '';
+    getToggleResult: function () {
+        if (typeof this.toggleValues != 'undefined') {
+            return this.toggleValues[this.toggleValue] || '';
         }
         return '';
     },
-    componentWillReceiveProps:function(newProps) {
-        console.log('recieve', newProps.selected);
-        if(newProps.selected) {
-            this.toggleOption.value = newProps.selected ? 1 : 0;
-            this.forceUpdate();
+    componentWillReceiveProps: function (newProps) {
+        if (typeof newProps.selected != 'undefined') {
+            this.toggleValue = newProps.selected ? 1 : 0;
         }
     },
-    componentWillUnmount:function() {
+    componentWillUnmount: function () {
         this.toggleUnbind();
     }
 };

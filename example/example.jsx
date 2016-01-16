@@ -2,19 +2,23 @@ var Test = React.createClass({
     getInitialState:function() {
         return {
             input_value:"123",
-            initData:1
+            initData:1,
+            dialogContent:<p>pppppppppppppppppppppp</p>
         };
     },
     inputChange:function() {
         console.log('input change');
     },
     componentDidMount:function() {
-        //setTimeout(function() {
-        //    this.setState({
-        //        input_value:999,
-        //        initData:0
-        //    });
-        //}.bind(this), 3000);
+        setTimeout(function() {
+            this.setState({
+                input_value:999,
+                initData:0,
+                dialogContent:[1,2,3,4,5].map(function() {
+                    return <p>pppppppppppppppppppppp</p>;
+                })
+            });
+        }.bind(this), 1000);
     },
     showDialog:function() {
         this.refs.dialog.show();
@@ -77,6 +81,9 @@ var Test = React.createClass({
     groupChange:function(event) {
         alert(event.data);
     },
+    radioGroupChange:function(event) {
+        alert(event.data);
+    },
     render:function() {
         var tableData = [
             {id:1, name:"商品测试1", category:"爆品", price:"199", percent:'10'},
@@ -85,7 +92,7 @@ var Test = React.createClass({
             {id:4, name:"商品测试4", category:"当季推荐", price:"99", percent:'10'}
         ];
         return <div>
-            {/*<RUI.DatePicker value={Date.now()} format={new RUI.DateFormatter("Y-m-d")} range={false} />
+            <RUI.DatePicker value={Date.now()} format={new RUI.DateFormatter("Y-m-d")} range={false} />
             <br/>
             <RUI.DatePicker value={Date.now()} format={new RUI.DateFormatter("Y-m-d")} range={true} />
             <br/>
@@ -116,13 +123,13 @@ var Test = React.createClass({
                 <RUI.Checkbox value="type_3" selected={1} onChange={this.valueChange}>自身含事件</RUI.Checkbox>
             </RUI.CheckboxGroup>
             <br/>*/}
-            <RUI.RadioGroup ref="radioGroup" onChange={this.radioGroupChange}>
-                <RUI.Radio value="type_1" selected={0} onChange={this.valueChange}>初始已选</RUI.Radio>
-                <RUI.Radio value="type_2" selected={0}>初始未选</RUI.Radio>
-                <RUI.Radio value="type_2" selected={1}>分组测试</RUI.Radio>
-                <RUI.Radio value="type_3" selected={0} disable={true}>禁用状态</RUI.Radio>
+            <RUI.RadioGroup ref="radioGroup" onChange={this.radioGroupChange} value={"type_2"}>
+                <RUI.Radio value="type_1">初始已选</RUI.Radio>
+                <RUI.Radio value="type_2">初始未选</RUI.Radio>
+                <RUI.Radio value="type_3">分组测试</RUI.Radio>
+                <RUI.Radio value="type_4" disable={true}>禁用状态</RUI.Radio>
             </RUI.RadioGroup>
-            {/*<br/>
+            <br/>
             <RUI.Radio value="type_1" selected={1} onChange={this.valueChange}>初始已选</RUI.Radio>
             <RUI.Radio value="type_2" selected={0}>初始未选</RUI.Radio>
             <RUI.Radio value="type_3" selected={0} disable={true}>禁用状态</RUI.Radio>
@@ -145,7 +152,7 @@ var Test = React.createClass({
             <br/>
             <RUI.Dialog ref="dialog" title="测试标题" buttons="submit,cancel" onCancel={this.dialogCancel} onSubmit={this.dialogSubmit}>
                 <div style={{width:'240px', wordWrap:'break-word'}}>
-                    qqqqqqqqqqqqq
+                    {this.state.dialogContent}
                 </div>
             </RUI.Dialog>
             <br/>
