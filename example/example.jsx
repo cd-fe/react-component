@@ -39,6 +39,22 @@ var Test = React.createClass({
             }
         })
     },
+    followShowLoading:function(e) {
+        this.refs.fLoading.open(e);
+    },
+    partialShowLoading:function(v,e) {
+        this.refs.pLoading.open(v,e);
+    },
+    fullShowLoading:function(e) {
+        this.refs.aLoading.open(e);
+    },
+    closeLoading:function() {
+        this.refs.myLoading.close();
+    },
+    filterCallback : function() {
+        return false;
+        //return [{key:'查看',value:'1'},{key:'你好',value:'2'}];
+    },
     selectCallback : function(e) {
         console.dir(this.refs.selectBody._getChoose());
         console.dir(this.refs.selectBody._choose);
@@ -181,6 +197,54 @@ var Test = React.createClass({
             <br/>
             <br/>
             <br/>*/}
+            <div data-id="partial-node" style={{width:'300px',height:'200px',background:'#f1f1f1'}}>
+            </div>
+            <RUI.Loading
+                ref="pLoading"
+                type={'partial-screen'}
+                mask={false}
+                size={'s-small'}>
+            </RUI.Loading>
+            <RUI.Button onClick={this.partialShowLoading.bind(this,'partial-node')}>遮住特定元素</RUI.Button>
+            <hr />
+            <RUI.Loading
+                ref="fLoading"
+                type={'follow'}
+                mask={false}
+                size={'s-small'}>
+            </RUI.Loading>
+            <RUI.Button onClick={this.followShowLoading}>尾随点击元素</RUI.Button>
+            <hr />
+            <RUI.Loading
+                ref="aLoading"
+                type={'full-screen'}
+                mask={true}
+                size={'s-middle'}>
+            </RUI.Loading>
+            <RUI.Button onClick={this.fullShowLoading}>全屏</RUI.Button>
+            <br/>
+            <br/>
+            <RUI.Select
+                ref="selectBody"
+                data={[{key:'查看',value:'1'},{key:'你好',value:'2'}]}
+                value={{key:'查看',value:'1'}}
+                className="rui-theme-3"
+                filter={true}
+                reg={/^[0-9]+$/}
+                placeholder={'请输入手机号'}
+                filterCallback={this.filterCallback}
+                stuff={true}
+                result={'找不到结果'}
+                callback={this.selectCallback}>
+            </RUI.Select>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
         </div>;
     }
 });
