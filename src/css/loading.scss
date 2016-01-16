@@ -1,0 +1,50 @@
+@import '../css/setting';
+/*具体样式*/
+@mixin load-img-base($value:32,$display:inline-block) {
+  width:#{$value}px;
+  height:#{$value}px;
+  background:url(../img/load_#{$value}.gif) 0 0 no-repeat;
+}
+@mixin load-site($value:16) {
+  position:fixed;
+  z-index:$zindexLoading;
+  top:50%;
+  left:50%;
+  margin-left:-#{$value}px;
+  margin-top:-#{$value}px;
+}
+.load-txt,.load-icon {
+  float:left;
+}
+.rui-loading {
+  &.s-middle {
+    height:32px;
+    .load-icon {
+      @include load-img-base;
+    }
+    .load-txt {
+      line-height:32px;
+    }
+  }
+  &.s-small {
+    height:16px;
+    .load-icon {
+      @include load-img-base(16);
+    }
+    .load-txt {
+      line-height:16px;
+    }
+  }
+  &.full-screen {
+    &.s-middle {
+      @include load-site;
+    }
+    &.s-small {
+      @include load-site(8);
+    }
+  }
+  &.follow {
+
+  }
+}
+

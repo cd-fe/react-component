@@ -12,6 +12,7 @@ import RadioGroup from './controls/RadioGroup.jsx';
 import Table from './containers/Table.jsx';
 import Column from './containers/table/Column.jsx';
 import DatePicker from './controls/DatePicker.jsx';
+import Loading from './controls/Loading.jsx';
 
 import DateFormatter from './formatters/DateFormatter.jsx';
 
@@ -32,6 +33,7 @@ var RUI = {
     Table:Table,
     Column:Column,
     DatePicker:DatePicker,
+    Loading:Loading,
 
     DateFormatter:DateFormatter
 };
