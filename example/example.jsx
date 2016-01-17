@@ -8,21 +8,22 @@ var Test = React.createClass({
             dynamicCheckboxValue:"type_2"
         };
     },
-    inputChange:function() {
-        console.log('input change');
+    inputChange:function(e) {
+        var value = e.target.value;
+        this.setState({
+            input_value:value.replace(/\d/g, '')
+        });
     },
     componentDidMount:function() {
-        setTimeout(function() {
-            this.setState({
-                input_value:999,
-                initData:0,
-                dialogContent:[1,2,3,4,5].map(function() {
-                    return <p>pppppppppppppppppppppp</p>;
-                }),
-                dynamicCheckbox:1,
-                dynamicCheckboxValue:"dynamicCheckboxValue"
-            });
-        }.bind(this), 1000);
+        this.setState({
+            input_value:999,
+            initData:0,
+            dialogContent:[1,2,3,4,5].map(function() {
+                return <p>pppppppppppppppppppppp</p>;
+            }),
+            dynamicCheckbox:1,
+            dynamicCheckboxValue:"dynamicCheckboxValue"
+        });
     },
     showDialog:function() {
         this.refs.dialog.show();
