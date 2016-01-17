@@ -23,7 +23,8 @@ module.exports = React.createClass({
     },
     getDefaultProps:function() {
         return {
-            cname:'datepicker'
+            cname:'datepicker',
+            value:Date.now()
         };
     },
     componentDidUpdate:function() {
