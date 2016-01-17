@@ -28,3 +28,22 @@
 * Button Done
 
 # how to develop
+
+```
+npm install
+npm run lib
+npm run example
+
+browser example/index.html
+```
+
+# Release logs
+
+## 0.1.13
+
+* add Loading Component
+* add DatePicker Component
+* add RadioGroup Component, so had to destory and rebuild Radio Component
+* Select component ```search mode``` support regexp to input
+* fixed some bug
+

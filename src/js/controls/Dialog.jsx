@@ -60,7 +60,8 @@ var Dialog = React.createClass({
         this.setState({
             title:nextProps.title || '',
             cancelText:nextProps.cancelText || '取消',
-            submitText:nextProps.submitText || '确认'
+            submitText:nextProps.submitText || '确认',
+            show:this.state.show
         });
     },
     componentDidUpdate:function(changes) {
@@ -73,7 +74,6 @@ var Dialog = React.createClass({
             var width = node.clientWidth;
             var height = node.clientHeight;
             node.style.width = width + 'px';
-            node.style.height = height + 'px';
             node.style.marginTop = -1 * (height / 2) + 'px';
             node.style.marginLeft = -1 * (width / 2) + 'px';
         }

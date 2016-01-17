@@ -9,9 +9,11 @@ module.exports = {
         }
     },
     componentWillReceiveProps:function(props) {
-        this.setState({
-            overlay:props.overlay || true
-        });
+        if(typeof props.overlay != 'undefined') {
+            this.setState({
+                overlay: props.overlay || true
+            });
+        }
     },
     componentDidMount:function() {
         this.updateOverlay();

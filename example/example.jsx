@@ -2,19 +2,27 @@ var Test = React.createClass({
     getInitialState:function() {
         return {
             input_value:"123",
-            initData:1
+            initData:1,
+            dialogContent:<p>pppppppppppppppppppppp</p>,
+            dynamicCheckbox:0,
+            dynamicCheckboxValue:"type_2"
         };
     },
     inputChange:function() {
         console.log('input change');
     },
     componentDidMount:function() {
-        //setTimeout(function() {
-        //    this.setState({
-        //        input_value:999,
-        //        initData:0
-        //    });
-        //}.bind(this), 3000);
+        setTimeout(function() {
+            this.setState({
+                input_value:999,
+                initData:0,
+                dialogContent:[1,2,3,4,5].map(function() {
+                    return <p>pppppppppppppppppppppp</p>;
+                }),
+                dynamicCheckbox:1,
+                dynamicCheckboxValue:"dynamicCheckboxValue"
+            });
+        }.bind(this), 1000);
     },
     showDialog:function() {
         this.refs.dialog.show();
@@ -39,6 +47,22 @@ var Test = React.createClass({
             }
         })
     },
+    followShowLoading:function(e) {
+        this.refs.fLoading.open(e);
+    },
+    partialShowLoading:function(v,e) {
+        this.refs.pLoading.open(v,e);
+    },
+    fullShowLoading:function(e) {
+        this.refs.aLoading.open(e);
+    },
+    closeLoading:function() {
+        this.refs.myLoading.close();
+    },
+    filterCallback : function() {
+        return false;
+        //return [{key:'查看',value:'1'},{key:'你好',value:'2'}];
+    },
     selectCallback : function(e) {
         console.dir(this.refs.selectBody._getChoose());
         console.dir(this.refs.selectBody._choose);
@@ -61,6 +85,12 @@ var Test = React.createClass({
     groupChange:function(event) {
         alert(event.data);
     },
+    radioGroupChange:function(event) {
+        alert(event.data);
+    },
+    checkboxDynamicChange:function(event) {
+        alert(JSON.stringify(event.data));
+    },
     render:function() {
         var tableData = [
             {id:1, name:"商品测试1", category:"爆品", price:"199", percent:'10'},
@@ -69,7 +99,7 @@ var Test = React.createClass({
             {id:4, name:"商品测试4", category:"当季推荐", price:"99", percent:'10'}
         ];
         return <div>
-            {/*<RUI.DatePicker value={Date.now()} format={new RUI.DateFormatter("Y-m-d")} range={false} />
+            <RUI.DatePicker value={Date.now()} format={new RUI.DateFormatter("Y-m-d")} range={false} />
             <br/>
             <RUI.DatePicker value={Date.now()} format={new RUI.DateFormatter("Y-m-d")} range={true} />
             <br/>
@@ -100,19 +130,19 @@ var Test = React.createClass({
                 <RUI.Checkbox value="type_3" selected={1} onChange={this.valueChange}>自身含事件</RUI.Checkbox>
             </RUI.CheckboxGroup>
             <br/>*/}
-            <RUI.RadioGroup ref="radioGroup" onChange={this.radioGroupChange}>
-                <RUI.Radio value="type_1" selected={0} onChange={this.valueChange}>初始已选</RUI.Radio>
-                <RUI.Radio value="type_2" selected={0}>初始未选</RUI.Radio>
-                <RUI.Radio value="type_2" selected={1}>分组测试</RUI.Radio>
-                <RUI.Radio value="type_3" selected={0} disable={true}>禁用状态</RUI.Radio>
+            <RUI.RadioGroup ref="radioGroup" onChange={this.radioGroupChange} value={"type_2"}>
+                <RUI.Radio value="type_1">初始已选</RUI.Radio>
+                <RUI.Radio value="type_2">初始未选</RUI.Radio>
+                <RUI.Radio value="type_3">分组测试</RUI.Radio>
+                <RUI.Radio value="type_4" disable={true}>禁用状态</RUI.Radio>
             </RUI.RadioGroup>
-            {/*<br/>
+            <br/>
             <RUI.Radio value="type_1" selected={1} onChange={this.valueChange}>初始已选</RUI.Radio>
             <RUI.Radio value="type_2" selected={0}>初始未选</RUI.Radio>
             <RUI.Radio value="type_3" selected={0} disable={true}>禁用状态</RUI.Radio>
             <br/>
             <RUI.Checkbox value="type_1" selected={1} onChange={this.valueChange}>初始已选</RUI.Checkbox>
-            <RUI.Checkbox value="type_2" selected={0}>初始未选</RUI.Checkbox>
+            <RUI.Checkbox value={this.state.dynamicCheckboxValue} selected={this.state.dynamicCheckbox} onChange={this.checkboxDynamicChange}>初始未选</RUI.Checkbox>
             <RUI.Checkbox value="type_3" selected={0} disable={true}>禁用状态</RUI.Checkbox>
             <br/>
             <RUI.Button className="primary" onClick={this.showDialog}>测试Dialog</RUI.Button>
@@ -129,7 +159,7 @@ var Test = React.createClass({
             <br/>
             <RUI.Dialog ref="dialog" title="测试标题" buttons="submit,cancel" onCancel={this.dialogCancel} onSubmit={this.dialogSubmit}>
                 <div style={{width:'240px', wordWrap:'break-word'}}>
-                    qqqqqqqqqqqqq
+                    {this.state.dialogContent}
                 </div>
             </RUI.Dialog>
             <br/>
@@ -181,6 +211,54 @@ var Test = React.createClass({
             <br/>
             <br/>
             <br/>*/}
+            <div data-id="partial-node" style={{width:'300px',height:'200px',background:'#f1f1f1'}}>
+            </div>
+            <RUI.Loading
+                ref="pLoading"
+                type={'partial-screen'}
+                mask={false}
+                size={'s-small'}>
+            </RUI.Loading>
+            <RUI.Button onClick={this.partialShowLoading.bind(this,'partial-node')}>遮住特定元素</RUI.Button>
+            <hr />
+            <RUI.Loading
+                ref="fLoading"
+                type={'follow'}
+                mask={false}
+                size={'s-small'}>
+            </RUI.Loading>
+            <RUI.Button onClick={this.followShowLoading}>尾随点击元素</RUI.Button>
+            <hr />
+            <RUI.Loading
+                ref="aLoading"
+                type={'full-screen'}
+                mask={true}
+                size={'s-middle'}>
+            </RUI.Loading>
+            <RUI.Button onClick={this.fullShowLoading}>全屏</RUI.Button>
+            <br/>
+            <br/>
+            <RUI.Select
+                ref="selectBody"
+                data={[{key:'查看',value:'1'},{key:'你好',value:'2'}]}
+                value={{key:'查看',value:'1'}}
+                className="rui-theme-3"
+                filter={true}
+                reg={/^[0-9]+$/}
+                placeholder={'请输入手机号'}
+                filterCallback={this.filterCallback}
+                stuff={true}
+                result={'找不到结果'}
+                callback={this.selectCallback}>
+            </RUI.Select>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
         </div>;
     }
 });
