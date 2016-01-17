@@ -12,18 +12,22 @@ import '../../css/datepicker.scss';
 module.exports = React.createClass({
     mixins:[ComponentBase],
     getInitialState:function() {
-        return {
+        var status = {
             popup:false,
-            value:this.props.value,
-            startValue:this.props.startValue || this.props.value,
-            endValue:this.props.endValue || this.props.value + 86400 * 1000,
-            startValuePreview:this.props.startValue || this.props.value,
-            endValuePreview:this.props.endValue || this.props.value + 86400 * 1000
+            value:this.props.value
         };
+        if(status.value) {
+            status.startValue = this.props.startValue || this.props.value;
+            status.endValue = this.props.endValue || this.props.value + 86400 * 1000;
+            status.startValuePreview = this.props.startValue || this.props.value;
+            status.endValuePreview = this.props.endValue || this.props.value + 86400 * 1000;
+        }
+        return status;
     },
     getDefaultProps:function() {
         return {
-            cname:'datepicker'
+            cname:'datepicker',
+            value:null
         };
     },
     componentDidUpdate:function() {
@@ -100,16 +104,24 @@ module.exports = React.createClass({
     display:function(type) {
         var formatter = (this.props.formatter || new DateFormatter("Y-m-d"));
         if(type) {
-            if(type == 'start') {
+            if(type == 'start' && this.state.startValuePreview) {
                 return formatter.format(this.state.startValuePreview);
             }
-            if(type == 'end') {
+            if(type == 'end' && this.state.endValuePreview) {
                 return formatter.format(this.state.endValuePreview);
             }
+
+            return "";
         }
         else if(this.props.range) {
+            if(!this.state.startValue || !this.state.endValue) {
+                return "";
+            }
             return formatter.format(this.state.startValue) + '  -  ' + formatter.format(this.state.endValue);
         }else {
+            if(!this.state.value) {
+                return "";
+            }
             return formatter.format(this.state.value);
         }
     },
@@ -142,11 +154,11 @@ module.exports = React.createClass({
                 <div className={defaultClass+'-row'}>
                     {this.props.range ? (
                         <div className={defaultClass+'-row-range'}>
-                            <Calendar value={this.state.startValuePreview} onChange={this.startCalendarChange} range={"start"} />
-                            <Calendar value={this.state.endValuePreview} onChange={this.endCalendarChange} range={"end"} />
+                            <Calendar value={this.state.startValuePreview || Date.now()} onChange={this.startCalendarChange} range={"start"} />
+                            <Calendar value={this.state.endValuePreview || (Date.now() + 86400 * 1000)} onChange={this.endCalendarChange} range={"end"} />
                         </div>
                     ) : (
-                        <Calendar value={this.state.value} onChange={this.onCalendarChange} />
+                        <Calendar value={this.state.value || Date.now()} onChange={this.onCalendarChange} />
                     )}
                 </div>
             </div>

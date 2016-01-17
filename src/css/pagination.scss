@@ -13,6 +13,11 @@ $backgroundColor : #fff #31afee;
   }
   &-list {
     @extend %float;
+
+    .break {
+      padding:0 0 0 10px;
+    }
+
     a {
       @extend %inline-block;
       width:24px;
