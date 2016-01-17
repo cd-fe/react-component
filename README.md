@@ -39,6 +39,11 @@ browser example/index.html
 
 # Release logs
 
+## 0.1.16
+
+* Input dynamic value
+* reduce so many times to call render
+
 ## 0.1.15
 
 * Pagination complete
