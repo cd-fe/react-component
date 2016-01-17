@@ -39,6 +39,12 @@ browser example/index.html
 
 # Release logs
 
+## 0.1.14
+
+* fixed radio and checkbox render twice
+* fixed Dialog and Loading battle for ToggleMixin
+* add Select component min-height
+
 ## 0.1.13
 
 * add Loading Component
