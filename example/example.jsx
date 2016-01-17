@@ -92,6 +92,10 @@ var Test = React.createClass({
     checkboxDynamicChange:function(event) {
         alert(JSON.stringify(event.data));
     },
+    tableDeleteTest:function(data) {
+        console.log(arguments);
+        alert('delete ' + data.id);
+    },
     render:function() {
         var tableData = [
             {id:1, name:"商品测试1", category:"爆品", price:"199", percent:'10'},
@@ -123,7 +127,7 @@ var Test = React.createClass({
                 <RUI.Column title={"返佣比例"} dataField={"percent"} />
                 <RUI.Column title={"操作"}>
                     <RUI.Table.ItemRender>
-                        <RUI.Button>删除</RUI.Button>
+                        <RUI.Button onClick={this.tableDeleteTest}>删除</RUI.Button>
                     </RUI.Table.ItemRender>
                 </RUI.Column>
             </RUI.Table>
@@ -134,7 +138,7 @@ var Test = React.createClass({
                 <RUI.Checkbox value="type_2" selected={0}>分组测试</RUI.Checkbox>
                 <RUI.Checkbox value="type_3" selected={1} onChange={this.valueChange}>自身含事件</RUI.Checkbox>
             </RUI.CheckboxGroup>
-            <br/>*/}
+            <br/>
             <RUI.RadioGroup ref="radioGroup" onChange={this.radioGroupChange} value={"type_2"}>
                 <RUI.Radio value="type_1">初始已选</RUI.Radio>
                 <RUI.Radio value="type_2">初始未选</RUI.Radio>
