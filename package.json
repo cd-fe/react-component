@@ -20,7 +20,7 @@
     "url": "https://github.com/cd-fe/react-component/issues"
   },
   "scripts": {
-    "build": "webpack -p --config webpack.config.product.js",
+    "build": "webpack --config webpack.config.product.js",
     "example": "webpack-dev-server --config webpack.config.example.js --devtool eval --progress --colors --inline --hot --port 8008 --host 127.0.0.1",
     "lib": "webpack-dev-server --config webpack.config.product.js --devtool eval --progress --colors --inline --hot --port 8007 --host 127.0.0.1"
   },
