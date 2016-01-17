@@ -153,8 +153,8 @@
         margin: 0 12px 20px;
         background-color: #fff;
         ul {
-          max-height: 300px;
-          overflow: auto;
+          max-height: 200px;
+          overflow-y: scroll;
           li {
             display:block;
             padding:0 1px;
