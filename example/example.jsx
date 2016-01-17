@@ -155,7 +155,7 @@ var Test = React.createClass({
             <RUI.Input className="large"/><br/>
             <RUI.Input className="full"/>
             <br/>
-            <RUI.Pagination pageSize="10" currentPage="5" totalNum="78" onPage={this.onPage} />
+            <RUI.Pagination pageSize={10} currentPage={11} totalNum={780} onPage={this.onPage} />
             <br/>
             <RUI.Dialog ref="dialog" title="测试标题" buttons="submit,cancel" onCancel={this.dialogCancel} onSubmit={this.dialogSubmit}>
                 <div style={{width:'240px', wordWrap:'break-word'}}>
