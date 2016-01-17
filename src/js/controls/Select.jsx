@@ -95,13 +95,13 @@ module.exports = React.createClass({
    },
    handleFilter : function(source) {
        var _this = this, res;
-       var reg = _this.props.reg;
+       var reg = _this.props.reg || /.*/;
        var value = _this.refs.filter.value;
        var result;
-       if(_this.props.filter && reg) {
+       if(_this.props.filter) {
           if(reg.test(value)) {
               if(_this.props.filterCallback) {
-                    result = _this.props.filterCallback();
+                    result = _this.props.filterCallback(value);
                     if(result) {
                         _this.setState({
                             data : result
@@ -112,6 +112,10 @@ module.exports = React.createClass({
                         })
                     }
               }
+          }else {
+              _this.setState({
+                  data : [{key:this.props.result,value:'error'}]
+              })
           }
        }
 
