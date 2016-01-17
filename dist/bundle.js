@@ -975,15 +975,85 @@ return /******/ (function(modules) { // webpackBootstrap
 	        });
 	        this.props.onPage && this.props.onPage.call(null, index, this);
 	    },
-	    renderPage: function renderPage() {
+	    changePage: function changePage(offset) {
+	        var target = this.getOffsetStatus(offset);
+	        if (target) {
+	            this.click(target);
+	        }
+	    },
+	    changePageToFirst: function changePageToFirst() {
+	        this.click(1);
+	    },
+	    changePageToLast: function changePageToLast() {
+	        this.click(Math.ceil(this.state.totalNum / this.state.pageSize));
+	    },
+	    getOffsetStatus: function getOffsetStatus(offset) {
 	        var pageNumber = Math.ceil(this.state.totalNum / this.state.pageSize);
+	        var target = this.state.currentPage * 1 + offset;
+	        if (target > 0 && target <= pageNumber) {
+	            return target;
+	        }
+	        return false;
+	    },
+	    renderItemRange: function renderItemRange(start, end) {
 	        var list = [];
-	        for (var i = 1; i <= pageNumber; i++) {
+	        var pageNumber = Math.ceil(this.state.totalNum / this.state.pageSize);
+	        for (var i = start; i > 0 && i <= pageNumber && i <= end; i++) {
 	            list.push(React.createElement(
 	                'a',
-	                { href: 'javascript:;', onClick: this.click.bind(this, i), className: "pagination-num " + (i == this.state.currentPage ? 'select' : '') },
+	                {
+	                    href: 'javascript:;',
+	                    onClick: this.click.bind(this, i),
+	                    className: "pagination-num " + (i == this.state.currentPage ? 'select' : '') },
 	                i
 	            ));
+	        }
+
+	        return list;
+	    },
+	    renderBreak: function renderBreak() {
+	        return React.createElement(
+	            'span',
+	            { className: 'break' },
+	            '...'
+	        );
+	    },
+	    renderPage: function renderPage() {
+	        var preview = 5;
+	        var pageNumber = Math.ceil(this.state.totalNum / this.state.pageSize);
+	        var list = [];
+	        if (this.state.currentPage <= preview) {
+	            list = list.concat(this.renderItemRange(1, this.state.currentPage));
+	            if (this.state.currentPage > Math.floor(preview / 2)) {
+	                list = list.concat(this.renderItemRange(this.state.currentPage + 1, this.state.currentPage + 2));
+	            } else {
+	                list = list.concat(this.renderItemRange(this.state.currentPage + 1, preview));
+	            }
+	            if (pageNumber > list.length + Math.floor(preview / 2)) {
+	                list.push(this.renderBreak());
+	            }
+	            if (pageNumber > list.length) {
+	                for (var m = pageNumber - 1; m <= pageNumber; m++) {
+	                    list = list.concat(this.renderItemRange(m, m));
+	                }
+	            }
+	        } else if (this.state.currentPage > pageNumber - preview) {
+	            list = list.concat(this.renderItemRange(1, 2));
+	            list.push(this.renderBreak());
+	            if (Math.abs(this.state.currentPage - pageNumber) > Math.floor(preview / 2)) {
+	                list = list.concat(this.renderItemRange(this.state.currentPage - 2, this.state.currentPage));
+	            } else {
+	                list = list.concat(this.renderItemRange(pageNumber - preview + 1, this.state.currentPage));
+	            }
+	            if (this.state.currentPage != pageNumber) {
+	                list = list.concat(this.renderItemRange(this.state.currentPage, pageNumber));
+	            }
+	        } else {
+	            list = list.concat(this.renderItemRange(1, 2));
+	            list.push(this.renderBreak());
+	            list = list.concat(this.renderItemRange(this.state.currentPage - Math.floor(preview / 2), this.state.currentPage + Math.floor(preview / 2)));
+	            list.push(this.renderBreak());
+	            list = list.concat(this.renderItemRange(pageNumber - 1, pageNumber));
 	        }
 
 	        return list;
@@ -1020,23 +1090,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	                { className: prefix + "-list" },
 	                React.createElement(
 	                    'a',
-	                    { href: 'javascript:;', className: prefix + "-home" },
+	                    { href: 'javascript:;', className: prefix + "-home", onClick: this.changePageToFirst },
 	                    '<<'
 	                ),
 	                React.createElement(
 	                    'a',
-	                    { href: 'javascript:;', className: prefix + "-prev" },
+	                    { href: 'javascript:;', className: prefix + "-prev " + (this.getOffsetStatus(-1) ? '' : 'disable'), onClick: this.changePage.bind(this, -1) },
 	                    '<'
 	                ),
 	                this.renderPage(),
 	                React.createElement(
 	                    'a',
-	                    { href: 'javascript:;', className: prefix + "-next" },
+	                    { href: 'javascript:;', className: prefix + "-next " + (this.getOffsetStatus(1) ? '' : 'disable'), onClick: this.changePage.bind(this, 1) },
 	                    '>'
 	                ),
 	                React.createElement(
 	                    'a',
-	                    { href: 'javascript:;', className: prefix + "-end" },
+	                    { href: 'javascript:;', className: prefix + "-end", onClick: this.changePageToLast },
 	                    '>>'
 	                )
 	            )
@@ -1079,7 +1149,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 	// module
-	exports.push([module.id, ".rui-pagination-detail, .rui-pagination-list {\n  float: left; }\n\n.rui-pagination-list a {\n  display: inline-block; }\n\n.rui-pagination {\n  height: 24px; }\n  .rui-pagination-detail {\n    color: #2b2b2b;\n    line-height: 24px; }\n  .rui-pagination-list a {\n    width: 24px;\n    height: 21px;\n    border-width: 1px;\n    border-style: solid;\n    border-color: #eceaea;\n    text-align: center;\n    line-height: 21px;\n    margin-left: 10px;\n    color: #2b2b2b;\n    background: #fff; }\n    .rui-pagination-list a.select {\n      border-color: #31afee;\n      color: #fff;\n      background: #31afee; }\n    .rui-pagination-list a.disable {\n      color: #c8c8c8; }\n", ""]);
+	exports.push([module.id, ".rui-pagination-detail, .rui-pagination-list {\n  float: left; }\n\n.rui-pagination-list a {\n  display: inline-block; }\n\n.rui-pagination {\n  height: 24px; }\n  .rui-pagination-detail {\n    color: #2b2b2b;\n    line-height: 24px; }\n  .rui-pagination-list .break {\n    padding: 0 0 0 10px; }\n  .rui-pagination-list a {\n    width: 24px;\n    height: 21px;\n    border-width: 1px;\n    border-style: solid;\n    border-color: #eceaea;\n    text-align: center;\n    line-height: 21px;\n    margin-left: 10px;\n    color: #2b2b2b;\n    background: #fff; }\n    .rui-pagination-list a.select {\n      border-color: #31afee;\n      color: #fff;\n      background: #31afee; }\n    .rui-pagination-list a.disable {\n      color: #c8c8c8; }\n", ""]);
 
 	// exports
 
@@ -2018,7 +2088,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return '';
 	    },
 	    componentWillReceiveProps: function componentWillReceiveProps(newProps) {
-	        if (typeof newProps.selected != 'undefined' && newProps.groupValidate) {
+	        if (typeof newProps.selected != 'undefined' && (this.props.cname != 'radio' || newProps.groupValidate)) {
 	            this.toggleValue = newProps.selected ? 1 : 0;
 	        }
 	    },
@@ -2726,19 +2796,22 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    mixins: [_ComponentBase2.default],
 	    getInitialState: function getInitialState() {
-	        return {
+	        var status = {
 	            popup: false,
-	            value: this.props.value,
-	            startValue: this.props.startValue || this.props.value,
-	            endValue: this.props.endValue || this.props.value + 86400 * 1000,
-	            startValuePreview: this.props.startValue || this.props.value,
-	            endValuePreview: this.props.endValue || this.props.value + 86400 * 1000
+	            value: this.props.value
 	        };
+	        if (status.value) {
+	            status.startValue = this.props.startValue || this.props.value;
+	            status.endValue = this.props.endValue || this.props.value + 86400 * 1000;
+	            status.startValuePreview = this.props.startValue || this.props.value;
+	            status.endValuePreview = this.props.endValue || this.props.value + 86400 * 1000;
+	        }
+	        return status;
 	    },
 	    getDefaultProps: function getDefaultProps() {
 	        return {
 	            cname: 'datepicker',
-	            value: Date.now()
+	            value: null
 	        };
 	    },
 	    componentDidUpdate: function componentDidUpdate() {
@@ -2815,15 +2888,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	    display: function display(type) {
 	        var formatter = this.props.formatter || new _DateFormatter2.default("Y-m-d");
 	        if (type) {
-	            if (type == 'start') {
+	            if (type == 'start' && this.state.startValuePreview) {
 	                return formatter.format(this.state.startValuePreview);
 	            }
-	            if (type == 'end') {
+	            if (type == 'end' && this.state.endValuePreview) {
 	                return formatter.format(this.state.endValuePreview);
 	            }
+
+	            return "";
 	        } else if (this.props.range) {
+	            if (!this.state.startValue || !this.state.endValue) {
+	                return "";
+	            }
 	            return formatter.format(this.state.startValue) + '  -  ' + formatter.format(this.state.endValue);
 	        } else {
+	            if (!this.state.value) {
+	                return "";
+	            }
 	            return formatter.format(this.state.value);
 	        }
 	    },
@@ -2889,9 +2970,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    this.props.range ? React.createElement(
 	                        'div',
 	                        { className: defaultClass + '-row-range' },
-	                        React.createElement(_Calendar2.default, { value: this.state.startValuePreview, onChange: this.startCalendarChange, range: "start" }),
-	                        React.createElement(_Calendar2.default, { value: this.state.endValuePreview, onChange: this.endCalendarChange, range: "end" })
-	                    ) : React.createElement(_Calendar2.default, { value: this.state.value, onChange: this.onCalendarChange })
+	                        React.createElement(_Calendar2.default, { value: this.state.startValuePreview || Date.now(), onChange: this.startCalendarChange, range: "start" }),
+	                        React.createElement(_Calendar2.default, { value: this.state.endValuePreview || Date.now() + 86400 * 1000, onChange: this.endCalendarChange, range: "end" })
+	                    ) : React.createElement(_Calendar2.default, { value: this.state.value || Date.now(), onChange: this.onCalendarChange })
 	                )
 	            )
 	        );
@@ -3260,7 +3341,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 	// module
-	exports.push([module.id, ".rui-datepicker {\n  position: relative;\n  width: 110px;\n  font-size: 12px; }\n  .rui-datepicker.range {\n    width: 190px; }\n    .rui-datepicker.range > .rui-input {\n      width: 190px; }\n  .rui-datepicker > .rui-input {\n    width: 110px; }\n  .rui-datepicker-input-icon {\n    background: #fff url(" + __webpack_require__(61) + ") no-repeat;\n    background-position: right 9px; }\n  .range .rui-datepicker-calendar {\n    float: left; }\n  .range .rui-datepicker-popup {\n    width: 540px; }\n    .range .rui-datepicker-popup .range-container {\n      margin-bottom: 10px;\n      padding-left: 10px;\n      clear: both;\n      height: 38px; }\n      .range .rui-datepicker-popup .range-container input {\n        width: 86px;\n        margin-right: 20px; }\n      .range .rui-datepicker-popup .range-container .right .rui-button:last-child {\n        margin-left: 10px; }\n  .rui-datepicker-calendar:first-child {\n    margin-left: 0; }\n  .rui-datepicker-calendar {\n    width: 262px;\n    height: 235px;\n    border: 1px solid #eceaea;\n    margin-left: 12px; }\n    .rui-datepicker-calendar-title {\n      border-bottom: 1px solid #eceaea;\n      text-align: center;\n      line-height: 36px; }\n    .rui-datepicker-calendar-left {\n      background: url(" + __webpack_require__(62) + ") no-repeat;\n      background-position: 6px -72px;\n      display: block;\n      width: 36px;\n      height: 36px;\n      float: left; }\n      .rui-datepicker-calendar-left:hover {\n        background-position: 6px -108px; }\n    .rui-datepicker-calendar-right {\n      background: url(" + __webpack_require__(62) + ") no-repeat;\n      background-position: 15px -0px;\n      display: block;\n      width: 36px;\n      height: 36px;\n      float: right; }\n      .rui-datepicker-calendar-right:hover {\n        background-position: 15px -36px; }\n    .rui-datepicker-calendar-table {\n      width: 100%;\n      line-height: 28px; }\n      .rui-datepicker-calendar-table thead {\n        color: #999; }\n        .rui-datepicker-calendar-table thead tr {\n          border-bottom: 1px solid #eceaea; }\n      .rui-datepicker-calendar-table tbody tr {\n        text-align: center; }\n      .rui-datepicker-calendar-table tbody td {\n        cursor: pointer;\n        -webkit-border-radius: 2px 2px;\n        -moz-border-radius: 2px 2px;\n        border-radius: \"2px 2px\"; }\n        .rui-datepicker-calendar-table tbody td:hover, .rui-datepicker-calendar-table tbody td.selected, .rui-datepicker-calendar-table tbody td.ranged:hover {\n          background: #2ea3dd;\n          color: #fff; }\n        .rui-datepicker-calendar-table tbody td.ranged {\n          background: #eff8fc;\n          color: #666; }\n        .rui-datepicker-calendar-table tbody td.disabled, .rui-datepicker-calendar-table tbody td.disabled:hover {\n          color: #cacaca;\n          background: #fff; }\n  .rui-datepicker-popup {\n    display: none;\n    border: 1px solid #74c5ee;\n    padding: 10px;\n    position: absolute;\n    top: 37px;\n    left: 0px;\n    background: #fff;\n    z-index: 1100; }\n    .rui-datepicker-popup-arrow {\n      position: absolute;\n      top: -8px;\n      left: 13px;\n      width: 14px;\n      height: 8px;\n      background: url(" + __webpack_require__(63) + ") no-repeat; }\n  .rui-datepicker.active .rui-datepicker-popup {\n    display: block; }\n", ""]);
+	exports.push([module.id, ".rui-datepicker {\n  position: relative;\n  width: 110px;\n  font-size: 12px; }\n  .rui-datepicker.range {\n    width: 190px; }\n    .rui-datepicker.range > .rui-input {\n      width: 190px; }\n  .rui-datepicker > .rui-input {\n    width: 110px; }\n  .rui-datepicker-input-icon {\n    background: #fff url(" + __webpack_require__(61) + ") no-repeat;\n    background-position: right 9px; }\n  .range .rui-datepicker-calendar {\n    float: left; }\n  .range .rui-datepicker-popup {\n    width: 540px; }\n    .range .rui-datepicker-popup .range-container {\n      margin-bottom: 10px;\n      padding-left: 10px;\n      clear: both;\n      height: 38px; }\n      .range .rui-datepicker-popup .range-container input {\n        width: 86px;\n        margin-right: 20px; }\n      .range .rui-datepicker-popup .range-container .right .rui-button:last-child {\n        margin-left: 10px; }\n  .rui-datepicker-calendar:first-child {\n    margin-left: 0; }\n  .rui-datepicker-calendar {\n    width: 262px;\n    height: 235px;\n    border: 1px solid #eceaea;\n    margin-left: 12px; }\n    .rui-datepicker-calendar-title {\n      border-bottom: 1px solid #eceaea;\n      text-align: center;\n      line-height: 36px; }\n    .rui-datepicker-calendar-left {\n      background: url(" + __webpack_require__(62) + ") no-repeat;\n      background-position: 6px -72px;\n      display: block;\n      width: 36px;\n      height: 36px;\n      float: left; }\n      .rui-datepicker-calendar-left:hover {\n        background-position: 6px -108px; }\n    .rui-datepicker-calendar-right {\n      background: url(" + __webpack_require__(62) + ") no-repeat;\n      background-position: 15px 0px;\n      display: block;\n      width: 36px;\n      height: 36px;\n      float: right; }\n      .rui-datepicker-calendar-right:hover {\n        background-position: 15px -36px; }\n    .rui-datepicker-calendar-table {\n      width: 100%;\n      line-height: 28px; }\n      .rui-datepicker-calendar-table thead {\n        color: #999; }\n        .rui-datepicker-calendar-table thead tr {\n          border-bottom: 1px solid #eceaea; }\n      .rui-datepicker-calendar-table tbody tr {\n        text-align: center; }\n      .rui-datepicker-calendar-table tbody td {\n        cursor: pointer;\n        -webkit-border-radius: 2px 2px;\n        -moz-border-radius: 2px 2px;\n        border-radius: \"2px 2px\"; }\n        .rui-datepicker-calendar-table tbody td:hover, .rui-datepicker-calendar-table tbody td.selected, .rui-datepicker-calendar-table tbody td.ranged:hover {\n          background: #2ea3dd;\n          color: #fff; }\n        .rui-datepicker-calendar-table tbody td.ranged {\n          background: #eff8fc;\n          color: #666; }\n        .rui-datepicker-calendar-table tbody td.disabled, .rui-datepicker-calendar-table tbody td.disabled:hover {\n          color: #cacaca;\n          background: #fff; }\n  .rui-datepicker-popup {\n    display: none;\n    border: 1px solid #74c5ee;\n    padding: 10px;\n    position: absolute;\n    top: 37px;\n    left: 0px;\n    background: #fff;\n    z-index: 1100; }\n    .rui-datepicker-popup-arrow {\n      position: absolute;\n      top: -8px;\n      left: 13px;\n      width: 14px;\n      height: 8px;\n      background: url(" + __webpack_require__(63) + ") no-repeat; }\n  .rui-datepicker.active .rui-datepicker-popup {\n    display: block; }\n", ""]);
 
 	// exports
 
@@ -3475,7 +3556,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 	// module
-	exports.push([module.id, "/**\r\n * 1. Set default font family to sans-serif.\r\n * 2. Prevent iOS text size adjust after orientation change, without disabling\r\n *    user zoom.\r\n * 0. sassCore's style\r\n */\nhtml {\n  font-family: 'Microsoft Yahei';\n  /* 1 */\n  -ms-text-size-adjust: 100%;\n  /* 2 */\n  -webkit-text-size-adjust: 100%;\n  /* 2 */\n  overflow-y: scroll;\n  /* 0 */\n  -webkit-overflow-scrolling: touch;\n  /* 0 */ }\n\n/**\r\n * 1. Remove default margin\r\n * 0. sassCore's style.\r\n */\nbody {\n  margin: 0;\n  /* 1 */\n  font-size: 14px;\n  /* 0 */\n  line-height: 1.5;\n  /* 0 */\n  color: #333;\n  /* 0 */\n  background-color: #fff;\n  /* 0 */ }\n\n/* HTML5 display definitions\r\n   ========================================================================== */\n/**\r\n * Correct `block` display not defined for any HTML5 element in IE 8/9.\r\n * Correct `block` display not defined for `details` or `summary` in IE 10/11 and Firefox.\r\n * Correct `block` display not defined for `main` in IE 11.\r\n */\narticle,\naside,\ndetails,\nfigcaption,\nfigure,\nfooter,\nheader,\nhgroup,\nmain,\nnav,\nsection,\nsummary {\n  display: block; }\n\n/**\r\n * 1. Correct `inline-block` display not defined in IE 8/9.\r\n * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.\r\n * 3. Correct `inline-block` display in IE 6/7.\r\n */\naudio,\ncanvas,\nprogress,\nvideo {\n  display: inline-block;\n  /* 1 */\n  vertical-align: baseline;\n  /* 2 */ }\n\n/**\r\n * Prevent modern browsers from displaying `audio` without controls.\r\n * Remove excess height in iOS 5 devices.\r\n */\naudio:not([controls]) {\n  display: none;\n  height: 0; }\n\n/**\r\n * Address `[hidden]` styling not present in IE 8/9/10.\r\n * Hide the `template` element in IE 8/9/11, Safari, and Firefox < 22.\r\n */\n[hidden],\ntemplate {\n  display: none; }\n\n/* Links\r\n   ========================================================================== */\n/**\r\n * 1. Remove the gray background color from active links in IE 10.\r\n * 2. Improve readability when focused and also mouse hovered in all browsers.\r\n * 0. sassCore's style.\r\n */\na {\n  background: transparent;\n  /* 1 */\n  /* 0 */\n  text-decoration: none;\n  cursor: pointer;\n  color: #08c; }\n  a:active, a:hover {\n    outline: 0;\n    /* 2 */ }\n  a:hover {\n    color: #006699; }\n\n/* Text-level semantics\r\n   ========================================================================== */\n/**\r\n * Address styling not present in IE 8/9/10/11, Safari, and Chrome.\r\n */\nabbr[title] {\n  border-bottom: 1px dotted; }\n\n/**\r\n * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.\r\n */\nb,\nstrong {\n  font-weight: bold; }\n\n/**\r\n * Address styling not present in Safari and Chrome.\r\n */\ndfn {\n  font-style: italic; }\n\n/**\r\n * Address styling not present in IE 8/9.\r\n */\nmark {\n  background: #ff0;\n  color: #000; }\n\n/**\r\n * Address inconsistent and variable font size in all browsers.\r\n */\nsmall {\n  font-size: 80%; }\n\n/**\r\n * Prevent `sub` and `sup` affecting `line-height` in all browsers.\r\n */\nsub,\nsup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline; }\n\nsup {\n  top: -0.5em; }\n\nsub {\n  bottom: -0.25em; }\n\n/* Embedded content\r\n   ========================================================================== */\n/**\r\n * 1. Remove border when inside `a` element in IE 8/9/10.\r\n * 2. Improve image quality when scaled in IE 7.\r\n * 0. sassCore's style.\r\n */\nimg {\n  border: 0;\n  /* 1 */\n  vertical-align: middle;\n  /* 0 */ }\n\n/**\r\n * Correct overflow not hidden in IE 9/10/11.\r\n */\nsvg:not(:root) {\n  overflow: hidden; }\n\n/* Grouping content\r\n   ========================================================================== */\n/**\r\n * Address differences between Firefox and other browsers.\r\n */\nhr {\n  -moz-box-sizing: content-box;\n  box-sizing: content-box;\n  height: 0; }\n\n/**\r\n * 1. Contain overflow in all browsers.\r\n * 2. Improve readability of pre-formatted text in all browsers.\r\n */\npre {\n  overflow: auto;\n  /* 1 */\n  white-space: pre;\n  /* 2 */\n  white-space: pre-wrap;\n  /* 2 */\n  word-wrap: break-word;\n  /* 2 */ }\n\n/**\r\n * 1. Address odd `em`-unit font size rendering in all browsers.\r\n * 2. Correct font family set oddly in IE 6, Safari 4/5, and Chrome.\r\n */\ncode,\nkbd,\npre,\nsamp {\n  font-family: monospace, monospace;\n  /* 1 */\n  font-size: 1em;\n  /* 2 */ }\n\n/* Forms\r\n   ========================================================================== */\n/**\r\n * Known limitation: by default, Chrome and Safari on OS X allow very limited\r\n * styling of `select`, unless a `border` property is set.\r\n */\n/**\r\n * 1. Correct color not being inherited.\r\n *    Known issue: affects color of disabled elements.\r\n * 2. Correct font properties not being inherited.\r\n * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.\r\n */\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  color: inherit;\n  /* 1 */\n  font: inherit;\n  /* 2 */\n  margin: 0;\n  /* 3 */ }\n\n/**\r\n * Address `overflow` set to `hidden` in IE 8/9/10/11.\r\n */\nbutton {\n  overflow: visible; }\n\n/**\r\n * Address inconsistent `text-transform` inheritance for `button` and `select`.\r\n * All other form control elements do not inherit `text-transform` values.\r\n * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.\r\n * Correct `select` style inheritance in Firefox.\r\n */\nbutton,\nselect {\n  text-transform: none; }\n\n/**\r\n * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`\r\n *    and `video` controls.\r\n * 2. Correct inability to style clickable `input` types in iOS.\r\n * 3. Improve usability and consistency of cursor style between image-type\r\n *    `input` and others.\r\n * 4. Remove inner spacing in IE 7 without affecting normal text inputs.\r\n *    Known issue: inner spacing remains in IE 6.\r\n */\nbutton,\nhtml input[type=\"button\"],\ninput[type=\"reset\"],\ninput[type=\"submit\"] {\n  -webkit-appearance: button;\n  /* 2 */\n  cursor: pointer;\n  /* 3 */ }\n\n/**\r\n * Re-set default cursor for disabled elements.\r\n */\nbutton[disabled],\nhtml input[disabled] {\n  cursor: default; }\n\n/**\r\n * Remove inner padding and border in Firefox 4+.\r\n */\nbutton::-moz-focus-inner,\ninput::-moz-focus-inner {\n  border: 0;\n  padding: 0; }\n\n/**\r\n * Address Firefox 4+ setting `line-height` on `input` using `!important` in\r\n * the UA stylesheet.\r\n */\ninput {\n  line-height: normal; }\n\n/**\r\n * It's recommended that you don't attempt to style these elements.\r\n * Firefox's implementation doesn't respect box-sizing, padding, or width.\r\n *\r\n * 1. Address box sizing set to `content-box` in IE 8/9/10.\r\n * 2. Remove excess padding in IE 8/9/10.\r\n * 3. Remove excess padding in IE 7.\r\n *    Known issue: excess padding remains in IE 6.\r\n */\ninput[type=\"checkbox\"],\ninput[type=\"radio\"] {\n  box-sizing: border-box;\n  /* 1 */\n  padding: 0;\n  /* 2 */ }\n\n/**\r\n * Fix the cursor style for Chrome's increment/decrement buttons. For certain\r\n * `font-size` values of the `input`, it causes the cursor style of the\r\n * decrement button to change from `default` to `text`.\r\n */\ninput[type=\"number\"]::-webkit-inner-spin-button,\ninput[type=\"number\"]::-webkit-outer-spin-button {\n  height: auto; }\n\n/**\r\n * 1. Address `appearance` set to `searchfield` in Safari and Chrome.\r\n * 2. Address `box-sizing` set to `border-box` in Safari and Chrome\r\n *    (include `-moz` to future-proof).\r\n */\ninput[type=\"search\"] {\n  -webkit-appearance: textfield;\n  /* 1 */\n  -moz-box-sizing: content-box;\n  -webkit-box-sizing: content-box;\n  /* 2 */\n  box-sizing: content-box; }\n\n/**\r\n * Remove inner padding and search cancel button in Safari and Chrome on OS X.\r\n * Safari (but not Chrome) clips the cancel button when the search input has\r\n * padding (and `textfield` appearance).\r\n */\ninput[type=\"search\"]::-webkit-search-cancel-button,\ninput[type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none; }\n\n/**\r\n * Define consistent border, margin, and padding.\r\n */\nfieldset {\n  border: 1px solid #c0c0c0;\n  margin: 0 2px;\n  padding: 0.35em 0.625em 0.75em; }\n\n/**\r\n * 1. Correct `color` not being inherited in IE 8/9/10/11.\r\n * 2. Remove padding so people aren't caught out if they zero out fieldsets.\r\n * 3. Correct alignment displayed oddly in IE 6/7.\r\n */\nlegend {\n  border: 0;\n  /* 1 */\n  padding: 0;\n  /* 2 */ }\n\n/**\r\n * 1. Remove default vertical scrollbar in IE 8/9/10/11.\r\n * 0. sassCore's style\r\n */\ntextarea {\n  overflow: auto;\n  /* 1 */\n  resize: vertical;\n  /* 0 */ }\n\n/**\r\n * Don't inherit the `font-weight` (applied by a rule above).\r\n * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.\r\n */\noptgroup {\n  font-weight: bold; }\n\n/* Tables\r\n   ========================================================================== */\n/**\r\n * Remove most spacing between table cells.\r\n */\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n\ntd,\nth {\n  padding: 0; }\n\n/**\r\n * Address CSS quotes not supported in IE 6/7.\r\n */\nhtml,\nbutton,\ninput,\nselect,\ntextarea {\n  font-family: \"Helvetica Neue\", Helvetica, Tahoma, Microsoft Yahei; }\n\nh1, h2, h3, h4, h5, h6, p, figure, form, blockquote {\n  margin: 0; }\n\nul, ol, li, dl, dd {\n  margin: 0;\n  padding: 0; }\n\nul, ol {\n  list-style: none outside none; }\n\nh1, h2, h3 {\n  font-weight: bold; }\n\nh1 {\n  font-size: 21px; }\n\nh2 {\n  font-size: 18.2px; }\n\nh3 {\n  font-size: 15.96px; }\n\nh4 {\n  font-size: 14px; }\n\nh5, h6 {\n  font-size: 11.9px;\n  text-transform: uppercase; }\n\ninput:-moz-placeholder,\ntextarea:-moz-placeholder {\n  color: #ccc; }\n\ninput::-moz-placeholder,\ntextarea::-moz-placeholder {\n  color: #ccc; }\n\ninput:-ms-input-placeholder,\ntextarea:-ms-input-placeholder {\n  color: #ccc; }\n\ninput::-webkit-input-placeholder,\ntextarea::-webkit-input-placeholder {\n  color: #ccc; }\n\n/* common */\n.radius {\n  -webkit-border-radius: 6px 6px;\n  -moz-border-radius: 6px 6px;\n  border-radius: \"6px 6px\"; }\n\n.shadow {\n  -webkit-box-shadow: 0 0 10px #666;\n  -moz-box-shadow: 0 0 10px #666;\n  box-shadow: \"0 0 10px #666\"; }\n\n.small {\n  width: 100px; }\n\n.medium {\n  width: 240px; }\n\n.large {\n  width: 480px; }\n\n.full {\n  width: 100%; }\n\n.left {\n  float: left; }\n\n.right {\n  float: right; }\n", ""]);
+	exports.push([module.id, "/**\r\n * 1. Set default font family to sans-serif.\r\n * 2. Prevent iOS text size adjust after orientation change, without disabling\r\n *    user zoom.\r\n * 0. sassCore's style\r\n */\nhtml {\n  font-family: 'Microsoft Yahei';\n  /* 1 */\n  -ms-text-size-adjust: 100%;\n  /* 2 */\n  -webkit-text-size-adjust: 100%;\n  /* 2 */\n  overflow-y: scroll;\n  /* 0 */\n  -webkit-overflow-scrolling: touch;\n  /* 0 */ }\n\n/**\r\n * 1. Remove default margin\r\n * 0. sassCore's style.\r\n */\nbody {\n  margin: 0;\n  /* 1 */\n  font-size: 14px;\n  /* 0 */\n  line-height: 1.5;\n  /* 0 */\n  color: #333;\n  /* 0 */\n  background-color: #fff;\n  /* 0 */ }\n\n/* HTML5 display definitions\r\n   ========================================================================== */\n/**\r\n * Correct `block` display not defined for any HTML5 element in IE 8/9.\r\n * Correct `block` display not defined for `details` or `summary` in IE 10/11 and Firefox.\r\n * Correct `block` display not defined for `main` in IE 11.\r\n */\narticle,\naside,\ndetails,\nfigcaption,\nfigure,\nfooter,\nheader,\nhgroup,\nmain,\nnav,\nsection,\nsummary {\n  display: block; }\n\n/**\r\n * 1. Correct `inline-block` display not defined in IE 8/9.\r\n * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.\r\n * 3. Correct `inline-block` display in IE 6/7.\r\n */\naudio,\ncanvas,\nprogress,\nvideo {\n  display: inline-block;\n  /* 1 */\n  vertical-align: baseline;\n  /* 2 */ }\n\n/**\r\n * Prevent modern browsers from displaying `audio` without controls.\r\n * Remove excess height in iOS 5 devices.\r\n */\naudio:not([controls]) {\n  display: none;\n  height: 0; }\n\n/**\r\n * Address `[hidden]` styling not present in IE 8/9/10.\r\n * Hide the `template` element in IE 8/9/11, Safari, and Firefox < 22.\r\n */\n[hidden],\ntemplate {\n  display: none; }\n\n/* Links\r\n   ========================================================================== */\n/**\r\n * 1. Remove the gray background color from active links in IE 10.\r\n * 2. Improve readability when focused and also mouse hovered in all browsers.\r\n * 0. sassCore's style.\r\n */\na {\n  background: transparent;\n  /* 1 */\n  /* 0 */\n  text-decoration: none;\n  cursor: pointer;\n  color: #08c; }\n  a:active,\n  a:hover {\n    outline: 0;\n    /* 2 */ }\n  a:hover {\n    color: #006699; }\n\n/* Text-level semantics\r\n   ========================================================================== */\n/**\r\n * Address styling not present in IE 8/9/10/11, Safari, and Chrome.\r\n */\nabbr[title] {\n  border-bottom: 1px dotted; }\n\n/**\r\n * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.\r\n */\nb,\nstrong {\n  font-weight: bold; }\n\n/**\r\n * Address styling not present in Safari and Chrome.\r\n */\ndfn {\n  font-style: italic; }\n\n/**\r\n * Address styling not present in IE 8/9.\r\n */\nmark {\n  background: #ff0;\n  color: #000; }\n\n/**\r\n * Address inconsistent and variable font size in all browsers.\r\n */\nsmall {\n  font-size: 80%; }\n\n/**\r\n * Prevent `sub` and `sup` affecting `line-height` in all browsers.\r\n */\nsub,\nsup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline; }\n\nsup {\n  top: -0.5em; }\n\nsub {\n  bottom: -0.25em; }\n\n/* Embedded content\r\n   ========================================================================== */\n/**\r\n * 1. Remove border when inside `a` element in IE 8/9/10.\r\n * 2. Improve image quality when scaled in IE 7.\r\n * 0. sassCore's style.\r\n */\nimg {\n  border: 0;\n  /* 1 */\n  vertical-align: middle;\n  /* 0 */ }\n\n/**\r\n * Correct overflow not hidden in IE 9/10/11.\r\n */\nsvg:not(:root) {\n  overflow: hidden; }\n\n/* Grouping content\r\n   ========================================================================== */\n/**\r\n * Address differences between Firefox and other browsers.\r\n */\nhr {\n  -moz-box-sizing: content-box;\n  box-sizing: content-box;\n  height: 0; }\n\n/**\r\n * 1. Contain overflow in all browsers.\r\n * 2. Improve readability of pre-formatted text in all browsers.\r\n */\npre {\n  overflow: auto;\n  /* 1 */\n  white-space: pre;\n  /* 2 */\n  white-space: pre-wrap;\n  /* 2 */\n  word-wrap: break-word;\n  /* 2 */ }\n\n/**\r\n * 1. Address odd `em`-unit font size rendering in all browsers.\r\n * 2. Correct font family set oddly in IE 6, Safari 4/5, and Chrome.\r\n */\ncode,\nkbd,\npre,\nsamp {\n  font-family: monospace, monospace;\n  /* 1 */\n  font-size: 1em;\n  /* 2 */ }\n\n/* Forms\r\n   ========================================================================== */\n/**\r\n * Known limitation: by default, Chrome and Safari on OS X allow very limited\r\n * styling of `select`, unless a `border` property is set.\r\n */\n/**\r\n * 1. Correct color not being inherited.\r\n *    Known issue: affects color of disabled elements.\r\n * 2. Correct font properties not being inherited.\r\n * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.\r\n */\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  color: inherit;\n  /* 1 */\n  font: inherit;\n  /* 2 */\n  margin: 0;\n  /* 3 */ }\n\n/**\r\n * Address `overflow` set to `hidden` in IE 8/9/10/11.\r\n */\nbutton {\n  overflow: visible; }\n\n/**\r\n * Address inconsistent `text-transform` inheritance for `button` and `select`.\r\n * All other form control elements do not inherit `text-transform` values.\r\n * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.\r\n * Correct `select` style inheritance in Firefox.\r\n */\nbutton,\nselect {\n  text-transform: none; }\n\n/**\r\n * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`\r\n *    and `video` controls.\r\n * 2. Correct inability to style clickable `input` types in iOS.\r\n * 3. Improve usability and consistency of cursor style between image-type\r\n *    `input` and others.\r\n * 4. Remove inner spacing in IE 7 without affecting normal text inputs.\r\n *    Known issue: inner spacing remains in IE 6.\r\n */\nbutton,\nhtml input[type=\"button\"], input[type=\"reset\"],\ninput[type=\"submit\"] {\n  -webkit-appearance: button;\n  /* 2 */\n  cursor: pointer;\n  /* 3 */ }\n\n/**\r\n * Re-set default cursor for disabled elements.\r\n */\nbutton[disabled],\nhtml input[disabled] {\n  cursor: default; }\n\n/**\r\n * Remove inner padding and border in Firefox 4+.\r\n */\nbutton::-moz-focus-inner,\ninput::-moz-focus-inner {\n  border: 0;\n  padding: 0; }\n\n/**\r\n * Address Firefox 4+ setting `line-height` on `input` using `!important` in\r\n * the UA stylesheet.\r\n */\ninput {\n  line-height: normal; }\n\n/**\r\n * It's recommended that you don't attempt to style these elements.\r\n * Firefox's implementation doesn't respect box-sizing, padding, or width.\r\n *\r\n * 1. Address box sizing set to `content-box` in IE 8/9/10.\r\n * 2. Remove excess padding in IE 8/9/10.\r\n * 3. Remove excess padding in IE 7.\r\n *    Known issue: excess padding remains in IE 6.\r\n */\ninput[type=\"checkbox\"],\ninput[type=\"radio\"] {\n  box-sizing: border-box;\n  /* 1 */\n  padding: 0;\n  /* 2 */ }\n\n/**\r\n * Fix the cursor style for Chrome's increment/decrement buttons. For certain\r\n * `font-size` values of the `input`, it causes the cursor style of the\r\n * decrement button to change from `default` to `text`.\r\n */\ninput[type=\"number\"]::-webkit-inner-spin-button,\ninput[type=\"number\"]::-webkit-outer-spin-button {\n  height: auto; }\n\n/**\r\n * 1. Address `appearance` set to `searchfield` in Safari and Chrome.\r\n * 2. Address `box-sizing` set to `border-box` in Safari and Chrome\r\n *    (include `-moz` to future-proof).\r\n */\ninput[type=\"search\"] {\n  -webkit-appearance: textfield;\n  /* 1 */\n  -moz-box-sizing: content-box;\n  -webkit-box-sizing: content-box;\n  /* 2 */\n  box-sizing: content-box; }\n\n/**\r\n * Remove inner padding and search cancel button in Safari and Chrome on OS X.\r\n * Safari (but not Chrome) clips the cancel button when the search input has\r\n * padding (and `textfield` appearance).\r\n */\ninput[type=\"search\"]::-webkit-search-cancel-button,\ninput[type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none; }\n\n/**\r\n * Define consistent border, margin, and padding.\r\n */\nfieldset {\n  border: 1px solid #c0c0c0;\n  margin: 0 2px;\n  padding: 0.35em 0.625em 0.75em; }\n\n/**\r\n * 1. Correct `color` not being inherited in IE 8/9/10/11.\r\n * 2. Remove padding so people aren't caught out if they zero out fieldsets.\r\n * 3. Correct alignment displayed oddly in IE 6/7.\r\n */\nlegend {\n  border: 0;\n  /* 1 */\n  padding: 0;\n  /* 2 */ }\n\n/**\r\n * 1. Remove default vertical scrollbar in IE 8/9/10/11.\r\n * 0. sassCore's style\r\n */\ntextarea {\n  overflow: auto;\n  /* 1 */\n  resize: vertical;\n  /* 0 */ }\n\n/**\r\n * Don't inherit the `font-weight` (applied by a rule above).\r\n * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.\r\n */\noptgroup {\n  font-weight: bold; }\n\n/* Tables\r\n   ========================================================================== */\n/**\r\n * Remove most spacing between table cells.\r\n */\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n\ntd,\nth {\n  padding: 0; }\n\n/**\r\n * Address CSS quotes not supported in IE 6/7.\r\n */\nhtml,\nbutton,\ninput,\nselect,\ntextarea {\n  font-family: \"Helvetica Neue\", Helvetica, Tahoma, Microsoft Yahei; }\n\nh1, h2, h3, h4, h5, h6, p, figure, form, blockquote {\n  margin: 0; }\n\nul, ol, li, dl, dd {\n  margin: 0;\n  padding: 0; }\n\nul, ol {\n  list-style: none outside none; }\n\nh1, h2, h3 {\n  font-weight: bold; }\n\nh1 {\n  font-size: 21px; }\n\nh2 {\n  font-size: 18.2px; }\n\nh3 {\n  font-size: 15.96px; }\n\nh4 {\n  font-size: 14px; }\n\nh5, h6 {\n  font-size: 11.9px;\n  text-transform: uppercase; }\n\ninput:-moz-placeholder,\ntextarea:-moz-placeholder {\n  color: #ccc; }\n\ninput::-moz-placeholder,\ntextarea::-moz-placeholder {\n  color: #ccc; }\n\ninput:-ms-input-placeholder,\ntextarea:-ms-input-placeholder {\n  color: #ccc; }\n\ninput::-webkit-input-placeholder,\ntextarea::-webkit-input-placeholder {\n  color: #ccc; }\n\n/* common */\n.radius {\n  -webkit-border-radius: 6px 6px;\n  -moz-border-radius: 6px 6px;\n  border-radius: \"6px 6px\"; }\n\n.shadow {\n  -webkit-box-shadow: 0 0 10px #666;\n  -moz-box-shadow: 0 0 10px #666;\n  box-shadow: \"0 0 10px #666\"; }\n\n.small {\n  width: 100px; }\n\n.medium {\n  width: 240px; }\n\n.large {\n  width: 480px; }\n\n.full {\n  width: 100%; }\n\n.left {\n  float: left; }\n\n.right {\n  float: right; }\n", ""]);
 
 	// exports
 

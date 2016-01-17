@@ -39,6 +39,19 @@ browser example/index.html
 
 # Release logs
 
+## 0.1.15
+
+* Pagination complete
+* Datepicker default empty (no text in Input)
+* Checkbox bug
+* use webpack normal mode to pack all(I dont know why ```-p``` mode would remove all ```-webkit```-style code)
+
+## 0.1.14
+
+* fixed radio and checkbox render twice
+* fixed Dialog and Loading battle for ToggleMixin
+* add Select component min-height
+
 ## 0.1.13
 
 * add Loading Component
