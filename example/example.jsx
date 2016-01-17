@@ -99,6 +99,10 @@ var Test = React.createClass({
             {id:4, name:"商品测试4", category:"当季推荐", price:"99", percent:'10'}
         ];
         return <div>
+            <RUI.DatePicker range={false} />
+            <br/>
+            <RUI.DatePicker range={true} />
+            <br/>
             <RUI.DatePicker value={Date.now()} format={new RUI.DateFormatter("Y-m-d")} range={false} />
             <br/>
             <RUI.DatePicker value={Date.now()} format={new RUI.DateFormatter("Y-m-d")} range={true} />
