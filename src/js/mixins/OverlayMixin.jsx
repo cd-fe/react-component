@@ -2,6 +2,8 @@ import '../../css/mixin/overlay.scss';
 
 import OverlayManager from '../managers/OverlayManager.jsx';
 
+let overlayId = 0;
+
 module.exports = {
     getInitialState:function() {
         return {
@@ -24,8 +26,11 @@ module.exports = {
     updateOverlay:function() {
         if(this.state.overlay && this.state.show) {
             OverlayManager.getInstance().show();
+            overlayId = this._reactInternalInstance._rootNodeID;
         }else {
-            OverlayManager.getInstance().hide();
+            var currentId = this._reactInternalInstance._rootNodeID;
+            if(currentId == overlayId)
+                OverlayManager.getInstance().hide();
         }
     }
 };

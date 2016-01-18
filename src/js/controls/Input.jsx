@@ -27,11 +27,13 @@ module.exports = React.createClass({
             this.state.change && this.state.change.call(null, e);
         }
     },
-    componentWillReceiveProps:function(props) {
-        this.setState({
-            value:props.value,
-            change:props.onChange
-        });
+    componentWillReceiveProps:function(nextProps) {
+        var update = {};
+        if(nextProps.value != this.state.value) {
+            update.value = nextProps.value
+        };
+
+        this.setState(update);
     },
     render:function() {
         var props = omit(this.props, 'type', 'onChange', 'value', 'readonly');

@@ -53,8 +53,8 @@ module.exports = {
         return '';
     },
     componentWillReceiveProps: function (newProps) {
-        if (typeof newProps.selected != 'undefined') {
-            this.toggleValue = newProps.selected ? 1 : 0;
+        if (typeof newProps.selected != 'undefined' && (this.props.cname != 'radio' || newProps.groupValidate)) {
+             this.toggleValue = newProps.selected ? 1 : 0;
         }
     },
     componentWillUnmount: function () {

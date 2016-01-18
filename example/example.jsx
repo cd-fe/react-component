@@ -8,21 +8,22 @@ var Test = React.createClass({
             dynamicCheckboxValue:"type_2"
         };
     },
-    inputChange:function() {
-        console.log('input change');
+    inputChange:function(e) {
+        var value = e.target.value;
+        this.setState({
+            input_value:value.replace(/\d/g, '')
+        });
     },
     componentDidMount:function() {
-        setTimeout(function() {
-            this.setState({
-                input_value:999,
-                initData:0,
-                dialogContent:[1,2,3,4,5].map(function() {
-                    return <p>pppppppppppppppppppppp</p>;
-                }),
-                dynamicCheckbox:1,
-                dynamicCheckboxValue:"dynamicCheckboxValue"
-            });
-        }.bind(this), 1000);
+        this.setState({
+            input_value:999,
+            initData:0,
+            dialogContent:[1,2,3,4,5].map(function() {
+                return <p>pppppppppppppppppppppp</p>;
+            }),
+            dynamicCheckbox:1,
+            dynamicCheckboxValue:"dynamicCheckboxValue"
+        });
     },
     showDialog:function() {
         this.refs.dialog.show();
@@ -90,6 +91,25 @@ var Test = React.createClass({
     checkboxDynamicChange:function(event) {
         alert(JSON.stringify(event.data));
     },
+    tableDeleteTest:function(data) {
+        console.log(arguments);
+        alert('delete ' + data.id);
+    },
+    getSinglePickerValue:function() {
+        alert(this.refs.singleDatePicker.getValue());
+    },
+    getRangePickerValue:function() {
+        alert(JSON.stringify(this.refs.rangeDatePicker.getValue()));
+    },
+    setRangePickerValue:function() {
+        this.refs.rangeDatePicker.setValue({
+            startValue:Date.now(),
+            endValue:Date.now() + 86400 * 1000 * 90
+        });
+    },
+    datePickerChange:function(e) {
+        alert(JSON.stringify(e.data));
+    },
     render:function() {
         var tableData = [
             {id:1, name:"商品测试1", category:"爆品", price:"199", percent:'10'},
@@ -98,9 +118,15 @@ var Test = React.createClass({
             {id:4, name:"商品测试4", category:"当季推荐", price:"99", percent:'10'}
         ];
         return <div>
+            <RUI.DatePicker ref="singleDatePicker" range={false} /><RUI.Button onClick={this.getSinglePickerValue}>获取结果</RUI.Button>
+            <br/>
+            <RUI.DatePicker ref="rangeDatePicker" range={true} />
+            <RUI.Button onClick={this.getRangePickerValue}>获取结果</RUI.Button>
+            <RUI.Button onClick={this.setRangePickerValue}>三个月内</RUI.Button>
+            <br/>
             <RUI.DatePicker value={Date.now()} format={new RUI.DateFormatter("Y-m-d")} range={false} />
             <br/>
-            <RUI.DatePicker value={Date.now()} format={new RUI.DateFormatter("Y-m-d")} range={true} />
+            <RUI.DatePicker value={Date.now()} format={new RUI.DateFormatter("Y-m-d")} range={true} onChange={this.datePickerChange} />
             <br/>
             <RUI.Table dataSource={tableData}>
                 <RUI.Column checkbox={true}>
@@ -117,7 +143,7 @@ var Test = React.createClass({
                 <RUI.Column title={"返佣比例"} dataField={"percent"} />
                 <RUI.Column title={"操作"}>
                     <RUI.Table.ItemRender>
-                        <RUI.Button>删除</RUI.Button>
+                        <RUI.Button onClick={this.tableDeleteTest}>删除</RUI.Button>
                     </RUI.Table.ItemRender>
                 </RUI.Column>
             </RUI.Table>
@@ -128,7 +154,7 @@ var Test = React.createClass({
                 <RUI.Checkbox value="type_2" selected={0}>分组测试</RUI.Checkbox>
                 <RUI.Checkbox value="type_3" selected={1} onChange={this.valueChange}>自身含事件</RUI.Checkbox>
             </RUI.CheckboxGroup>
-            <br/>*/}
+            <br/>
             <RUI.RadioGroup ref="radioGroup" onChange={this.radioGroupChange} value={"type_2"}>
                 <RUI.Radio value="type_1">初始已选</RUI.Radio>
                 <RUI.Radio value="type_2">初始未选</RUI.Radio>
@@ -154,7 +180,7 @@ var Test = React.createClass({
             <RUI.Input className="large"/><br/>
             <RUI.Input className="full"/>
             <br/>
-            <RUI.Pagination pageSize="10" currentPage="5" totalNum="78" onPage={this.onPage} />
+            <RUI.Pagination pageSize={10} currentPage={11} totalNum={780} onPage={this.onPage} />
             <br/>
             <RUI.Dialog ref="dialog" title="测试标题" buttons="submit,cancel" onCancel={this.dialogCancel} onSubmit={this.dialogSubmit}>
                 <div style={{width:'240px', wordWrap:'break-word'}}>
