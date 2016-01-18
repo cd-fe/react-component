@@ -30,6 +30,15 @@ module.exports = React.createClass({
             value:null
         };
     },
+    getValue:function() {
+        if (this.props.range) {
+            return {
+                start:this.state.startValue,
+                end:this.state.endValue
+            };
+        }
+        return this.state.value;
+    },
     componentDidUpdate:function() {
         document.body.removeEventListener('mousedown', this.hidePopup);
         if(this.state.popup) {
@@ -78,6 +87,8 @@ module.exports = React.createClass({
                 popup: false
             });
         }
+
+        this.dispatchEvent('change', this.getValue());
     },
     startCalendarChange:function(event) {
         this.setState({
@@ -100,6 +111,8 @@ module.exports = React.createClass({
             endValue:this.state.endValuePreview,
             popup:false
         });
+
+        this.dispatchEvent('change', this.getValue());
     },
     display:function(type) {
         var formatter = (this.props.formatter || new DateFormatter("Y-m-d"));

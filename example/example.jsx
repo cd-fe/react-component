@@ -96,6 +96,15 @@ var Test = React.createClass({
         console.log(arguments);
         alert('delete ' + data.id);
     },
+    getSinglePickerValue:function() {
+        alert(this.refs.singleDatePicker.getValue());
+    },
+    getRangePickerValue:function() {
+        alert(JSON.stringify(this.refs.rangeDatePicker.getValue()));
+    },
+    datePickerChange:function(e) {
+        alert(JSON.stringify(e.data));
+    },
     render:function() {
         var tableData = [
             {id:1, name:"商品测试1", category:"爆品", price:"199", percent:'10'},
@@ -104,13 +113,13 @@ var Test = React.createClass({
             {id:4, name:"商品测试4", category:"当季推荐", price:"99", percent:'10'}
         ];
         return <div>
-            <RUI.DatePicker range={false} />
+            <RUI.DatePicker ref="singleDatePicker" range={false} /><RUI.Button onClick={this.getSinglePickerValue}>获取结果</RUI.Button>
             <br/>
-            <RUI.DatePicker range={true} />
+            <RUI.DatePicker ref="rangeDatePicker" range={true} /><RUI.Button onClick={this.getRangePickerValue}>获取结果</RUI.Button>
             <br/>
             <RUI.DatePicker value={Date.now()} format={new RUI.DateFormatter("Y-m-d")} range={false} />
             <br/>
-            <RUI.DatePicker value={Date.now()} format={new RUI.DateFormatter("Y-m-d")} range={true} />
+            <RUI.DatePicker value={Date.now()} format={new RUI.DateFormatter("Y-m-d")} range={true} onChange={this.datePickerChange} />
             <br/>
             <RUI.Table dataSource={tableData}>
                 <RUI.Column checkbox={true}>
