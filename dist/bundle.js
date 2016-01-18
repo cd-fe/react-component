@@ -2771,11 +2771,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	        };
 	    },
 	    render: function render() {
+	        var _this = this;
 	        var classes = (0, _className2.default)(this.props.className, this.getPropClass());
 	        return React.createElement(
 	            'li',
 	            _extends({}, this.props, { className: classes }),
-	            this.props.children ? this.props.children : this.props.value
+	            this.props.children ? (this.props.children instanceof Array ? this.props.children : [this.props.children]).map(function (child) {
+	                var resultProps = {};
+	                for (var key in child.props) {
+	                    if (child.props.hasOwnProperty(key)) {
+	                        if (typeof child.props[key] == 'function') {
+	                            var func = child.props[key].bind(null, _this.props.source);
+	                            resultProps[key] = func;
+	                        } else {
+	                            resultProps[key] = child.props[key];
+	                        }
+	                    }
+	                }
+
+	                return React.cloneElement(child, resultProps);
+	            }) : this.props.value
 	        );
 	    }
 	});
@@ -2896,6 +2911,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	            value: null
 	        };
 	    },
+	    getValue: function getValue() {
+	        if (this.props.range) {
+	            return {
+	                start: this.state.startValue,
+	                end: this.state.endValue
+	            };
+	        }
+	        return this.state.value;
+	    },
 	    componentDidUpdate: function componentDidUpdate() {
 	        document.body.removeEventListener('mousedown', this.hidePopup);
 	        if (this.state.popup) {
@@ -2944,6 +2968,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                popup: false
 	            });
 	        }
+
+	        this.dispatchEvent('change', this.getValue());
 	    },
 	    startCalendarChange: function startCalendarChange(event) {
 	        this.setState({
@@ -2966,6 +2992,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            endValue: this.state.endValuePreview,
 	            popup: false
 	        });
+
+	        this.dispatchEvent('change', this.getValue());
 	    },
 	    display: function display(type) {
 	        var formatter = this.props.formatter || new _DateFormatter2.default("Y-m-d");
