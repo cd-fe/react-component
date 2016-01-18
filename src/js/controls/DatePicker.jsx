@@ -80,15 +80,17 @@ module.exports = React.createClass({
         if(this.props.range) {
             this.setState({
                 value: event.data
-            });
+            }, function() {
+                this.dispatchEvent('change', this.getValue());
+            }.bind(this));
         }else {
             this.setState({
                 value: event.data,
                 popup: false
-            });
+            }, function() {
+                this.dispatchEvent('change', this.getValue());
+            }.bind(this));
         }
-
-        this.dispatchEvent('change', this.getValue());
     },
     startCalendarChange:function(event) {
         this.setState({
@@ -110,9 +112,9 @@ module.exports = React.createClass({
             startValue:this.state.startValuePreview,
             endValue:this.state.endValuePreview,
             popup:false
-        });
-
-        this.dispatchEvent('change', this.getValue());
+        }, function() {
+            this.dispatchEvent('change', this.getValue());
+        }.bind(this));
     },
     display:function(type) {
         var formatter = (this.props.formatter || new DateFormatter("Y-m-d"));

@@ -2961,15 +2961,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (this.props.range) {
 	            this.setState({
 	                value: event.data
-	            });
+	            }, (function () {
+	                this.dispatchEvent('change', this.getValue());
+	            }).bind(this));
 	        } else {
 	            this.setState({
 	                value: event.data,
 	                popup: false
-	            });
+	            }, (function () {
+	                this.dispatchEvent('change', this.getValue());
+	            }).bind(this));
 	        }
-
-	        this.dispatchEvent('change', this.getValue());
 	    },
 	    startCalendarChange: function startCalendarChange(event) {
 	        this.setState({
@@ -2991,9 +2993,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            startValue: this.state.startValuePreview,
 	            endValue: this.state.endValuePreview,
 	            popup: false
-	        });
-
-	        this.dispatchEvent('change', this.getValue());
+	        }, (function () {
+	            this.dispatchEvent('change', this.getValue());
+	        }).bind(this));
 	    },
 	    display: function display(type) {
 	        var formatter = this.props.formatter || new _DateFormatter2.default("Y-m-d");
