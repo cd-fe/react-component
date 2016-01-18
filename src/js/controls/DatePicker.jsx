@@ -33,11 +33,26 @@ module.exports = React.createClass({
     getValue:function() {
         if (this.props.range) {
             return {
-                start:this.state.startValue,
-                end:this.state.endValue
+                startValue:this.state.startValue,
+                endValue:this.state.endValue
             };
         }
         return this.state.value;
+    },
+    setValue:function(opt) {
+        if(typeof opt == 'string' && this.props.range) {
+            this.setState({
+                value:opt
+            });
+        }
+        if(this.props.range) {
+            this.setState({
+                startValue:opt.startValue,
+                endValue:opt.endValue,
+                startValuePreview:opt.startValue,
+                endValuePreview:opt.endValue
+            });
+        }
     },
     componentDidUpdate:function() {
         document.body.removeEventListener('mousedown', this.hidePopup);
@@ -46,11 +61,20 @@ module.exports = React.createClass({
         }
     },
     componentWillReceiveProps:function(newProps) {
+        var update = {};
         if(newProps.value) {
-            this.setState({
-                value:newProps.value
-            });
+            update.value = newProps.value;
         }
+        if(newProps.startValue) {
+            update.startValue = newProps.startValue;
+            update.startValuePreview = newProps.startValue;
+        }
+        if(newProps.endValue) {
+            update.endValue = newProps.endValue;
+            update.endValuePreview = newProps.startValue;
+        }
+
+        this.setState(update);
     },
     togglePopup:function() {
         this.setState({

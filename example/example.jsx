@@ -102,6 +102,12 @@ var Test = React.createClass({
     getRangePickerValue:function() {
         alert(JSON.stringify(this.refs.rangeDatePicker.getValue()));
     },
+    setRangePickerValue:function() {
+        this.refs.rangeDatePicker.setValue({
+            startValue:Date.now(),
+            endValue:Date.now() + 86400 * 1000 * 90
+        });
+    },
     datePickerChange:function(e) {
         alert(JSON.stringify(e.data));
     },
@@ -115,7 +121,9 @@ var Test = React.createClass({
         return <div>
             <RUI.DatePicker ref="singleDatePicker" range={false} /><RUI.Button onClick={this.getSinglePickerValue}>获取结果</RUI.Button>
             <br/>
-            <RUI.DatePicker ref="rangeDatePicker" range={true} /><RUI.Button onClick={this.getRangePickerValue}>获取结果</RUI.Button>
+            <RUI.DatePicker ref="rangeDatePicker" range={true} />
+            <RUI.Button onClick={this.getRangePickerValue}>获取结果</RUI.Button>
+            <RUI.Button onClick={this.setRangePickerValue}>三个月内</RUI.Button>
             <br/>
             <RUI.DatePicker value={Date.now()} format={new RUI.DateFormatter("Y-m-d")} range={false} />
             <br/>
