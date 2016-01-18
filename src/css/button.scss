@@ -3,6 +3,8 @@
 .rui-button {
   @include simple-btn(false, #ededed, $text1);
   @include prefixer-value('border-radius', '2px 2px');
+  @include prefixer-value('transition', 'background-color .3s ease-out,border-color .3s ease-out');
+  @include prefixer-value('user-select', 'none');
 
   &.primary {
     @include simple-btn(false, $primary, $white);
@@ -12,7 +14,7 @@
       background:#30abe8;
     }
 
-    &.active {
+    :active {
       background:#2ea3dd;
     }
   }
@@ -21,7 +23,8 @@
     background:#e1e1e1;
   }
 
-  &.active {
+  &:active {
+    @include prefixer-value('box-shadow', 'inset 0 3px 5px rgba(0,0,0,.15)');
     background:#cecece;
   }
 }
