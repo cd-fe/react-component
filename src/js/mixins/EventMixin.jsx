@@ -35,5 +35,8 @@ module.exports = {
     },
     unbindEvent:function() {
         this.__eventDispatcher.removeAllListener();
+    },
+    createEvent:function(type) {
+        return this.__eventDispatcher.createEvent(type);
     }
 };
