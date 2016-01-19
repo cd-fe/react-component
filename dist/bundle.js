@@ -334,6 +334,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	    unbindEvent: function unbindEvent() {
 	        this.__eventDispatcher.removeAllListener();
+	    },
+	    createEvent: function createEvent(type) {
+	        return this.__eventDispatcher.createEvent(type);
 	    }
 	};
 
@@ -400,7 +403,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var _this = this;
 
 	        if (typeof event == 'string') {
-	            event = new Event(event);
+	            event = this.createEvent(event);
 	            event.data = data;
 	        }
 
@@ -410,6 +413,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	            list.forEach(function (callback) {
 	                return callback && callback.call(_this, event);
 	            });
+	        }
+	    };
+
+	    this.createEvent = function (type) {
+	        try {
+	            return new Event(type);
+	        } catch (e) {
+	            var event = document.createEvent('Event');
+	            event.initEvent(type, true, false);
+	            return event;
 	        }
 	    };
 	};
@@ -977,7 +990,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 	// module
-	exports.push([module.id, ".rui-input {\n  line-height: 36px;\n  background: #fff;\n  box-sizing: border-box;\n  border: 1px solid #eceaea;\n  margin: 0;\n  padding: 0;\n  outline: none;\n  padding: 0 10px; }\n  .rui-input:focus {\n    border: 1px solid #74c5ee; }\n", ""]);
+	exports.push([module.id, ".rui-input {\n  line-height: 36px;\n  height: 38px;\n  background: #fff;\n  box-sizing: border-box;\n  border: 1px solid #eceaea;\n  margin: 0;\n  padding: 0;\n  outline: none;\n  padding: 0 10px; }\n  .rui-input:focus {\n    border: 1px solid #74c5ee; }\n", ""]);
 
 	// exports
 
@@ -1100,7 +1113,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                list = list.concat(this.renderItemRange(pageNumber - preview + 1, this.state.currentPage));
 	            }
 	            if (this.state.currentPage != pageNumber) {
-	                list = list.concat(this.renderItemRange(this.state.currentPage, pageNumber));
+	                list = list.concat(this.renderItemRange(this.state.currentPage + 1, pageNumber));
 	            }
 	        } else {
 	            list = list.concat(this.renderItemRange(1, 2));
@@ -1973,7 +1986,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        data.map(function (item, index) {
 	                            return React.createElement(
 	                                'li',
-	                                { onClick: _this.handleClick.bind(_this, item) },
+	                                { onClick: _this.handleClick.bind(_this, item), key: index },
 	                                React.createElement(
 	                                    'a',
 	                                    { href: 'javascript:;' },
@@ -3172,7 +3185,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        });
 	    },
 	    onItemClick: function onItemClick(value) {
-	        var event = new Event('change');
+	        var event = this.createEvent('change');
 	        event.data = value;
 	        this.dispatchEvent(event);
 	    },
@@ -3216,7 +3229,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        }
 	                    }
 
-	                    return React.createElement(CalendarItem, { value: date.getTime(), className: classes.join(" "), onClick: _this.onItemClick });
+	                    return React.createElement(CalendarItem, { value: date.getTime(), className: classes.join(" "),
+	                        onClick: _this.onItemClick });
 	                })
 	            );
 	        });
