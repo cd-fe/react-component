@@ -61,7 +61,6 @@ var Test = React.createClass({
         this.refs.myLoading.close();
     },
     filterCallback : function() {
-
         return [{key:'hello',value:'1'},{key:'well',value:'2'}];
     },
     selectCallback : function(e) {
@@ -92,6 +91,25 @@ var Test = React.createClass({
     checkboxDynamicChange:function(event) {
         alert(JSON.stringify(event.data));
     },
+    tableDeleteTest:function(data) {
+        console.log(arguments);
+        alert('delete ' + data.id);
+    },
+    getSinglePickerValue:function() {
+        alert(this.refs.singleDatePicker.getValue());
+    },
+    getRangePickerValue:function() {
+        alert(JSON.stringify(this.refs.rangeDatePicker.getValue()));
+    },
+    setRangePickerValue:function() {
+        this.refs.rangeDatePicker.setValue({
+            startValue:Date.now(),
+            endValue:Date.now() + 86400 * 1000 * 90
+        });
+    },
+    datePickerChange:function(e) {
+        alert(JSON.stringify(e.data));
+    },
     render:function() {
         var tableData = [
             {id:1, name:"商品测试1", category:"爆品", price:"199", percent:'10'},
@@ -100,13 +118,15 @@ var Test = React.createClass({
             {id:4, name:"商品测试4", category:"当季推荐", price:"99", percent:'10'}
         ];
         return <div>
-            <RUI.DatePicker range={false} />
+            <RUI.DatePicker ref="singleDatePicker" range={false} /><RUI.Button onClick={this.getSinglePickerValue}>获取结果</RUI.Button>
             <br/>
-            <RUI.DatePicker range={true} />
+            <RUI.DatePicker ref="rangeDatePicker" range={true} />
+            <RUI.Button onClick={this.getRangePickerValue}>获取结果</RUI.Button>
+            <RUI.Button onClick={this.setRangePickerValue}>三个月内</RUI.Button>
             <br/>
             <RUI.DatePicker value={Date.now()} format={new RUI.DateFormatter("Y-m-d")} range={false} />
             <br/>
-            <RUI.DatePicker value={Date.now()} format={new RUI.DateFormatter("Y-m-d")} range={true} />
+            <RUI.DatePicker value={Date.now()} format={new RUI.DateFormatter("Y-m-d")} range={true} onChange={this.datePickerChange} />
             <br/>
             <RUI.Table dataSource={tableData}>
                 <RUI.Column checkbox={true}>
@@ -123,7 +143,7 @@ var Test = React.createClass({
                 <RUI.Column title={"返佣比例"} dataField={"percent"} />
                 <RUI.Column title={"操作"}>
                     <RUI.Table.ItemRender>
-                        <RUI.Button>删除</RUI.Button>
+                        <RUI.Button onClick={this.tableDeleteTest}>删除</RUI.Button>
                     </RUI.Table.ItemRender>
                 </RUI.Column>
             </RUI.Table>
@@ -134,7 +154,7 @@ var Test = React.createClass({
                 <RUI.Checkbox value="type_2" selected={0}>分组测试</RUI.Checkbox>
                 <RUI.Checkbox value="type_3" selected={1} onChange={this.valueChange}>自身含事件</RUI.Checkbox>
             </RUI.CheckboxGroup>
-            <br/>*/}
+            <br/>
             <RUI.RadioGroup ref="radioGroup" onChange={this.radioGroupChange} value={"type_2"}>
                 <RUI.Radio value="type_1">初始已选</RUI.Radio>
                 <RUI.Radio value="type_2">初始未选</RUI.Radio>

@@ -94,7 +94,7 @@ module.exports = React.createClass({
                 list = list.concat(this.renderItemRange(pageNumber - preview + 1, this.state.currentPage));
             }
             if(this.state.currentPage != pageNumber) {
-                list = list.concat(this.renderItemRange(this.state.currentPage, pageNumber));
+                list = list.concat(this.renderItemRange(this.state.currentPage + 1, pageNumber));
             }
         }
         else {

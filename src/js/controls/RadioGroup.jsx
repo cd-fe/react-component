@@ -33,14 +33,21 @@ module.exports = React.createClass({
         var children = null;
         if(this.props.children) {
             children = this.props.children.map(function(child, index) {
-                if(this.state.value == child.props.value) {
-                    child.props.selected = true;
-                }else {
-                    child.props.selected = false;
+                var props = {};
+                for(var key in child.props) {
+                    if(child.props.hasOwnProperty(key)) {
+                        props[key] = child.props[key];
+                    }
                 }
-                child.props.groupValidate = this.groupValidate;
 
-                return React.cloneElement(child);
+                if(this.state.value == child.props.value) {
+                    props.selected = true;
+                }else {
+                    props.selected = false;
+                }
+                props.groupValidate = this.groupValidate;
+
+                return React.cloneElement(child, props);
             }.bind(this));
         }
         var classes = className(this.props.className, this.getPropClass());

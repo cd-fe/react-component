@@ -41,7 +41,7 @@ var EventDispatcher = function() {
 
     this.dispatchEvent = function(event, data) {
         if(typeof event == 'string') {
-            event = new Event(event);
+            event = this.createEvent(event);
             event.data = data;
         }
 
@@ -51,6 +51,16 @@ var EventDispatcher = function() {
             list.forEach((callback)=>(callback && callback.call(this, event)));
         }
     };
+
+    this.createEvent = function(type) {
+        try {
+            return new Event(type);
+        }catch(e) {
+            var event = document.createEvent('Event');
+            event.initEvent(type, true, false);
+            return event;
+        }
+    }
 };
 
 module.exports = EventDispatcher;

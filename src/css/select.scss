@@ -46,7 +46,7 @@
       i {
         display: block;
         position: absolute;
-        top: 34px;
+        top: 31px;
         z-index:1200;
         &:before {
           @extend %pseudo;
@@ -107,10 +107,11 @@
 .rui-select {
   position: relative;
   width:300px;
+  height:36px;
+  line-height:22px;
   cursor: pointer;
   padding: 7px 9px;
   display: inline-block;
-  line-height: normal;
   box-sizing: border-box;
   background-color: #fff;
   vertical-align: middle;

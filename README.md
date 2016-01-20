@@ -39,6 +39,11 @@ browser example/index.html
 
 # Release logs
 
+## 0.1.17
+
+* DatePicker add getValue() and onChange
+* fixed issue #7
+
 ## 0.1.16
 
 * Input dynamic value
