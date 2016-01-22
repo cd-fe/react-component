@@ -235,7 +235,7 @@ var Test = React.createClass({
             <br/>
             <br/>
             <br/>
-            <br/>*/}
+            <br/>
             <div data-id="partial-node" style={{width:'300px',height:'200px',background:'#f1f1f1'}}>
             </div>
             <RUI.Loading

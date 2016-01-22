@@ -17,7 +17,8 @@ module.exports = React.createClass({
             offset : this.props.offset,
             reg : this.props.reg,
             placeholder : this.props.placeholder,
-            result : this.props.result
+            result : this.props.result,
+            maxLen : this.props.maxLen || '200'
         };
    },
    getDefaultProps:function() {
@@ -136,7 +137,7 @@ module.exports = React.createClass({
       if(filterAble) {
            filter = (
                <div className="filter">
-                   <input type="text" ref="filter" onChange={this.handleFilter} placeholder={this.props.placeholder}/>
+                   <input type="text" ref="filter" maxLength={_this.state.maxLen} onChange={_this.handleFilter} placeholder={_this.props.placeholder}/>
                </div>
            );
        }
