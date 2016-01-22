@@ -1,6 +1,7 @@
 import className from '../util/className.jsx';
 import ComponentBase from '../mixins/ComponentBase.jsx';
 import Column from './table/Column.jsx';
+import clone from '../util/clone.jsx';
 
 import '../../css/table.scss';
 
@@ -26,9 +27,10 @@ var Table = React.createClass({
             if(typeof styles.width == 'undefined') {
                 styles.width = widthPercent + "%";
             }
-            column.props.style = styles;
-            column.props.source = this.props.dataSource;
-            return column;
+            var props = clone(column.props);
+            props.style = styles;
+            props.source = this.props.dataSource;
+            return React.cloneElement(column, props);
         }.bind(this));
 
         return <div {...this.props} className={classes}>
