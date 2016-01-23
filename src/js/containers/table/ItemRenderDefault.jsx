@@ -15,8 +15,10 @@ module.exports = React.createClass({
         var _this = this;
         var classes = className(this.props.className, this.getPropClass());
         return <li {...this.props} className={classes}>
-            {this.props.children ? (this.props.children instanceof Array ? this.props.children : [this.props.children]).map(function(child) {
-                var resultProps = {};
+            {this.props.children ? (this.props.children instanceof Array ? this.props.children : [this.props.children]).map(function(child, index) {
+                var resultProps = {
+                    key:index
+                };
                 for(var key in child.props) {
                     if(child.props.hasOwnProperty(key)) {
                         if(typeof child.props[key] == 'function') {

@@ -18,8 +18,8 @@ var Test = React.createClass({
         this.setState({
             input_value:999,
             initData:0,
-            dialogContent:[1,2,3,4,5].map(function() {
-                return <p>pppppppppppppppppppppp</p>;
+            dialogContent:[1,2,3,4,5].map(function(item, index) {
+                return <p key={index}>pppppppppppppppppppppp</p>;
             }),
             dynamicCheckbox:1,
             dynamicCheckboxValue:"dynamicCheckboxValue"

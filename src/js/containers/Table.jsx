@@ -22,7 +22,7 @@ var Table = React.createClass({
 
         var childrenLength = this.props.children instanceof Array ? this.props.children.length : 1;
         var widthPercent = (100 / childrenLength).toFixed(8);
-        var children = this.props.children.map(function(column) {
+        var children = this.props.children.map(function(column, index) {
             var styles = column.props.style ? column.props.style : {};
             if(typeof styles.width == 'undefined') {
                 styles.width = widthPercent + "%";
@@ -30,6 +30,7 @@ var Table = React.createClass({
             var props = clone(column.props);
             props.style = styles;
             props.source = this.props.dataSource;
+            props.key = index;
             return React.cloneElement(column, props);
         }.bind(this));
 
