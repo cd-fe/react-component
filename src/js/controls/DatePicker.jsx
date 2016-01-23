@@ -55,9 +55,9 @@ module.exports = React.createClass({
         }
     },
     componentDidUpdate:function() {
-        document.body.removeEventListener('mousedown', this.hidePopup);
+        $('body').unbind('mousedown', this.hidePopup);
         if(this.state.popup) {
-            document.body.addEventListener('mousedown', this.hidePopup);
+            $('body').bind('mousedown', this.hidePopup);
         }
     },
     componentWillReceiveProps:function(newProps) {

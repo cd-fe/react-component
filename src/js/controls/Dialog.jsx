@@ -54,7 +54,7 @@ var Dialog = React.createClass({
         }
     },
     componentDidMount:function() {
-        window.addEventListener('resize', this.resize);
+        $(window).bind('resize', this.resize);
     },
     componentWillReceiveProps:function(nextProps) {
         this.setState({

@@ -16,13 +16,13 @@ module.exports = React.createClass({
         this.toggleValue = this.props.selected ? 1 : 0;
 
         var node = ReactDOM.findDOMNode(this);
-        node.addEventListener('click', this.clickHandler);
+        $(node).bind('click', this.clickHandler);
 
         this.forceUpdate();
     },
     componentWillUnmount:function() {
         var node = ReactDOM.findDOMNode(this);
-        node.removeEventListener('click', this.clickHandler);
+        $(node).unbind('click', this.clickHandler);
     },
     clickHandler:function(event) {
         var change;

@@ -8,9 +8,9 @@ var CalendarItem = React.createClass({
             value: ""
         };
     },
-    clickHandler: function () {
+    clickHandler: function (event) {
         if ((this.props.className || "").indexOf('disabled') < 0) {
-            this.props.onClick && this.props.onClick(this.props.value);
+            this.props.onClick && this.props.onClick(this.props.value, event);
         }
     },
     render: function () {
@@ -52,8 +52,10 @@ module.exports = React.createClass({
             value: formatter.getTime()
         });
     },
-    onItemClick: function (value) {
-        var event = this.createEvent('change');
+    onItemClick: function (value, event) {
+        //var event = this.createEvent('change');
+        //event.data = value;
+        event.type = 'change';
         event.data = value;
         this.dispatchEvent(event);
     },
