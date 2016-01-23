@@ -61,6 +61,7 @@ var Test = React.createClass({
         this.refs.myLoading.close();
     },
     filterCallback : function() {
+        return false;
         return [{key:'hello',value:'1'},{key:'well',value:'2'}];
     },
     selectCallback : function(e) {
