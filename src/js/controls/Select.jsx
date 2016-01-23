@@ -152,7 +152,7 @@ module.exports = React.createClass({
                         <ul>
                             {
                                data.map(function(item, index) {
-                                    return <li onClick={_this.handleClick.bind(_this,item)} key={index}><a href="javascript:;">{item.key}</a></li>
+                                    return <li onClick={item.value == 'error' ? null : _this.handleClick.bind(_this,item)} key={index}><a href="javascript:;">{item.key}</a></li>
                                 })
                             }
                         </ul>
