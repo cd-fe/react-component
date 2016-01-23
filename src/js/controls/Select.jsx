@@ -6,8 +6,6 @@ module.exports = React.createClass({
     mixins: [ComponentBase,TimerMixin],
     _choose: null,
     getInitialState:function() {
-        debugger;
-        alert('init');
         return {
             active : false,
             filter : false,//过滤筛选
