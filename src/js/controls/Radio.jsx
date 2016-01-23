@@ -46,7 +46,6 @@ module.exports = React.createClass({
         classes = array.join(" ");
 
         classes += ' ' + this.getToggleResult();
-
         return <label className={classes} selected={this.props.selected}>{this.props.children}</label>
     }
 });

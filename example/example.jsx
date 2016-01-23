@@ -5,7 +5,8 @@ var Test = React.createClass({
             initData:1,
             dialogContent:<p>pppppppppppppppppppppp</p>,
             dynamicCheckbox:0,
-            dynamicCheckboxValue:"type_2"
+            dynamicCheckboxValue:"type_2",
+            radioGroup:'type_1'
         };
     },
     inputChange:function(e) {
@@ -22,7 +23,8 @@ var Test = React.createClass({
                 return <p key={index}>pppppppppppppppppppppp</p>;
             }),
             dynamicCheckbox:1,
-            dynamicCheckboxValue:"dynamicCheckboxValue"
+            dynamicCheckboxValue:"dynamicCheckboxValue",
+            radioGroup:'type_2'
         });
     },
     showDialog:function() {
@@ -155,7 +157,7 @@ var Test = React.createClass({
                 <RUI.Checkbox value="type_3" selected={1} onChange={this.valueChange}>自身含事件</RUI.Checkbox>
             </RUI.CheckboxGroup>
             <br/>
-            <RUI.RadioGroup ref="radioGroup" onChange={this.radioGroupChange} value={"type_2"}>
+            <RUI.RadioGroup ref="radioGroup" onChange={this.radioGroupChange} value={this.state.radioGroup}>
                 <RUI.Radio value="type_1">初始已选</RUI.Radio>
                 <RUI.Radio value="type_2">初始未选</RUI.Radio>
                 <RUI.Radio value="type_3">分组测试</RUI.Radio>
