@@ -103,7 +103,7 @@ module.exports = React.createClass({
           if(reg.test(value)) {
               if(_this.props.filterCallback) {
                     result = _this.props.filterCallback(value);
-                    if(result) {
+                    if(result && result.length > 0) {
                         _this.setState({
                             data : result
                         })
