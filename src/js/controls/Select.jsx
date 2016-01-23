@@ -37,6 +37,7 @@ module.exports = React.createClass({
        var node = ReactDOM.findDOMNode(this);
        if(this.props.event == 'mouseenter') {
            $(node).bind(this.props.event, function() {
+
                _this.startTimer(function() {
                    if(_this.state.active) {
                        _this.close();
@@ -103,6 +104,7 @@ module.exports = React.createClass({
           if(reg.test(value)) {
               if(_this.props.filterCallback) {
                     result = _this.props.filterCallback(value);
+
                     if(result && result.length > 0) {
                         _this.setState({
                             data : result
@@ -119,7 +121,6 @@ module.exports = React.createClass({
               })
           }
        }
-
    },
    _getChoose : function() {
        var _this = this;

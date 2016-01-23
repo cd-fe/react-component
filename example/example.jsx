@@ -61,7 +61,6 @@ var Test = React.createClass({
         this.refs.myLoading.close();
     },
     filterCallback : function() {
-        return false;
         return [{key:'hello',value:'1'},{key:'well',value:'2'}];
     },
     selectCallback : function(e) {
@@ -265,11 +264,12 @@ var Test = React.createClass({
             <br/>
             <br/>
             <RUI.Select
-                ref="selectBody"
+                ref="selectMBody"
                 data={[{key:'查看',value:'1'},{key:'你好',value:'2'}]}
                 value={{key:'查看',value:'1'}}
                 className="rui-theme-3"
                 filter={true}
+                maxLen={11}
                 reg={/^[0-9]+$/}
                 placeholder={'请输入手机号'}
                 filterCallback={this.filterCallback}
