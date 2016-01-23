@@ -3,9 +3,11 @@ import ComponentBase from '../mixins/ComponentBase.jsx';
 import TimerMixin from '../mixins/TimerMixin.jsx';
 import '../../css/select.scss';
 module.exports = React.createClass({
-   mixins: [ComponentBase,TimerMixin],
-   _choose: null,
-   getInitialState:function() {
+    mixins: [ComponentBase,TimerMixin],
+    _choose: null,
+    getInitialState:function() {
+        debugger;
+        alert('init');
         return {
             active : false,
             filter : false,//过滤筛选
@@ -20,13 +22,13 @@ module.exports = React.createClass({
             result : this.props.result,
             maxLen : this.props.maxLen || '200'
         };
-   },
-   getDefaultProps:function() {
+    },
+    getDefaultProps:function() {
         return  {
             cname : "select",
             event : "mouseenter"
         };
-   },
+    },
     componentWillReceiveProps: function(nextProps) {
         this.setState({
             data: nextProps.data
