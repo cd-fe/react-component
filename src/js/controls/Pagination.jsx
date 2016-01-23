@@ -54,7 +54,7 @@ module.exports = React.createClass({
         var list = [];
         var pageNumber = Math.ceil(this.state.totalNum / this.state.pageSize);
         for (var i = start; (i>0) && (i<=pageNumber) && (i<=end); i++) {
-            list.push(<a
+            list.push(<a key={start+'-'+end+'-'+i}
                 href="javascript:;"
                 onClick={this.click.bind(this, i)}
                 className={"pagination-num "+(i == this.state.currentPage ? 'select' : '')}>{i}</a>);
@@ -62,8 +62,8 @@ module.exports = React.createClass({
 
         return list;
     },
-    renderBreak:function() {
-        return <span className="break">...</span>;
+    renderBreak:function(index) {
+        return <span key={index} className="break">...</span>;
     },
     renderPage:function() {
         var preview = 5;
@@ -77,7 +77,7 @@ module.exports = React.createClass({
                 list = list.concat(this.renderItemRange(this.state.currentPage+1, preview));
             }
             if(pageNumber > (list.length + Math.floor(preview/2))) {
-                list.push(this.renderBreak());
+                list.push(this.renderBreak(list.length));
             }
             if(pageNumber > list.length){
                 for(var m=pageNumber-1;m<=pageNumber;m++) {
@@ -87,7 +87,7 @@ module.exports = React.createClass({
         }
         else if(this.state.currentPage > (pageNumber - preview)) {
             list = list.concat(this.renderItemRange(1, 2));
-            list.push(this.renderBreak());
+            list.push(this.renderBreak(list.length));
             if(Math.abs(this.state.currentPage - pageNumber) > Math.floor(preview/2)) {
                 list = list.concat(this.renderItemRange(this.state.currentPage-2, this.state.currentPage));
             }else {
@@ -99,9 +99,9 @@ module.exports = React.createClass({
         }
         else {
             list = list.concat(this.renderItemRange(1, 2));
-            list.push(this.renderBreak());
+            list.push(this.renderBreak(list.length));
             list = list.concat(this.renderItemRange(this.state.currentPage - Math.floor(preview/2), this.state.currentPage + Math.floor(preview/2)));
-            list.push(this.renderBreak());
+            list.push(this.renderBreak(list.length));
             list = list.concat(this.renderItemRange(pageNumber-1, pageNumber));
         }
 

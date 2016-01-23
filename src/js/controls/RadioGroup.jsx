@@ -33,7 +33,9 @@ module.exports = React.createClass({
         var children = null;
         if(this.props.children) {
             children = this.props.children.map(function(child, index) {
-                var props = {};
+                var props = {
+                    key:index
+                };
                 for(var key in child.props) {
                     if(child.props.hasOwnProperty(key)) {
                         props[key] = child.props[key];

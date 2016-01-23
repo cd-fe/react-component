@@ -71,7 +71,7 @@ module.exports = React.createClass({
         var lastIndex = currentMonthFirstDay.getDay() + monthValue.getCurrentMonthDays();
 
         var tds = rows.map(function (item, row) {
-            return <tr>
+            return <tr key={"calendar-" + row}>
                 {columns.map(function (item, column) {
                     var index = column + row * columns.length;
                     var date = new DateFormatter().setTime(monthValue.getTime());
@@ -95,7 +95,7 @@ module.exports = React.createClass({
                         }
                     }
 
-                    return <CalendarItem value={date.getTime()} className={classes.join(" ")}
+                    return <CalendarItem key={"calendar-"+row+column} value={date.getTime()} className={classes.join(" ")}
                                          onClick={_this.onItemClick}/>;
                 })}
             </tr>;
@@ -109,12 +109,14 @@ module.exports = React.createClass({
             </div>
             <table className={"rui-datepicker-calendar-table"}>
                 <thead>
-                {columns.map(function (item) {
-                    return <th>{item}</th>
-                })}
+                    <tr>
+                        {columns.map(function (item, index) {
+                            return <th key={index}>{item}</th>
+                        })}
+                    </tr>
                 </thead>
                 <tbody>
-                {tds}
+                    {tds}
                 </tbody>
             </table>
         </div>;
