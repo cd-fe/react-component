@@ -1,7 +1,7 @@
 {
   "name": "react-component-lib",
   "author": "darkty2009",
-  "version": "0.1.23",
+  "version": "0.2.1",
   "description": "a full base ui library to reactjs",
   "license": "MIT",
   "main": "dist/bundle.js",
@@ -20,21 +20,21 @@
     "url": "https://github.com/cd-fe/react-component/issues"
   },
   "scripts": {
-    "build": "webpack --config webpack.config.product.js",
+    "build": "webpack -p --config webpack.config.product.js",
     "example": "webpack-dev-server --config webpack.config.example.js --devtool eval --progress --colors --inline --port 8008 --host 127.0.0.1",
     "lib": "webpack-dev-server --config webpack.config.product.js --devtool eval --progress --colors --inline --port 8007 --host 127.0.0.1"
   },
   "devDependencies": {
-    "webpack": "~1.12.6",
+    "webpack": "~1.12.11",
     "webpack-dev-server": "~1.12.1",
     "react": "^0.14.3",
     "react-dom": "^0.14.0",
     "jsx-loader": "^0.13.2",
-    "babel": "~6.0.12",
-    "babel-core": "~6.0.12",
-    "babel-loader": "~6.2.0",
-    "babel-preset-es2015": "~6.0.12",
-    "babel-preset-react": "~6.1.18",
+    "babel": "~6.3.26",
+    "babel-core": "~6.4.5",
+    "babel-loader": "~6.2.1",
+    "babel-preset-es2015": "~6.3.13",
+    "babel-preset-react": "~6.3.13",
     "babel-preset-stage-0": "~6.3.13",
     "sass-loader": "~3.0.0",
     "raw-loader": "^0.5.1",
