@@ -193,8 +193,8 @@ module.exports = React.createClass({
                 <div className={defaultClass+'-row'}>
                     {this.props.range ? (
                         <div className={defaultClass+'-row-range'}>
-                            <Calendar value={this.state.startValuePreview || Date.now()} onChange={this.startCalendarChange} range={"start"} />
-                            <Calendar value={this.state.endValuePreview || (Date.now() + 86400 * 1000)} onChange={this.endCalendarChange} range={"end"} />
+                            <Calendar source={{start:this.state.startValuePreview, end:this.state.endValuePreview}} value={this.state.startValuePreview || Date.now()} onChange={this.startCalendarChange} range={"start"} />
+                            <Calendar source={{start:this.state.startValuePreview, end:this.state.endValuePreview}} value={this.state.endValuePreview || (Date.now() + 86400 * 1000)} onChange={this.endCalendarChange} range={"end"} />
                         </div>
                     ) : (
                         <Calendar value={this.state.value || Date.now()} onChange={this.onCalendarChange} />

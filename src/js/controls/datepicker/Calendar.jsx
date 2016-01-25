@@ -86,13 +86,14 @@ module.exports = React.createClass({
                     if (index == currentIndex) {
                         classes.push('selected');
                     }
+
                     if (_this.props.range == 'start') {
-                        if (date.getTime() > monthValue.getTime()) {
+                        if (date.getTime() > monthValue.getTime() && date.getTime() < _this.props.source.end) {
                             classes.push('ranged');
                         }
                     }
                     if (_this.props.range == 'end') {
-                        if (date.getTime() < monthValue.getTime()) {
+                        if (date.getTime() < monthValue.getTime() && date.getTime() > _this.props.source.start) {
                             classes.push('ranged');
                         }
                     }
