@@ -105,7 +105,7 @@
 
         td {
           cursor:pointer;
-          @include prefixer-value('border-radius', '2px 2px');
+          @include prefixer('border-radius', 2px 2px);
 
           &:hover,&.selected,&.ranged:hover {
             background:#2ea3dd;

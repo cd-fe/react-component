@@ -3,11 +3,11 @@
 
 /* common */
 .radius {
-  @include prefixer-value('border-radius', '6px 6px');
+  @include prefixer('border-radius', 6px 6px);
 }
 
 .shadow {
-  @include prefixer-value('box-shadow', '0 0 10px #666')
+  @include prefixer('box-shadow', 0 0 10px #666)
 }
 
 .small {

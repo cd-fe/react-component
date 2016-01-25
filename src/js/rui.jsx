@@ -16,6 +16,12 @@ import Loading from './controls/Loading.jsx';
 
 import DateFormatter from './formatters/DateFormatter.jsx';
 
+import EventMixin from './mixins/EventMixin.jsx';
+import OverlayMixin from './mixins/OverlayMixin.jsx';
+import TimerMixin from './mixins/TimerMixin.jsx';
+import ToggleMixin from './mixins/ToggleMixin.jsx';
+import TooltipMixin from './mixins/TooltipMixin.jsx';
+
 import '../css/common.scss';
 
 var RUI = {
@@ -35,7 +41,13 @@ var RUI = {
     DatePicker:DatePicker,
     Loading:Loading,
 
-    DateFormatter:DateFormatter
+    DateFormatter:DateFormatter,
+
+    EventMixin:EventMixin,
+    OverlayMixin:OverlayMixin,
+    TimerMixin:TimerMixin,
+    ToggleMixin:ToggleMixin,
+    TooltipMixin:TooltipMixin
 };
 
 try {

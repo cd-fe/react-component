@@ -120,13 +120,17 @@ var Test = React.createClass({
             {id:4, name:"商品测试4", category:"当季推荐", price:"99", percent:'10'}
         ];
         return <div>
-            <RUI.DatePicker ref="singleDatePicker" range={false} /><RUI.Button onClick={this.getSinglePickerValue}>获取结果</RUI.Button>
+            <RUI.DatePicker ref="singleDatePicker" range={false}>
+            </RUI.DatePicker>
+            <RUI.Button onClick={this.getSinglePickerValue}>获取结果</RUI.Button>
             <br/>
             <RUI.DatePicker ref="rangeDatePicker" range={true} />
             <RUI.Button onClick={this.getRangePickerValue}>获取结果</RUI.Button>
             <RUI.Button onClick={this.setRangePickerValue}>三个月内</RUI.Button>
             <br/>
-            <RUI.DatePicker value={Date.now()} format={new RUI.DateFormatter("Y-m-d")} range={false} />
+            <RUI.DatePicker value={Date.now()} format={new RUI.DateFormatter("Y-m-d")} range={false}>
+                <RUI.Tooltip align="top-center" trigger="click">嵌套使用，click触发</RUI.Tooltip>
+            </RUI.DatePicker>
             <br/>
             <RUI.DatePicker value={Date.now()} format={new RUI.DateFormatter("Y-m-d")} range={true} onChange={this.datePickerChange} />
             <br/>
@@ -190,9 +194,37 @@ var Test = React.createClass({
                 </div>
             </RUI.Dialog>
             <br/>
-            <RUI.Button hello="mmmmm">
+            <RUI.Button>
                 <span>上方Tooltip</span>
-                <RUI.Tooltip align="top-center">上方示例</RUI.Tooltip>
+                <RUI.Tooltip align="top-center">Tooltip</RUI.Tooltip>
+            </RUI.Button>
+            <RUI.Button>
+                <span>下方Tooltip</span>
+                <RUI.Tooltip align="bottom-center">Tooltip</RUI.Tooltip>
+            </RUI.Button>
+            <RUI.Button>
+                <span>左方Tooltip</span>
+                <RUI.Tooltip align="middle-left">Tooltip</RUI.Tooltip>
+            </RUI.Button>
+            <RUI.Button>
+                <span>右方Tooltip</span>
+                <RUI.Tooltip align="middle-right">Tooltip</RUI.Tooltip>
+            </RUI.Button>
+            <RUI.Button>
+                <span>左上方Tooltip</span>
+                <RUI.Tooltip align="top-left">Tooltip</RUI.Tooltip>
+            </RUI.Button>
+            <RUI.Button>
+                <span>右上方Tooltip</span>
+                <RUI.Tooltip align="top-right">Tooltip</RUI.Tooltip>
+            </RUI.Button>
+            <RUI.Button>
+                <span>左下方Tooltip</span>
+                <RUI.Tooltip align="bottom-left">Tooltip</RUI.Tooltip>
+            </RUI.Button>
+            <RUI.Button>
+                <span>右下方Tooltip</span>
+                <RUI.Tooltip align="bottom-right"><span style={{color:'#d90000'}}>this is a html block</span></RUI.Tooltip>
             </RUI.Button>
 
             <br/>

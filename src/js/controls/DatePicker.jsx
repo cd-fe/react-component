@@ -201,6 +201,7 @@ module.exports = React.createClass({
                     )}
                 </div>
             </div>
+            {this.props.children}
         </div>
     }
 });

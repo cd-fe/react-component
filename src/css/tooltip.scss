@@ -1,5 +1,44 @@
 @import './function';
 
+// animation
+@include animate-fadeInDown;
+
 .rui-tooltip {
   display:none;
+  @include prefixer('border-radius', 2px);
+  background:#fff;
+  border:1px solid #eceaea;
+  color:#ccc;
+  padding:0 20px;
+  min-width:130px;
+  line-height:36px;
+  position:absolute;
+  z-index:1001;
+  top:0;
+  left:0;
+
+  @extend .fadeInDown;
+
+  &-arrow {
+    width:0;
+    height:0;
+    line-height:0;
+    font-size:0;
+    border:10px solid #eceaea;
+    position:absolute;
+
+    &.arrow-top-center {
+      border-bottom-color: transparent;
+      border-left-color: transparent;
+      border-right-color: transparent;
+    }
+
+    &.arrow-bottom-right {
+      border-color:#eceaea transparent transparent;
+    }
+
+    &.arrow-bottom-center {
+      border-color:transparent transparent #eceaea;
+    }
+  }
 }
