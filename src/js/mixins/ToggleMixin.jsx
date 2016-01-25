@@ -5,7 +5,7 @@ module.exports = {
     toggleUnbind: function () {
         if (this.toggleEvent) {
             var node = ReactDOM.findDOMNode(this);
-            node.removeEventListener(this.toggleEvent, this.toggleHandler);
+            $(node).unbind(this.toggleEvent, this.toggleHandler);
         }
     },
     toggleAction: function (target, action, values) {
@@ -13,7 +13,7 @@ module.exports = {
 
         if (target && action) {
             var node = ReactDOM.findDOMNode(target);
-            node.addEventListener(action, this.toggleHandler);
+            $(node).bind(action, this.toggleHandler);
 
             this.toggleEvent = action;
 

@@ -29,6 +29,11 @@ module.exports = React.createClass({
             this.dispatchEvent('change', this.getValue());
         }
     },
+    componentWillReceiveProps:function(newProps) {
+        this.setState({
+            value:newProps.value
+        });
+    },
     render:function() {
         var children = null;
         if(this.props.children) {

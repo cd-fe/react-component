@@ -56,8 +56,10 @@ var EventDispatcher = function() {
         try {
             return new Event(type);
         }catch(e) {
-            var event = document.createEvent('Event');
-            event.initEvent(type, true, false);
+            var event = {
+                type:type,
+                data:null
+            };
             return event;
         }
     }

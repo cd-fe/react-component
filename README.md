@@ -39,6 +39,10 @@ browser example/index.html
 
 # Release logs
 
+## 0.2.5
+
+* Support IE8!!!
+
 ## 0.1.17
 
 * DatePicker add getValue() and onChange
