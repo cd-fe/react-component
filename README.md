@@ -39,6 +39,12 @@ browser example/index.html
 
 # Release logs
 
+## 0.2.6
+
+* add Mixin to export
+* Tooltip half to complete
+* fixed DatePicker range error
+
 ## 0.2.5
 
 * Support IE8!!!
