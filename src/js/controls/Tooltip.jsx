@@ -59,7 +59,6 @@ module.exports = React.createClass({
             });
         }.bind(this), this.props.duration);
 
-        var node = ReactDOM.findDOMNode(this);
         this.setState({
             show:true
         });
@@ -73,10 +72,73 @@ module.exports = React.createClass({
     },
     componentDidUpdate:function() {
         var node = ReactDOM.findDOMNode(this);
-        $(node).css(this.getPosition());
+        $(node).css(this.getPosition(node));
+
+        var arrow = $(node).find('.'+this.getDefaultClass()+'-arrow');
+        $(arrow).css(this.getArrowPosition(arrow));
+
+        var back = $(node).find('.'+this.getDefaultClass()+'-arrow-back');
+        $(back).css(this.getArrowPosition(arrow).back);
     },
-    getPosition:function() {
-        var node = ReactDOM.findDOMNode(this);
+    getArrowPosition:function(node) {
+        var main = $(ReactDOM.findDOMNode(this));
+
+        var position = {
+            top:0,
+            left:0,
+            back:{
+                top:0,
+                left:0
+            }
+        };
+        var align = this.props.align.split('-');
+        if(align.indexOf('top') >= 0) {
+            position.top = position.back.top = main.outerHeight() - 1;
+            position.back.top -= 1;
+        }
+        if(align.indexOf('middle') >= 0) {
+            position.top = position.back.top = (main.outerHeight() - $(node).outerHeight()) / 2;
+        }
+        if(align.indexOf('bottom') >= 0) {
+            position.top = position.back.top = -20;
+            position.back.top += 1;
+        }
+        if(align.indexOf('left') >= 0) {
+            position.left = position.back.left = main.outerWidth() - 1;
+            position.back.left -= 1;
+        }
+        if(align.indexOf('center') >= 0) {
+            position.left = position.back.left = (main.outerWidth() - $(node).outerWidth()) / 2;
+        }
+        if(align.indexOf('right') >= 0) {
+            position.left = position.back.left = -20;
+            position.back.left += 1;
+        }
+
+        if(align.indexOf('top') >= 0 && align.indexOf('left') >= 0) {
+            position.top -= 12;
+            position.left -= 7;
+            position.back.top -= 12;
+            position.back.left -= 7;
+        }
+        if(align.indexOf('top') >= 0 && align.indexOf('right') >= 0) {
+            position.top -= 12;
+            position.left += 6;
+            position.back.top -= 12;
+            position.back.left += 6;
+        }
+        if(align.indexOf('bottom') >= 0 && align.indexOf('left') >= 0) {
+            position.left -= 7;
+            position.back.left -= 7;
+        }
+        if(align.indexOf('bottom') >= 0 && align.indexOf('right') >= 0) {
+            position.left += 6;
+            position.back.left += 6;
+        }
+
+        return position;
+    },
+    getPosition:function(node) {
         var position = {
             top:0,
             left:0
@@ -107,10 +169,11 @@ module.exports = React.createClass({
         var allname = className(this.props.className, this.getPropClass());
         var prefix = this.getDefaultClass();
         var arrows = (this.props.align || 'top');
+        var style = this.props.style || {};
         return <div className={allname} style={{display:this.state.show ? 'block' : 'none'}}>
             {this.props.children}
             <div className={prefix+"-arrow "+"arrow-"+arrows}></div>
-            {/*<div className={prefix+"-arrow "+"arrow-back-"+arrows}></div>*/}
+            <div className={prefix+"-arrow-back "+"arrow-back-"+arrows}></div>
         </div>
     }
 });
