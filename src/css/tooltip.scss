@@ -40,5 +40,18 @@
     &.arrow-bottom-center {
       border-color:transparent transparent #eceaea;
     }
+
+    &.arrow-middle-left {
+      border-color:transparent transparent transparent #eceaea;
+    }
+
+    &.arrow-middle-right {
+      border-color:transparent #eceaea transparent transparent;
+    }
+
+    &.arrow-top-left {
+      border-color:transparent transparent #eceaea transparent;
+      border-width:10px 10px 20px;
+    }
   }
 }
