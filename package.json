@@ -1,7 +1,7 @@
 {
   "name": "react-component-lib",
   "author": "darkty2009",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "a full base ui library to reactjs",
   "license": "MIT",
   "main": "dist/bundle.js",
@@ -29,6 +29,7 @@
     "webpack-dev-server": "~1.12.1",
     "react": "^0.14.3",
     "react-dom": "^0.14.0",
+    "react-router":"^2.0.0rc5",
     "jsx-loader": "^0.13.2",
     "babel": "~6.3.26",
     "babel-core": "~6.4.5",
