@@ -7,11 +7,18 @@ module.exports = React.createClass({
     mixins:[ComponentBase],
     getDefaultProps:function() {
         return {
-            cname:'button'
+            cname:'button',
+            disable:false
         };
+    },
+    clickHandler:function(e) {
+        if(!this.props.disable) {
+            this.dispatchEvent('click', e);
+        }
     },
     render:function() {
         var classes = className(this.props.className, this.getPropClass());
-        return <a {...this.props} className={classes}>{this.props.children}</a>
+        var props = require('../util/omit.jsx')(this.props, 'onClick');
+        return <a {...props} onClick={this.clickHandler} className={classes}>{this.props.children}</a>
     }
 });
