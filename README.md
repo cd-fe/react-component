@@ -1,6 +1,6 @@
 # UI Library for React
 
-## (live demo)[http://5doe.com/custom/react-component/example/]
+## [live demo](http://5doe.com/custom/react-component/example/)
 
 ## todolist
 
