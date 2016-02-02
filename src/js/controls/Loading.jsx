@@ -17,40 +17,51 @@ module.exports = React.createClass({
         var _this = this;
         var node = ReactDOM.findDOMNode(_this);
         var type = _this.props.type;
-        var args = arguments;
-        var e = args[0];
-        var offset;
-        var left;
-        var top;
-        var selfHeight;
-        var selfWidth;
-        var target;
-        if(type == 'follow') {
-            target = $(e.target);
-            offset = target.offset();
-            left = target.outerWidth();
-            top = target.outerHeight();
-            selfHeight = $(node).height();
-            node.style.position = 'absolute';
-            node.style.left = offset.left + left + 'px';
-            node.style.top = (offset.top + parseInt((top-selfHeight) / 2)) + 'px';
-
-        }else if(type == 'partial-screen') {
-            target = $('[data-id='+ args[0] + ']');
-            if(target.size() > 0) {
-                offset = target.offset();
-                left = target.outerWidth();
-                top = target.outerHeight();
-                selfHeight = $(node).height();
-                selfWidth = $(node).width();
-                node.style.position = 'absolute';
-                node.style.left = (offset.left + parseInt((left - selfWidth)/2)) + 'px';
-                node.style.top = (offset.top + parseInt((top-selfHeight) / 2)) + 'px';
-            }
-        }
+        var e = arguments[0];
+        _this.doOpen(node, e, type);
         _this.setState({
             active : true,
             show : this.props.mask
+        });
+    },
+    doOpen : function() {
+        var _this = this;
+        var loader = arguments[0];//loading元素
+        var loaderTrigger = $(arguments[1].target || arguments[1].currentTarget.target);//触发loading元素
+        var loaderType = arguments[2];//loading类型
+        var originPos;
+        if(loaderType == 'follow') {
+            _this.setPos(loaderTrigger, loader);
+            _this.resize(loaderTrigger, loader);
+        }
+    },
+    setPos : function(trigger, loader) {
+        var offset, tiggerWidth, triggerHeight, loaderWidth, loaderHeight, originLeft, originTop;
+        offset = trigger.offset();
+        tiggerWidth = trigger.outerWidth();
+        triggerHeight = trigger.outerHeight();
+        loaderHeight = $(loader).height();
+        loader.style.position = 'fixed';
+        loader.style.left = offset.left + tiggerWidth + 'px';
+        loader.style.top = (offset.top + parseInt((triggerHeight-loaderHeight) / 2)) + 'px';
+        return {
+            originLeft : offset.left + tiggerWidth,
+            originTop : offset.top + parseInt((triggerHeight-loaderHeight) / 2)
+        };
+    },
+    resize : function(trigger, loader) {
+        var _this = this;
+        var body,sLeft,sTop,pos;
+        $(window).bind('scroll', function() {
+            body = $('body');
+            sLeft = body.scrollLeft();
+            sTop = body.scrollTop();
+            pos = _this.setPos(trigger, loader);
+            loader.style.left = pos.originLeft - sLeft + 'px';
+            loader.style.top = pos.originTop - sTop + 'px';
+        });
+        $(window).bind('resize', function() {
+            _this.setPos(trigger, loader);
         });
     },
     close : function() {
