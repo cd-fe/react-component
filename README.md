@@ -3,16 +3,16 @@
 ## todolist
 
 * Pagination Done
-* Table
+* Table Done
 * List
 * QRCode
-* Checkbox
-* CheckboxGroup
-* Radio
-* RadioGroup
-* Select
+* Checkbox Done
+* CheckboxGroup Done
+* Radio Done
+* RadioGroup Done
+* Select Done
 * Tree
-* Datetime
+* Datepicker Done
 * Message
 * Form
 * DataSource
@@ -22,9 +22,8 @@
 * Accordion
 * AutoComplete
 * Progress
-* Tooltip
+* Tooltip Done
 * Slider
-* Button Done
 * Button Done
 
 # how to develop
@@ -38,6 +37,11 @@ browser example/index.html
 ```
 
 # Release logs
+
+## 0.3.0
+
+* add examples
+* fixed data error bug
 
 ## 0.2.6
 
