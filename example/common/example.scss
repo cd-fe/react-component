@@ -1,13 +1,25 @@
 @-webkit-keyframes rightToLeft{
   0%{
     opacity:0;
-    -webkit-transform:translateX(1980px)}
+    left:1980px;
+   }
   100%{
     opacity:1;
-    -webkit-transform:translateX(0);}
+    left:0;
+    }
 }
 
-.wrapper {
+
+.clearfix:after{
+  content: " ";
+  display: block;
+  clear: both;
+  height: 0;
+}
+.clearfix{
+  zoom: 1;
+}
+  .wrapper {
   width:100%;
   margin:0;
   padding:0;
@@ -70,7 +82,7 @@
     }
 
     .components {
-      clear:both;
+      @extend .clearfix;
       .lists {
         width:20%;
         float:left;
@@ -101,6 +113,7 @@
         counter-reset : header4;
 
         &>div {
+          position:relative;
           -webkit-animation:rightToLeft .5s ease both;
         }
 
