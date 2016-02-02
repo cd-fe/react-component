@@ -35,6 +35,10 @@ module.exports = {
             {
                 test:/\.css?$/,
                 loader:'style!css'
+            },
+            {
+                test: /\.md$/,
+                loader: "html!markdown"
             }
         ],
         noParse:[react]

@@ -6,6 +6,7 @@ module.exports = React.createClass({
             <ul className="lists">
                 <li><Link activeClassName="active" to="/components/button">按钮</Link></li>
                 <li><Link activeClassName="active" to="/components/input">输入框</Link></li>
+                <li><Link activeClassName="active" to="/components/select">下拉选框</Link></li>
                 <li><Link activeClassName="active" to="/components/pagination">分页</Link></li>
                 <li><Link activeClassName="active" to="/components/dialog">弹出层</Link></li>
                 <li><Link activeClassName="active" to="/components/tooltip">提示</Link></li>

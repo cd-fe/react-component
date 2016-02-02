@@ -1,3 +1,12 @@
+@-webkit-keyframes rightToLeft{
+  0%{
+    opacity:0;
+    -webkit-transform:translateX(1980px)}
+  100%{
+    opacity:1;
+    -webkit-transform:translateX(0);}
+}
+
 .wrapper {
   width:100%;
   margin:0;
@@ -55,10 +64,16 @@
         }
       }
 
+      counter-reset: header3;
+
       .component-detail {
         float:right;
         width:78%;
-        counter-reset : header3;
+        counter-reset : header4;
+
+        &>div {
+          -webkit-animation:rightToLeft .5s ease both;
+        }
 
         h2.title {
           line-height:40px;
@@ -80,6 +95,16 @@
             content:counter(header3) ". ";
           }
         }
+
+        h4.final-title {
+          line-height:28px;
+          margin:10px 0 5px 0;
+          &:before {
+            color:#999;
+            counter-increment: header4;
+            content:counter(header3) "." counter(header4) ". ";
+          }
+        }
       }
     }
   }
@@ -88,5 +113,17 @@
 .example-button {
   .rui-button {
     margin-right:10px;
+  }
+}
+
+.example-input {
+  .rui-input {
+    margin-bottom:10px;
+  }
+}
+
+.example-tooltip {
+  .example>div {
+    margin-bottom:10px;
   }
 }

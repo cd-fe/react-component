@@ -1,4 +1,4 @@
-var ButtonExample = React.createClass({
+var Example = React.createClass({
     onClickHandler:function(e) {
         RUI.DialogManager.alert("click:" + e, "提示");
     },
@@ -15,11 +15,11 @@ var ButtonExample = React.createClass({
             <h3 className="sub-title">源码</h3>
             <div className="source">
                 <pre>
-
+                    {require('raw!./button.js')}
                 </pre>
             </div>
         </div>;
     }
 });
 
-module.exports = ButtonExample;
+module.exports = Example;
