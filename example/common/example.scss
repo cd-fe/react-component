@@ -1,11 +1,14 @@
 @-webkit-keyframes rightToLeft{
   0%{
-    opacity:0;
+    // what the fuck !!! opacity and transform cause zIndex and position error!!!
+    //opacity:0;
+    //-webkit-transform:translateX(1980px);
     left:1980px;
    }
   100%{
-    opacity:1;
-    left:0;
+    //opacity:1;
+    //-webkit-transform:translateX(0px);
+    left:0px;
     }
 }
 

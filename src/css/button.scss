@@ -4,7 +4,7 @@
   @include simple-btn(false, #ededed, $text1);
   @include prefixer('border-radius', 2px 2px);
   @include prefixer('transition', background-color .3s ease-out,border-color .3s ease-out);
-  @include prefixer('user-select', 'none');
+  @include prefixer('user-select', none);
 
   &.primary {
     @include simple-btn(false, $primary, $white);

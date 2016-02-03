@@ -5,6 +5,7 @@ module.exports = {
         if(!exist) {
             var container = document.createElement('div');
             container.setAttribute('id', 'overlay-container');
+            //$(document.body).prepend(container);
             document.body.appendChild(container);
         }
 
