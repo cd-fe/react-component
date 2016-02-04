@@ -1,4 +1,5 @@
 module.exports = {
     classPrefix:'rui-',
-    selected:'selected'
+    selected:'selected',
+    treePadding:20
 };
