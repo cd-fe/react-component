@@ -1,7 +1,8 @@
 import { Router, Route, Link, hashHistory } from 'react-router';
 import loader from './common/loader.jsx';
-
 import Layout from './common/layout.jsx';
+
+import './common/codemirror.jsx';
 
 ReactDOM.render((
     <Router history={hashHistory}>

@@ -28,9 +28,7 @@ var Example = React.createClass({
             </div>
             <h3 className="sub-title">源码</h3>
             <div className="source">
-                <pre>
-                    {require('raw!./radio.js')}
-                </pre>
+                <textarea defaultValue={require('raw!./radio.js')} />
             </div>
         </div>;
     }

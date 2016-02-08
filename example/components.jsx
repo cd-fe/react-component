@@ -1,6 +1,35 @@
 import {Link} from 'react-router';
 
+var mixedMode = {
+    name: "htmlmixed",
+    scriptTypes: [
+        {matches: /\/x-handlebars-template|\/x-mustache/i, mode: null},
+        {matches: /(text|application)\/(x-)?vb(a|script)/i, mode: "vbscript"}
+    ]
+};
+
 module.exports = React.createClass({
+    componentDidUpdate:function() {
+        this.rebuildCodeMirror();
+    },
+    componentDidMount:function() {
+        this.rebuildCodeMirror();
+    },
+    editor:null,
+    rebuildCodeMirror:function() {
+        if(typeof CodeMirror == 'undefined' || CodeMirror.mimeModes['text/html'] != 'htmlmixed' || !$('.source>textarea').text()) {
+            setTimeout(this.rebuildCodeMirror, 100);
+        }else {
+            if(!this.editor || this.editor.getValue() != $('.source>textarea').text()) {
+                this.editor = CodeMirror.fromTextArea($('.source>textarea')[0], {
+                    mode: mixedMode,
+                    selectionPointer: true
+                });
+            }
+            this.editor.setValue($('.source>textarea').text());
+            this.editor.setSize('100%', this.editor.defaultTextHeight() * (this.editor.lineCount() + 1));
+        }
+    },
     render:function() {
         return <div className="components">
             <ul className="lists">

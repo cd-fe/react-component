@@ -13,12 +13,16 @@ module.exports = {
         path:"./example/dist/",
         filename:'example.js'
     },
-    externals: {
-        "jquery": "jQuery",
-        "react": "React",
-        "react-dom": "ReactDOM",
-        "zepto": "Zepto"
-    },
+    externals: [
+        {
+            "jquery": "jQuery",
+            "react": "React",
+            "react-dom": "ReactDOM",
+            "zepto": "Zepto",
+
+        },
+        require('webpack-require-http')
+    ],
     module:{
         loaders:[
             {

@@ -28,9 +28,7 @@ var Example = React.createClass({
             </div>
             <h3 className="sub-title">源码</h3>
             <div className="source">
-                <pre>
-                    {require('raw!./checkbox.js')}
-                </pre>
+                <textarea defaultValue={require('raw!./checkbox.js')} />
             </div>
         </div>;
     }

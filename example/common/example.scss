@@ -150,6 +150,10 @@
             content:counter(header3) "." counter(header4) ". ";
           }
         }
+
+        .source>textarea {
+          display:none;
+        }
       }
     }
   }
