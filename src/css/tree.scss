@@ -1,5 +1,46 @@
 @import './function';
 
 .rui-tree {
+  .rui-treenode {
+    &-text {
+      cursor:pointer;
+      line-height:32px;
+      @include user-select(none);
+    }
 
+    .rui-treenode-icon {
+      width:19px;
+      height:19px;
+      display:inline-block;
+    }
+
+    .treenode-show {
+      &:hover {
+        background:#e1e1e1;
+      }
+    }
+  }
+
+  .treenode-root {
+    height:32px;
+    overflow-y:hidden;
+
+    &.expand {
+      height:auto;
+
+      &>div>.rui-treenode-icon {
+        background-position:0px 4px;
+      }
+    }
+
+    &>div>.rui-treenode-icon {
+      background:url(../img/tree.png) -19px 4px no-repeat;
+    }
+  }
+
+  .treenode-leaf {
+    &>div>.rui-treenode-icon {
+
+    }
+  }
 }

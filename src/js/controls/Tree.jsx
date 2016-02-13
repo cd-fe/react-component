@@ -1,15 +1,20 @@
 import className from '../util/className.jsx';
 import ComponentBase from '../mixins/ComponentBase.jsx';
+import ToggleMixin from '../mixins/ToggleMixin.jsx';
 import constant from '../constant.jsx';
 
 import '../../css/tree.scss';
 
 var TreeNode = React.createClass({
-    mixins:[ComponentBase],
+    mixins:[ComponentBase, ToggleMixin],
     getInitialState:function() {
         return {
             expand:this.props.expand || false
         };
+    },
+    componentDidMount:function() {
+        this.toggleAction(this.refs.icon, 'click', constant.expand);
+        this.toggleAction(this.refs.label, 'dblclick', constant.expand);
     },
     getDefaultProps:function() {
         return  {
@@ -20,19 +25,30 @@ var TreeNode = React.createClass({
         var allname = className(this.props.className, this.getPropClass());
         var currentLevel = (this.props.level>>>0) + 1;
 
-        if(this.state.expand) {
-            allname += ' expand';
-        }
+        allname += ' ' + this.getToggleResult();
+
         if(this.props.dataSource && this.props.dataSource.children && this.props.dataSource.children.length) {
             allname += ' treenode-root';
         }else {
             allname += ' treenode-leaf';
         }
 
+        var icon = this.props.iconRender.call(this, this.props.dataSource);
+        var label = this.props.labelRender.call(this, this.props.dataSource);
+
         return <div className={allname} style={{paddingLeft:currentLevel * constant.treePadding}}>
-            {this.props.labelRender.call(null, this.props.dataSource)}
+            <div className={'treenode-show'}>
+                {React.cloneElement(icon, {
+                    onClick:this.expandHandler,
+                    ref:"icon"
+                })}
+                {React.cloneElement(label, {
+                    onDoubleClick:this.expandHandler,
+                    ref:"label"
+                })}
+            </div>
             {this.props.dataSource.children && this.props.dataSource.children.map(function(item, index) {
-                return <TreeNode key={index} dataSource={item} source={this.props.dataSource} labelRender={this.props.labelRender} />;
+                return <TreeNode key={index} dataSource={item} source={this.props.dataSource} iconRender={this.props.iconRender} labelRender={this.props.labelRender} />;
             }.bind(this))}
         </div>;
     }
@@ -40,26 +56,25 @@ var TreeNode = React.createClass({
 
 var Tree = React.createClass({
     mixins:[ComponentBase],
-    labelRender:function(data) {
-        var prefix = this.getDefaultClass();
-        return <div>
-            <label className={prefix + '-text'}>{(data.data || "").toString()}</label>
-        </div>;
-    },
     getDefaultProps:function() {
         return  {
             cname:"tree",
-            labelRender:null,
+            iconRender:function(data) {
+                var prefix = this.getDefaultClass();
+                return <div className={prefix + '-icon'}></div>;
+            },
+            labelRender:function(data) {
+                var prefix = this.getDefaultClass();
+                return <label className={prefix + '-text'}>{(data.data || "").toString()}</label>;
+            },
             dataSource:[]
         };
     },
     render:function() {
         var allname = className(this.props.className, this.getPropClass());
-
-        var labelRender = this.props.labelRender || this.labelRender;
         return <div className={allname}>
             {this.props.dataSource.map(function(item, index) {
-                return <TreeNode key={index} level={1} dataSource={item} source={this.props.dataSource} labelRender={labelRender} />;
+                return <TreeNode key={index} level={1} dataSource={item} source={this.props.dataSource} iconRender={this.props.iconRender} labelRender={this.props.labelRender} />;
             }.bind(this))}
         </div>
     }

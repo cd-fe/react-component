@@ -2,47 +2,46 @@ var Example = React.createClass({
     getData:function() {
         return [
             {
-                data:"root1",
+                data:"Post",
                 children:[
-                    {
-                        data:"sub-root-1",
-                        children:[
-                            {
-                                data:"1-1-1"
-                            },
-                            {
-                                data:"1-1-2"
-                            },
-                            {
-                                data:"1-1-3"
-                            }
-                        ]
-                    },
-                    {
-                        data:"sub-root-2",
-                        children:[
-                            {
-                                data:"1-2-1"
-                            },
-                            {
-                                data:"1-2-2"
-                            },
-                            {
-                                data:"1-2-3"
-                            }
-                        ]
-                    }
+                    {data:"All Post", children:[{data:"All"}, {data:"Published"}, {data:"Draft"}]},
+                    {data:"Add New"},
+                    {data:"Categories", children:[{data:"List"}, {data:"Add New"}]},
+                    {data:"Tags", children:[{data:"List"}, {data:"Add New"}]}
                 ]
             },
             {
-                data:"root2",
+                data:"Media",
                 children:[
-                    {
-                        data:"sub-root-1"
-                    }
+                    {data:"Library"},
+                    {data:"Add New"}
+                ]
+            },
+            {
+                data:"Appearance",
+                children:[
+                    {data:"Themes"},
+                    {data:"Theme Options"},
+                    {data:"Customize"},
+                    {data:"Widgets"},
+                    {data:"Menus"},
+                    {data:"Editor"}
+                ]
+            },
+            {
+                data:"Settings",
+                children:[
+                    {data:"General", children:[{data:"Site Title"}, {data:"Tagline"}, {data:"Site Address"}, {data:"Timezone"}]},
+                    {data:"Writing"},
+                    {data:"Reading"},
+                    {data:"Media"},
+                    {data:"Permalinks"}
                 ]
             }
         ];
+    },
+    changeHandler:function(event) {
+        RUI.DialogManager.alert(JSON.stringify(event.data));
     },
     render:function() {
         var initData = this.getData();
@@ -53,6 +52,8 @@ var Example = React.createClass({
             <div className="example">
                 <h4 className="final-title">初始数据</h4>
                 <RUI.Tree dataSource={initData} />
+                <h4 className="final-title">事件</h4>
+                <RUI.Tree dataSource={initData} onChange={this.changeHandler}/>
             </div>
             <h3 className="sub-title">源码</h3>
             <div className="source">

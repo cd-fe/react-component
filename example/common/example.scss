@@ -54,6 +54,7 @@
   .content {
     width:80%;
     margin: 20px auto 0;
+    overflow-x:hidden;
 
     .home {
       &>h3 {
@@ -174,5 +175,11 @@
 .example-tooltip {
   .example>div {
     margin-bottom:10px;
+  }
+}
+
+.example-tree {
+  .example {
+    width:240px;
   }
 }
