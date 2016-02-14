@@ -43,6 +43,7 @@ var Example = React.createClass({
     getDataSource:function() {
         if(!this.dataSource) {
             this.dataSource = new RUI.DataSource();
+            debugger;
         }
         return this.dataSource;
     },
