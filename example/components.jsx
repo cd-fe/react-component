@@ -23,11 +23,13 @@ module.exports = React.createClass({
             if(!this.editor || this.editor.getValue() != $('.source>textarea').text()) {
                 this.editor = CodeMirror.fromTextArea($('.source>textarea')[0], {
                     mode: mixedMode,
-                    selectionPointer: true
+                    selectionPointer: true,
+                    readOnly: true,
+                    lineWrapping: true
                 });
             }
             this.editor.setValue($('.source>textarea').text());
-            this.editor.setSize('100%', this.editor.defaultTextHeight() * (this.editor.lineCount() + 1));
+            this.editor.setSize('auto', 'auto');
         }
     },
     render:function() {

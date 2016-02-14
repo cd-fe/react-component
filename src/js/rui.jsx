@@ -15,6 +15,8 @@ import DatePicker from './controls/DatePicker.jsx';
 import Loading from './controls/Loading.jsx';
 import Tree from './controls/Tree.jsx';
 
+import DataSource from './data/DataSource.jsx';
+
 import DateFormatter from './formatters/DateFormatter.jsx';
 
 import EventMixin from './mixins/EventMixin.jsx';
@@ -42,6 +44,8 @@ var RUI = {
     DatePicker:DatePicker,
     Loading:Loading,
     Tree:Tree,
+
+    DataSource:DataSource,
 
     DateFormatter:DateFormatter,
 
