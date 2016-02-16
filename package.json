@@ -1,7 +1,7 @@
 {
   "name": "react-component-lib",
   "author": "darkty2009",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "a full base ui library to reactjs",
   "license": "MIT",
   "main": "dist/bundle.js",
@@ -45,7 +45,7 @@
     "css-loader": "^0.23.0",
     "bundle-loader": "^0.5.4",
     "markdown-loader":"^0.1.7",
-    "webpack-require-http":"^0.0.1"
+    "webpack-require-http":"^0.1.0"
   },
   "homepage": "https://github.com/cd-fe/react-component#readme",
   "directories": {

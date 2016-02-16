@@ -13,7 +13,7 @@
 * Radio Done
 * RadioGroup Done
 * Select Done
-* Tree
+* Tree Done
 * Datepicker Done
 * Message
 * Form
@@ -39,6 +39,10 @@ browser example/index.html
 ```
 
 # Release logs
+
+## 0.3.2
+
+* add Component Tree
 
 ## 0.3.0
 
