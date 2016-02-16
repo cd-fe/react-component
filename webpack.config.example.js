@@ -8,8 +8,8 @@ module.exports = {
         'example':'./example/example.jsx'
     },
     output:{
-         //publicPath:"./dist/",
-        publicPath:"http://localhost:8008/example/dist/",
+        publicPath:"./dist/",
+        //publicPath:"http://localhost:8008/example/dist/",
         path:"./example/dist/",
         filename:'example.js'
     },

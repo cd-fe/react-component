@@ -40,7 +40,7 @@ browser example/index.html
 
 # Release logs
 
-## 0.3.2
+## 0.3.3
 
 * add Component Tree
 
