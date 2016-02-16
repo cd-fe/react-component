@@ -40,12 +40,6 @@ var Example = React.createClass({
             }
         ];
     },
-    getDataSource:function() {
-        if(!this.dataSource) {
-            this.dataSource = new RUI.DataSource();
-        }
-        return this.dataSource;
-    },
     changeHandler:function(event) {
         RUI.DialogManager.alert(JSON.stringify({
             type:event.type,
@@ -70,8 +64,6 @@ var Example = React.createClass({
                 <RUI.Tree dataSource={initData} />
                 <h4 className="final-title">事件</h4>
                 <RUI.Tree dataSource={initData} onExpand={this.changeHandler} onSelect={this.clickHandler}/>
-                <h4 className="final-title">异步数据</h4>
-                <RUI.Tree dataSource={this.getDataSource()} />
             </div>
             <h3 className="sub-title">源码</h3>
             <div className="source">

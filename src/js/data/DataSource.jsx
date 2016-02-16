@@ -13,6 +13,20 @@ var DataSource = function() {
         this.__mapping = func;
     };
 
+    this.setData = function(data) {
+        if(typeof data == 'function') {
+            data.call(null).then(this.setData.bind(this));
+        }else {
+            var self = this;
+            self.length = data.length;
+            data.map(function(item, index) {
+                self[index] = self.__mapping.call(null, item);
+            });
+
+            this.dispatchEvent(constant.events.dataChange, this);
+        }
+    };
+
     this.getData = function() {
         return this.__mapping(this);
     };

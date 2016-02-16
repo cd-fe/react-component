@@ -3,6 +3,7 @@ import omit from '../util/omit.jsx';
 import ComponentBase from '../mixins/ComponentBase.jsx';
 import ToggleMixin from '../mixins/ToggleMixin.jsx';
 import constant from '../constant.jsx';
+import DataSource from '../data/DataSource.jsx';
 
 import '../../css/tree.scss';
 
@@ -87,7 +88,10 @@ var Tree = React.createClass({
             },
             labelRender:function(data) {
                 var prefix = this.getDefaultClass();
-                return <label className={prefix + '-text'}>{(data.data || "").toString()}</label>;
+                return <label className={prefix + '-text'}>{(this.props.labelFunction(data.data) || "").toString()}</label>;
+            },
+            labelFunction:function(data) {
+                return data.toString();
             },
             dataSource:[]
         };
