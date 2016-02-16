@@ -45,7 +45,7 @@ var TreeNode = React.createClass({
     },
     render:function() {
         var allname = className(this.props.className, this.getPropClass());
-        var currentLevel = (this.props.level>>>0) + 1;
+        var currentLevel = (this.props.level>>0) + 1;
 
         allname += ' ' + this.getToggleResult();
 
@@ -60,8 +60,8 @@ var TreeNode = React.createClass({
 
         var props = omit(this.props, 'cname', 'level');
 
-        return <div className={allname} style={{paddingLeft:currentLevel * constant.treePadding}}>
-            <div className={'treenode-show'} onClick={this.clickHandler}>
+        return <div className={allname}>
+            <div className={'treenode-show'} onClick={this.clickHandler} style={{paddingLeft:currentLevel * constant.treePadding}}>
                 {React.cloneElement(icon, {
                     ref:"icon"
                 })}
@@ -70,7 +70,7 @@ var TreeNode = React.createClass({
                 })}
             </div>
             {this.props.dataSource.children && this.props.dataSource.children.map(function(item, index) {
-                return <TreeNode {...props} key={index} dataSource={item} source={this.props.dataSource} />;
+                return <TreeNode {...props} key={index} level={currentLevel} dataSource={item} source={this.props.dataSource} />;
             }.bind(this))}
         </div>;
     }
@@ -79,7 +79,7 @@ var TreeNode = React.createClass({
 var Tree = React.createClass({
     mixins:[ComponentBase],
     getDefaultProps:function() {
-        return  {
+        return {
             cname:"tree",
             iconRender:function(data) {
                 var prefix = this.getDefaultClass();
@@ -98,7 +98,7 @@ var Tree = React.createClass({
         var props = omit(this.props, 'cname');
         return <div className={allname}>
             {this.props.dataSource.map(function(item, index) {
-                return <TreeNode {...props} key={index} level={1} dataSource={item} source={this.props.dataSource} />;
+                return <TreeNode {...props} key={index} level={-1} dataSource={item} source={this.props.dataSource} />;
             }.bind(this))}
         </div>
     }

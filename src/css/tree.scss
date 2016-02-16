@@ -2,6 +2,10 @@
 
 .rui-tree {
   .rui-treenode {
+    &.selected {
+
+    }
+
     &-text {
       cursor:pointer;
       line-height:32px;
