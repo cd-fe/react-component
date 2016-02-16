@@ -36,7 +36,7 @@ module.exports = React.createClass({
                     };
                 }
 
-                this.groupValues[index] = typeof props.value != 'undefined' ? ( props.value ? 1 : 0) : 0;
+                this.groupValues[index] = {value:props.value || "", selected:props.selected ? 1 : 0};
 
                 props.key = index;
                 return React.cloneElement(child, props);

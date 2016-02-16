@@ -8,15 +8,21 @@ module.exports = {
         'example':'./example/example.jsx'
     },
     output:{
-        path:"./",
-        filename:'dist/example.js'
+        publicPath:"./dist/",
+        //publicPath:"http://localhost:8008/example/dist/",
+        path:"./example/dist/",
+        filename:'example.js'
     },
-    externals: {
-        "jquery": "jQuery",
-        "react": "React",
-        "react-dom": "ReactDOM",
-        "zepto": "Zepto"
-    },
+    externals: [
+        {
+            "jquery": "jQuery",
+            "react": "React",
+            "react-dom": "ReactDOM",
+            "zepto": "Zepto",
+
+        },
+        require('webpack-require-http')
+    ],
     module:{
         loaders:[
             {
@@ -34,6 +40,10 @@ module.exports = {
             {
                 test:/\.css?$/,
                 loader:'style!css'
+            },
+            {
+                test: /\.md$/,
+                loader: "html!markdown"
             }
         ],
         noParse:[react]

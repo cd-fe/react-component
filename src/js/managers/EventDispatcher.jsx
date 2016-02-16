@@ -1,10 +1,8 @@
-var count = 1;
 var EventDispatcher = function() {
-    this.count = count++;
     this.__map = new Map();
 
     this.hasListeners = function(event) {
-
+        return !!(this.__map.get(event) && this.__map.get(event).length);
     };
 
     this.addEventListener = function(event, callback) {

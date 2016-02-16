@@ -1,6 +1,7 @@
 @import './function';
 
 .rui-table {
+  clear: both;
   &-column {
     text-indent:20px;
     float:left;

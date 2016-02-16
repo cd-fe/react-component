@@ -2,27 +2,29 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>Demo</title>
+    <title>React Component Lib</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
 </head>
 <body>
-<div id="wrapper">
-
-</div>
-<div class="tri"></div>
-<style>
-    .tri {
-        width:0;
-        height:0;
-        font-size:0;
-        line-height:0;
-        border:40px solid #000;
-        border-color:transparent #000 transparent transparent;
-        border-width:40px 30px 0px;
-    }
-</style>
-<script type="text/javascript" src="http://5doe.com/custom/website.js"></script>
-<script type="text/javascript" src="http://127.0.0.1:8007/dist/bundle.js"></script>
-<!--<script type="text/javascript" src="../dist/bundle.js"></script>-->
-<script type="text/javascript" src="http://127.0.0.1:8008/dist/example.js"></script>
+    <div id="wrapper"></div>
+    <div style="display:none;">
+        <script>
+            var _hmt = _hmt || [];
+            (function() {
+                var hm = document.createElement("script");
+                hm.src = "//hm.baidu.com/hm.js?f312172c323a817c690bbee99dd1f5c0";
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(hm, s);
+            })();
+        </script>
+    </div>
 </body>
+<script type="text/javascript" src="./lib/baseline.js"></script>
+<script type="text/javascript" src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="./lib/react.js"></script>
+<script type="text/javascript" src="./lib/react-dom.js"></script>
+<!--<script type="text/javascript" src="http://127.0.0.1:8007/dist/bundle.js"></script>-->
+<!--<script type="text/javascript" src="http://127.0.0.1:8008/example/dist/example.js"></script>-->
+<script type="text/javascript" src="../dist/bundle.js"></script>
+<script type="text/javascript" src="dist/example.js"></script>
 </html>

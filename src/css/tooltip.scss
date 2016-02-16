@@ -3,12 +3,15 @@
 // animation
 @include animate-fadeInDown;
 
+$outset: #ccc;
+$inset : #fff;
+
 .rui-tooltip {
   display:none;
   @include prefixer('border-radius', 2px);
   background:#fff;
-  border:1px solid #eceaea;
-  color:#ccc;
+  border:1px solid #{$outset};
+  color:#{$outset};
   padding:0 20px;
   min-width:130px;
   line-height:36px;
@@ -24,34 +27,104 @@
     height:0;
     line-height:0;
     font-size:0;
-    border:10px solid #eceaea;
+    border:10px solid #{$outset};
     position:absolute;
 
     &.arrow-top-center {
-      border-bottom-color: transparent;
-      border-left-color: transparent;
-      border-right-color: transparent;
+      border-color: #{$outset} transparent transparent;
     }
 
     &.arrow-bottom-right {
-      border-color:#eceaea transparent transparent;
+      border-color:#{$outset} transparent transparent;
     }
 
     &.arrow-bottom-center {
-      border-color:transparent transparent #eceaea;
+      border-color:transparent transparent #{$outset};
     }
 
     &.arrow-middle-left {
-      border-color:transparent transparent transparent #eceaea;
+      border-color:transparent transparent transparent #{$outset};
     }
 
     &.arrow-middle-right {
-      border-color:transparent #eceaea transparent transparent;
+      border-color:transparent #{$outset} transparent transparent;
     }
 
     &.arrow-top-left {
-      border-color:transparent transparent #eceaea transparent;
+      border-color:#{$outset} transparent transparent transparent;
+      border-width:20px 10px 10px;
+      @include prefixer('transform', rotate(-45deg));
+    }
+
+    &.arrow-bottom-left {
+      border-color:transparent transparent #{$outset} transparent;
       border-width:10px 10px 20px;
+      @include prefixer('transform', rotate(45deg));
+    }
+
+    &.arrow-top-right {
+      border-color:transparent transparent #{$outset} transparent;
+      border-width:10px 10px 20px;
+      @include prefixer('transform', rotate(-135deg));
+    }
+
+    &.arrow-bottom-right {
+      border-color:transparent transparent #{$outset} transparent;
+      border-width:10px 10px 20px;
+      @include prefixer('transform', rotate(-45deg));
+    }
+  }
+
+  &-arrow-back {
+    width:0;
+    height:0;
+    line-height:0;
+    font-size:0;
+    border:10px solid #{$inset};
+    position:absolute;
+
+    &.arrow-back-top-center {
+      border-color: #{$inset} transparent transparent;
+    }
+
+    &.arrow-back-bottom-right {
+      border-color:#{$inset} transparent transparent;
+    }
+
+    &.arrow-back-bottom-center {
+      border-color:transparent transparent #{$inset};
+    }
+
+    &.arrow-back-middle-left {
+      border-color:transparent transparent transparent #{$inset};
+    }
+
+    &.arrow-back-middle-right {
+      border-color:transparent #{$inset} transparent transparent;
+    }
+
+    &.arrow-back-top-left {
+      border-color:#{$inset} transparent transparent transparent;
+      border-width:20px 10px 10px;
+      @include prefixer('transform', rotate(-45deg));
+    }
+
+    &.arrow-back-bottom-left {
+      border-color:transparent transparent #{$inset} transparent;
+      border-width:10px 10px 20px;
+      @include prefixer('transform', rotate(45deg));
+    }
+
+    &.arrow-back-top-right {
+      border-color:transparent transparent #{$inset} transparent;
+      border-width:10px 10px 20px;
+      @include prefixer('transform', rotate(-135deg));
+    }
+
+    &.arrow-back-bottom-right {
+      border-color:transparent transparent #{$inset} transparent;
+      border-width:10px 10px 20px;
+      @include prefixer('transform', rotate(-45deg));
     }
   }
 }

@@ -1,4 +1,9 @@
 module.exports = {
     classPrefix:'rui-',
-    selected:'selected'
+    selected:'selected',
+    expand:'expand',
+    treePadding:20,
+    events:{
+        dataChange:'dataChange'
+    }
 };

@@ -13,6 +13,9 @@ import Table from './containers/Table.jsx';
 import Column from './containers/table/Column.jsx';
 import DatePicker from './controls/DatePicker.jsx';
 import Loading from './controls/Loading.jsx';
+import Tree from './controls/Tree.jsx';
+
+import DataSource from './data/DataSource.jsx';
 
 import DateFormatter from './formatters/DateFormatter.jsx';
 
@@ -40,6 +43,9 @@ var RUI = {
     Column:Column,
     DatePicker:DatePicker,
     Loading:Loading,
+    Tree:Tree,
+
+    DataSource:DataSource,
 
     DateFormatter:DateFormatter,
 

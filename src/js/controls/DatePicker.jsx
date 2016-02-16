@@ -71,7 +71,7 @@ module.exports = React.createClass({
         }
         if(newProps.endValue) {
             update.endValue = newProps.endValue;
-            update.endValuePreview = newProps.startValue;
+            update.endValuePreview = newProps.endValue;
         }
 
         this.setState(update);
