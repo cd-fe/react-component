@@ -4,14 +4,14 @@ var node_modules = path.resolve(__dirname, 'node_modules');
 var react = path.resolve(node_modules, 'react/dict/react.js');
 var process = require('process');
 
-console.log(process.env.NODE_ENV);
+var ENV = process.env.NODE_ENV;
 var config = {
     entry:{
         'example':'./example/example.jsx'
     },
     output:{
         //publicPath:"./dist/",
-        publicPath:process.env.NODE_ENV == 'development' ? "http://localhost:8008/example/dist/" : "./dist/",
+        publicPath:ENV == 'development' ? "http://localhost:8008/example/dist/" : "./dist/",
         path:"./example/dist/",
         filename:'example.js'
     },

@@ -14,6 +14,28 @@ var Slide = React.createClass({
     }
 });
 
+var Pagination = React.createClass({
+    getDefaultProps:function() {
+        return {
+            useClick:true
+        };
+    },
+    render:function() {
+        return <div className="swiper-pagination"></div>;
+    }
+});
+
+var NavigateButton = React.createClass({
+    getDefaultProps:function() {
+        return {
+            role:'hide'
+        };
+    },
+    render:function() {
+        return <div {...this.props} className={"swiper-button-"+this.props.role}></div>;
+    }
+});
+
 var Slider = React.createClass({
     mixins:[ComponentBase],
     getDefaultProps:function() {
@@ -30,11 +52,52 @@ var Slider = React.createClass({
     componentDidUpdate:function() {
         this.updateSwiper();
     },
-    updateSwiper:function() {
-        if(!this.swiper) {
-            this.swiper = $(ReactDOM.findDOMNode(this)).swiper(Object.assign({}, this.props));
-            this.swiper = Swiper.call(Swiper, ReactDOM.findDOMNode(this), Object.assign({}, this.props));
+    getPagination:function() {
+        return (Array.isArray(this.props.children) ? this.props.children : []).find(function(item) {
+            if(item && item.type && item.type.displayName == 'Pagination') {
+                return true;
+            }
+            return false;
+        });
+    },
+    getButtons:function() {
+        return (Array.isArray(this.props.children) ? this.props.children : []).filter(function(item) {
+            if(item && item.type && item.type.displayName == 'NavigateButton') {
+                return true;
+            }
+            return false;
+        });
+    },
+    getSlides:function() {
+        return (Array.isArray(this.props.children) ? this.props.children : []).filter(function(item) {
+            if(item.type && (item.type.displayName != 'Pagination' || item.type.displayName != 'NavigateButton')) {
+                return false;
+            }
+            return true;
+        });
+    },
+    getSwiperParams:function() {
+        var current = {};
+
+        var pagination = this.getPagination();
+        if(pagination) {
+            current.pagination = '.swiper-pagination';
+            current.paginationClickable = pagination.props.useClick || false;
         }
+        return Object.assign(current, this.props);
+    },
+    getSwiper:function() {
+        return $(ReactDOM.findDOMNode(this)).data('react-swiper');
+    },
+    clearSwiper:function() {
+        this.getSwiper() && (this.getSwiper().kill(), this.getSwiper().data('react-swiper', undefined));
+    },
+    updateSwiper:function() {
+        var swiper = this.getSwiper();
+        if(swiper) {
+            this.clearSwiper();
+        }
+        $(ReactDOM.findDOMNode(this)).data('react-swiper', $(ReactDOM.findDOMNode(this)).swiper(this.getSwiperParams()));
     },
     render:function() {
         var classes = className(this.props.className, this.getPropClass());
@@ -42,12 +105,16 @@ var Slider = React.createClass({
         var props = require('../util/omit.jsx')(this.props, 'onClick');
         return <div {...props} className={classes}>
             <div className={"swiper-wrapper"}>
-                {this.props.children}
+                {this.getSlides()}
             </div>
+            {this.getPagination()}
+            {this.getButtons()}
         </div>;
     }
 });
 
 Slider.Item = Slide;
+Slider.Pagination = Pagination;
+Slider.NavigateButton = NavigateButton;
 
 module.exports = Slider;
