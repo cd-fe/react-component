@@ -47,6 +47,7 @@ module.exports = React.createClass({
                 <li><Link activeClassName="active" to="/components/datepicker">日历</Link></li>
                 <li><Link activeClassName="active" to="/components/loading">加载</Link></li>
                 <li><Link activeClassName="active" to="/components/tree">树形菜单</Link></li>
+                <li><Link activeClassName="active" to="/components/slider">轮播图</Link></li>
             </ul>
             <div className="component-detail">
                 {this.props.children}
