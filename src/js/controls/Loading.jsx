@@ -27,7 +27,7 @@ module.exports = React.createClass({
     doOpen : function() {
         var _this = this;
         var loader = arguments[0];//loading元素
-        var loaderTrigger = $(arguments[1].target || arguments[1].currentTarget.target);//触发loading元素
+        var loaderTrigger = $(arguments[1] ? arguments[1].target || arguments[1].currentTarget.target : 'body');//触发loading元素
         var loaderType = arguments[2];//loading类型
         var originPos;
         if(loaderType == 'follow') {
