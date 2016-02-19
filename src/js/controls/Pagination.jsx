@@ -69,7 +69,7 @@ module.exports = React.createClass({
         var preview = 5;
         var pageNumber = Math.ceil(this.state.totalNum / this.state.pageSize);
         var list = [];
-        if(this.state.currentPage <= preview) {
+        if(this.state.currentPage <= (preview + 1)) {
             list = list.concat(this.renderItemRange(1, this.state.currentPage));
             if(this.state.currentPage > Math.floor(preview/2)) {
                 list = list.concat(this.renderItemRange(this.state.currentPage+1, this.state.currentPage+2));
@@ -80,12 +80,12 @@ module.exports = React.createClass({
                 list.push(this.renderBreak(list.length));
             }
             if(pageNumber > list.length){
-                for(var m=pageNumber-1;m<=pageNumber;m++) {
+                for(var m=pageNumber;m<=pageNumber;m++) {
                     list = list.concat(this.renderItemRange(m, m));
                 }
             }
         }
-        else if(this.state.currentPage > (pageNumber - preview)) {
+        else if(this.state.currentPage > (pageNumber - preview) && pageNumber > (preview + 1)) {
             list = list.concat(this.renderItemRange(1, 2));
             list.push(this.renderBreak(list.length));
             if(Math.abs(this.state.currentPage - pageNumber) > Math.floor(preview/2)) {
