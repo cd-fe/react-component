@@ -40,6 +40,10 @@ browser example/index.html
 
 # Release logs
 
+## 0.3.6
+
+* add Component Slider
+
 ## 0.3.3
 
 * add Component Tree
