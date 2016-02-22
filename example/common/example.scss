@@ -183,3 +183,15 @@
     width:240px;
   }
 }
+
+.example-slider {
+  .slide-content {
+    width:100%;
+    height:300px;
+    line-height:300px;
+    text-align:center;
+  }
+  .auto-layout .swiper-slide {
+    width:auto;
+  }
+}

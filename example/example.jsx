@@ -20,6 +20,7 @@ ReactDOM.render((
                 <Route path="datepicker" component={loader(require('bundle?lazy!babel?presets=react!./components/datepicker.js'))}></Route>
                 <Route path="loading" component={loader(require('bundle?lazy!babel?presets=react!./components/loading.js'))}></Route>
                 <Route path="tree" component={loader(require('bundle?lazy!babel?presets=react!./components/tree.js'))}></Route>
+                <Route path="slider" component={loader(require('bundle?lazy!babel?presets=react!./components/slider.js'))}></Route>
             </Route>
         </Route>
     </Router>
