@@ -7,6 +7,11 @@ var Example = React.createClass({
     onInputChange:function(e) {
         RUI.DialogManager.alert("change:" + e.target.value, "提示");
     },
+    blurHandler:function(e) {
+        this.setState({
+            init:Math.random()
+        });
+    },
     render:function() {
         return <div className="example-input">
             <h2 className="title">输入框<span>Input</span></h2>
@@ -14,7 +19,7 @@ var Example = React.createClass({
             <div className="example">
                 <RUI.Input value={this.state.init} onChange={this.onInputChange} /><br/>
                 <RUI.Input className="small" mode="static" value={"不可修改"}/><br/>
-                <RUI.Input className="medium" placeholder="保留正常结点属性"/><br/>
+                <RUI.Input onBlur={this.blurHandler} className="medium" placeholder="保留正常结点属性"/><br/>
                 <RUI.Input className="large"/><br/>
                 <RUI.Input className="full"/>
             </div>

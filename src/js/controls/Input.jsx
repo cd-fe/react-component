@@ -29,10 +29,9 @@ module.exports = React.createClass({
     },
     componentWillReceiveProps:function(nextProps) {
         var update = {};
-        if(nextProps.value != this.state.value) {
+        if(typeof nextProps.value != 'undefined' && nextProps.value != this.state.value) {
             update.value = nextProps.value
         };
-
         this.setState(update);
     },
     render:function() {

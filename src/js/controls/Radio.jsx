@@ -33,6 +33,11 @@ module.exports = React.createClass({
             this.forceUpdate();
         }
     },
+    componentWillReceiveProps:function(nextProps) {
+        if(typeof nextProps.selected != 'undefined' && nextProps.selected != this.toggleValue) {
+            this.toggleValue = nextProps.selected;
+        }
+    },
     render:function() {
         var classes = className(this.props.className, this.getPropClass());
 
