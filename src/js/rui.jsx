@@ -2,7 +2,6 @@ import Button from './controls/Button.jsx';
 import Input from './controls/Input.jsx';
 import Pagination from './controls/Pagination.jsx';
 import Dialog from './controls/Dialog.jsx';
-import DialogManager from './managers/DialogManager.jsx';
 import Tooltip from './controls/Tooltip.jsx';
 import Select from './controls/Select.jsx';
 import Checkbox from './controls/Checkbox.jsx';
@@ -26,6 +25,9 @@ import TimerMixin from './mixins/TimerMixin.jsx';
 import ToggleMixin from './mixins/ToggleMixin.jsx';
 import TooltipMixin from './mixins/TooltipMixin.jsx';
 
+import DialogManager from './managers/DialogManager.jsx';
+import OverlayManager from './managers/OverlayManager.jsx';
+
 import '../css/common.scss';
 
 var RUI = {
@@ -33,7 +35,6 @@ var RUI = {
     Input:Input,
     Pagination:Pagination,
     Dialog:Dialog,
-    DialogManager:DialogManager,
     Tooltip:Tooltip,
     Select:Select,
     Checkbox:Checkbox,
@@ -55,7 +56,10 @@ var RUI = {
     OverlayMixin:OverlayMixin,
     TimerMixin:TimerMixin,
     ToggleMixin:ToggleMixin,
-    TooltipMixin:TooltipMixin
+    TooltipMixin:TooltipMixin,
+
+    DialogManager:DialogManager,
+    OverlayManager:OverlayManager
 };
 
 try {

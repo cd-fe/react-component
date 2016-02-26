@@ -2,6 +2,12 @@ import Dialog from '../controls/Dialog.jsx';
 
 module.exports = {
     __instance:null,
+    __autohide:true,
+    clearAll:function() {
+        if(this.__instance) {
+            this.__instance.hideAll();
+        }
+    },
     createContainer:function() {
         var exist = document.getElementById('dialog-container');
         if(!exist) {
@@ -36,6 +42,10 @@ module.exports = {
                 }, function() {
                     this.refs.confirm.show();
                 }.bind(this));
+            },
+            hideAll:function() {
+                this.refs.alert.hide();
+                this.refs.confirm.hide();
             },
             render:function() {
                 return <div>
