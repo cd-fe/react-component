@@ -1,7 +1,7 @@
 {
   "name": "react-component-lib",
   "author": "darkty2009",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "description": "a full base ui library to reactjs",
   "license": "MIT",
   "main": "dist/bundle.js",
@@ -21,7 +21,7 @@
   },
   "scripts": {
     "build": "webpack -p --config webpack.config.product.js",
-    "build-example": "set NODE_ENV=production&&webpack -p --config webpack.config.example.js",
+    "build-example": "NODE_ENV=production webpack -p --config webpack.config.example.js",
     "example": "NODE_ENV=development webpack-dev-server --config webpack.config.example.js --devtool eval --progress --colors --inline --port 8008 --host 127.0.0.1",
     "lib": "webpack-dev-server --config webpack.config.product.js --devtool eval --progress --colors --inline --port 8007 --host 127.0.0.1"
   },
