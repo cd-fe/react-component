@@ -52,13 +52,15 @@ module.exports = React.createClass({
         var DefaultRenderClass = this.getDefaultItemRender();
         var DefaultRenderClassProps = DefaultRenderClass.props;
         var dataField = this.props.dataField;
+        var _this = this;
         return <ul {...this.props} className={classes}>
             {this.getDefaultTitleRender()}
             {this.props.source && this.props.source.map(function(item, index) {
                 return React.cloneElement(DefaultRenderClass, merge({
                     value:item[dataField],
                     source:item,
-                    key:index
+                    key:index,
+                    fieldFunction:_this.props.fieldFunction
                 }, DefaultRenderClassProps));
             })}
         </ul>;

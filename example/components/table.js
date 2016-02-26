@@ -30,6 +30,11 @@ var Example = React.createClass({
     tableDelete:function(data) {
         RUI.DialogManager.alert(JSON.stringify(data));
     },
+    fieldFormat:function(data) {
+        return (data+"").replace(/(\d{3})(\d{4})(\d{4})/g, function(match, a1, a2, a3) {
+            return a1 + '-' + a2 + '-' + a3;
+        });
+    },
     render:function() {
         var sourceData = this.state.data;
 
@@ -53,8 +58,8 @@ var Example = React.createClass({
                                 <a onClick={this.sortData}>序号(点击后排序)</a>
                             </RUI.Table.TitleRender>
                         </RUI.Column>
-                        <RUI.Column title={"用户名"} dataField={"name"}/>
-                        <RUI.Column title={"手机号"} dataField={"phone"} />
+                        <RUI.Column title={"用户名"} dataField={"name"} />
+                        <RUI.Column title={"手机号"} dataField={"phone"} fieldFunction={this.fieldFormat} />
                         <RUI.Column title={"省份"} dataField={"prov"} />
                         <RUI.Column title={"角色"} dataField={"role"} />
                     </RUI.Table>

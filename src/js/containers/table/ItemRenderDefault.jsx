@@ -8,7 +8,10 @@ module.exports = React.createClass({
     },
     getDefaultProps:function() {
         return {
-            cname:'table-column-item'
+            cname:'table-column-item',
+            fieldFunction:function(val) {
+                return val;
+            }
         };
     },
     render:function() {
@@ -31,7 +34,7 @@ module.exports = React.createClass({
                 }
 
                 return React.cloneElement(child, resultProps);
-            }) : this.props.value}
+            }) : this.props.fieldFunction(this.props.value)}
         </li>;
     }
 });
