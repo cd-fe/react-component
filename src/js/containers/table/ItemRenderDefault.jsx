@@ -34,7 +34,7 @@ module.exports = React.createClass({
                 }
 
                 return React.cloneElement(child, resultProps);
-            }) : this.props.fieldFunction(this.props.value)}
+            }) : this.props.fieldFunction(this.props.value, this.props.source)}
         </li>;
     }
 });

@@ -30,8 +30,8 @@ var Example = React.createClass({
     tableDelete:function(data) {
         RUI.DialogManager.alert(JSON.stringify(data));
     },
-    fieldFormat:function(data) {
-        return (data+"").replace(/(\d{3})(\d{4})(\d{4})/g, function(match, a1, a2, a3) {
+    fieldFormat:function(data, source) {
+        return source.name + ' ' + (data+"").replace(/(\d{3})(\d{4})(\d{4})/g, function(match, a1, a2, a3) {
             return a1 + '-' + a2 + '-' + a3;
         });
     },

@@ -18,6 +18,17 @@ module.exports = React.createClass({
     getValue:function() {
         return this.getToggleResult() == constant.selected ? this.props.value : '';
     },
+    setSelected:function(val) {
+        this.toggleValue = !!val ? 1 : 0;
+        if (this.dispatchEvent) {
+            this.dispatchEvent('change', {
+                value: this.props.value,
+                selected: this.toggleValue
+            });
+        }
+
+        this.forceUpdate();
+    },
     render:function() {
         var classes = className(this.props.className, this.getPropClass());
         classes += ' ' + this.getToggleResult();
