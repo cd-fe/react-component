@@ -40,6 +40,11 @@ browser example/index.html
 
 # Release logs
 
+## 0.3.9
+
+* fixed some bugs
+* !!! The implement of Table is dirty , refactor in next version : 0.4.0
+
 ## 0.3.6
 
 * add Component Slider
