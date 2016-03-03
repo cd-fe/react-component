@@ -40,6 +40,11 @@ browser example/index.html
 
 # Release logs
 
+## 0.3.10
+
+* fixed Pagination default state error
+* fixed Table css float error, add clearfix
+
 ## 0.3.9
 
 * fixed some bugs
