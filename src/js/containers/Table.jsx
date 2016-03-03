@@ -22,6 +22,7 @@ var Table = React.createClass({
     },
     render:function() {
         var classes = className(this.props.className, this.getPropClass());
+        classes += " clearfix";
         var childrenLength = this.props.children instanceof Array ? this.props.children.length : 1;
         var widthPercent = this.percent(childrenLength);
         var children = this.props.children ? this.props.children.map(function(column, index) {
