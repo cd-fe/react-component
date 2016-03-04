@@ -14,7 +14,10 @@ var Table = React.createClass({
     },
     getDefaultProps:function() {
         return {
-            cname:'table'
+            cname:'table',
+            columnsFilter:function(keys) {
+                return keys;
+            }
         };
     },
     percent:function(piece) {
@@ -35,7 +38,7 @@ var Table = React.createClass({
             props.source = this.props.dataSource;
             props.key = index;
             return React.cloneElement(column, props);
-        }.bind(this)) : (this.props.dataSource && this.props.dataSource.length ? Object.keys(this.props.dataSource[0]).map(function(key, index, all) {
+        }.bind(this)) : (this.props.dataSource && this.props.dataSource.length ? this.props.columnsFilter(Object.keys(this.props.dataSource[0])).map(function(key, index, all) {
             return <Column source={this.props.dataSource} title={key} dataField={key} key={index} style={{width:this.percent(all.length) + '%'}}/>
         }.bind(this)) : null);
 

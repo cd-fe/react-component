@@ -56,8 +56,17 @@ var Example = React.createClass({
     componentDidMount:function() {
         // 你就假设这儿有一个ajax请求吧
         this.setState({
-            ajaxData:this.getData()
+            ajaxData:this.state.data
         });
+    },
+    columnsFilter:function(keys) {
+        var index = keys.findIndex(function(item) {
+            return item == 'selected';
+        });
+        if(index > -1) {
+            keys.splice(index, 1);
+        }
+        return keys;
     },
     getData:function() {
         return [
@@ -116,11 +125,11 @@ var Example = React.createClass({
             <div className="example">
                 <h4 className="final-title">默认表格</h4>
                 <div>
-                    <RUI.Table dataSource={sourceData} />
+                    <RUI.Table dataSource={sourceData}/>
                 </div>
                 <h4 className="final-title">动态渲染</h4>
                 <div>
-                    <RUI.Table dataSource={this.state.ajaxData} />
+                    <RUI.Table dataSource={this.state.ajaxData} columnsFilter={this.columnsFilter} />
                 </div>
                 <h4 className="final-title">自定义标题格</h4>
                 <div>
