@@ -40,6 +40,11 @@ browser example/index.html
 
 # Release logs
 
+## 0.3.11
+
+* implement table allcheck
+* refactor TitleRender,  ItemRender and Column
+
 ## 0.3.10
 
 * fixed Pagination default state error
