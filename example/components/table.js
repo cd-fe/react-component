@@ -1,8 +1,56 @@
+var CheckboxItemRender = React.createClass({
+    getInitialState:function() {
+        return {
+            selected:this.props.selected || 0
+        };
+    },
+    componentWillReceiveProps:function(nextProps) {
+        if(typeof nextProps.selected != 'undefined') {
+            this.setState({
+                selected:!!nextProps.selected
+            });
+        }
+    },
+    setData:function(data, field) {
+        this.setState(data);
+    },
+    changeHandler:function() {
+        this.props.onClick && this.props.onClick(this.state);
+    },
+    render:function() {
+        return <RUI.Checkbox selected={this.state.selected} onChange={this.changeHandler} />
+    }
+});
+
+var OperationItemRender = React.createClass({
+    setData:function(data) {
+        this.setState(data);
+    },
+    clickHandler:function() {
+        this.props.onClick && this.props.onClick(this.state);
+    },
+    render:function() {
+        return <RUI.Button onClick={this.clickHandler}>{this.props.children}</RUI.Button>;
+    }
+});
+
+var SortTitleRender = React.createClass({
+    setData:function(data) {
+        this.setState(data);
+    },
+    render:function() {
+        return <a {...this.props}>序号(点击后排序)</a>;
+    }
+});
+
 var Example = React.createClass({
     getInitialState:function() {
         return {
             ajaxData:[],
-            data:this.getData()
+            data:this.getData().map(function(item) {
+                item.selected = true;
+                return item;
+            })
         };
     },
     componentDidMount:function() {
@@ -35,6 +83,30 @@ var Example = React.createClass({
             return a1 + '-' + a2 + '-' + a3;
         });
     },
+    allCheck:function() {
+        var isAllCheck = this.isAllCheck();
+        this.setState({
+            data:this.state.data.map(function(item) {
+                item.selected = isAllCheck ? false : true;
+                return item;
+            })
+        });
+    },
+    isAllCheck:function() {
+        return !this.state.data.some(function(item) {
+            return !item.selected;
+        });
+    },
+    checkItem:function(data) {
+        this.setState({
+            data:this.state.data.map(function(item) {
+                if(item.id == data.id) {
+                    item.selected = !item.selected;
+                }
+                return item;
+            })
+        });
+    },
     render:function() {
         var sourceData = this.state.data;
 
@@ -55,7 +127,7 @@ var Example = React.createClass({
                     <RUI.Table dataSource={sourceData}>
                         <RUI.Column dataField={"id"}>
                             <RUI.Table.TitleRender>
-                                <a onClick={this.sortData}>序号(点击后排序)</a>
+                                <SortTitleRender onClick={this.sortData} />
                             </RUI.Table.TitleRender>
                         </RUI.Column>
                         <RUI.Column title={"用户名"} dataField={"name"} />
@@ -67,12 +139,12 @@ var Example = React.createClass({
                 <h4 className="final-title">自定义单元格</h4>
                 <div>
                     <RUI.Table dataSource={sourceData}>
-                        <RUI.Column checkbox={true}>
+                        <RUI.Column>
                             <RUI.Table.TitleRender>
-                                <RUI.Checkbox selected={0} />
+                                <CheckboxItemRender onClick={this.allCheck} selected={this.isAllCheck()} />
                             </RUI.Table.TitleRender>
                             <RUI.Table.ItemRender>
-                                <RUI.Checkbox selected={0} />
+                                <CheckboxItemRender onClick={this.checkItem} />
                             </RUI.Table.ItemRender>
                         </RUI.Column>
                         <RUI.Column title={"用户名"} dataField={"name"}/>
@@ -81,7 +153,7 @@ var Example = React.createClass({
                         <RUI.Column title={"角色"} dataField={"role"} />
                         <RUI.Column title={"操作"}>
                             <RUI.Table.ItemRender>
-                                <RUI.Button onClick={this.tableDelete}>删除</RUI.Button>
+                                <OperationItemRender onClick={this.tableDelete}>删除</OperationItemRender>
                             </RUI.Table.ItemRender>
                         </RUI.Column>
                     </RUI.Table>

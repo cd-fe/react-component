@@ -8,14 +8,13 @@ module.exports = React.createClass({
     },
     getDefaultProps:function() {
         return {
-            cname:'table-title-render'
+            cname:'table-title'
         };
     },
     render:function() {
         var classes = className(this.props.className, this.getPropClass());
-
         return <li {...this.props} className={classes}>
-            {this.props.value}
+            {this.props.children}
         </li>;
     }
 });
