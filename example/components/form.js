@@ -12,7 +12,16 @@ var Example = React.createClass({
                 </div>
                 <h4 className="final-title">水平布局</h4>
                 <div>
-
+                    <RUI.Form>
+                        <RUI.Form.Control name="name" label="用户名" />
+                        <RUI.Form.Control name="password" label="密码" type="password" />
+                        <RUI.Form.Control name="interest" label="兴趣" type="checkbox">
+                            <RUI.Checkbox value="1">科技</RUI.Checkbox>
+                            <RUI.Checkbox value="1">摄影</RUI.Checkbox>
+                            <RUI.Checkbox value="1">旅游</RUI.Checkbox>
+                            <RUI.Checkbox value="1">娱乐</RUI.Checkbox>
+                        </RUI.Form.Control>
+                    </RUI.Form>
                 </div>
                 <h4 className="final-title">行内布局</h4>
                 <div>
