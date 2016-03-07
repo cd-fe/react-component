@@ -9,7 +9,8 @@ module.exports = React.createClass({
     getDefaultProps:function() {
         return {
             cname:'input',
-            mode:'dynamic'
+            mode:'dynamic',
+            type:'text'
         };
     },
     getInitialState:function() {
@@ -36,9 +37,9 @@ module.exports = React.createClass({
         this.setState(update);
     },
     render:function() {
-        var props = omit(this.props, 'type', 'onChange', 'value', 'readonly');
+        var props = omit(this.props, 'onChange', 'value', 'readonly');
         return <input {...props}
-            type="text"
+            type={this.props.type}
             value={this.state.value}
             onChange={this.changeHandler}
             className={className(this.props.className, this.getPropClass())}

@@ -9,10 +9,9 @@ module.exports = React.createClass({
         return {
             active : false,
             filter : false,//过滤筛选
-            event : this.props.event,//事件类型mousover,click,dbclick
-            data : this.props.data,//数据
-            value : this.props.value,//默认值
-            stuff : this.props.stuff,//选中值填充
+            event : this.props.event || 'click',//事件类型mousover,click,dbclick
+            data : this.props.data || [],//数据
+            value : this.props.value || (this.props.data instanceof Array && this.props.data[0]),//默认值
             callback : this.props.callback,//回调
             offset : this.props.offset,
             reg : this.props.reg,
@@ -24,13 +23,20 @@ module.exports = React.createClass({
     getDefaultProps:function() {
         return  {
             cname : "select",
-            event : "mouseenter"
+            event : "mouseenter",
+            className : "rui-theme-1",
+            stuff : true
         };
     },
     componentWillReceiveProps: function(nextProps) {
-        this.setState({
-            data: nextProps.data
-        });
+        var newProps = {};
+        if(typeof nextProps.data != 'undefined') {
+            newProps.data = nextProps.data;
+        }
+        if(typeof nextProps.value != 'undefined') {
+            newProps.value = nextProps.value;
+        }
+        this.setState(newProps);
     },
     componentDidMount:function() {
        var _this = this;
@@ -124,7 +130,7 @@ module.exports = React.createClass({
    },
    _getChoose : function() {
        var _this = this;
-       return _this._choose ? _this._choose : _this.props.value;
+       return _this._choose ? _this._choose : _this.state.value;
    },
    render : function() {
       var _this = this,
@@ -146,7 +152,7 @@ module.exports = React.createClass({
 
             <div ref="container" className={final}>
                 <i className="arrow"></i>
-                <span ref="choose" className="placeholder">{this.props.value.key}</span>
+                <span ref="choose" className="placeholder">{this.state.value.key}</span>
                 <div className="rui-select-options-wrap" style={{top:offset}}>
                     <div ref="options" className="rui-select-options">
                         {filter}
