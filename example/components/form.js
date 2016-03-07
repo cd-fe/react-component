@@ -1,4 +1,8 @@
 var Example = React.createClass({
+    submitHandler:function(data, form) {
+        console.log(data);
+        return false;
+    },
     render:function() {
         var selectData = [
             { key:'管理员', value:1 },
@@ -30,18 +34,11 @@ var Example = React.createClass({
                         </RUI.Form.Control>
                     </RUI.Form>
                 </div>
-                <h4 className="final-title">行内布局</h4>
-                <div>
-                    <RUI.Form className="inline">
-                        <RUI.Form.Control name="name" label="用户名" />
-                        <RUI.Form.Control name="password" label="密码" type="password" />
-                    </RUI.Form>
-                </div>
                 <h4 className="final-title">提交与重置</h4>
                 <div>
-                    <RUI.Form className="horizonal">
-                        <RUI.Form.Control name="name" label="用户名" />
-                        <RUI.Form.Control name="password" label="密码" type="password" />
+                    <RUI.Form className="horizonal" onSubmit={this.submitHandler}>
+                        <RUI.Form.Control name="name" label="用户名" placeholder="请输入邮箱或者手机号" />
+                        <RUI.Form.Control name="password" label="密码" type="password" placeholder="请输入密码" />
                         <RUI.Form.Control name="interest" label="兴趣" type="checkbox">
                             <RUI.Checkbox value="1">科技</RUI.Checkbox>
                             <RUI.Checkbox value="2">摄影</RUI.Checkbox>

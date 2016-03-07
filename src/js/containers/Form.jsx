@@ -10,11 +10,23 @@ var Form = React.createClass({
     mixins:[ComponentBase],
     getDefaultProps:function() {
         return {
-            cname:'form'
+            cname:'form',
+            onSubmit:function() {
+                return true;
+            }
         };
     },
-    submitHandler:function(e) {
+    serializeArray:function() {
 
+    },
+    serializeObject:function() {
+
+    },
+    submitHandler:function(e) {
+        var result = this.props.onSubmit(this.serializeObject());
+        if(result === false) {
+            e.nativeEvent.preventDefault();
+        }
     },
     render:function() {
         var classes = className(this.props.className, this.getPropClass());
