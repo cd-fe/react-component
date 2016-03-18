@@ -1,5 +1,6 @@
 import Button from './controls/Button.jsx';
 import Input from './controls/Input.jsx';
+import Textarea from './controls/Textarea.jsx';
 import Pagination from './controls/Pagination.jsx';
 import Dialog from './controls/Dialog.jsx';
 import Tooltip from './controls/Tooltip.jsx';
@@ -33,6 +34,7 @@ import '../css/common.scss';
 var RUI = {
     Button:Button,
     Input:Input,
+    Textarea:Textarea,
     Pagination:Pagination,
     Dialog:Dialog,
     Tooltip:Tooltip,

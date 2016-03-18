@@ -1,0 +1,17 @@
+@import './function';
+
+.rui-textarea {
+  min-height:240px;
+  width:480px;
+  background:#fff;
+  box-sizing: border-box;
+  border:1px solid #eceaea;
+  margin:0;
+  outline:none;
+  resize:none;
+  padding:10px;
+
+  &:focus {
+    border:1px solid #74c5ee;
+  }
+}

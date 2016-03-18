@@ -40,6 +40,10 @@ browser example/index.html
 
 # Release logs
 
+## 0.3.12
+
+* add Form Control : Textarea
+
 ## 0.3.11
 
 * implement table allcheck
