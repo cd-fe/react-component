@@ -11,13 +11,13 @@ module.exports = React.createClass({
     getDefaultProps:function() {
         return {
             fieldFunction:function(val) {
-                return val || "";
+                return val.toString() || "";
             }
         };
     },
     setData:function(data, field) {
         this.setState({
-            label:this.props.fieldFunction(data[field], data),
+            label:this.props.fieldFunction(eval(`(data['${field.split('.').join('\'][\'')}'])`), data),
             data:data
         });
     },
