@@ -40,7 +40,7 @@ browser example/index.html
 
 # Release logs
 
-## 0.3.13
+## 0.3.14
 
 * Table support object render
 

@@ -11,7 +11,7 @@ module.exports = React.createClass({
     getDefaultProps:function() {
         return {
             fieldFunction:function(val) {
-                return val.toString() || "";
+                return val ? val.toString() : "";
             }
         };
     },
