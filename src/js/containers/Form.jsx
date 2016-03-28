@@ -28,10 +28,22 @@ var Form = React.createClass({
             e.nativeEvent.preventDefault();
         }
     },
+    submit:function() {
+
+    },
+    resset:function() {
+
+    },
     render:function() {
         var classes = className(this.props.className, this.getPropClass());
         return <form {...this.props} className={classes} onSubmit={this.submitHandler}>
-            {this.props.children}
+            {React.Children.map(this.props.children, function(child) {
+                var props = Object.assign({
+                    form:this
+                }, child.props);
+
+                return React.cloneElement(child, props);
+            }.bind(this))}
         </form>;
     }
 });
