@@ -1,8 +1,8 @@
 import Button from './controls/Button.jsx';
 import Input from './controls/Input.jsx';
+import Textarea from './controls/Textarea.jsx';
 import Pagination from './controls/Pagination.jsx';
 import Dialog from './controls/Dialog.jsx';
-import DialogManager from './managers/DialogManager.jsx';
 import Tooltip from './controls/Tooltip.jsx';
 import Select from './controls/Select.jsx';
 import Checkbox from './controls/Checkbox.jsx';
@@ -14,6 +14,7 @@ import Column from './containers/table/Column.jsx';
 import DatePicker from './controls/DatePicker.jsx';
 import Loading from './controls/Loading.jsx';
 import Tree from './controls/Tree.jsx';
+import Slider from './controls/Slider.jsx';
 
 import DataSource from './data/DataSource.jsx';
 
@@ -25,14 +26,17 @@ import TimerMixin from './mixins/TimerMixin.jsx';
 import ToggleMixin from './mixins/ToggleMixin.jsx';
 import TooltipMixin from './mixins/TooltipMixin.jsx';
 
+import DialogManager from './managers/DialogManager.jsx';
+import OverlayManager from './managers/OverlayManager.jsx';
+
 import '../css/common.scss';
 
 var RUI = {
     Button:Button,
     Input:Input,
+    Textarea:Textarea,
     Pagination:Pagination,
     Dialog:Dialog,
-    DialogManager:DialogManager,
     Tooltip:Tooltip,
     Select:Select,
     Checkbox:Checkbox,
@@ -44,6 +48,7 @@ var RUI = {
     DatePicker:DatePicker,
     Loading:Loading,
     Tree:Tree,
+    Slider:Slider,
 
     DataSource:DataSource,
 
@@ -53,7 +58,10 @@ var RUI = {
     OverlayMixin:OverlayMixin,
     TimerMixin:TimerMixin,
     ToggleMixin:ToggleMixin,
-    TooltipMixin:TooltipMixin
+    TooltipMixin:TooltipMixin,
+
+    DialogManager:DialogManager,
+    OverlayManager:OverlayManager
 };
 
 try {

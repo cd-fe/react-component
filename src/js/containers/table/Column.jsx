@@ -29,37 +29,52 @@ module.exports = React.createClass({
         return render;
     },
     getDefaultTitleRender:function() {
-        var render = this.findExistRender('table-title-render');
+        var render = this.findExistRender('table-title');
         if(!render) {
-            render = <ItemRenderDefault className={"rui-table-title"} value={this.props.title || this.props.dataField}/>;
-        }else {
-            render = <ItemRenderDefault className={"rui-table-title"}>{render}</ItemRenderDefault>;
+            render = <ItemRenderDefault label={this.props.title || this.props.dataField} />;
         }
         return render;
     },
     getDefaultItemRender:function() {
-        var render = this.findExistRender('table-item-render');
+        var render = this.findExistRender('table-column-item');
         if(!render) {
             render = <ItemRenderDefault />;
-        }else {
-            render = <ItemRenderDefault>{render}</ItemRenderDefault>
         }
         return render;
+    },
+    componentDidMount:function() {
+        this.childrenUpdate();
+    },
+    componentDidUpdate:function() {
+        this.childrenUpdate();
+    },
+    childrenUpdate:function() {
+        var dataField = this.props.dataField;
+        Object.keys(this.refs).forEach(function(key, index) {
+            var data = this.props.source[index];
+            var child = this.refs[key];
+            if(child.setData) {
+                child.setData(data, dataField);
+            }else {
+                console.warn('ItemRender must to implement "setData" method.', child.props.cname);
+            }
+        }.bind(this));
     },
     render:function() {
         var classes = className(this.props.className, this.getPropClass());
 
         var DefaultRenderClass = this.getDefaultItemRender();
         var DefaultRenderClassProps = DefaultRenderClass.props;
-        var dataField = this.props.dataField;
+        var _this = this;
         return <ul {...this.props} className={classes}>
-            {this.getDefaultTitleRender()}
+            <TitleRender>
+                {this.getDefaultTitleRender()}
+            </TitleRender>
             {this.props.source && this.props.source.map(function(item, index) {
-                return React.cloneElement(DefaultRenderClass, merge({
-                    value:item[dataField],
-                    source:item,
-                    key:index
-                }, DefaultRenderClassProps));
+                return <ItemRender key={index}>{React.cloneElement(DefaultRenderClass, merge({
+                    ref:index,
+                    fieldFunction:_this.props.fieldFunction
+                }, DefaultRenderClassProps))}</ItemRender>;
             })}
         </ul>;
     }

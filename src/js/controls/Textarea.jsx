@@ -2,13 +2,13 @@ import className from '../util/className.jsx';
 import omit from '../util/omit.jsx';
 import ComponentBase from '../mixins/ComponentBase.jsx';
 
-import '../../css/input.scss';
+import '../../css/textarea.scss';
 
 module.exports = React.createClass({
     mixins:[ComponentBase],
     getDefaultProps:function() {
         return {
-            cname:'input',
+            cname:'textarea',
             mode:'dynamic'
         };
     },
@@ -36,11 +36,10 @@ module.exports = React.createClass({
     },
     render:function() {
         var props = omit(this.props, 'type', 'onChange', 'value', 'readonly');
-        return <input {...props}
-            type="text"
+        return <textarea {...props}
             value={this.state.value}
             onChange={this.changeHandler}
             className={className(this.props.className, this.getPropClass())}
-        ></input>
+        ></textarea>
     }
 });
