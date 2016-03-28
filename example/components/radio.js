@@ -25,6 +25,15 @@ var Example = React.createClass({
                         <RUI.Radio value="type_4" disable={true}>禁用状态</RUI.Radio>
                     </RUI.RadioGroup>
                 </div>
+                <h4 className="final-title">自定义</h4>
+                <div>
+                    <RUI.RadioGroup onChange={this.groupChange} value={"type_1"}>
+                        <RUI.Radio.ItemRender value="custom_1"><RUI.Button>初始已选</RUI.Button></RUI.Radio.ItemRender>
+                        <RUI.Radio.ItemRender value="custom_1"><RUI.Button>初始未选</RUI.Button></RUI.Radio.ItemRender>
+                        <RUI.Radio.ItemRender value="custom_1"><RUI.Button>分组测试</RUI.Button></RUI.Radio.ItemRender>
+                        <RUI.Radio.ItemRender value="custom_1"><RUI.Button>禁用状态</RUI.Button></RUI.Radio.ItemRender>
+                    </RUI.RadioGroup>
+                </div>
             </div>
             <h3 className="sub-title">源码</h3>
             <div className="source">
