@@ -63,6 +63,9 @@ var Dialog = React.createClass({
             submitText:nextProps.submitText || '确认'
         });
     },
+    componentWillUnmount:function() {
+        $(window).unbind('resize', this.resize);
+    },
     componentDidUpdate:function(changes) {
         this.resize();
     },

@@ -5,6 +5,11 @@ import './example.scss';
 
 var home = require("../../README.md");
 
+window.onhashchange = function() {
+    RUI.DialogManager.clearAll();
+    RUI.OverlayManager.clearAll();
+};
+
 module.exports = React.createClass({
     render:function() {
         return (

@@ -40,6 +40,29 @@ browser example/index.html
 
 # Release logs
 
+## 0.3.14
+
+* Table support object render
+
+## 0.3.12
+
+* add Form Control : Textarea
+
+## 0.3.11
+
+* implement table allcheck
+* refactor TitleRender,  ItemRender and Column
+
+## 0.3.10
+
+* fixed Pagination default state error
+* fixed Table css float error, add clearfix
+
+## 0.3.9
+
+* fixed some bugs
+* !!! The implement of Table is dirty , refactor in next version : 0.4.0
+
 ## 0.3.6
 
 * add Component Slider

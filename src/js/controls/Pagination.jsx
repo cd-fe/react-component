@@ -7,9 +7,9 @@ module.exports = React.createClass({
     mixins:[ComponentBase],
     getInitialState:function() {
         return {
-            pageSize:this.props.pageSize || 20,
+            pageSize:this.props.pageSize || 10,
             currentPage:this.props.currentPage || 1,
-            totalNum:this.props.totalNum || 108
+            totalNum:this.props.totalNum || 0
         };
     },
     getDefaultProps:function() {
@@ -52,7 +52,7 @@ module.exports = React.createClass({
     },
     renderItemRange:function(start, end) {
         var list = [];
-        var pageNumber = Math.ceil(this.state.totalNum / this.state.pageSize);
+        var pageNumber = this.state.totalNum < this.state.pageSize ? 1 : Math.ceil(this.state.totalNum / this.state.pageSize);
         for (var i = start; (i>0) && (i<=pageNumber) && (i<=end); i++) {
             list.push(<a key={start+'-'+end+'-'+i}
                 href="javascript:;"
@@ -67,7 +67,7 @@ module.exports = React.createClass({
     },
     renderPage:function() {
         var preview = 5;
-        var pageNumber = Math.ceil(this.state.totalNum / this.state.pageSize);
+        var pageNumber = this.state.totalNum <= this.state.pageSize ? 1 : Math.ceil(this.state.totalNum / this.state.pageSize);
         var list = [];
         if(this.state.currentPage <= (preview + 1)) {
             list = list.concat(this.renderItemRange(1, this.state.currentPage));

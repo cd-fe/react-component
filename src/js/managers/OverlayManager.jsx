@@ -1,5 +1,11 @@
 module.exports = {
     __overlay:null,
+    __autohide:true,
+    clearAll:function() {
+        if(this.__instance) {
+            this.__instance.hide();
+        }
+    },
     createOverlay:function() {
         var exist = document.getElementById('overlay-container');
         if(!exist) {
