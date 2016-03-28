@@ -1,5 +1,6 @@
 var Example = React.createClass({
     submitHandler:function(data, form) {
+        debugger;
         console.log(data);
         return false;
     },

@@ -1,5 +1,11 @@
 module.exports = React.createClass({
+    setForm:function(form) {
+        this.form = form;
+    },
+    clickHandler:function() {
+        this.form && this.form.submit();
+    },
     render:function() {
-        return <input type="submit" className="rui-button primary" />;
+        return <a type="submit" className="rui-button primary" onClick={this.clickHandler}>{this.props.children || '提交'}</a>;
     }
 });
