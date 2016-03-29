@@ -18,6 +18,9 @@ module.exports = React.createClass({
             change:this.props.onChange
         }
     },
+    getValue:function() {
+        return this.state.value;
+    },
     changeHandler:function(e) {
         if(this.props.mode == 'dynamic') {
             this.setState({

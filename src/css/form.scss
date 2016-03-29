@@ -1,0 +1,28 @@
+.rui-form {
+
+}
+
+.rui-control {
+  margin: 0 0 20px 0;
+}
+
+.rui-form-label {
+  display:inline-block;
+  margin:0 0 5px 0;
+  font-weight: 700;
+  line-height:38px;
+
+  .horizonal & {
+    float:left;
+    min-width:120px;
+    text-align:left;
+  }
+
+  .inline & {
+    display:none;
+  }
+}
+
+.rui-form-content {
+
+}

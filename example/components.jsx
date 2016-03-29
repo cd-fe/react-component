@@ -35,6 +35,7 @@ module.exports = React.createClass({
     render:function() {
         return <div className="components">
             <ul className="lists">
+                <li><Link activeClassName="active" to="/components/form">表单</Link></li>
                 <li><Link activeClassName="active" to="/components/button">按钮</Link></li>
                 <li><Link activeClassName="active" to="/components/input">输入框</Link></li>
                 <li><Link activeClassName="active" to="/components/select">下拉选框</Link></li>
