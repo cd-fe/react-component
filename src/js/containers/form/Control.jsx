@@ -22,6 +22,9 @@ var Control = React.createClass({
             cname:'control'
         };
     },
+    getValue:function() {
+        return this.refs.content.getValue && (this.refs.content.getValue() || null);
+    },
     render:function() {
         var ControlMap = Control.findControlMap(this.props.type);
 
@@ -30,7 +33,7 @@ var Control = React.createClass({
         return <div {...this.props} className={className(this.props.className, this.getPropClass())}>
             <Label>{this.props.label}</Label>
             <Content>
-                <ControlMap.tag {...props} {...ControlMap.props}>
+                <ControlMap.tag {...props} {...ControlMap.props} ref="content">
                     {this.props.children}
                 </ControlMap.tag>
             </Content>

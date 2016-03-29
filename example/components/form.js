@@ -1,7 +1,6 @@
 var Example = React.createClass({
     submitHandler:function(data, form) {
-        debugger;
-        console.log(data);
+        alert(JSON.stringify(data));
         return false;
     },
     render:function() {
@@ -52,7 +51,6 @@ var Example = React.createClass({
                             </RUI.Form.Control>
                         <RUI.Form.Control name="role" label="角色" type="select" data={selectData} />
                         <RUI.Form.Submit>保存</RUI.Form.Submit>
-                        <RUI.Form.Reset>重置</RUI.Form.Reset>
                     </RUI.Form>
                 </div>
                 <h4 className="final-title">验证</h4>
