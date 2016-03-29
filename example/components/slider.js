@@ -23,6 +23,34 @@ var Example = React.createClass({
         }
         return result;
     },
+    getImageSlide:function() {
+        return [
+            'http://5doe.com/custom/demo/images/wave_photo_1.jpg',
+            'http://5doe.com/custom/demo/images/wave_photo_2.jpg',
+            'http://5doe.com/custom/demo/images/wave_photo_3.jpg',
+            'http://5doe.com/custom/demo/images/wave_photo_4.jpg'
+        ].map(function(image, index) {
+            return <RUI.Slider.Item key={index}>
+                <img src={image} style={{height:300}} />
+            </RUI.Slider.Item>
+        });
+    },
+    getThumbSlide:function() {
+        return [
+            'http://5doe.com/custom/demo/images/wave_photo_1.jpg',
+            'http://5doe.com/custom/demo/images/wave_photo_2.jpg',
+            'http://5doe.com/custom/demo/images/wave_photo_3.jpg',
+            'http://5doe.com/custom/demo/images/wave_photo_4.jpg'
+        ].map(function(image, index) {
+            return <RUI.Slider.Item key={index}>
+                <img src={image} style={{height:80}}/>
+            </RUI.Slider.Item>
+        });
+    },
+    componentDidMount:function() {
+        this.refs.big.setControl(this.refs.thumb.getSwiper());
+        this.refs.thumb.setControl(this.refs.big.getSwiper());
+    },
     render:function() {
         return <div className="example-slider">
             <h2 className="title">轮播图<span>Slider</span></h2>
@@ -55,6 +83,15 @@ var Example = React.createClass({
                     <RUI.Slider slidesPerView={"auto"} centeredSlides={true} spaceBetween={30} className={"auto-layout"}>
                         {this.getSlides(18, 150, 600)}
                         <RUI.Slider.Pagination useClick={true} />
+                    </RUI.Slider>
+                </div>
+                <h4 className="final-title">缩略图</h4>
+                <div>
+                    <RUI.Slider ref="big" centeredSlides={true}>
+                        {this.getImageSlide()}
+                    </RUI.Slider>
+                    <RUI.Slider ref="thumb" thumb={true}>
+                        {this.getThumbSlide(8)}
                     </RUI.Slider>
                 </div>
             </div>

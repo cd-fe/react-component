@@ -20,3 +20,15 @@
     align-items: center;
   }
 }
+
+.swiper-thumb {
+  .slider-item {
+    max-height:80px;
+    width:auto;
+  }
+}
+
+.example-slider .swiper-thumb .slide-content {
+  width:120px;
+  height:80px;
+}

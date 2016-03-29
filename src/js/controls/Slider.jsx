@@ -1,6 +1,6 @@
 import className from '../util/className.jsx';
 import ComponentBase from '../mixins/ComponentBase.jsx';
-
+import flatten from '../util/flatten.jsx';
 import Swiper from 'swiper';
 
 import 'swiper/dist/css/swiper.css';
@@ -43,7 +43,7 @@ var Slider = React.createClass({
             cname:'slider',
             autoplay:3000,
             speed:300,
-            loop:true
+            loop:false
         };
     },
     componentDidMount:function() {
@@ -69,12 +69,16 @@ var Slider = React.createClass({
         });
     },
     getSlides:function() {
-        return (Array.isArray(this.props.children) ? this.props.children : []).filter(function(item) {
-            if(item.type && (item.type.displayName != 'Pagination' || item.type.displayName != 'NavigateButton')) {
-                return false;
+        return flatten(Array.isArray(this.props.children) ? this.props.children : []).filter(function(item) {
+            if(item.type && item.type.displayName == 'Slide') {
+                return true;
             }
-            return true;
+            return false;
         });
+    },
+    setControl:function(control) {
+        this.control = control;
+        this.updateSwiper();
     },
     getSwiperParams:function() {
         var current = {};
@@ -83,6 +87,16 @@ var Slider = React.createClass({
         if(pagination) {
             current.pagination = '.swiper-pagination';
             current.paginationClickable = pagination.props.useClick || false;
+        }
+        if(this.control) {
+            current.control = this.control;
+        }
+        if(this.props.thumb) {
+            current.slideToClickedSlide = true;
+            current.centeredSlides = true;
+            current.slidesPerView = 'auto';
+            current.spaceBetween = 10;
+            current.touchRatio = 0.2;
         }
         return Object.assign(current, this.props);
     },
@@ -94,14 +108,14 @@ var Slider = React.createClass({
     },
     updateSwiper:function() {
         var swiper = this.getSwiper();
-        if(swiper) {
-            this.clearSwiper();
-        }
         $(ReactDOM.findDOMNode(this)).data('react-swiper', $(ReactDOM.findDOMNode(this)).swiper(this.getSwiperParams()));
     },
     render:function() {
         var classes = className(this.props.className, this.getPropClass());
         classes += ' swiper-container';
+        if(this.props.thumb) {
+            classes += ' swiper-thumb';
+        }
         var props = require('../util/omit.jsx')(this.props, 'onClick');
         return <div {...props} className={classes}>
             <div className={"swiper-wrapper"}>
