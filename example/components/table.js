@@ -127,7 +127,7 @@ var Example = React.createClass({
                 <div>
                     <RUI.Table dataSource={sourceData}/>
                 </div>
-                <h4 className="final-title">动态渲染</h4>
+                <h4 className="final-title">动态渲染-过滤列名</h4>
                 <div>
                     <RUI.Table dataSource={this.state.ajaxData} columnsFilter={this.columnsFilter} />
                 </div>
@@ -142,7 +142,7 @@ var Example = React.createClass({
                         <RUI.Column title={"用户名"} dataField={"name"} />
                         <RUI.Column title={"手机号"} dataField={"phone"} fieldFunction={this.fieldFormat} />
                         <RUI.Column title={"省份"} dataField={"prov"} />
-                        <RUI.Column title={"标签"} dataField={"desc.tag"} />
+                        <RUI.Column title={"描述标签"} dataField={"desc.tag"} />
                         <RUI.Column title={"角色"} dataField={"role"} />
                     </RUI.Table>
                 </div>
@@ -167,7 +167,7 @@ var Example = React.createClass({
                             </RUI.Table.ItemRender>
                         </RUI.Column>
                     </RUI.Table>
-                </div>*/}
+                </div>
             </div>
             <h3 className="sub-title">源码</h3>
             <div className="source">

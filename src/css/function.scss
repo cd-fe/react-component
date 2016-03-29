@@ -895,7 +895,6 @@ $flexMid:                     true !default; //用于ie10 -ms前缀
 // @include simple-btn(true);
 // @include simple-btn($bgColor:$green);
 @mixin simple-btn($formbtn:false, $bgColor: $white, $textColor:$text1){
-  vertical-align: middle;
   cursor: pointer;
   text-align: center;
 
