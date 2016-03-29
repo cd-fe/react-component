@@ -31,7 +31,7 @@ module.exports = React.createClass({
     getDefaultTitleRender:function() {
         var render = this.findExistRender('table-title');
         if(!render) {
-            render = <ItemRenderDefault label={this.props.title || this.props.dataField} />;
+            render = <ItemRenderDefault label={this.props.title || this.props.dataField} style={{height:this.props.titleHeight}} />;
         }
         return render;
     },
@@ -56,7 +56,7 @@ module.exports = React.createClass({
             if(child.setData) {
                 child.setData(data, dataField);
             }else {
-                console.warn('ItemRender must to implement "setData" method.', child.props.cname);
+                console.warn('ItemRender must to implement "setData" method.', child);
             }
         }.bind(this));
     },
@@ -71,9 +71,10 @@ module.exports = React.createClass({
                 {this.getDefaultTitleRender()}
             </TitleRender>
             {this.props.source && this.props.source.map(function(item, index) {
-                return <ItemRender key={index}>{React.cloneElement(DefaultRenderClass, merge({
+                return <ItemRender key={index} style={{height:_this.props.itemHeight}}>{React.cloneElement(DefaultRenderClass, merge({
                     ref:index,
-                    fieldFunction:_this.props.fieldFunction
+                    fieldFunction:_this.props.fieldFunction,
+                    itemHeight:_this.props.itemMiddle ? _this.props.itemHeight + 'px' : null
                 }, DefaultRenderClassProps))}</ItemRender>;
             })}
         </ul>;

@@ -133,15 +133,19 @@ var Example = React.createClass({
                 </div>
                 <h4 className="final-title">自定义标题格</h4>
                 <div>
-                    <RUI.Table dataSource={sourceData}>
+                    <RUI.Table dataSource={sourceData} itemHeight={72}>
                         <RUI.Column dataField={"id"}>
                             <RUI.Table.TitleRender>
                                 <SortTitleRender onClick={this.sortData} />
                             </RUI.Table.TitleRender>
                         </RUI.Column>
+                        <RUI.Column title={"头像"}>
+                            <RUI.Table.ItemRender>
+                                <img src="http://5doe.com/custom/demo/images/wave_photo_1.jpg" style={{height:80}} />
+                            </RUI.Table.ItemRender>
+                        </RUI.Column>
                         <RUI.Column title={"用户名"} dataField={"name"} />
                         <RUI.Column title={"手机号"} dataField={"phone"} fieldFunction={this.fieldFormat} />
-                        <RUI.Column title={"省份"} dataField={"prov"} />
                         <RUI.Column title={"描述标签"} dataField={"desc.tag"} />
                         <RUI.Column title={"角色"} dataField={"role"} />
                     </RUI.Table>

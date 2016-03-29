@@ -15,6 +15,9 @@ var Table = React.createClass({
     getDefaultProps:function() {
         return {
             cname:'table',
+            titleHeight:38,
+            itemHeight:36,
+            itemMiddle:true,
             columnsFilter:function(keys) {
                 return keys;
             }
@@ -37,9 +40,21 @@ var Table = React.createClass({
             props.style = styles;
             props.source = this.props.dataSource;
             props.key = index;
+            props.titleHeight = this.props.titleHeight;
+            props.itemHeight = this.props.itemHeight;
+            props.itemMiddle = this.props.itemMiddle;
             return React.cloneElement(column, props);
         }.bind(this)) : (this.props.dataSource && this.props.dataSource.length ? this.props.columnsFilter(Object.keys(this.props.dataSource[0])).map(function(key, index, all) {
-            return <Column source={this.props.dataSource} title={key} dataField={key} key={index} style={{width:this.percent(all.length) + '%'}}/>
+            return <Column
+                titleHeight={this.props.titleHeight}
+                itemHeight={this.props.itemHeight}
+                source={this.props.dataSource}
+                title={key}
+                dataField={key}
+                key={index}
+                itemMiddle={this.props.itemMiddle}
+                style={{width:this.percent(all.length) + '%'}}
+            />;
         }.bind(this)) : null);
 
         return <div {...this.props} className={classes}>

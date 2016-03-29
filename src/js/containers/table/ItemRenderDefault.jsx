@@ -22,7 +22,7 @@ module.exports = React.createClass({
         });
     },
     render:function() {
-        return <span {...this.props}>
+        return <span {...this.props} style={{lineHeight:this.props.itemHeight}}>
             {this.state.label || ""}
         </span>;
     }

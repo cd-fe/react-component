@@ -3,7 +3,17 @@
 .rui-table {
   clear: both;
   &-column {
-    text-indent:20px;
+    &:first-child {
+      .rui-table-column-item,.rui-table-title {
+        padding-left:20px;
+      }
+    }
+    &:last-child {
+      .rui-table-column-item,.rui-table-title {
+        padding-right: 20px;
+      }
+    }
+
     float:left;
     color:#666;
 
