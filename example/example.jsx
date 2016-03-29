@@ -22,6 +22,7 @@ ReactDOM.render((
                 <Route path="tree" component={loader(require('bundle?lazy!babel?presets=react!./components/tree.js'))}></Route>
                 <Route path="slider" component={loader(require('bundle?lazy!babel?presets=react!./components/slider.js'))}></Route>
                 <Route path="form" component={loader(require('bundle?lazy!babel?presets=react!./components/form.js'))}></Route>
+                <Route path="spinner" component={loader(require('bundle?lazy!babel?presets=react!./components/spinner.js'))}></Route>
             </Route>
         </Route>
     </Router>
