@@ -13,7 +13,8 @@ var config = {
         //publicPath:"./dist/",
         publicPath:ENV == 'development' ? "http://localhost:8008/example/dist/" : "./dist/",
         path:"./example/dist/",
-        filename:'example.js'
+        filename:'example.js',
+        chunkFilename:'chunk/[name].[chunkhash:8].js'
     },
     externals: [
         {
