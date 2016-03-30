@@ -5,30 +5,30 @@
 
 ## todolist
 
-* Pagination Done ![Done][1]
-* Table Done
+* Pagination ![Done][1]
+* Table ![Done][1]
 * List
 * QRCode
-* Checkbox Done
-* CheckboxGroup Done
-* Radio Done
-* RadioGroup Done
-* Select Done
-* Tree Done
-* Datepicker Done
+* Checkbox ![Done][1]
+* CheckboxGroup ![Done][1]
+* Radio ![Done][1]
+* RadioGroup ![Done][1]
+* Select ![Done][1]
+* Tree ![Done][1]
+* Datepicker ![Done][1]
 * Message
-* Form
+* Form ![Done][1]
 * DataSource
-* Dialog Done
+* Dialog ![Done][1]
 * Upload
 * Tab
 * Accordion
 * AutoComplete
 * Progress
-* Tooltip Done
-* Slider
-* Button Done
-* Spinner Done
+* Tooltip ![Done][1]
+* Slider ![Done][1]
+* Button ![Done][1]
+* Spinner ![Done][1]
 
 # how to develop
 
@@ -41,6 +41,13 @@ browser example/index.html
 ```
 
 # Release logs
+
+## 0.3.15
+
+* add Component Spinner
+* Table support custom itemHeight
+* Input add props disable
+* add Slider thumb demo
 
 ## 0.3.14
 
