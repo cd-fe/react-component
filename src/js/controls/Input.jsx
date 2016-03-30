@@ -27,7 +27,6 @@ module.exports = React.createClass({
             this.setState({
                 value: e.target.value
             });
-
             this.state.change && this.state.change.call(null, e);
         }
     },
@@ -40,9 +39,14 @@ module.exports = React.createClass({
     },
     render:function() {
         var props = omit(this.props, 'onChange', 'value', 'readonly');
+
+        if(this.props.disable) {
+            props.disabled = true;
+        }
+
         return <input {...props}
             type={this.props.type}
-            value={this.state.value}
+            value={this.state.value+""}
             onChange={this.changeHandler}
             className={className(this.props.className, this.getPropClass())}
         ></input>

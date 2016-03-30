@@ -195,3 +195,14 @@
     width:auto;
   }
 }
+
+.spinner-config {
+  p {
+    label:first-child {
+      width:120px;
+      display:inline-block;
+      line-height:36px;
+    }
+    margin-bottom:10px;
+  }
+}

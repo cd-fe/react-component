@@ -1,3 +1,25 @@
 .rui-spinner {
+  &-input {
+    width:50px;
+    border:none;
+    outline:none;
+  }
 
+  &-down {
+    padding:10px 18px;
+    &:hover,&:active {
+      box-shadow:none;
+      background:url(../img/spinner.png) 0 0 no-repeat;
+    }
+    background:url(../img/spinner.png) 0 0 no-repeat;
+  }
+
+  &-up {
+    padding:10px 18px;
+    &:hover,&:active {
+      box-shadow:none;
+      background:url(../img/spinner.png) 0 -36px no-repeat;
+    }
+    background:url(../img/spinner.png) 0 -36px no-repeat;
+  }
 }

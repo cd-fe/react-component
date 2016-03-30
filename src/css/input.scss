@@ -11,6 +11,10 @@
   outline:none;
   padding:0 10px;
 
+  &.disable {
+    background:#ececec;
+  }
+
   &:focus {
     border:1px solid #74c5ee;
   }
