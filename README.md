@@ -27,6 +27,7 @@
 * Tooltip Done
 * Slider
 * Button Done
+* Spinner Done
 
 # how to develop
 
