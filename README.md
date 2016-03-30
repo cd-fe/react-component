@@ -4,7 +4,7 @@
 
 ## todolist
 
-* Pagination Done [![Done](https://cdn2.iconfinder.com/static/b8f60f4d8c7eba9114a36481bae51c41/assets/img/checkmark-green.png)]
+* Pagination Done ![Done](https://cdn2.iconfinder.com/static/b8f60f4d8c7eba9114a36481bae51c41/assets/img/checkmark-green.png)
 * Table Done
 * List
 * QRCode
