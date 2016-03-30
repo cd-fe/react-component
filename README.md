@@ -1,10 +1,11 @@
+[1]:https://cdn2.iconfinder.com/static/b8f60f4d8c7eba9114a36481bae51c41/assets/img/checkmark-green.png
 # UI Library for React
 
 ## [live demo](http://5doe.com/custom/react-component/example/)
 
 ## todolist
 
-* Pagination Done ![Done](https://cdn2.iconfinder.com/static/b8f60f4d8c7eba9114a36481bae51c41/assets/img/checkmark-green.png)
+* Pagination Done ![Done][1]
 * Table Done
 * List
 * QRCode
