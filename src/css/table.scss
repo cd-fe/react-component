@@ -2,6 +2,25 @@
 
 .rui-table {
   clear: both;
+
+  &-header {
+    width:100%;
+    .rui-table-title {
+      float:left;
+    }
+    float:left;
+    color:#666;
+
+    .rui-table-title:first-child {
+      padding-left:20px;
+    }
+    .rui-table-title:last-child {
+      padding-right: 20px;
+      text-align:center;
+    }
+
+  }
+
   &-column {
     &:first-child {
       .rui-table-column-item,.rui-table-title {
@@ -16,6 +35,7 @@
 
     float:left;
     color:#666;
+    position:relative;
 
     &-item {
       background:#fff;
@@ -47,5 +67,11 @@
     height:38px;
     padding:0;
     background:#f7f7f7;
+  }
+
+  &-scroller {
+    overflow-y:auto;
+    position:relative;
+    float:left;
   }
 }

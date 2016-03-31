@@ -47,6 +47,20 @@ var Example = React.createClass({
     getInitialState:function() {
         return {
             ajaxData:[],
+            fullData:[
+                {id:1,name:"张三",phone:"13312341234", prov:"北京", role:"管理员", desc:{tag:'影视 娱乐'}},
+                {id:2,name:"李四",phone:"18912341234", prov:"四川", role:"超级管理员", desc:{tag:'IT 编程'}},
+                {id:3,name:"王五",phone:"13512341234", prov:"杭州", role:"编辑", desc:{tag:'数码 科技'}},
+                {id:4,name:"张三",phone:"13312341234", prov:"北京", role:"管理员", desc:{tag:'影视 娱乐'}},
+                {id:5,name:"李四",phone:"18912341234", prov:"四川", role:"超级管理员", desc:{tag:'IT 编程'}},
+                {id:6,name:"王五",phone:"13512341234", prov:"杭州", role:"编辑", desc:{tag:'数码 科技'}},
+                {id:7,name:"张三",phone:"13312341234", prov:"北京", role:"管理员", desc:{tag:'影视 娱乐'}},
+                {id:8,name:"李四",phone:"18912341234", prov:"四川", role:"超级管理员", desc:{tag:'IT 编程'}},
+                {id:9,name:"王五",phone:"13512341234", prov:"杭州", role:"编辑", desc:{tag:'数码 科技'}},
+                {id:10,name:"张三",phone:"13312341234", prov:"北京", role:"管理员", desc:{tag:'影视 娱乐'}},
+                {id:11,name:"李四",phone:"18912341234", prov:"四川", role:"超级管理员", desc:{tag:'IT 编程'}},
+                {id:12,name:"王五",phone:"13512341234", prov:"杭州", role:"编辑", desc:{tag:'数码 科技'}}
+            ],
             data:this.getData().map(function(item) {
                 item.selected = true;
                 return item;
@@ -183,6 +197,10 @@ var Example = React.createClass({
                             </RUI.Table.ItemRender>
                         </RUI.Column>
                     </RUI.Table>
+                </div>
+                <h4 className="final-title">固定高度-滚动条</h4>
+                <div>
+                    <RUI.Table height={200} dataSource={this.state.fullData}/>
                 </div>
             </div>
             <h3 className="sub-title">源码</h3>
