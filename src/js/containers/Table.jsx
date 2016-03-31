@@ -9,7 +9,8 @@ var Table = React.createClass({
     mixins:[ComponentBase],
     getInitialState:function() {
         return {
-            dataSource:this.props.dataSource || []
+            dataSource:this.props.dataSource || [],
+            componentWidth:0
         };
     },
     getDefaultProps:function() {

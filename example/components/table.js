@@ -39,7 +39,7 @@ var SortTitleRender = React.createClass({
         this.setState(data);
     },
     render:function() {
-        return <a {...this.props}>序号(点击后排序)</a>;
+        return <a {...this.props}>排序</a>;
     }
 });
 
@@ -56,8 +56,20 @@ var Example = React.createClass({
     componentDidMount:function() {
         // 你就假设这儿有一个ajax请求吧
         this.setState({
-            ajaxData:this.state.data
+            ajaxData:this.state.data.concat({
+                id:4,name:"张三44444",phone:"13312341234", prov:"北京", role:"管理员", desc:{tag:'影视 娱乐'}
+            })
         });
+
+        setTimeout(function() {
+            var list = this.state.ajaxData;
+            list.splice(0, 3);
+            this.setState({
+                ajaxData:list.concat({
+                    id:5,name:"张三5555",phone:"13312341234", prov:"北京", role:"管理员", desc:{tag:'影视 娱乐'}
+                })
+            });
+        }.bind(this), 2000);
     },
     columnsFilter:function(keys) {
         var index = keys.findIndex(function(item) {
@@ -123,18 +135,18 @@ var Example = React.createClass({
             <h2 className="title">表格<span>Table</span></h2>
             <h3 className="sub-title">演示</h3>
             <div className="example">
-                <h4 className="final-title">默认表格</h4>
+                {/*<h4 className="final-title">默认表格</h4>
                 <div>
                     <RUI.Table dataSource={sourceData}/>
                 </div>
                 <h4 className="final-title">动态渲染-过滤列名</h4>
                 <div>
                     <RUI.Table dataSource={this.state.ajaxData} columnsFilter={this.columnsFilter} />
-                </div>
+                </div>*/}
                 <h4 className="final-title">自定义标题格</h4>
                 <div>
                     <RUI.Table dataSource={sourceData} itemHeight={72}>
-                        <RUI.Column dataField={"id"}>
+                        <RUI.Column dataField={"id"} style={{width:80}}>
                             <RUI.Table.TitleRender>
                                 <SortTitleRender onClick={this.sortData} />
                             </RUI.Table.TitleRender>
