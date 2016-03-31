@@ -42,6 +42,12 @@ browser example/index.html
 
 # Release logs
 
+## 0.3.16
+
+* Table support column width
+* Table support scroller and fixed title
+* Spinner max number bug
+
 ## 0.3.15
 
 * add Component Spinner

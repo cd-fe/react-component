@@ -40,22 +40,20 @@ module.exports = React.createClass({
     getValue:function() {
         return this.state.value;
     },
-    doCount:function(direction) {
+    doCount:function(direction, val) {
         if(this.props.disable) {
             return;
         }
 
-        var value = this.state.value + direction * this.props.step;
-        value = Math.max(Math.min(value, this.props.max), this.props.min);
+        var value = (val || this.state.value) + direction * this.props.step;
+        value = Math.max(Math.min(value, this.props.max), this.props.min * 1);
         this.setState({
             value:value
         });
     },
     changeHandler:function(e) {
         var value = e.target.value;
-        this.setState({
-            value:value - (value % this.props.step)
-        });
+        this.doCount(0, value - (value % this.props.step));
     },
     componentWillReceiveProps:function(nextProps) {
         var update = {};
@@ -76,7 +74,7 @@ module.exports = React.createClass({
 
         return <div {...props} className={classes}>
             <RUI.Button className="rui-spinner-down" onClick={this.doCount.bind(this, -1)} />
-            <RUI.Input ref="input" className="rui-spinner-input" value={this.state.value} disable={this.props.disable} onChange={this.changeHandler} />
+            <RUI.Input ref="input" className="rui-spinner-input" value={this.state.value} disable={this.props.disable} onBlur={this.changeHandler} />
             <RUI.Button className="rui-spinner-up" onClick={this.doCount.bind(this, 1)} />
         </div>;
     }

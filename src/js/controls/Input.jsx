@@ -32,7 +32,7 @@ module.exports = React.createClass({
     },
     componentWillReceiveProps:function(nextProps) {
         var update = {};
-        if(typeof nextProps.value != 'undefined' && nextProps.value != this.state.value) {
+        if(typeof nextProps.value != 'undefined') {
             update.value = nextProps.value
         };
         this.setState(update);
