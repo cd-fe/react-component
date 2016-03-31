@@ -135,18 +135,18 @@ var Example = React.createClass({
             <h2 className="title">表格<span>Table</span></h2>
             <h3 className="sub-title">演示</h3>
             <div className="example">
-                {/*<h4 className="final-title">默认表格</h4>
+                <h4 className="final-title">默认表格</h4>
                 <div>
                     <RUI.Table dataSource={sourceData}/>
                 </div>
                 <h4 className="final-title">动态渲染-过滤列名</h4>
                 <div>
                     <RUI.Table dataSource={this.state.ajaxData} columnsFilter={this.columnsFilter} />
-                </div>*/}
+                </div>
                 <h4 className="final-title">自定义标题格</h4>
                 <div>
                     <RUI.Table dataSource={sourceData} itemHeight={72}>
-                        <RUI.Column dataField={"id"} style={{width:80}}>
+                        <RUI.Column dataField={"id"} width={80}>
                             <RUI.Table.TitleRender>
                                 <SortTitleRender onClick={this.sortData} />
                             </RUI.Table.TitleRender>
@@ -165,7 +165,7 @@ var Example = React.createClass({
                 <h4 className="final-title">自定义单元格</h4>
                 <div>
                     <RUI.Table dataSource={sourceData}>
-                        <RUI.Column>
+                        <RUI.Column width={75}>
                             <RUI.Table.TitleRender>
                                 <CheckboxItemRender onClick={this.allCheck} selected={this.isAllCheck()} />
                             </RUI.Table.TitleRender>
@@ -175,8 +175,8 @@ var Example = React.createClass({
                         </RUI.Column>
                         <RUI.Column title={"用户名"} dataField={"name"}/>
                         <RUI.Column title={"手机号"} dataField={"phone"} />
-                        <RUI.Column title={"省份"} dataField={"prov"} />
-                        <RUI.Column title={"角色"} dataField={"role"} />
+                        <RUI.Column title={"省份"} dataField={"prov"} width={75} />
+                        <RUI.Column title={"角色"} dataField={"role"} width={75} />
                         <RUI.Column title={"操作"}>
                             <RUI.Table.ItemRender>
                                 <OperationItemRender onClick={this.tableDelete}>删除</OperationItemRender>
