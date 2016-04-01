@@ -17,7 +17,7 @@ var Table = React.createClass({
     getDefaultProps:function() {
         return {
             cname:'table',
-            height:'auto',
+            height:null,
             titleHeight:38,
             showTitle:true,
             itemHeight:36,
@@ -104,9 +104,15 @@ var Table = React.createClass({
             />;
         }.bind(this)));
 
+        var scrollerStyles = {};
+        if(this.props.height !== null) {
+            scrollerStyles.maxHeight = this.props.height;
+            scrollerStyles.overflowY = 'auto';
+        }
+
         return <div {...this.props} className={classes}>
             {this.props.showTitle && <Header columns={children} />}
-            <div className="rui-table-scroller" style={{maxHeight:this.props.height}}>
+            <div className="rui-table-scroller" style={scrollerStyles}>
                 {children}
             </div>
         </div>;
