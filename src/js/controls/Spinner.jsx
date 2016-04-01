@@ -23,18 +23,27 @@ module.exports = React.createClass({
     },
     componentDidMount:function() {
         var _this = this;
+        this.updateKeyboardEvent();
+    },
+    updateKeyboardEvent:function() {
+        var _this = this;
+
+        function keyHandler(e) {
+            if(e.keyCode == 38) {
+                _this.doCount(1);
+                return false;
+            }
+            if(e.keyCode == 40) {
+                _this.doCount(-1);
+                return false;
+            }
+        }
+
+        var node = ReactDOM.findDOMNode(this.refs.input);
         if(this.props.keyboardEnable) {
-            var node = ReactDOM.findDOMNode(this.refs.input);
-            $(node).on('keydown', function(e) {
-                if(e.keyCode == 38) {
-                    _this.doCount(1);
-                    return false;
-                }
-                if(e.keyCode == 40) {
-                    _this.doCount(-1);
-                    return false;
-                }
-            });
+            $(node).bind('keydown', keyHandler);
+        }else {
+            $(node).unbind('keydown');
         }
     },
     getValue:function() {
@@ -57,6 +66,7 @@ module.exports = React.createClass({
     },
     componentWillReceiveProps:function(nextProps) {
         var update = {};
+        var flag = false;
         if(typeof nextProps.value != 'undefined' && nextProps.value != this.state.value) {
             update.value = Math.max(Math.min(nextProps.value, this.props.max), this.props.min);
         }
@@ -66,7 +76,12 @@ module.exports = React.createClass({
         if(typeof nextProps.min != 'undefined') {
             update.value = Math.max(nextProps.min, (update.value || this.state.value));
         }
-        this.setState(update);
+        if(typeof nextProps.keyboardEnable !== this.props.keyboardEnable) {
+            flag = true;
+        }
+        this.setState(update, function() {
+            flag && this.updateKeyboardEvent();
+        }.bind(this));
     },
     render:function() {
         var props = omit(this.props, 'onChange', 'value');
