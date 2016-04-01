@@ -45,7 +45,7 @@ module.exports = React.createClass({
             return;
         }
 
-        var value = (val || this.state.value) + direction * this.props.step;
+        var value = (typeof val == 'number' ? val : this.state.value) + direction * this.props.step;
         value = Math.max(Math.min(value, this.props.max), this.props.min * 1);
         this.setState({
             value:value
