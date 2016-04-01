@@ -41,7 +41,7 @@ var Column = module.exports = React.createClass({
             var data = this.props.source[index];
             var child = this.refs[key];
             if(child.setData) {
-                child.setData(data, dataField);
+                child.setData(data, dataField, key * 1);
             }else {
                 console.warn('ItemRender must to implement "setData" method.', child);
             }
