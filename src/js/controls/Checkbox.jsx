@@ -36,6 +36,6 @@ module.exports = React.createClass({
         var classes = className(this.props.className, this.getPropClass());
         classes += ' ' + this.getToggleResult();
 
-        return <label className={classes}>{this.props.children}</label>
+        return <label {...this.props} className={classes}>{this.props.children}</label>
     }
 });
