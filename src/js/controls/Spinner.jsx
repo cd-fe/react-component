@@ -1,5 +1,6 @@
 import className from '../util/className.jsx';
 import omit from '../util/omit.jsx';
+import cap from '../util/capitalize.jsx';
 import ComponentBase from '../mixins/ComponentBase.jsx';
 
 import '../../css/spinner.scss';
@@ -13,7 +14,8 @@ module.exports = React.createClass({
             max:9999,
             min:0,
             keyboardEnable:true,
-            disable:false
+            disable:false,
+            eventType:'blur'
         };
     },
     getInitialState:function() {
@@ -22,7 +24,6 @@ module.exports = React.createClass({
         };
     },
     componentDidMount:function() {
-        var _this = this;
         this.updateKeyboardEvent();
     },
     updateKeyboardEvent:function() {
@@ -54,7 +55,7 @@ module.exports = React.createClass({
             return;
         }
 
-        var value = (typeof val == 'number' ? val : this.state.value) + direction * this.props.step;
+        var value = (typeof val == 'number' ? val : (this.state.value ? this.state.value : 0)) + direction * this.props.step;
         value = Math.max(Math.min(value, this.props.max), this.props.min * 1);
         this.setState({
             value:value
@@ -87,9 +88,17 @@ module.exports = React.createClass({
         var props = omit(this.props, 'onChange', 'value');
         var classes = className(this.props.className, this.getPropClass());
 
+        var inputProps = {
+            ref:"input",
+            className:"rui-spinner-input",
+            value:this.state.value,
+            disable:this.props.disable
+        };
+        inputProps['on' + cap(this.props.eventType)] = this.changeHandler;
+
         return <div {...props} className={classes}>
             <RUI.Button className="rui-spinner-down" onClick={this.doCount.bind(this, -1)} />
-            <RUI.Input ref="input" className="rui-spinner-input" value={this.state.value} disable={this.props.disable} onBlur={this.changeHandler} />
+            <RUI.Input {...inputProps} />
             <RUI.Button className="rui-spinner-up" onClick={this.doCount.bind(this, 1)} />
         </div>;
     }
