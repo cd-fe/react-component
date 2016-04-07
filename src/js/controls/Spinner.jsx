@@ -15,7 +15,11 @@ module.exports = React.createClass({
             min:0,
             keyboardEnable:true,
             disable:false,
-            eventType:'blur'
+            eventType:'blur',
+            onChange:null,
+            fieldFunction:function(str) {
+                return str;
+            }
         };
     },
     getInitialState:function() {
@@ -25,6 +29,10 @@ module.exports = React.createClass({
     },
     componentDidMount:function() {
         this.updateKeyboardEvent();
+    },
+    componentWillUnmount:function() {
+        var node = ReactDOM.findDOMNode(this.refs.input);
+        $(node).unbind('keydown');
     },
     updateKeyboardEvent:function() {
         var _this = this;
@@ -41,10 +49,9 @@ module.exports = React.createClass({
         }
 
         var node = ReactDOM.findDOMNode(this.refs.input);
+        $(node).unbind('keydown');
         if(this.props.keyboardEnable) {
             $(node).bind('keydown', keyHandler);
-        }else {
-            $(node).unbind('keydown');
         }
     },
     getValue:function() {
@@ -59,7 +66,9 @@ module.exports = React.createClass({
         value = Math.max(Math.min(value, this.props.max), this.props.min * 1);
         this.setState({
             value:value
-        });
+        }, function() {
+            this.props.onChange && this.props.onChange.call(null, this.state.value);
+        }.bind(this));
     },
     changeHandler:function(e) {
         var value = e.target.value;
@@ -91,7 +100,7 @@ module.exports = React.createClass({
         var inputProps = {
             ref:"input",
             className:"rui-spinner-input",
-            value:this.state.value,
+            value:this.props.fieldFunction(this.state.value),
             disable:this.props.disable
         };
         inputProps['on' + cap(this.props.eventType)] = this.changeHandler;

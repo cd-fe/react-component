@@ -13,8 +13,12 @@
     }
   }
 
+  &.timestatus {
+    width:160px;
+  }
+
   >.rui-input {
-    width:110px;
+    width:100%;
   }
 
   &-input-icon {
@@ -149,6 +153,22 @@
   &.active {
     .rui-datepicker-popup {
       display:block;
+    }
+  }
+
+  .rui-datepicker-time {
+    margin:10px 0;
+
+    .rui-timepicker {
+      float:left;
+    }
+
+    &-cancel {
+      margin-left:17px;
+    }
+
+    &-submit {
+      margin-left:10px;
     }
   }
 }

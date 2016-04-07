@@ -13,6 +13,7 @@ import RadioGroup from './controls/RadioGroup.jsx';
 import Table from './containers/Table.jsx';
 import Column from './containers/table/Column.jsx';
 import DatePicker from './controls/DatePicker.jsx';
+import TimePicker from './controls/TimePicker.jsx';
 import Loading from './controls/Loading.jsx';
 import Tree from './controls/Tree.jsx';
 import Slider from './controls/Slider.jsx';
@@ -49,6 +50,7 @@ var RUI = {
     Table:Table,
     Column:Column,
     DatePicker:DatePicker,
+    TimePicker:TimePicker,
     Loading:Loading,
     Tree:Tree,
     Slider:Slider,
