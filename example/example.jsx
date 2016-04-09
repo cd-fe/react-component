@@ -23,6 +23,7 @@ ReactDOM.render((
                 <Route path="slider" component={loader(require('bundle?lazy!babel?presets=react!./components/slider.js'))}></Route>
                 <Route path="form" component={loader(require('bundle?lazy!babel?presets=react!./components/form.js'))}></Route>
                 <Route path="spinner" component={loader(require('bundle?lazy!babel?presets=react!./components/spinner.js'))}></Route>
+                <Route path="scrollview" component={loader(require('bundle?lazy!babel?presets=react!./components/scrollview.js'))}></Route>
             </Route>
         </Route>
     </Router>

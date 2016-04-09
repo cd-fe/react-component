@@ -46,7 +46,8 @@
     "bundle-loader": "^0.5.4",
     "markdown-loader":"^0.1.7",
     "webpack-require-http":"^0.1.0",
-    "swiper":"^3.3.1"
+    "swiper":"^3.3.1",
+    "jquery-mousewheel":"latest"
   },
   "homepage": "https://github.com/cd-fe/react-component#readme",
   "directories": {

@@ -18,6 +18,7 @@ import Loading from './controls/Loading.jsx';
 import Tree from './controls/Tree.jsx';
 import Slider from './controls/Slider.jsx';
 import Form from './containers/Form.jsx';
+import ScrollView from './containers/ScrollView.jsx';
 
 import DataSource from './data/DataSource.jsx';
 
@@ -55,6 +56,7 @@ var RUI = {
     Tree:Tree,
     Slider:Slider,
     Form:Form,
+    ScrollView:ScrollView,
 
     DataSource:DataSource,
 
