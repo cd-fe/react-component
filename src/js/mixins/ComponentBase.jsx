@@ -1,6 +1,6 @@
 import PropClassMixin from '../mixins/PropClassMixin.jsx';
 import EventMixin from '../mixins/EventMixin.jsx';
-import TooltipMixin from '../mixins/ToolTipMixin.jsx';
+import TooltipMixin from '../mixins/TooltipMixin.jsx';
 
 import equal from '../util/equal.jsx';
 
