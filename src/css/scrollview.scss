@@ -12,7 +12,6 @@
     right:0;
     width:8px;
     height:100%;
-    background:rgba(254, 0, 0, 0.5);
   }
 
   &-baritem {
@@ -21,7 +20,12 @@
     left:0;
     width:100%;
     min-height:20px;
-    background:rgb(127, 127, 127);
+    background:rgba(0, 0, 0, 0);
     border-radius:4px 4px;
+    transition:background 0.3s;
+  }
+
+  .active &-baritem {
+    background:rgba(0, 0, 0, 0.5);
   }
 }

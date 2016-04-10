@@ -29,13 +29,15 @@ module.exports = React.createClass({
             outerWidth:0,
             outerHeight:0,
             nodeWidth:0,
-            nodeHeight:0
+            nodeHeight:0,
+            active:false,
+            dragging:false
         };
     },
     componentDidMount: function () {
         this.updateScroller();
 
-        var node = $(ReactDOM.findDOMNode(this.refs.content));
+        var node = $(ReactDOM.findDOMNode(this));
         var lastWidth = node.width();
         var lastHeight = node.height();
 
@@ -61,6 +63,67 @@ module.exports = React.createClass({
                 }
             }.bind(this));
         }
+
+        if(this.props.vertical) {
+            var vbar = $(ReactDOM.findDOMNode(this.refs.vbar));
+            var vbarItem = $(ReactDOM.findDOMNode(this.refs.vbaritem));
+
+            var entryPoint = null;
+
+            vbar.on('mouseup', function(e) {
+                if(entryPoint) {
+                    return;
+                }
+
+                var offsetY = e.clientY;
+                this.move(0, (offsetY > vbarItem.offset().top ? -1 : 1) * (this.state.outerHeight / this.props.scrollAmount));
+            }.bind(this));
+
+            function clear(e) {
+                $(window).unbind('mousemove');
+                entryPoint = null;
+                e.stopPropagation();
+                e.preventDefault();
+
+                this.setState({
+                    dragging:false
+                });
+
+                return false;
+            }
+
+            vbarItem.on('mousedown', function(e) {
+                entryPoint = {
+                    y:e.clientY
+                };
+
+                $(window).on('mousemove', function(e) {
+                    var offsetY = e.clientY - entryPoint.y;
+                    var percent = this.state.outerHeight / this.state.nodeHeight;
+                    this.move(0, (offsetY > 0 ? -1 : 1) * percent * Math.abs(offsetY));
+
+                    entryPoint = {
+                        y:e.clientY
+                    };
+                }.bind(this));
+
+                $(window).on('mouseup', clear.bind(this));
+
+                this.setState({
+                    dragging:true
+                });
+            }.bind(this));
+        }
+
+        node.on('mouseenter', function(e) {
+            this.setState({
+                active:true
+            });
+        }.bind(this)).on('mouseleave', function(e) {
+            this.setState({
+                active:false
+            });
+        }.bind(this));
     },
     updateScroller: function () {
         var node = $(ReactDOM.findDOMNode(this.refs.content));
@@ -115,15 +178,23 @@ module.exports = React.createClass({
         var vpercent = this.state.scrollTop / (this.state.nodeHeight - this.state.outerHeight);
         vpercent = isNaN(vpercent) || !isFinite(vpercent) ? 0 : vpercent;
 
+        if(this.state.active) {
+            classes += ' active';
+        }
+
+        if(this.state.dragging) {
+            classes += ' noselect';
+        }
+
         return <div {...this.props} className={classes}>
             <div className="rui-scrollview-content" ref="content">
                 {this.props.children}
             </div>
-            <div className="rui-scrollview-vbar">
-                <div className="rui-scrollview-baritem" ref="baritem" style={{height:this.state.vbarItemHeight,marginTop:-1 * vpercent * (this.state.outerHeight - this.state.vbarItemHeight)}}/>
+            <div className="rui-scrollview-vbar" ref="vbar">
+                <div className="rui-scrollview-baritem" ref="vbaritem" style={{height:this.state.vbarItemHeight,marginTop:-1 * vpercent * (this.state.outerHeight - this.state.vbarItemHeight)}}/>
             </div>
-            <div className="rui-scrollview-hbar">
-                <div className="rui-scrollview-baritem" ref="baritem" style={{width:this.state.hbarItemWidth}}/>
+            <div className="rui-scrollview-hbar" ref="hbar">
+                <div className="rui-scrollview-baritem" ref="hbaritem" style={{width:this.state.hbarItemWidth}}/>
             </div>
         </div>;
     }
