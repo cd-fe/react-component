@@ -23,6 +23,8 @@
     background:rgba(0, 0, 0, 0);
     border-radius:4px 4px;
     transition:background 0.3s;
+    cursor:pointer;
+    z-index:1;
   }
 
   .active &-baritem {

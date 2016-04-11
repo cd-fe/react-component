@@ -106,14 +106,16 @@ var Table = React.createClass({
 
         var scrollerStyles = {};
         if(this.props.height !== null) {
-            scrollerStyles.maxHeight = this.props.height;
-            scrollerStyles.overflowY = 'auto';
+            scrollerStyles.height = this.props.height;
+            scrollerStyles.overflowY = 'hidden';
         }
 
         return <div {...this.props} className={classes}>
             {this.props.showTitle && <Header columns={children} />}
             <div className="rui-table-scroller" style={scrollerStyles}>
-                {children}
+                {scrollerStyles.height ? <RUI.ScrollView>
+                    {children}
+                </RUI.ScrollView> : children}
             </div>
         </div>;
     }

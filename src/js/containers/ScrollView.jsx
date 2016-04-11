@@ -74,8 +74,7 @@ module.exports = React.createClass({
                 if(entryPoint) {
                     return;
                 }
-
-                var offsetY = e.clientY;
+                var offsetY = e.pageY;
                 this.move(0, (offsetY > vbarItem.offset().top ? -1 : 1) * (this.state.outerHeight / this.props.scrollAmount));
             }.bind(this));
 
@@ -94,16 +93,16 @@ module.exports = React.createClass({
 
             vbarItem.on('mousedown', function(e) {
                 entryPoint = {
-                    y:e.clientY
+                    y:e.pageY
                 };
 
                 $(window).on('mousemove', function(e) {
-                    var offsetY = e.clientY - entryPoint.y;
+                    var offsetY = e.pageY - entryPoint.y;
                     var percent = this.state.outerHeight / this.state.nodeHeight;
                     this.move(0, (offsetY > 0 ? -1 : 1) * percent * Math.abs(offsetY));
 
                     entryPoint = {
-                        y:e.clientY
+                        y:e.pageY
                     };
                 }.bind(this));
 
@@ -187,7 +186,7 @@ module.exports = React.createClass({
         }
 
         return <div {...this.props} className={classes}>
-            <div className="rui-scrollview-content" ref="content">
+            <div className="rui-scrollview-content clearfix" ref="content">
                 {this.props.children}
             </div>
             <div className="rui-scrollview-vbar" ref="vbar">
