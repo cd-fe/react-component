@@ -43,7 +43,7 @@ module.exports = React.createClass({
 
         if (this.props.autoUpdate) {
             var updateScroller = throttle(150, this.updateScroller);
-            setInterval(function () {
+            this.autoUpdater = setInterval(function () {
                 var width = node.width();
                 var height = node.height();
 
@@ -123,6 +123,9 @@ module.exports = React.createClass({
                 active:false
             });
         }.bind(this));
+    },
+    componentWillUnmount:function() {
+        clearInterval(this.autoUpdater);
     },
     updateScroller: function () {
         var node = $(ReactDOM.findDOMNode(this.refs.content));
