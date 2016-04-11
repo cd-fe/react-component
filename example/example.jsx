@@ -9,7 +9,7 @@ import './common/codemirror.jsx';
 
 var Root = React.createClass({
     onUpdate:function() {
-        window.hmt && hmt.push(['_trackPageview', location.hash.substring(1)]);
+        window._hmt && _hmt.push(['_trackPageview', location.hash.substring(1)]);
     },
     render:function() {
         return <Router history={history} onUpdate={this.onUpdate}>
