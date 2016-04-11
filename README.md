@@ -42,6 +42,12 @@ browser example/index.html
 
 # Release logs
 
+## 0.3.19
+
+* Add ScrollView
+* Add TimePicker
+* Table use ScrollView
+
 ## 0.3.16
 
 * Table support column width
