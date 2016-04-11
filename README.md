@@ -42,7 +42,7 @@ browser example/index.html
 
 # Release logs
 
-## 0.3.19
+## 0.3.20
 
 * Add ScrollView
 * Add TimePicker
