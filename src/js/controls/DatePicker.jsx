@@ -217,7 +217,7 @@ module.exports = React.createClass({
                         </div>
                     </div>
                 </div>)}
-                <div className={defaultClass+'-row'}>
+                <div className={defaultClass+'-row'} style={{height:this.props.showTime ? 280 : 'auto'}}>
                     {this.props.range ? (
                         <div className={defaultClass+'-row-range'}>
                             <Calendar source={{start:this.state.startValuePreview, end:this.state.endValuePreview}} value={this.state.startValuePreview || this.dateNow(Date.now())} onChange={this.startCalendarChange} range={"start"} />
