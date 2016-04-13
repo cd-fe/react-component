@@ -1,3 +1,8 @@
+/**
+ * 轮播图组件
+ * @module controls/Slider
+ */
+
 import className from '../util/className.jsx';
 import ComponentBase from '../mixins/ComponentBase.jsx';
 import flatten from '../util/flatten.jsx';
@@ -7,7 +12,7 @@ import 'swiper/dist/css/swiper.css';
 import '../../css/slider.scss';
 
 var Slide = React.createClass({
-    render:function() {
+    render: function () {
         return <div className="slider-item swiper-slide">
             {this.props.children}
         </div>;
@@ -15,83 +20,83 @@ var Slide = React.createClass({
 });
 
 var Pagination = React.createClass({
-    getDefaultProps:function() {
+    getDefaultProps: function () {
         return {
-            useClick:true
+            useClick: true
         };
     },
-    render:function() {
+    render: function () {
         return <div className="swiper-pagination"></div>;
     }
 });
 
 var NavigateButton = React.createClass({
-    getDefaultProps:function() {
+    getDefaultProps: function () {
         return {
-            role:'hide'
+            role: 'hide'
         };
     },
-    render:function() {
+    render: function () {
         return <div {...this.props} className={"swiper-button-"+this.props.role}></div>;
     }
 });
 
 var Slider = React.createClass({
-    mixins:[ComponentBase],
-    getDefaultProps:function() {
+    mixins: [ComponentBase],
+    getDefaultProps: function () {
         return {
-            cname:'slider',
-            autoplay:3000,
-            speed:300,
-            loop:false
+            cname: 'slider',
+            autoplay: 3000,
+            speed: 300,
+            loop: false
         };
     },
-    componentDidMount:function() {
+    componentDidMount: function () {
         this.updateSwiper();
     },
-    componentDidUpdate:function() {
+    componentDidUpdate: function () {
         this.updateSwiper();
     },
-    getPagination:function() {
-        return (Array.isArray(this.props.children) ? this.props.children : []).find(function(item) {
-            if(item && item.type && item.type.displayName == 'Pagination') {
+    getPagination: function () {
+        return (Array.isArray(this.props.children) ? this.props.children : []).find(function (item) {
+            if (item && item.type && item.type.displayName == 'Pagination') {
                 return true;
             }
             return false;
         });
     },
-    getButtons:function() {
-        return (Array.isArray(this.props.children) ? this.props.children : []).filter(function(item) {
-            if(item && item.type && item.type.displayName == 'NavigateButton') {
+    getButtons: function () {
+        return (Array.isArray(this.props.children) ? this.props.children : []).filter(function (item) {
+            if (item && item.type && item.type.displayName == 'NavigateButton') {
                 return true;
             }
             return false;
         });
     },
-    getSlides:function() {
-        return flatten(Array.isArray(this.props.children) ? this.props.children : []).filter(function(item) {
-            if(item.type && item.type.displayName == 'Slide') {
+    getSlides: function () {
+        return flatten(Array.isArray(this.props.children) ? this.props.children : []).filter(function (item) {
+            if (item.type && item.type.displayName == 'Slide') {
                 return true;
             }
             return false;
         });
     },
-    setControl:function(control) {
+    setControl: function (control) {
         this.control = control;
         this.updateSwiper();
     },
-    getSwiperParams:function() {
+    getSwiperParams: function () {
         var current = {};
 
         var pagination = this.getPagination();
-        if(pagination) {
+        if (pagination) {
             current.pagination = '.swiper-pagination';
             current.paginationClickable = pagination.props.useClick || false;
         }
-        if(this.control) {
+        if (this.control) {
             current.control = this.control;
         }
-        if(this.props.thumb) {
+        if (this.props.thumb) {
             current.slideToClickedSlide = true;
             current.centeredSlides = true;
             current.slidesPerView = 'auto';
@@ -100,20 +105,20 @@ var Slider = React.createClass({
         }
         return Object.assign(current, this.props);
     },
-    getSwiper:function() {
+    getSwiper: function () {
         return $(ReactDOM.findDOMNode(this)).data('react-swiper');
     },
-    clearSwiper:function() {
+    clearSwiper: function () {
         this.getSwiper() && (this.getSwiper().kill(), this.getSwiper().data('react-swiper', undefined));
     },
-    updateSwiper:function() {
+    updateSwiper: function () {
         var swiper = this.getSwiper();
         $(ReactDOM.findDOMNode(this)).data('react-swiper', $(ReactDOM.findDOMNode(this)).swiper(this.getSwiperParams()));
     },
-    render:function() {
+    render: function () {
         var classes = className(this.props.className, this.getPropClass());
         classes += ' swiper-container';
-        if(this.props.thumb) {
+        if (this.props.thumb) {
             classes += ' swiper-thumb';
         }
         var props = require('../util/omit.jsx')(this.props, 'onClick');

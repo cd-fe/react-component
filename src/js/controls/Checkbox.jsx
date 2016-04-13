@@ -15,8 +15,8 @@ module.exports = React.createClass({
      * base methods
      * @see {@link module:mixins/ComponentBase}
      */
-    mixins:[ComponentBase, ToggleMixin],
-    getDefaultProps:function() {
+    mixins: [ComponentBase, ToggleMixin],
+    getDefaultProps: function () {
         return {
             /**
              * @instance
@@ -24,24 +24,24 @@ module.exports = React.createClass({
              * @type string
              * @desc 组件名称
              */
-            cname:'checkbox',
+            cname: 'checkbox',
             /**
              * @instance
              * @default
              * @type string
              * @desc 组件值
              */
-            value:'',
+            value: '',
             /**
              * @instance
              * @default false
              * @type boolean
              * @desc 当前是否选中
              */
-            selected:false
+            selected: false
         };
     },
-    componentDidMount:function() {
+    componentDidMount: function () {
         this.toggleAction(this, 'click', constant.selected);
     },
     /**
@@ -49,7 +49,7 @@ module.exports = React.createClass({
      * @instance
      * @return {string}
      */
-    getValue:function() {
+    getValue: function () {
         return this.getToggleResult() == constant.selected ? this.props.value : '';
     },
     /**
@@ -57,7 +57,7 @@ module.exports = React.createClass({
      * @instance
      * @return {number}
      */
-    isSelected:function() {
+    isSelected: function () {
         return this.toggleValue;
     },
     /**
@@ -65,7 +65,7 @@ module.exports = React.createClass({
      * @param {number} val - 1为选中，0为不选中
      * @instance
      */
-    setSelected:function(val) {
+    setSelected: function (val) {
         this.toggleValue = !!val ? 1 : 0;
         if (this.dispatchEvent) {
             this.dispatchEvent('change', {
@@ -76,7 +76,7 @@ module.exports = React.createClass({
 
         this.forceUpdate();
     },
-    render:function() {
+    render: function () {
         var classes = className(this.props.className, this.getPropClass());
         classes += ' ' + this.getToggleResult();
 

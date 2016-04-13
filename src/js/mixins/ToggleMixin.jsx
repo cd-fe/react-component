@@ -49,6 +49,12 @@ module.exports = {
             this.forceUpdate();
         }
     },
+    /**
+     * 切换一次状态，当前props的disable为true时不生效
+     * 该方法的变更，会触发一次change事件
+     * @instance
+     * @returns {string}
+     */
     toggle: function () {
         if (!this.props.disable) {
             this.toggleValue = !this.toggleValue ? 1 : 0;
@@ -62,6 +68,11 @@ module.exports = {
         }
         return this.getToggleResult();
     },
+    /**
+     * 获取当前状态值，该值为toggleAction方法中传入的数组中的一个
+     * @instance
+     * @returns {string}
+     */
     getToggleResult: function () {
         if (typeof this.toggleValues != 'undefined') {
             return this.toggleValues[this.toggleValue] || '';
