@@ -26,12 +26,12 @@ var Example = React.createClass({
                 <h4 className="final-title">单个按钮</h4>
                 <div>
                     <RUI.Radio value="type_1" selected={1} onChange={this.valueChange}>初始已选</RUI.Radio>
-                    <RUI.Radio value="type_2" selected={this.state.asyncMode}>初始未选</RUI.Radio>
+                    <RUI.Radio value="type_2" selected={this.state.asyncMode}>异步变更</RUI.Radio>
                     <RUI.Radio value="type_3" selected={0} disable={true}>禁用状态</RUI.Radio>
                 </div>
                 <h4 className="final-title">组</h4>
                 <div>
-                    <RUI.RadioGroup ref="radioGroup" onChange={this.groupChange} value={"type_1"}>
+                    <RUI.RadioGroup ref="radioGroup" onChange={this.groupChange} defaultValue={"type_1"}>
                         <RUI.Radio value="type_1">初始已选</RUI.Radio>
                         <RUI.Radio value="type_2">初始未选</RUI.Radio>
                         <RUI.Radio value="type_3">分组测试</RUI.Radio>

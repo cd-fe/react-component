@@ -10,27 +10,95 @@ import Button from './Button.jsx';
 import '../../css/dialog.scss';
 
 var Dialog = React.createClass({
+    /**
+     * 基础方法
+     * @see {@link module:mixins/ComponentBase}
+     * @see {@link module:mixins/OverlayMixin}
+     */
     mixins: [ComponentBase, OverlayMixin],
     getInitialState: function () {
         return {
-            show: false,
-            title: this.props.title || '',
-            cancelText: this.props.cancelText || '取消',
-            submitText: this.props.submitText || '确认'
+            show: false
         }
     },
     getDefaultProps: function () {
         return {
+            /**
+             * @instance
+             * @default dialog
+             * @type string
+             * @desc 组件名称
+             */
             cname: "dialog",
             radius: true,
-            shadow: true
+            shadow: true,
+            /**
+             * @instance
+             * @default
+             * @type string
+             * @desc 弹出层标题
+             */
+            title: '',
+            /**
+             * @instance
+             * @default 取消
+             * @type string
+             * @desc 弹出层取消按钮文本
+             */
+            cancelText: '取消',
+            /**
+             * @instance
+             * @default 确认
+             * @type string
+             * @desc 弹出层确认按钮文本
+             */
+            submitText: '确认',
+            /**
+             * @instance
+             * @default null
+             * @type function
+             * @desc 取消按钮点击后的回调函数
+             */
+            onCancel: null,
+            /**
+             * @instance
+             * @default null
+             * @type function
+             * @desc 确认按钮点击后的回调函数
+             */
+            onSubmit: null,
+            /**
+             * @instance
+             * @default false
+             * @type boolean
+             * @desc 是否隐藏弹出层标题
+             */
+            hideTitle: false,
+            /**
+             * @instance
+             * @default null
+             * @type string
+             * @desc 是否显示弹出层按钮，按钮由两个关键字组成
+             * @example
+             * <RUI.Dialog buttons="submit,cancel" />
+             * <RUI.Dialog buttons="submit" />
+             */
+            buttons: null
         };
     },
+    /**
+     * 显示弹出层
+     * @instance
+     */
     show: function () {
         this.setState({
             show: true
         });
     },
+    /**
+     * 隐藏弹出层
+     * @instance
+     */
     hide: function () {
         this.setState({
             show: false
@@ -57,19 +125,16 @@ var Dialog = React.createClass({
     componentDidMount: function () {
         $(window).bind('resize', this.resize);
     },
-    componentWillReceiveProps: function (nextProps) {
-        this.setState({
-            title: nextProps.title || '',
-            cancelText: nextProps.cancelText || '取消',
-            submitText: nextProps.submitText || '确认'
-        });
-    },
     componentWillUnmount: function () {
         $(window).unbind('resize', this.resize);
     },
     componentDidUpdate: function (changes) {
         this.resize();
     },
+    /**
+     * 重新计算一次居中对齐（虽然自动调用了，但也许有时候你会发现没对齐，可以主动调一下这个方法）
+     * @instance
+     */
     resize: function () {
         var node = ReactDOM.findDOMNode(this);
 
@@ -90,7 +155,7 @@ var Dialog = React.createClass({
             <div className={prefix+"-content"}>
                 {!this.props.hideTitle && (
                     <div className={prefix+"-header"}>
-                        <h4 className={prefix+"-title"}>{this.state.title}</h4>
+                        <h4 className={prefix+"-title"}>{this.props.title}</h4>
                         <Button className={prefix+"-close"} onClick={this.closeHandler}>×</Button>
                     </div>
                 )}
@@ -100,9 +165,9 @@ var Dialog = React.createClass({
                 {this.props.buttons && (
                     <div className={prefix+"-footer"}>
                         {this.props.buttons.indexOf('cancel') >= 0 && (
-                            <Button onClick={this.closeHandler}>{this.state.cancelText}</Button>)}
+                            <Button onClick={this.closeHandler}>{this.props.cancelText}</Button>)}
                         {this.props.buttons.indexOf('submit') >= 0 && (
-                            <Button className="primary" onClick={this.submitHandler}>{this.state.submitText}</Button>)}
+                            <Button className="primary" onClick={this.submitHandler}>{this.props.submitText}</Button>)}
                     </div>
                 )}
             </div>

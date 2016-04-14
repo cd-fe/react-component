@@ -3,7 +3,7 @@ var Example = React.createClass({
         return {
             pageSize:10,
             currentPage:1,
-            totalNum:11
+            totalNum:88
         };
     },
     onPageChange:function(currentPage) {

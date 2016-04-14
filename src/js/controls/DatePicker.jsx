@@ -15,6 +15,10 @@ import DateFormatter from '../formatters/DateFormatter.jsx';
 import '../../css/datepicker.scss';
 
 module.exports = React.createClass({
+    /**
+     * 基础方法
+     * @see {@link module:mixins/ComponentBase}
+     */
     mixins: [ComponentBase],
     getInitialState: function () {
         var status = {
@@ -31,10 +35,87 @@ module.exports = React.createClass({
     },
     getDefaultProps: function () {
         return {
+            /**
+             * @instance
+             * @default datepicker
+             * @type string
+             * @desc 组件名称
+             */
             cname: 'datepicker',
-            value: null
+            /**
+             * @instance
+             * @default null
+             * @type number
+             * @desc 需要显示时间的时间戳
+             * @example
+             * Date.now()
+             * 1460600493335
+             */
+            value: null,
+            /**
+             * @instance
+             * @default null
+             * @type number
+             * @desc 范围选取时间中的开始时间，当开始时间未设置时，默认使用value作为开始时间
+             */
+            startValue: null,
+            /**
+             * @instance
+             * @default null
+             * @type number
+             * @desc 范围选取时间中的结束时间，当结束时间未设置时，默认使用开始时间后一天作为结束时间
+             */
+            endValue: null,
+            /**
+             * @instance
+             * @default false
+             * @type boolean
+             * @desc 是否使用日期范围模式
+             */
+            range: false,
+            /**
+             * @instance
+             * @default false
+             * @type boolean
+             * @desc 是否显示时间设置，showTime为true时，会覆盖range，也就是显示时间时，没有范围选取模式
+             */
+            showTime: false,
+            /**
+             * @instance
+             * @default null
+             * @type object
+             * @desc 显示时间的格式化类，该时间格式类的显示规则将会覆盖原有的显示内容，例如时间显示
+             * @see {@link module:formatters/DateFormatter}
+             * @example
+             * <RUI.DatePicker formatter={new DateFormatter("Y年m月d号")} />
+             */
+            formatter: null,
+            /**
+             * @instance
+             * @default null
+             * @type function
+             * @desc 当时间变更时，发布一个change事件，事件内的data属性，为变更后的时间戳
+             * @example
+             * changeHandler:function(event) {
+             *      // event.data 的值与 getValue() 方法一致
+             *      // event.data === instance.getValue()
+             * }
+             */
+            onChange: null
         };
     },
+    /**
+     * 获取修改后的时间戳
+     * @instance
+     * @returns {number}
+     * @desc 当props.range为真时，返回包括开始和结束时间的对象，否则仅返回单个时间
+     * @example
+     * return {
+     *      startValue:1460600493335,
+     *      endValue:1460600493335
+     * };
+     * return 1460600493335;
+     */
     getValue: function () {
         if (this.props.range) {
             return {
@@ -44,6 +125,18 @@ module.exports = React.createClass({
         }
         return this.state.value;
     },
+    /**
+     * 设置组件的时间戳
+     * @instance
+     * @param {number|object} opt
+     * @desc 设置当前组件显示的时间内容，在props.range为真时，需要传入一个object
+     * @example
+     * instance.setValue(1460600493335);
+     * instance.setValue({
+     *      startValue:1460600493335,
+     *      endValue:1460600493335
+     * });
+     */
     setValue: function (opt) {
         if (typeof opt == 'string' && this.props.range) {
             this.setState({

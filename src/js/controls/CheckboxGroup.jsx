@@ -10,6 +10,10 @@ import ComponentBase from '../mixins/ComponentBase.jsx';
 import ToggleMixin from '../mixins/ToggleMixin.jsx';
 
 module.exports = React.createClass({
+    /**
+     * 基础方法
+     * @see {@link module:mixins/ComponentBase}
+     */
     mixins: [ComponentBase],
     groupValues: [],
     getDefaultProps: function () {

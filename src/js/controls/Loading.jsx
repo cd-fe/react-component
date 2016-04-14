@@ -8,13 +8,30 @@ import OverlayMixin from '../mixins/OverlayMixin.jsx';
 import ComponentBase from '../mixins/ComponentBase.jsx';
 import '../../css/loading.scss';
 module.exports = React.createClass({
+    /**
+     * 基础方法
+     * @see {@link module:mixins/ComponentBase}
+     * @see {@link module:mixins/OverlayMixin}
+     */
     mixins: [ComponentBase, OverlayMixin],
+    getDefaultProps: function () {
+        return {
+            /**
+             * @instance
+             * @default loading
+             * @type string
+             * @desc 组件名称
+             */
+            cname: "loading",
+            type: 'follow',
+            size: 'small',
+            mask: true
+        };
+    },
     getInitialState: function () {
         return {
             active: false,
             show: false,//overlay,只有type类型为full-screen时才生效[true,false]
-            type: this.props.type,//loading类型 ['follow','partial-screen','full-screen']
-            size: this.props.size,//loading图标的大小['middle','small']
             mask: this.props.mask
         };
     },
@@ -26,7 +43,7 @@ module.exports = React.createClass({
         _this.doOpen(node, e, type);
         _this.setState({
             active: true,
-            show: this.props.mask
+            show: true
         });
     },
     doOpen: function () {
@@ -76,11 +93,6 @@ module.exports = React.createClass({
             show: false
         });
     },
-    getDefaultProps: function () {
-        return {
-            cname: "loading"
-        };
-    },
     render: function () {
         var _this = this;
         var type = _this.props.type || '';
@@ -88,9 +100,10 @@ module.exports = React.createClass({
         var classes = className(size, className(type, _this.getPropClass()));
         var options = (this.props.type == 'follow') && (<span className="load-txt">&nbsp;正在提交数据...</span>);
         return (
-            <div className={classes} style={{display:this.state.active ? 'block' : 'none'}}>
+            <div {...this.props} className={classes} style={{display:this.state.active ? 'block' : 'none'}}>
                 <span className="load-icon"></span>
                 {options}
+                {this.props.children}
             </div>
         )
     }

@@ -9,24 +9,62 @@ import ComponentBase from '../mixins/ComponentBase.jsx';
 import '../../css/pagination.scss';
 
 module.exports = React.createClass({
+    /**
+     * 基础方法
+     * @see {@link module:mixins/ComponentBase}
+     */
     mixins: [ComponentBase],
     getInitialState: function () {
         return {
-            pageSize: this.props.pageSize || 10,
-            currentPage: this.props.currentPage || 1,
-            totalNum: this.props.totalNum || 0
+            currentPage: this.props.currentPage
         };
     },
     getDefaultProps: function () {
         return {
-            cname: "pagination"
+            /**
+             * @instance
+             * @default input
+             * @type string
+             * @desc 组件名称
+             */
+            cname: "pagination",
+            /**
+             * @instance
+             * @default 10
+             * @type number
+             * @desc 每页显示的条数
+             */
+            pageSize: 10,
+            /**
+             * @instance
+             * @default 0
+             * @type number
+             * @desc 总共多少条数据
+             */
+            totalNum: 0,
+            /**
+             * @instance
+             * @default 1
+             * @type number
+             * @desc 当前显示第几页
+             */
+            currentPage: 1,
+            /**
+             * @instance
+             * @default null
+             * @type function
+             * @desc 页数变更时的回调函数
+             * @example
+             * pageHandler:function(page, pagination) {
+             *      console.log(page);
+             * }
+             */
+            onPage: null
         };
     },
     componentWillReceiveProps: function (props) {
         this.setState({
-            pageSize: props.pageSize,
-            currentPage: props.currentPage,
-            totalNum: props.totalNum
+            currentPage: props.currentPage
         });
     },
     click: function (index) {
@@ -45,10 +83,10 @@ module.exports = React.createClass({
         this.click(1);
     },
     changePageToLast: function () {
-        this.click(Math.ceil(this.state.totalNum / this.state.pageSize));
+        this.click(Math.ceil(this.props.totalNum / this.props.pageSize));
     },
     getOffsetStatus: function (offset) {
-        var pageNumber = Math.ceil(this.state.totalNum / this.state.pageSize);
+        var pageNumber = Math.ceil(this.props.totalNum / this.props.pageSize);
         var target = this.state.currentPage * 1 + offset;
         if (target > 0 && target <= pageNumber) {
             return target;
@@ -57,7 +95,7 @@ module.exports = React.createClass({
     },
     renderItemRange: function (start, end) {
         var list = [];
-        var pageNumber = this.state.totalNum < this.state.pageSize ? 1 : Math.ceil(this.state.totalNum / this.state.pageSize);
+        var pageNumber = this.props.totalNum < this.props.pageSize ? 1 : Math.ceil(this.props.totalNum / this.props.pageSize);
         for (var i = start; (i > 0) && (i <= pageNumber) && (i <= end); i++) {
             list.push(<a key={start+'-'+end+'-'+i}
                          href="javascript:;"
@@ -72,7 +110,7 @@ module.exports = React.createClass({
     },
     renderPage: function () {
         var preview = 5;
-        var pageNumber = this.state.totalNum <= this.state.pageSize ? 1 : Math.ceil(this.state.totalNum / this.state.pageSize);
+        var pageNumber = this.props.totalNum <= this.props.pageSize ? 1 : Math.ceil(this.props.totalNum / this.props.pageSize);
         var list = [];
         if (this.state.currentPage <= (preview + 1)) {
             list = list.concat(this.renderItemRange(1, this.state.currentPage));
@@ -81,7 +119,7 @@ module.exports = React.createClass({
             } else {
                 list = list.concat(this.renderItemRange(this.state.currentPage + 1, preview));
             }
-            if (pageNumber > (list.length + Math.floor(preview / 2))) {
+            if (pageNumber >= (list.length + Math.floor(preview / 2))) {
                 list.push(this.renderBreak(list.length));
             }
             if (pageNumber > list.length) {
@@ -117,7 +155,7 @@ module.exports = React.createClass({
         var prefix = this.getDefaultClass();
         return <div className={allname}>
             <div className={prefix+"-detail"}>
-                <p>共 <span>{this.state.totalNum}</span> 条，当前第 <span>{this.state.currentPage}</span> 页 </p>
+                <p>共 <span>{this.props.totalNum}</span> 条，当前第 <span>{this.state.currentPage}</span> 页 </p>
             </div>
             <div className={prefix+"-list"}>
                 <a href="javascript:;" className={prefix+"-home"} onClick={this.changePageToFirst}>&lt;&lt;</a>

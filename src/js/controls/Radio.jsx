@@ -10,10 +10,65 @@ import ToggleMixin from '../mixins/ToggleMixin.jsx';
 import '../../css/radio.scss';
 
 module.exports = React.createClass({
+    /**
+     * 基础方法
+     * @see {@link module:mixins/ComponentBase}
+     * @see {@link module:mixins/ToggleMixin}
+     */
     mixins: [ComponentBase, ToggleMixin],
     getDefaultProps: function () {
         return {
-            cname: 'radio'
+            /**
+             * @instance
+             * @default radio
+             * @type string
+             * @desc 组件名称
+             */
+            cname: 'radio',
+            /**
+             * @instance
+             * @default 0
+             * @type number
+             * @desc 当前组件选中状态，值为: 0 和 1
+             */
+            selected: 0,
+            /**
+             * @instance
+             * @default
+             * @type string
+             * @desc 当前组件代表的值，类似html input标签的value属性
+             */
+            value: '',
+            /**
+             * @instance
+             * @default null
+             * @type function
+             * @desc 状态变更时的回调函数
+             * @example
+             * changeHandler:function(event) {
+             *      console.log(event.data.value);
+             *      console.log(event.data.selected);
+             * }
+             */
+            onChange: null,
+            /**
+             * @instance
+             * @default false
+             * @type boolean
+             * @desc 当前组件是否禁用
+             */
+            disable: false
+        };
+    },
+    /**
+     * 获取当前组件的值
+     * @instance
+     * @returns {object}
+     */
+    getValue: function () {
+        return {
+            value: this.props.value,
+            selected: this.toggleValue
         };
     },
     componentDidMount: function () {

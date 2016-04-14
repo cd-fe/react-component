@@ -9,17 +9,53 @@ import ComponentBase from '../mixins/ComponentBase.jsx';
 import ToggleMixin from '../mixins/ToggleMixin.jsx';
 
 module.exports = React.createClass({
+    /**
+     * 基础方法
+     * @see {@link module:mixins/ComponentBase}
+     */
     mixins: [ComponentBase],
     getInitialState: function () {
         return {
-            value: this.props.value
+            value: this.props.value || this.props.defaultValue
         };
     },
     getDefaultProps: function () {
         return {
-            cname: 'radiogroup'
+            /**
+             * @instance
+             * @default radiogroup
+             * @type string
+             * @desc 组件名称
+             */
+            cname: 'radiogroup',
+            /**
+             * @instance
+             * @default
+             * @type string
+             * @desc 默认值，该值为下属 radio 组件的 value 属性
+             */
+            defaultValue: '',
+            /**
+             * @instance
+             * @default undefined
+             * @type string
+             * @desc 指定当前组件的选中值
+             */
+            value: undefined,
+            /**
+             * @instance
+             * @default null
+             * @type function
+             * @desc 当前值发生变更时的回调函数
+             */
+            onChange: null
         };
     },
+    /**
+     * 获取当前值
+     * @instance
+     * @returns {string}
+     */
     getValue: function () {
         return this.state.value;
     },
@@ -35,9 +71,13 @@ module.exports = React.createClass({
         }
     },
     componentWillReceiveProps: function (newProps) {
-        this.setState({
-            value: newProps.value
-        });
+        var update = {};
+
+        if(typeof newProps.value != 'undefined') {
+            update.value = newProps.value;
+        }
+
+        this.setState(update);
     },
     render: function () {
         var children = null;

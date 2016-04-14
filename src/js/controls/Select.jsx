@@ -9,6 +9,11 @@ import TimerMixin from '../mixins/TimerMixin.jsx';
 import '../../css/select.scss';
 
 module.exports = React.createClass({
+    /**
+     * 基础方法
+     * @see {@link module:mixins/ComponentBase}
+     * @see {@link module:mixins/TimerMixin}
+     */
     mixins: [ComponentBase, TimerMixin],
     _choose: null,
     getInitialState: function () {
