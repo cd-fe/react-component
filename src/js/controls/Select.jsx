@@ -1,7 +1,13 @@
+/**
+ * 下拉菜单组件
+ * @module controls/Select
+ */
+
 import className from '../util/className.jsx';
 import ComponentBase from '../mixins/ComponentBase.jsx';
 import TimerMixin from '../mixins/TimerMixin.jsx';
 import '../../css/select.scss';
+
 module.exports = React.createClass({
     mixins: [ComponentBase, TimerMixin],
     _choose: null,
@@ -133,7 +139,7 @@ module.exports = React.createClass({
         return _this._choose ? _this._choose : _this.state.value;
     },
 
-    getValue:function() {
+    getValue: function () {
         return this._getChoose();
     },
 

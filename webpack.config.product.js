@@ -2,6 +2,7 @@ var path = require('path');
 var project = require('./package.json');
 var node_modules = path.resolve(__dirname, 'node_modules');
 var react = path.resolve(node_modules, 'react/dict/react.js');
+var mousewheel = path.resolve(node_modules, 'jquery-mousewheel/jquery.mousewheel.js');
 
 module.exports = {
     entry:{
@@ -42,6 +43,6 @@ module.exports = {
                 loader:'url'
             }
         ],
-        noParse:[react]
+        noParse:[react, mousewheel]
     }
 };

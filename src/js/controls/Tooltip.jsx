@@ -1,3 +1,8 @@
+/**
+ * 提示组件
+ * @module controls/Tooltip
+ */
+
 import className from '../util/className.jsx';
 import ComponentBase from '../mixins/ComponentBase.jsx';
 import TimerMixin from '../mixins/TimerMixin.jsx';
@@ -5,167 +10,167 @@ import TimerMixin from '../mixins/TimerMixin.jsx';
 import '../../css/tooltip.scss';
 
 module.exports = React.createClass({
-    mixins:[ComponentBase, TimerMixin],
-    parentNode:null,
-    getInitialState:function() {
+    mixins: [ComponentBase, TimerMixin],
+    parentNode: null,
+    getInitialState: function () {
         return {
-            show:false
+            show: false
         };
     },
-    getDefaultProps:function() {
-        return  {
-            cname:"tooltip",
-            align:'top-center',
-            trigger:'mouseenter',
-            duration:5000
+    getDefaultProps: function () {
+        return {
+            cname: "tooltip",
+            align: 'top-center',
+            trigger: 'mouseenter',
+            duration: 5000
         };
     },
-    componentDidMount:function() {
+    componentDidMount: function () {
         var node = ReactDOM.findDOMNode(this);
-        if(node && node.parentNode) {
+        if (node && node.parentNode) {
             this.parentNode = node.parentNode;
-            if($(this.parentNode).css('position') == 'static') {
+            if ($(this.parentNode).css('position') == 'static') {
                 $(this.parentNode).css('position', 'relative');
             }
             this.bindNodeEvent();
         }
     },
-    componentWillUnmount:function() {
+    componentWillUnmount: function () {
         this.unbindNodeEvent();
     },
-    componentWillReceiveProps:function(props) {
+    componentWillReceiveProps: function (props) {
 
     },
-    bindNodeEvent:function() {
-        if(!this.parentNode)
+    bindNodeEvent: function () {
+        if (!this.parentNode)
             return;
 
         // just use jQuery a moment !!!
         $(this.parentNode).bind(this.props.trigger, this.onMouseEnter);
         $(this.parentNode).bind('mouseleave', this.onMouseLeave);
     },
-    unbindNodeEvent:function() {
-        if(!this.parentNode)
+    unbindNodeEvent: function () {
+        if (!this.parentNode)
             return;
 
         // just use jQuery a moment too!!!
         $(this.parentNode).unbind(this.props.trigger, this.onMouseEnter);
         $(this.parentNode).unbind('mouseleave', this.onMouseLeave);
     },
-    onMouseEnter:function() {
-        this.resetTimer(function() {
+    onMouseEnter: function () {
+        this.resetTimer(function () {
             this.setState({
-                show:false
+                show: false
             });
         }.bind(this), this.props.duration);
 
         this.setState({
-            show:true
+            show: true
         });
     },
-    onMouseLeave:function() {
-        this.resetTimer(function() {
+    onMouseLeave: function () {
+        this.resetTimer(function () {
             this.setState({
-                show:false
+                show: false
             });
         }.bind(this), 100);
     },
-    componentDidUpdate:function() {
+    componentDidUpdate: function () {
         var node = ReactDOM.findDOMNode(this);
         $(node).css(this.getPosition(node));
 
-        var arrow = $(node).find('.'+this.getDefaultClass()+'-arrow');
+        var arrow = $(node).find('.' + this.getDefaultClass() + '-arrow');
         $(arrow).css(this.getArrowPosition(arrow));
 
-        var back = $(node).find('.'+this.getDefaultClass()+'-arrow-back');
+        var back = $(node).find('.' + this.getDefaultClass() + '-arrow-back');
         $(back).css(this.getArrowPosition(arrow).back);
     },
-    getArrowPosition:function(node) {
+    getArrowPosition: function (node) {
         var main = $(ReactDOM.findDOMNode(this));
 
         var position = {
-            top:0,
-            left:0,
-            back:{
-                top:0,
-                left:0
+            top: 0,
+            left: 0,
+            back: {
+                top: 0,
+                left: 0
             }
         };
         var align = this.props.align.split('-');
-        if(align.indexOf('top') >= 0) {
+        if (align.indexOf('top') >= 0) {
             position.top = position.back.top = main.outerHeight() - 1;
             position.back.top -= 1;
         }
-        if(align.indexOf('middle') >= 0) {
+        if (align.indexOf('middle') >= 0) {
             position.top = position.back.top = (main.outerHeight() - $(node).outerHeight()) / 2;
         }
-        if(align.indexOf('bottom') >= 0) {
+        if (align.indexOf('bottom') >= 0) {
             position.top = position.back.top = -20;
             position.back.top += 1;
         }
-        if(align.indexOf('left') >= 0) {
+        if (align.indexOf('left') >= 0) {
             position.left = position.back.left = main.outerWidth() - 1;
             position.back.left -= 1;
         }
-        if(align.indexOf('center') >= 0) {
+        if (align.indexOf('center') >= 0) {
             position.left = position.back.left = (main.outerWidth() - $(node).outerWidth()) / 2;
         }
-        if(align.indexOf('right') >= 0) {
+        if (align.indexOf('right') >= 0) {
             position.left = position.back.left = -20;
             position.back.left += 1;
         }
 
-        if(align.indexOf('top') >= 0 && align.indexOf('left') >= 0) {
+        if (align.indexOf('top') >= 0 && align.indexOf('left') >= 0) {
             position.top -= 12;
             position.left -= 7;
             position.back.top -= 12;
             position.back.left -= 7;
         }
-        if(align.indexOf('top') >= 0 && align.indexOf('right') >= 0) {
+        if (align.indexOf('top') >= 0 && align.indexOf('right') >= 0) {
             position.top -= 12;
             position.left += 6;
             position.back.top -= 12;
             position.back.left += 6;
         }
-        if(align.indexOf('bottom') >= 0 && align.indexOf('left') >= 0) {
+        if (align.indexOf('bottom') >= 0 && align.indexOf('left') >= 0) {
             position.left -= 7;
             position.back.left -= 7;
         }
-        if(align.indexOf('bottom') >= 0 && align.indexOf('right') >= 0) {
+        if (align.indexOf('bottom') >= 0 && align.indexOf('right') >= 0) {
             position.left += 6;
             position.back.left += 6;
         }
 
         return position;
     },
-    getPosition:function(node) {
+    getPosition: function (node) {
         var position = {
-            top:0,
-            left:0
+            top: 0,
+            left: 0
         };
         var align = this.props.align.split('-');
-        if(align.indexOf('top') >= 0) {
+        if (align.indexOf('top') >= 0) {
             position.top = $(node).outerHeight() * -1 - 15;
         }
-        if(align.indexOf('middle') >= 0) {
+        if (align.indexOf('middle') >= 0) {
             position.top = ($(this.parentNode).outerHeight() - $(node).outerHeight()) / 2
         }
-        if(align.indexOf('bottom') >= 0) {
+        if (align.indexOf('bottom') >= 0) {
             position.top = $(node).outerHeight() + 15;
         }
-        if(align.indexOf('left') >= 0) {
+        if (align.indexOf('left') >= 0) {
             position.left = -1 * $(node).outerWidth() - 15
         }
-        if(align.indexOf('center') >= 0) {
+        if (align.indexOf('center') >= 0) {
             position.left = ($(this.parentNode).outerWidth() - $(node).outerWidth()) / 2;
         }
-        if(align.indexOf('right') >= 0) {
+        if (align.indexOf('right') >= 0) {
             position.left = $(this.parentNode).outerWidth() + 15;
         }
 
         return position;
     },
-    render:function() {
+    render: function () {
         var allname = className(this.props.className, this.getPropClass());
         var prefix = this.getDefaultClass();
         var arrows = (this.props.align || 'top');

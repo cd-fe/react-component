@@ -5,7 +5,7 @@ import ItemRender from './ItemRender.jsx';
 import ItemRenderDefault from './ItemRenderDefault.jsx';
 import merge from '../../util/merge.jsx';
 
-module.exports = React.createClass({
+var Column = module.exports = React.createClass({
     mixins:[ComponentBase],
     getInitialState:function() {
         return {};
@@ -15,28 +15,15 @@ module.exports = React.createClass({
             cname:'table-column'
         };
     },
-    findExistRender:function(cname) {
-        var render = null;
-        if(this.props.children) {
-            var children = this.props.children instanceof Array ? this.props.children : [this.props.children];
-            var exist = children.find(function(child) {
-                return child.props.cname == cname;
-            });
-            if(exist) {
-                render = exist.props.children;
-            }
-        }
-        return render;
-    },
     getDefaultTitleRender:function() {
-        var render = this.findExistRender('table-title');
+        var render = Column.findExistRender('table-title', this.props.children);
         if(!render) {
             render = <ItemRenderDefault label={this.props.title || this.props.dataField} style={{height:this.props.titleHeight}} />;
         }
         return render;
     },
     getDefaultItemRender:function() {
-        var render = this.findExistRender('table-column-item');
+        var render = Column.findExistRender('table-column-item', this.props.children);
         if(!render) {
             render = <ItemRenderDefault />;
         }
@@ -54,7 +41,7 @@ module.exports = React.createClass({
             var data = this.props.source[index];
             var child = this.refs[key];
             if(child.setData) {
-                child.setData(data, dataField);
+                child.setData(data, dataField, key * 1);
             }else {
                 console.warn('ItemRender must to implement "setData" method.', child);
             }
@@ -67,9 +54,9 @@ module.exports = React.createClass({
         var DefaultRenderClassProps = DefaultRenderClass.props;
         var _this = this;
         return <ul {...this.props} className={classes}>
-            <TitleRender>
+            {/*<TitleRender>
                 {this.getDefaultTitleRender()}
-            </TitleRender>
+            </TitleRender>*/}
             {this.props.source && this.props.source.map(function(item, index) {
                 return <ItemRender key={index} style={{height:_this.props.itemHeight}}>{React.cloneElement(DefaultRenderClass, merge({
                     ref:index,
@@ -80,3 +67,17 @@ module.exports = React.createClass({
         </ul>;
     }
 });
+
+Column.findExistRender = function(cname, childlist) {
+    var render = null;
+    if(childlist) {
+        var children = childlist instanceof Array ? childlist : [childlist];
+        var exist = children.find(function(child) {
+            return child.props.cname == cname;
+        });
+        if(exist) {
+            render = exist.props.children;
+        }
+    }
+    return render;
+};

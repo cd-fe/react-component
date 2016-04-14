@@ -15,9 +15,10 @@ module.exports = React.createClass({
             }
         };
     },
-    setData:function(data, field) {
+    setData:function(data, field, index) {
+        var fieldValue = typeof field == 'undefined' ? data : eval(`(data['${(field+"").split('.').join('\'][\'')}'])`);
         this.setState({
-            label:this.props.fieldFunction(eval(`(data['${field.split('.').join('\'][\'')}'])`), data),
+            label:this.props.fieldFunction(fieldValue, data, index),
             data:data
         });
     },

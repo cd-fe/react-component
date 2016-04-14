@@ -1,13 +1,29 @@
+/**
+ * 状态切换工具集合
+ * @module mixins/ToggleMixin
+ */
+
 module.exports = {
     toggleValues: [],
     toggleValue: null,
     toggleEvent: "click",
+    /**
+     * 解除状态切换绑定
+     * @instance
+     */
     toggleUnbind: function () {
         if (this.toggleEvent) {
             var node = ReactDOM.findDOMNode(this);
             $(node).unbind(this.toggleEvent, this.toggleHandler);
         }
     },
+    /**
+     * 开启状态切换绑定
+     * @instance
+     * @param {ReactElement} target     - 待绑定节点
+     * @param {string} action           - 触发状态变更的事件类型
+     * @param {array} values            - 在哪些值里切换，一般此处需要传入一个具有两个元素的数组
+     */
     toggleAction: function (target, action, values) {
         this.toggleUnbind();
 
@@ -33,6 +49,12 @@ module.exports = {
             this.forceUpdate();
         }
     },
+    /**
+     * 切换一次状态，当前props的disable为true时不生效
+     * 该方法的变更，会触发一次change事件
+     * @instance
+     * @returns {string}
+     */
     toggle: function () {
         if (!this.props.disable) {
             this.toggleValue = !this.toggleValue ? 1 : 0;
@@ -46,6 +68,11 @@ module.exports = {
         }
         return this.getToggleResult();
     },
+    /**
+     * 获取当前状态值，该值为toggleAction方法中传入的数组中的一个
+     * @instance
+     * @returns {string}
+     */
     getToggleResult: function () {
         if (typeof this.toggleValues != 'undefined') {
             return this.toggleValues[this.toggleValue] || '';

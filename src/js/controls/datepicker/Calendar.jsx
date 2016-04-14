@@ -27,6 +27,11 @@ module.exports = React.createClass({
             value: this.props.value
         };
     },
+    getDefaultProps:function() {
+        return {
+            showTime:false
+        };
+    },
     componentWillReceiveProps: function (newProps) {
         if (newProps.value) {
             this.setState({
@@ -53,11 +58,18 @@ module.exports = React.createClass({
         });
     },
     onItemClick: function (value, event) {
-        //var event = this.createEvent('change');
-        //event.data = value;
         event.type = 'change';
         event.data = value;
         this.dispatchEvent(event);
+    },
+    onSubmitClick:function() {
+        var times = this.refs.time.getValue();
+        var date = new Date(this.state.value);
+        date.setHours(times.hour);
+        date.setMinutes(times.minute);
+        date.setSeconds(times.second);
+
+        this.props.onSave && this.props.onSave(date.getTime());
     },
     render: function () {
         var _this = this;
@@ -122,6 +134,13 @@ module.exports = React.createClass({
                     {tds}
                 </tbody>
             </table>
+            {this.props.showTime && (
+                <div className="rui-datepicker-time clearfix">
+                    <RUI.TimePicker ref="time" value={this.state.value} />
+                    <RUI.Button className="rui-datepicker-time-cancel" onClick={this.props.onCancel}>取消</RUI.Button>
+                    <RUI.Button className="rui-datepicker-time-submit primary" onClick={this.onSubmitClick}>保存</RUI.Button>
+                </div>
+            )}
         </div>;
     }
 });

@@ -5,7 +5,8 @@ var Example = React.createClass({
             min:0+"",
             step:5,
             disable:false,
-            keyboardEnable:true
+            keyboardEnable:true,
+            eventType:'blur'
         };
     },
     run:function() {

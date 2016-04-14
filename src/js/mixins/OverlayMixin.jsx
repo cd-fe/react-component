@@ -1,3 +1,9 @@
+/**
+ * 遮罩层工具类
+ * @module mixins/OverlayMixin
+ * @see {@link module:managers/OverlayManager}
+ */
+
 import '../../css/mixin/overlay.scss';
 
 import OverlayManager from '../managers/OverlayManager.jsx';
@@ -7,6 +13,11 @@ let overlayId = 0;
 module.exports = {
     getInitialState:function() {
         return {
+            /**
+             * 根据属性里的overlay属性设置当前遮罩层是否显示
+             * @instance
+             * @type boolean
+             */
             overlay:this.props.overlay || true
         }
     },
