@@ -42,12 +42,40 @@ var NavigateButton = React.createClass({
 });
 
 var Slider = React.createClass({
+    /**
+     * 基础方法
+     * @see {@link module:mixins/ComponentBase}
+     */
     mixins: [ComponentBase],
     getDefaultProps: function () {
         return {
+            /**
+             * @instance
+             * @default slider
+             * @type string
+             * @desc 组件名称
+             */
             cname: 'slider',
+            /**
+             * @instance
+             * @default 3000
+             * @type number
+             * @desc 自动播放间隔时间
+             */
             autoplay: 3000,
+            /**
+             * @instance
+             * @default 300
+             * @type number
+             * @desc 动画播放时长,更多配置参数，请直接传送swiper官方({@link http://idangero.us/swiper/api/})
+             */
             speed: 300,
+            /**
+             * @instance
+             * @default false
+             * @type boolean
+             * @desc 是否循环播放
+             */
             loop: false
         };
     },
@@ -105,6 +133,11 @@ var Slider = React.createClass({
         }
         return Object.assign(current, this.props);
     },
+    /**
+     * 获取swiper插件创建的swiper实例
+     * @instance
+     * @return {object}
+     */
     getSwiper: function () {
         return $(ReactDOM.findDOMNode(this)).data('react-swiper');
     },
