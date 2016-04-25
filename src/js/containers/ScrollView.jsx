@@ -1,3 +1,8 @@
+/**
+ * 滚动视图组件
+ * @module containers/ScrollView
+ */
+
 import className from '../util/className.jsx';
 import ComponentBase from '../mixins/ComponentBase.jsx';
 import throttle from '../util/throttle.jsx';
@@ -5,18 +10,82 @@ import throttle from '../util/throttle.jsx';
 import '../../css/scrollview.scss';
 
 module.exports = React.createClass({
+    /**
+     * 基础方法
+     * @see {@link module:mixins/ComponentBase}
+     */
     mixins: [ComponentBase],
     getDefaultProps: function () {
         return {
+            /**
+             * @instance
+             * @default scrollview
+             * @type string
+             * @desc 组件名称
+             */
             cname: 'scrollview',
+            /**
+             * @instance
+             * @default false
+             * @type boolean
+             * @desc 是否启用横向滚动
+             */
             horizonal: false,
+            /**
+             * @instance
+             * @default true
+             * @type boolean
+             * @desc 是否启用竖向滚动
+             */
             vertical: true,
+            /**
+             * @instance
+             * @default 0
+             * @type number
+             * @desc 滚动到距离顶部多少像素的地方
+             */
             scrollTop: 0,
+            /**
+             * @instance
+             * @default 0
+             * @type number
+             * @desc 滚动到距离左侧多少像素的地方
+             */
             scrollLeft: 0,
+            /**
+             * @instance
+             * @default stepless
+             * @type string
+             * @desc 设置滑动类型为无缝滑动(stepless)和按步滑动(step)
+             */
             scrollType: 'stepless', // step
+            /**
+             * @instance
+             * @default true
+             * @type boolean
+             * @desc 是否启用鼠标滚轮
+             */
             mouseWheelEnable: true,
+            /**
+             * @instance
+             * @default true
+             * @type boolean
+             * @desc 是否启用键盘控制滑动
+             */
             keyboardEnable: true,
+            /**
+             * @instance
+             * @default true
+             * @type boolean
+             * @desc 是否启用自动监控容器大小，进行滚动条自适应，在某些特殊情况下，可关闭此功能以提升性能
+             */
             autoUpdate: true,
+            /**
+             * @instance
+             * @default 20
+             * @type number
+             * @desc 单次滑动距离
+             */
             scrollAmount: 20
         };
     },

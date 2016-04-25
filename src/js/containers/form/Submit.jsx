@@ -1,3 +1,8 @@
+/**
+ * 表单提交按钮
+ * @module containers/form/Submit
+ */
+
 module.exports = React.createClass({
     clickHandler:function() {
         this.props.form && this.props.form.submit();
