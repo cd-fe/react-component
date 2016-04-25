@@ -11,6 +11,15 @@ import Swiper from 'swiper';
 import 'swiper/dist/css/swiper.css';
 import '../../css/slider.scss';
 
+/**
+ * 单个轮播页
+ * @name Item
+ * @static
+ * @example
+ * <RUI.Slider>
+ *     <RUI.Slider.Item>your custom content</RUI.Slider.Item>
+ * </RUI.Slider>
+ */
 var Slide = React.createClass({
     render: function () {
         return <div className="slider-item swiper-slide">
@@ -19,6 +28,15 @@ var Slide = React.createClass({
     }
 });
 
+/**
+ * 分页信息
+ * @name Pagination
+ * @static
+ * @example
+ * <RUI.Slider>
+ *     <RUI.Slider.Pagination useClick={true} />
+ * </RUI.Slider>
+ */
 var Pagination = React.createClass({
     getDefaultProps: function () {
         return {
@@ -30,6 +48,16 @@ var Pagination = React.createClass({
     }
 });
 
+/**
+ * 左右操作按钮
+ * @name NavigateButton
+ * @static
+ * @example
+ * <RUI.Slider>
+ *      <RUI.Slider.NavigateButton role="prev" />
+ *      <RUI.Slider.NavigateButton role="next" />
+ * </RUI.Slider>
+ */
 var NavigateButton = React.createClass({
     getDefaultProps: function () {
         return {

@@ -10,10 +10,26 @@ import ComponentBase from '../mixins/ComponentBase.jsx';
 import '../../css/textarea.scss';
 
 module.exports = React.createClass({
+    /**
+     * 基础方法
+     * @see {@link module:mixins/ComponentBase}
+     */
     mixins: [ComponentBase],
     getDefaultProps: function () {
         return {
+            /**
+             * @instance
+             * @default textarea
+             * @type string
+             * @desc 组件名称
+             */
             cname: 'textarea',
+            /**
+             * @instance
+             * @default dynamic
+             * @type string
+             * @desc 当前模式，分为静态(static)和动态(dynamic)
+             */
             mode: 'dynamic'
         };
     },
@@ -23,6 +39,11 @@ module.exports = React.createClass({
             change: this.props.onChange
         }
     },
+    /**
+     * 获取当前值
+     * @instance
+     * @returns {number}
+     */
     getValue: function () {
         return this.state.value;
     },

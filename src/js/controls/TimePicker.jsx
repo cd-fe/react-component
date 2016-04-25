@@ -11,6 +11,10 @@ import Formatter from '../formatters/DateFormatter.jsx';
 import '../../css/timerpicker.scss';
 
 module.exports = React.createClass({
+    /**
+     * 基础方法
+     * @see {@link module:mixins/ComponentBase}
+     */
     mixins: [ComponentBase],
     getInitialState: function () {
         return {
@@ -19,7 +23,19 @@ module.exports = React.createClass({
     },
     getDefaultProps: function () {
         return {
+            /**
+             * @instance
+             * @default timepicker
+             * @type string
+             * @desc 组件名称
+             */
             cname: 'timepicker',
+            /**
+             * @instance
+             * @default Date.now()
+             * @type number
+             * @desc 当前显示时间戳
+             */
             value: Date.now()
         };
     },
@@ -62,6 +78,18 @@ module.exports = React.createClass({
             }, common)
         };
     },
+    /**
+     * 获取当前值
+     * @instance
+     * @returns {{value: number, hour: number, minute: number, second: number}}
+     * @example
+     * {
+     *      value:number,
+     *      hour:number,
+     *      minute:number,
+     *      second:number
+     * };
+     */
     getValue: function () {
         var date = new Date(this.state.value);
         date.setHours(this.refs.hour.getValue());

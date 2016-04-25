@@ -1,3 +1,8 @@
+/**
+ * 表格列组件
+ * @module containers/table/Column
+ */
+
 import className from '../../util/className.jsx';
 import ComponentBase from '../../mixins/ComponentBase.jsx';
 import TitleRender from './TitleRender.jsx';
@@ -6,13 +11,37 @@ import ItemRenderDefault from './ItemRenderDefault.jsx';
 import merge from '../../util/merge.jsx';
 
 var Column = module.exports = React.createClass({
+    /**
+     * 基础方法
+     * @see {@link module:mixins/ComponentBase}
+     */
     mixins:[ComponentBase],
     getInitialState:function() {
         return {};
     },
     getDefaultProps:function() {
         return {
-            cname:'table-column'
+            /**
+             * @instance
+             * @default table-column
+             * @type string
+             * @desc 组件名称
+             */
+            cname:'table-column',
+            /**
+             * @instance
+             * @default null
+             * @type string
+             * @desc 标题头显示内容
+             */
+            title: null,
+            /**
+             * @instance
+             * @default null
+             * @type string
+             * @desc 内容单元格显示的字段内容
+             */
+            dataField: null
         };
     },
     getDefaultTitleRender:function() {

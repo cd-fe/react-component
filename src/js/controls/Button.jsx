@@ -1,4 +1,5 @@
 /**
+ * 按钮组件
  * @module controls/Button
  */
 

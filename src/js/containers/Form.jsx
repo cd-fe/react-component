@@ -1,3 +1,12 @@
+/**
+ * 表单组件
+ * @module containers/Form
+ *
+ * @see 表单行元素 {@link module:containers/form/Control}
+ * @see 重置表单按钮 {@link module:containers/form/Reset}
+ * @see 提交表单按钮 {@link module:containers/form/Submit}
+ */
+
 import ComponentBase from '../mixins/ComponentBase.jsx';
 import className from '../util/className.jsx';
 import Control from './form/Control.jsx';

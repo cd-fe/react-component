@@ -1,8 +1,18 @@
 import Dialog from '../controls/Dialog.jsx';
 
+/**
+ * 弹出层管理类
+ * @module managers/DialogManager
+ */
+
 module.exports = {
     __instance:null,
     __autohide:true,
+    /**
+     * 清除所有弹出层
+     * @static
+     * @member
+     */
     clearAll:function() {
         if(this.__instance) {
             this.__instance.hideAll();
@@ -60,6 +70,17 @@ module.exports = {
         var instance = ReactDOM.render(<DialogManager />, document.getElementById('dialog-container'));
         this.__instance = instance;
     },
+    /**
+     * 显示一个alert对话框
+     * @param opt {object|string} 显示内容的配置参数
+     * @param title {string} 对话框标题
+     * @example
+     * DialogManager.alert("正在跳转中……", "友情提示");
+     * DialogManager.alert({
+     *      message:"正在跳转中……",
+     *      title:"友情提示"
+     * });
+     */
     alert:function(opt, title) {
         if(typeof opt == 'string') {
             opt = {
@@ -70,6 +91,19 @@ module.exports = {
 
         this.getInstance().showAlert(opt);
     },
+    /**
+     * 显示一个confirm对话框
+     * @param opt {object|string} 显示内容的配置参数
+     * @param title {string} 对话框标题
+     * @param callback {function} 确认后的回调
+     * @example
+     * DialogManager.confirm("是否真的要删除？", "友情提示", function() {console.log('submit')});
+     * DialogManager.confirm({
+     *      message:"是否真的要删除？",
+     *      title:"友情提示",
+     *      submit:function() {console.log('submit')}
+     * });
+     */
     confirm:function(opt, title, callback) {
         if(typeof opt == 'string') {
             opt = {
@@ -81,6 +115,11 @@ module.exports = {
 
         this.getInstance().showConfirm(opt);
     },
+    /**
+     * 获取弹出层在界面上mount的ReactElement
+     * @inner
+     * @returns {DialogContainer}
+     */
     getInstance:function() {
         if(!this.__instance) {
             this.createContainer();

@@ -10,6 +10,11 @@ import TimerMixin from '../mixins/TimerMixin.jsx';
 import '../../css/tooltip.scss';
 
 module.exports = React.createClass({
+    /**
+     * 基础方法
+     * @see {@link module:mixins/ComponentBase}
+     * @see {@link module:mixins/TimerMixin}
+     */
     mixins: [ComponentBase, TimerMixin],
     parentNode: null,
     getInitialState: function () {
@@ -19,9 +24,37 @@ module.exports = React.createClass({
     },
     getDefaultProps: function () {
         return {
+            /**
+             * @instance
+             * @default tooltip
+             * @type string
+             * @desc 组件名称
+             */
             cname: "tooltip",
+            /**
+             * @instance
+             * @default top-center
+             * @type string
+             * @desc 显示方位, 分为(top middle bottom)和(left center right)两组，可以分别组合
+             * @example
+             * top-left         左上角
+             * middle-right     正右侧
+             * bottom-left      左下角
+             */
             align: 'top-center',
+            /**
+             * @instance
+             * @default mouseenter
+             * @type string
+             * @desc 触发显示tooltip的事件
+             */
             trigger: 'mouseenter',
+            /**
+             * @instance
+             * @default 500
+             * @type number
+             * @desc 显示多少时间(ms)后自动消失
+             */
             duration: 5000
         };
     },
