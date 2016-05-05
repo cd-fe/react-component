@@ -28,7 +28,7 @@ module.exports = React.createClass({
                             <div className="home-list">
                                 <Link to="/components/form">组件列表</Link>
                                 <Link to="/article">入门指南</Link>
-                                <Link to="/docs">API文档</Link>
+                                <a href="http://5doe.com/custom/react-component-api/index.html">API文档</a>
                                 <a href="https://github.com/cd-fe/react-component">贡献代码</a>
                             </div>
                         </div>

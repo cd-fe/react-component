@@ -1,7 +1,7 @@
 {
   "name": "react-component-lib",
   "author": "darkty2009",
-  "version": "0.3.23",
+  "version": "0.3.24",
   "description": "a full base ui library to reactjs",
   "license": "MIT",
   "main": "dist/bundle.js",

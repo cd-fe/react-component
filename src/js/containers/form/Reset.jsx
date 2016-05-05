@@ -1,3 +1,8 @@
+/**
+ * 表单重置按钮
+ * @module containers/form/Reset
+ */
+
 module.exports = React.createClass({
     clickHandler:function() {
         this.props.form && this.props.form.reset();

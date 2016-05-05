@@ -33,10 +33,44 @@ module.exports = React.createClass({
     },
     getDefaultProps: function () {
         return {
+            /**
+             * @instance
+             * @default select
+             * @type string
+             * @desc 组件名称
+             */
             cname: "select",
+            /**
+             * @instance
+             * @default mouseenter
+             * @type string
+             * @desc 触发下拉菜单显示的事件名称
+             */
             event: "mouseenter",
             className: "rui-theme-1",
-            stuff: true
+            /**
+             * @instance
+             * @default true
+             * @type boolean
+             * @desc 是否点击后回填输入框
+             */
+            stuff: true,
+            /**
+             * @instance
+             * @default false
+             * @type boolean
+             * @desc 是否启用下拉搜索框
+             */
+            filter: false,
+            /**
+             * @instance
+             * @default []
+             * @type array
+             * @desc 显示的内容所需的数据
+             * @example
+             * <RUI.Select data={[{key:'查看',value:'1'}, {key:'编辑',value:'2'}, {key:'删除',value:'3'}]} />
+             */
+            data: []
         };
     },
     componentWillReceiveProps: function (nextProps) {

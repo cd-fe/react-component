@@ -1,3 +1,12 @@
+/**
+ * 表格组件
+ * @module containers/Table
+ *
+ * @see 表格列组件 {@link module:containers/table/Column}
+ * @see 单元格组件 {@link module:containers/table/ItemRender}
+ * @see 标题栏单元格组件 {@link module:containers/table/TitleRender}
+ */
+
 import className from '../util/className.jsx';
 import ComponentBase from '../mixins/ComponentBase.jsx';
 import Column from './table/Column.jsx';
@@ -7,24 +16,91 @@ import clone from '../util/clone.jsx';
 import '../../css/table.scss';
 
 var Table = React.createClass({
+    /**
+     * 基础方法
+     * @see {@link module:mixins/ComponentBase}
+     */
     mixins:[ComponentBase],
     getInitialState:function() {
         return {
-            dataSource:this.props.dataSource || [],
+            dataSource:this.props.dataSource,
             componentWidth:0
         };
     },
     getDefaultProps:function() {
         return {
+            /**
+             * @instance
+             * @default table
+             * @type string
+             * @desc 组件名称
+             */
             cname:'table',
+            /**
+             * @instance
+             * @default null
+             * @type number
+             * @desc 固定高度值，如果设置，则启用滚动条模式
+             */
             height:null,
+            /**
+             * @instance
+             * @default 38
+             * @type number
+             * @desc 表格头部分单元格高度
+             */
             titleHeight:38,
+            /**
+             * @instance
+             * @default true
+             * @type boolean
+             * @desc 是否显示表格头
+             */
             showTitle:true,
+            /**
+             * @instance
+             * @default 36
+             * @type number
+             * @desc 内容单元格高度
+             */
             itemHeight:36,
+            /**
+             * @instance
+             * @default true
+             * @type boolean
+             * @desc 内容单元格是否居中显示
+             */
             itemMiddle:true,
+            /**
+             * @member
+             * @instance
+             * @param keys
+             * @returns {*}
+             * @type function
+             * @default function(keys) {return keys;}
+             * @desc 数据过滤函数
+             * @example
+             * columnsFilter:function(keys) {
+             *      // keys => 单个数据的key值集合
+             *      return ['id', 'name', 'phone'];
+             * }
+             */
             columnsFilter:function(keys) {
                 return keys;
-            }
+            },
+            /**
+             * @instance
+             * @default []
+             * @type array
+             * @desc 表格数据
+             * @example
+             * dataSource = [
+             *     {id;1, name:'Athas', phone:'13312341234', male:1, role:'manager'},
+             *     {id;2, name:'Jobs', phone:'18934525552', male:0, role:'developer'},
+             *     {id;3, name:'Tom', phone:'18366769899', male:0, role:'tester'},
+             * ];
+             */
+            dataSource: []
         };
     },
     componentDidMount:function() {

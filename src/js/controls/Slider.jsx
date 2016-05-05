@@ -11,6 +11,15 @@ import Swiper from 'swiper';
 import 'swiper/dist/css/swiper.css';
 import '../../css/slider.scss';
 
+/**
+ * 单个轮播页
+ * @name Item
+ * @static
+ * @example
+ * <RUI.Slider>
+ *     <RUI.Slider.Item>your custom content</RUI.Slider.Item>
+ * </RUI.Slider>
+ */
 var Slide = React.createClass({
     render: function () {
         return <div className="slider-item swiper-slide">
@@ -19,6 +28,15 @@ var Slide = React.createClass({
     }
 });
 
+/**
+ * 分页信息
+ * @name Pagination
+ * @static
+ * @example
+ * <RUI.Slider>
+ *     <RUI.Slider.Pagination useClick={true} />
+ * </RUI.Slider>
+ */
 var Pagination = React.createClass({
     getDefaultProps: function () {
         return {
@@ -30,6 +48,16 @@ var Pagination = React.createClass({
     }
 });
 
+/**
+ * 左右操作按钮
+ * @name NavigateButton
+ * @static
+ * @example
+ * <RUI.Slider>
+ *      <RUI.Slider.NavigateButton role="prev" />
+ *      <RUI.Slider.NavigateButton role="next" />
+ * </RUI.Slider>
+ */
 var NavigateButton = React.createClass({
     getDefaultProps: function () {
         return {
@@ -42,12 +70,40 @@ var NavigateButton = React.createClass({
 });
 
 var Slider = React.createClass({
+    /**
+     * 基础方法
+     * @see {@link module:mixins/ComponentBase}
+     */
     mixins: [ComponentBase],
     getDefaultProps: function () {
         return {
+            /**
+             * @instance
+             * @default slider
+             * @type string
+             * @desc 组件名称
+             */
             cname: 'slider',
+            /**
+             * @instance
+             * @default 3000
+             * @type number
+             * @desc 自动播放间隔时间
+             */
             autoplay: 3000,
+            /**
+             * @instance
+             * @default 300
+             * @type number
+             * @desc 动画播放时长,更多配置参数，请直接传送swiper官方({@link http://idangero.us/swiper/api/})
+             */
             speed: 300,
+            /**
+             * @instance
+             * @default false
+             * @type boolean
+             * @desc 是否循环播放
+             */
             loop: false
         };
     },
@@ -105,6 +161,11 @@ var Slider = React.createClass({
         }
         return Object.assign(current, this.props);
     },
+    /**
+     * 获取swiper插件创建的swiper实例
+     * @instance
+     * @return {object}
+     */
     getSwiper: function () {
         return $(ReactDOM.findDOMNode(this)).data('react-swiper');
     },

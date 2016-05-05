@@ -1,6 +1,16 @@
+/**
+ * 遮罩层管理类
+ * @module managers/OverlayManager
+ */
+
 module.exports = {
     __overlay:null,
     __autohide:true,
+    /**
+     * 清除所有遮罩层
+     * @static
+     * @member
+     */
     clearAll:function() {
         if(this.__instance) {
             this.__instance.hide();
@@ -38,6 +48,18 @@ module.exports = {
 
         var instance = ReactDOM.render(<Overlay />, document.getElementById('overlay-container'));
         this.__overlay = instance;
+    },
+    /**
+     * 显示遮罩层
+     */
+    show:function() {
+        this.getInstance().show();
+    },
+    /**
+     * 关闭遮罩层
+     */
+    hide:function() {
+        this.getInstance().hide();
     },
     getInstance:function() {
         if(!this.__overlay) {

@@ -1,3 +1,8 @@
+/**
+ * 表单行组件
+ * @module containers/form/Control
+ */
+
 import ComponentBase from '../../mixins/ComponentBase.jsx';
 
 import omit from '../../util/omit.jsx';
@@ -16,12 +21,40 @@ var Content = React.createClass({
 });
 
 var Control = React.createClass({
+    /**
+     * 基础方法
+     * @see {@link module:mixins/ComponentBase}
+     */
     mixins:[ComponentBase],
     getDefaultProps:function() {
         return {
-            cname:'control'
+            /**
+             * @instance
+             * @default control
+             * @type string
+             * @desc 组件名称
+             */
+            cname:'control',
+            /**
+             * @instance
+             * @default input
+             * @type string
+             * @desc 表单行内的表单输入类型，可选值有 input, password, checkbox, radio 等
+             */
+            type: 'input',
+            /**
+             * @instance
+             * @type string
+             * @desc 表单行组件显示的文本内容
+             */
+            label: null,
         };
     },
+    /**
+     * 获取当前表单行的值
+     * @instance
+     * @returns {*|null}
+     */
     getValue:function() {
         return this.refs.content.getValue && (this.refs.content.getValue() || null);
     },

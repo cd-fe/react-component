@@ -11,17 +11,80 @@ import ComponentBase from '../mixins/ComponentBase.jsx';
 import '../../css/spinner.scss';
 
 module.exports = React.createClass({
+    /**
+     * 基础方法
+     * @see {@link module:mixins/ComponentBase}
+     */
     mixins: [ComponentBase],
     getDefaultProps: function () {
         return {
+            /**
+             * @instance
+             * @default spinner
+             * @type string
+             * @desc 组件名称
+             */
             cname: 'spinner',
+            /**
+             * @instance
+             * @default 1
+             * @type number
+             * @desc 单步递变值
+             */
             step: 1,
+            /**
+             * @instance
+             * @default 9999
+             * @type number
+             * @desc 最大值
+             */
             max: 9999,
+            /**
+             * @instance
+             * @default 0
+             * @type number
+             * @desc 最小值
+             */
             min: 0,
+            /**
+             * @instance
+             * @default true
+             * @type boolean
+             * @desc 是否启用键盘上下键控制
+             */
             keyboardEnable: true,
+            /**
+             * @instance
+             * @default false
+             * @type boolean
+             * @desc 是否禁用
+             */
             disable: false,
+            /**
+             * @instance
+             * @default blur
+             * @type string
+             * @desc 手动输入内容后，根据此事件触发内容校正
+             */
             eventType: 'blur',
+            /**
+             * @instance
+             * @default null
+             * @type function
+             * @desc 当内容变更后的回调事件
+             * @example
+             * changeHandler:function(val) {
+             *      console.log(val);
+             * }
+             */
             onChange: null,
+            /**
+             * @instance
+             * @member
+             * @default function(str) {return str;}
+             * @type function
+             * @desc 对显示的内容进行最后的修改
+             */
             fieldFunction: function (str) {
                 return str;
             }
@@ -59,6 +122,11 @@ module.exports = React.createClass({
             $(node).bind('keydown', keyHandler);
         }
     },
+    /**
+     * 获取当前值
+     * @instance
+     * @returns {number}
+     */
     getValue: function () {
         return this.state.value;
     },

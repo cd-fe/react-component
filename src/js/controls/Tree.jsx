@@ -85,22 +85,82 @@ var TreeNode = React.createClass({
 });
 
 var Tree = React.createClass({
+    /**
+     * 基础方法
+     * @see {@link module:mixins/ComponentBase}
+     */
     mixins: [ComponentBase],
     getDefaultProps: function () {
         return {
+            /**
+             * @instance
+             * @default tree
+             * @type string
+             * @desc 组件名称
+             */
             cname: "tree",
+            /**
+             * @member
+             * @instance
+             * @param data
+             * @returns {ReactElement}
+             * @default function
+             * @type function
+             * @desc 单个节点的图标区域渲染
+             */
             iconRender: function (data) {
                 var prefix = this.getDefaultClass();
                 return <div className={prefix + '-icon'}></div>;
             },
+            /**
+             * @member
+             * @instance
+             * @param data
+             * @returns {ReactElement}
+             * @default function
+             * @type function
+             * @desc 单个节点的内容区域渲染
+             */
             labelRender: function (data) {
                 var prefix = this.getDefaultClass();
                 return <label
                     className={prefix + '-text'}>{(this.props.labelFunction(data.data) || "").toString()}</label>;
             },
+            /**
+             * @member
+             * @instance
+             * @param data
+             * @returns {string}
+             * @default function
+             * @type function
+             * @desc 对内容区域进行文本修正显示
+             */
             labelFunction: function (data) {
                 return data.toString();
             },
+            /**
+             * @instance
+             * @default []
+             * @type array
+             * @desc 节点数据
+             * @example
+             * dataSource = {
+             *   data:"Post",
+             *   children:[
+             *       {data:"All Post", children:[{data:"All"}, {data:"Published"}, {data:"Draft"}]},
+             *       {data:"Add New"},
+             *       {data:"Categories", children:[{data:"List"}, {data:"Add New"}]},
+             *       {data:"Tags", children:[{data:"List"}, {data:"Add New"}]}
+             *   ]
+             * },
+             * {
+             *    data:"Media",
+             *    children:[
+             *        {data:"Library"},
+             *        {data:"Add New"}
+             *    ]
+             * }
+             */
             dataSource: []
         };
     },
