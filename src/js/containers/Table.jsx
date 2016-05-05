@@ -183,6 +183,7 @@ var Table = React.createClass({
         var scrollerStyles = {};
         if(this.props.height !== null) {
             scrollerStyles.height = this.props.height;
+            scrollerStyles.minHeight = this.props.height;
             scrollerStyles.overflowY = 'hidden';
         }
 
