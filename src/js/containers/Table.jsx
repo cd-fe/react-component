@@ -111,6 +111,7 @@ var Table = React.createClass({
         $(window).unbind('resize', this.updateWidth);
     },
     updateWidth:function() {
+        var _this = this;
         var node = $(ReactDOM.findDOMNode(this));
         // 先让父容器能够自适应宽度
         node.width('auto');
@@ -120,6 +121,40 @@ var Table = React.createClass({
 
         this.setState({
             componentWidth : width
+        }, function() {
+            var items = node.find('.rui-table-column-item');
+            items.height('auto');
+
+            var map = [];
+
+            items.map(function(index, item) {
+                if($(item).height() != _this.props.itemHeight) {
+                    $(item).css('lineHeight', 'normal');
+                    $(item).find('span').css('lineHeight', 'normal');
+
+                    var height = $(item).height();
+                    map[index % _this.props.dataSource.length] = Math.max(height, map[index % _this.props.dataSource.length] || _this.props.itemHeight);
+                }else {
+                    $(item).height(_this.props.itemHeight);
+                }
+            });
+
+            items.map(function(index, item) {
+                var mod = index % _this.props.dataSource.length;
+                if(map[mod]) {
+                    if($(item).height() != map[mod]) {
+                        if($(item).height() != _this.props.itemHeight) {
+                            $(item).find('span').css({
+                                display:'block',
+                                marginTop:(map[mod] - $(item).find('span').height())/2
+                            });
+                        }else {
+                            $(item).css('lineHeight', map[mod] + 'px');
+                        }
+                    }
+                    $(item).height(map[mod]);
+                }
+            });
         });
     },
     percent:function(piece) {

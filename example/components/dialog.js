@@ -9,7 +9,9 @@ var Example = React.createClass({
         RUI.DialogManager.alert("自定义弹出层的确认按钮点击了");
     },
     showAlert:function() {
-        RUI.DialogManager.alert('弹出提示', '自定义标题');
+        RUI.DialogManager.alert('弹出提示', '自定义标题', function() {
+            RUI.DialogManager.alert('alert的确定按钮点击了');
+        });
     },
     showConfirm:function() {
         RUI.DialogManager.confirm('真的要删除么？');

@@ -31,6 +31,7 @@ module.exports = {
                 return {
                     alertMessage:"",
                     alertTitle:"",
+                    alertSubmit:null,
                     confirmTitle:"",
                     confirmMessage:"",
                     confirmSubmit:null
@@ -39,7 +40,8 @@ module.exports = {
             showAlert:function(opt) {
                 this.setState({
                     alertMessage:opt.message,
-                    alertTitle:opt.title
+                    alertTitle:opt.title,
+                    alertSubmit:opt.submit
                 }, function() {
                     this.refs.alert.show();
                 }.bind(this));
@@ -59,7 +61,7 @@ module.exports = {
             },
             render:function() {
                 return <div>
-                    <Dialog ref="alert" title={this.state.alertTitle} buttons={'submit'} style={{'min-width':'200px'}}>{this.state.alertMessage}</Dialog>
+                    <Dialog ref="alert" title={this.state.alertTitle} buttons={'submit'} onSubmit={this.state.alertSubmit} style={{'min-width':'200px'}}>{this.state.alertMessage}</Dialog>
                     <Dialog ref="confirm" title={this.state.confirmTitle} buttons={'cancel,submit'} onSubmit={this.state.confirmSubmit}>
                         {this.state.confirmMessage}
                     </Dialog>
@@ -74,18 +76,21 @@ module.exports = {
      * 显示一个alert对话框
      * @param opt {object|string} 显示内容的配置参数
      * @param title {string} 对话框标题
+     * @param callback {function} 确认回调函数
      * @example
      * DialogManager.alert("正在跳转中……", "友情提示");
      * DialogManager.alert({
      *      message:"正在跳转中……",
-     *      title:"友情提示"
+     *      title:"友情提示",
+     *      callback:function() {}
      * });
      */
-    alert:function(opt, title) {
+    alert:function(opt, title, callback) {
         if(typeof opt == 'string') {
             opt = {
                 message:opt,
-                title:title
+                title:title,
+                submit:callback
             };
         }
 
