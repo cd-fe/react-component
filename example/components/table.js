@@ -96,9 +96,9 @@ var Example = React.createClass({
     },
     getData:function() {
         return [
-            {id:1,name:"张三",phone:"13312341234", prov:"北京", role:"管理员", desc:{tag:'影视 娱乐'}},
-            {id:3,name:"李四",phone:"18912341234", prov:"四川", role:"超级管理员", desc:{tag:'IT 编程'}},
-            {id:2,name:"王五",phone:"13512341234", prov:"杭州", role:"编辑", desc:{tag:'数码 科技'}}
+            {id:1,name:"张三",phone:"1331234123413312341234133123412341331234123413312341234", prov:"北京", role:"管理员超级管理员超级管理员", desc:{tag:'影视 娱乐'}},
+            {id:3,name:"李四",phone:"18912341234133123412341331234123413312341234", prov:"四川", role:"超级管理员超级管理员超级管理员超级管理员", desc:{tag:'IT 编程'}},
+            {id:2,name:"王五",phone:"13512341234133123412341331234123413312341234133123412341331234123413312341234", prov:"杭州", role:"编辑超级管理员超级管理员", desc:{tag:'数码 科技'}}
         ];
     },
     sortData:function() {
