@@ -123,12 +123,10 @@ module.exports = React.createClass({
         }
 
         if (this.props.mouseWheelEnable) {
-            require('jquery-mousewheel');
             var move = throttle(16, this.move);
-            node.on('mousewheel', function (e) {
-                var e = e.originalEvent;
-                if (e.deltaX != 0 || e.deltaY != 0) {
-                    move(e.deltaX, e.deltaY);
+            node.mousewheel(function (e, delta, deltaX, deltaY) {
+                if (deltaX != 0 || deltaY != 0) {
+                    move(deltaX, deltaY);
                     return false;
                 }
             }.bind(this));
