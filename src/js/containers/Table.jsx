@@ -110,6 +110,9 @@ var Table = React.createClass({
     componentWillUnmount:function() {
         $(window).unbind('resize', this.updateWidth);
     },
+    componentDidUpdate:function() {
+        this.updateItemHeight();
+    },
     updateWidth:function() {
         var _this = this;
         var node = $(ReactDOM.findDOMNode(this));
@@ -121,40 +124,42 @@ var Table = React.createClass({
 
         this.setState({
             componentWidth : width
-        }, function() {
-            var items = node.find('.rui-table-column-item');
-            items.height('auto');
+        }, this.updateItemHeight.bind(this));
+    },
+    updateItemHeight:function() {
+        var _this = this;
+        var items = node.find('.rui-table-column-item');
+        items.height('auto');
 
-            var map = [];
+        var map = [];
 
-            items.map(function(index, item) {
-                if($(item).height() != _this.props.itemHeight) {
-                    $(item).css('lineHeight', 'normal');
-                    $(item).find('span').css('lineHeight', 'normal');
+        items.map(function(index, item) {
+            if($(item).height() != _this.props.itemHeight) {
+                $(item).css('lineHeight', 'normal');
+                $(item).find('span').css('lineHeight', 'normal');
 
-                    var height = $(item).height();
-                    map[index % _this.props.dataSource.length] = Math.max(height, map[index % _this.props.dataSource.length] || _this.props.itemHeight);
-                }else {
-                    $(item).height(_this.props.itemHeight);
-                }
-            });
+                var height = $(item).height();
+                map[index % _this.props.dataSource.length] = Math.max(height, map[index % _this.props.dataSource.length] || _this.props.itemHeight);
+            }else {
+                $(item).height(_this.props.itemHeight);
+            }
+        });
 
-            items.map(function(index, item) {
-                var mod = index % _this.props.dataSource.length;
-                if(map[mod]) {
-                    if($(item).height() != map[mod]) {
-                        if($(item).height() != _this.props.itemHeight) {
-                            $(item).find('span').css({
-                                display:'block',
-                                marginTop:(map[mod] - $(item).find('span').height())/2
-                            });
-                        }else {
-                            $(item).css('lineHeight', map[mod] + 'px');
-                        }
+        items.map(function(index, item) {
+            var mod = index % _this.props.dataSource.length;
+            if(map[mod]) {
+                if($(item).height() != map[mod]) {
+                    if($(item).height() != _this.props.itemHeight) {
+                        $(item).find('span').css({
+                            display:'block',
+                            marginTop:(map[mod] - $(item).find('span').height())/2
+                        });
+                    }else {
+                        $(item).css('lineHeight', map[mod] + 'px');
                     }
-                    $(item).height(map[mod]);
                 }
-            });
+                $(item).height(map[mod]);
+            }
         });
     },
     percent:function(piece) {
