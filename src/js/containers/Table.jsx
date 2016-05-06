@@ -111,7 +111,7 @@ var Table = React.createClass({
         $(window).unbind('resize', this.updateWidth);
     },
     componentDidUpdate:function() {
-        this.updateItemHeight();
+        setTimeout(this.updateItemHeight, 0);
     },
     updateWidth:function() {
         var _this = this;
@@ -124,27 +124,33 @@ var Table = React.createClass({
 
         this.setState({
             componentWidth : width
-        }, this.updateItemHeight.bind(this));
+        }, this.updateItemHeight);
     },
     updateItemHeight:function() {
         var _this = this;
+        var node = $(ReactDOM.findDOMNode(this));
         var items = node.find('.rui-table-column-item');
         items.height('auto');
+        items.find('span').css({
+            display:'inline',
+            marginTop:0
+        });
 
         var map = [];
-
         items.map(function(index, item) {
-            if($(item).height() != _this.props.itemHeight) {
+            if($(item).height() > _this.props.itemHeight) {
                 $(item).css('lineHeight', 'normal');
                 $(item).find('span').css('lineHeight', 'normal');
 
                 var height = $(item).height();
+                console.log(height);
                 map[index % _this.props.dataSource.length] = Math.max(height, map[index % _this.props.dataSource.length] || _this.props.itemHeight);
             }else {
                 $(item).height(_this.props.itemHeight);
+                $(item).css('lineHeight', _this.props.itemHeight + 'px');
             }
         });
-
+        console.log(map);
         items.map(function(index, item) {
             var mod = index % _this.props.dataSource.length;
             if(map[mod]) {

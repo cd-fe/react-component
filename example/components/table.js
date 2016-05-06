@@ -149,15 +149,15 @@ var Example = React.createClass({
             <h2 className="title">表格<span>Table</span></h2>
             <h3 className="sub-title">演示</h3>
             <div className="example">
-                {/*<h4 className="final-title">默认表格</h4>
+                <h4 className="final-title">默认表格</h4>
                 <div>
                     <RUI.Table dataSource={sourceData}/>
-                </div>*/}
+                </div>
                 <h4 className="final-title">动态渲染-过滤列名</h4>
                 <div>
                     <RUI.Table dataSource={this.state.ajaxData} columnsFilter={this.columnsFilter} />
                 </div>
-                {/*<h4 className="final-title">自定义标题格</h4>
+                <h4 className="final-title">自定义标题格</h4>
                 <div>
                     <RUI.Table dataSource={sourceData} itemHeight={72}>
                         <RUI.Column dataField={"id"} width={80}>
@@ -201,7 +201,7 @@ var Example = React.createClass({
                 <h4 className="final-title">固定高度-滚动条</h4>
                 <div>
                     <RUI.Table height={200} dataSource={this.state.fullData}/>
-                </div>*/}
+                </div>
             </div>
             <h3 className="sub-title">源码</h3>
             <div className="source">
