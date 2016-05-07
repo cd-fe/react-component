@@ -24,7 +24,8 @@ var Table = React.createClass({
     getInitialState:function() {
         return {
             dataSource:this.props.dataSource,
-            componentWidth:0
+            componentWidth:0,
+            itemHeight:this.props.itemHeight || 36
         };
     },
     getDefaultProps:function() {
@@ -59,11 +60,11 @@ var Table = React.createClass({
             showTitle:true,
             /**
              * @instance
-             * @default 36
+             * @default null
              * @type number
              * @desc 内容单元格高度
              */
-            itemHeight:36,
+            itemHeight:null,
             /**
              * @instance
              * @default true
@@ -127,6 +128,10 @@ var Table = React.createClass({
         }, this.updateItemHeight);
     },
     updateItemHeight:function() {
+        if(this.props.itemHeight) {
+            return;
+        }
+
         var _this = this;
         var node = $(ReactDOM.findDOMNode(this));
         var items = node.find('.rui-table-column-item');
@@ -138,24 +143,22 @@ var Table = React.createClass({
 
         var map = [];
         items.map(function(index, item) {
-            if($(item).height() > _this.props.itemHeight) {
+            if($(item).height() > _this.state.itemHeight) {
                 $(item).css('lineHeight', 'normal');
                 $(item).find('span').css('lineHeight', 'normal');
 
                 var height = $(item).height();
-                console.log(height);
-                map[index % _this.props.dataSource.length] = Math.max(height, map[index % _this.props.dataSource.length] || _this.props.itemHeight);
+                map[index % _this.props.dataSource.length] = Math.max(height, map[index % _this.props.dataSource.length] || _this.state.itemHeight);
             }else {
-                $(item).height(_this.props.itemHeight);
-                $(item).css('lineHeight', _this.props.itemHeight + 'px');
+                $(item).height(_this.state.itemHeight);
+                $(item).css('lineHeight', _this.state.itemHeight + 'px');
             }
         });
-        console.log(map);
         items.map(function(index, item) {
             var mod = index % _this.props.dataSource.length;
             if(map[mod]) {
                 if($(item).height() != map[mod]) {
-                    if($(item).height() != _this.props.itemHeight) {
+                    if($(item).height() != _this.state.itemHeight) {
                         $(item).find('span').css({
                             display:'block',
                             marginTop:(map[mod] - $(item).find('span').height())/2
@@ -207,7 +210,7 @@ var Table = React.createClass({
             props.source = this.props.dataSource;
             props.key = index;
             props.titleHeight = this.props.titleHeight;
-            props.itemHeight = this.props.itemHeight;
+            props.itemHeight = this.state.itemHeight;
             props.itemMiddle = this.props.itemMiddle;
             return React.cloneElement(column, props);
         }.bind(this)) : (keys.map(function(key, index, all) {
@@ -216,7 +219,7 @@ var Table = React.createClass({
             totalAutoCount--;
             return <Column
                 titleHeight={this.props.titleHeight}
-                itemHeight={this.props.itemHeight}
+                itemHeight={this.state.itemHeight}
                 source={this.props.dataSource}
                 title={key}
                 dataField={key}
