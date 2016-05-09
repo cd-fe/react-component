@@ -42,6 +42,10 @@ browser example/index.html
 
 # Release logs
 
+## 0.3.28
+
+* fixed DatePicker bugs
+
 ## 0.3.22
 
 * Add ScrollView
