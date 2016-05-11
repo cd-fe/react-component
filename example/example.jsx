@@ -37,4 +37,7 @@ var Root = React.createClass({
     }
 });
 
-ReactDOM.render(<Root />, document.getElementById('wrapper'));
+var codemirrorResources = require('./common/codemirror.jsx');
+Promise.all(codemirrorResources).then(function() {
+    ReactDOM.render(<Root />, document.getElementById('wrapper'));
+});
