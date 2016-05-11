@@ -7,8 +7,6 @@
 
 * Pagination ![Done][1]
 * Table ![Done][1]
-* List
-* QRCode
 * Checkbox ![Done][1]
 * CheckboxGroup ![Done][1]
 * Radio ![Done][1]
