@@ -36,6 +36,19 @@ var Example = React.createClass({
                         filterCallback={this.filterHandle}>
                     </RUI.Select>
                 </div>
+
+                <h4 className="final-title">选项只有一个</h4>
+                <div>
+                    <RUI.Select
+                        data={[{key:'查看',value:'1'}]}
+                        value={{key:'查看',value:'1'}}
+                        stuff={true}
+                        event={'mouseenter'}
+                        offset={'0'}
+                        callback={this.selectCallback}
+                        className="rui-theme-2">
+                    </RUI.Select>
+                </div>
             </div>
             <h3 className="sub-title">源码</h3>
             <div className="source">
