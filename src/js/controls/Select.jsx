@@ -149,7 +149,7 @@ module.exports = React.createClass({
     },
     handleClick: function (e) {
         var _this = this;
-        //_this.close();
+        (_this.state.data.length > 1 || _this.state.filter) && _this.close();
         _this.props.stuff && (_this.refs.choose.innerHTML = e.key);
         _this._choose = e;
         this.props.callback && this.props.callback(e);
