@@ -153,9 +153,13 @@
         box-shadow:0 5px 5px rgba(233, 241, 252, 0.67);
         margin: 0 12px 20px;
         background-color: #fff;
+        &.one {
+          display: block;
+           -webkit-transform: translateY(0);
+           transform: translateY(0);
+        }
         ul {
-          max-height: 200px;
-          overflow-y: scroll;
+          max-height: 108px;
           li {
             display:block;
             padding:0 1px;
