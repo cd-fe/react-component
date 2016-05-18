@@ -9,7 +9,10 @@ var Example = React.createClass({
             data : [
                 {key:'查看1',value:'1'},
                 {key:'查看2',value:'2'},
-                {key:'查看3',value:'3'}
+                {key:'查看3',value:'3'},
+                {key:'查看4',value:'3'},
+                {key:'查看5',value:'3'},
+                {key:'查看6',value:'3'}
             ]
         });
     },
