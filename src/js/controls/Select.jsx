@@ -83,18 +83,14 @@ module.exports = React.createClass({
         }
         this.setState(newProps);
     },
-    componentDidMount: function () {
+    doEvent : function() {
         var _this = this;
         var node = ReactDOM.findDOMNode(this);
         var ul = $(node).find('ul');
         var li = ul.find('li');
-        if(_this.state.data.length == 1 && !_this.state.filter) {
-           return false;
-        }
         if (this.props.event == 'mouseenter') {
             $(node).bind(this.props.event, function () {
-
-                _this.startTimer(function () {
+                (_this.state.data.length > 1 || _this.state.filter ) && _this.startTimer(function () {
                     if (_this.state.active) {
                         _this.close();
                     } else {
@@ -109,19 +105,29 @@ module.exports = React.createClass({
                 }
             });
         } else {
-            $(node).bind('mouseleave', this.onMouseLeave);
+            $(node).bind('mouseleave', function() {
+                (_this.state.data.length > 1 || _this.state.filter ) && _this.onMouseLeave();
+            });
             $(node).bind(this.props.event, function () {
-                if (_this.state.active) {
-                    _this.close();
-                } else {
-                    _this.open();
+                if(_this.state.data.length > 1 || _this.state.filter) {
+                    if (_this.state.active) {
+                        _this.close();
+                    } else {
+                        _this.open();
+                    }
                 }
             });
         }
-
         li.size() > 3 && ul.css({
             overflowY : 'scroll'
         });
+    },
+    componentDidMount: function () {
+        var _this = this;
+        var node = ReactDOM.findDOMNode(this);
+        var ul = $(node).find('ul');
+        var li = ul.find('li');
+        _this.doEvent();
     },
     onMouseLeave: function () {
         this.close();
