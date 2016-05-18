@@ -97,6 +97,9 @@ module.exports = React.createClass({
                         _this.open();
                     }
                 }, 200);
+                _this.state.data.length > 3 && ul.css({
+                    overflowY : 'scroll'
+                });
             });
             $(node).bind('mouseleave', function () {
                 if (_this.__timer) {
@@ -115,12 +118,12 @@ module.exports = React.createClass({
                     } else {
                         _this.open();
                     }
+                    _this.state.data.length > 3 && ul.css({
+                        overflowY : 'scroll'
+                    });
                 }
             });
         }
-        li.size() > 3 && ul.css({
-            overflowY : 'scroll'
-        });
     },
     componentDidMount: function () {
         var _this = this;
