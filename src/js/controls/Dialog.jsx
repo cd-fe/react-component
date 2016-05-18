@@ -144,6 +144,8 @@ var Dialog = React.createClass({
             node.style.width = width + 'px';
             node.style.marginTop = -1 * (height / 2) + 'px';
             node.style.marginLeft = -1 * (width / 2) + 'px';
+            node.style.top = "50%";
+            node.style.left = "50%";
         } else {
             node.style.width = 'auto';
         }
