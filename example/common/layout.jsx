@@ -3,8 +3,6 @@ import {Link} from 'react-router';
 
 import './example.scss';
 
-var home = require("../../README.md");
-
 window.onhashchange = function() {
     RUI.DialogManager.clearAll();
     RUI.OverlayManager.clearAll();

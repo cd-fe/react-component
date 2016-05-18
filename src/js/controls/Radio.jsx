@@ -86,11 +86,14 @@ module.exports = React.createClass({
     },
     clickHandler: function (event) {
         var change;
-        if (this.props.groupValidate) {
-            change = this.props.groupValidate.call(null, event, this);
-        } else {
-            this.toggle();
-            this.forceUpdate();
+
+        if(!this.props.disable) {
+            if (this.props.groupValidate) {
+                change = this.props.groupValidate.call(null, event, this);
+            } else {
+                this.toggle();
+                this.forceUpdate();
+            }
         }
     },
     componentWillReceiveProps: function (nextProps) {

@@ -44,18 +44,30 @@ module.exports = React.createClass({
         formatter.setTime(this.state.value);
         formatter.dateTo('m', -1);
 
-        this.setState({
-            value: formatter.getTime()
-        });
+        if(this.props.range) {
+            var event = new Event('change');
+            event.data = formatter.getTime();
+            this.dispatchEvent(event);
+        }else {
+            this.setState({
+                value: formatter.getTime()
+            });
+        }
     },
     nextMonth: function () {
         var formatter = new DateFormatter();
         formatter.setTime(this.state.value);
         formatter.dateTo('m', 1);
 
-        this.setState({
-            value: formatter.getTime()
-        });
+        if(this.props.range) {
+            var event = new Event('change');
+            event.data = formatter.getTime();
+            this.dispatchEvent(event);
+        }else {
+            this.setState({
+                value: formatter.getTime()
+            });
+        }
     },
     onItemClick: function (value, event) {
         event.type = 'change';
@@ -95,19 +107,27 @@ module.exports = React.createClass({
                     if (index <= firstIndex || index > lastIndex) {
                         classes.push('disabled');
                     }
-                    if (index == currentIndex) {
-                        classes.push('selected');
+
+                    if(_this.props.range == 'end') {
+                        var formatStartTime = new Date(_this.props.source.start);
+                        if(date.compare(formatStartTime) < 0) {
+                            classes.push('disabled');
+                        }
                     }
 
                     if (_this.props.range == 'start') {
-                        if (date.getTime() > monthValue.getTime() && date.getTime() < _this.props.source.end) {
+                        if (date.getTime() >= monthValue.getTime() && date.getTime() <= _this.props.source.end) {
                             classes.push('ranged');
                         }
                     }
                     if (_this.props.range == 'end') {
-                        if (date.getTime() < monthValue.getTime() && date.getTime() > _this.props.source.start) {
+                        if (date.getTime() <= monthValue.getTime() && date.getTime() >= _this.props.source.start) {
                             classes.push('ranged');
                         }
+                    }
+
+                    if (index == currentIndex) {
+                        classes.push('selected');
                     }
 
                     return <CalendarItem key={"calendar-"+row+column} value={date.getTime()} className={classes.join(" ")}

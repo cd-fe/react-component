@@ -7,8 +7,6 @@
 
 * Pagination ![Done][1]
 * Table ![Done][1]
-* List
-* QRCode
 * Checkbox ![Done][1]
 * CheckboxGroup ![Done][1]
 * Radio ![Done][1]
@@ -41,6 +39,10 @@ browser example/index.html
 ```
 
 # Release logs
+
+## 0.3.28
+
+* fixed DatePicker bugs
 
 ## 0.3.22
 

@@ -86,6 +86,11 @@ module.exports = React.createClass({
     componentDidMount: function () {
         var _this = this;
         var node = ReactDOM.findDOMNode(this);
+        var ul = $(node).find('ul');
+        var li = ul.find('li');
+        if(_this.state.data.length == 1 && !_this.state.filter) {
+           return false;
+        }
         if (this.props.event == 'mouseenter') {
             $(node).bind(this.props.event, function () {
 
@@ -114,6 +119,9 @@ module.exports = React.createClass({
             });
         }
 
+        li.size() > 3 && ul.css({
+            overflowY : 'scroll'
+        });
     },
     onMouseLeave: function () {
         this.close();
@@ -141,7 +149,7 @@ module.exports = React.createClass({
     },
     handleClick: function (e) {
         var _this = this;
-        _this.close();
+        (_this.state.data.length > 1 || _this.state.filter) && _this.close();
         _this.props.stuff && (_this.refs.choose.innerHTML = e.key);
         _this._choose = e;
         this.props.callback && this.props.callback(e);
@@ -205,8 +213,8 @@ module.exports = React.createClass({
                 <i className="arrow"></i>
                 <span ref="choose" className="placeholder">{this.state.value.key}</span>
 
-                <div className="rui-select-options-wrap" style={{top:offset}}>
-                    <div ref="options" className="rui-select-options">
+                <div className="rui-select-options-wrap" style={(this.state.data.length == 1 && !_this.state.filter )? {top:offset, zIndex:'1049'} : {top:offset}}>
+                    <div ref="options" className={(this.state.data.length == 1 && !_this.state.filter )? 'rui-select-options one' : 'rui-select-options'}>
                         {filter}
                         <ul>
                             {

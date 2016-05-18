@@ -246,6 +246,18 @@ module.exports = React.createClass({
             this.dispatchEvent('change', this.getValue());
         }.bind(this));
     },
+    onStartTimeBlur:function(event) {
+        var time = Date.parse(event.target.value);
+        this.setState({
+            startValuePreview:isNaN(time) ? this.state.startValuePreview : time
+        });
+    },
+    onEndTimeBlur:function(event) {
+        var time = Date.parse(event.target.value);
+        this.setState({
+            endValuePreview:isNaN(time) ? this.state.endValuePreview : time
+        });
+    },
     dateNow: function (time) {
         var date = new Date(time);
         if (!this.props.showTime) {
@@ -308,8 +320,8 @@ module.exports = React.createClass({
                 {this.props.range && (<div className={defaultClass+'-row'}>
                     <div className={"range-container"}>
                         <div className={"left"}>
-                            <span>开始时间： </span><Input value={this.display('start')}/>
-                            <span className="end">结束时间： </span><Input value={this.display('end')}/>
+                            <span>开始时间： </span><Input value={this.display('start')} onBlur={this.onStartTimeBlur}/>
+                            <span className="end">结束时间： </span><Input value={this.display('end')} onBlur={this.onEndTimeBlur}/>
                         </div>
                         <div className={"right"}>
                             <Button onClick={this.rangeCalendarCancel}>取消</Button>

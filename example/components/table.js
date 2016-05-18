@@ -159,7 +159,7 @@ var Example = React.createClass({
                 </div>
                 <h4 className="final-title">自定义标题格</h4>
                 <div>
-                    <RUI.Table dataSource={sourceData} itemHeight={72}>
+                    <RUI.Table dataSource={sourceData}>
                         <RUI.Column dataField={"id"} width={80}>
                             <RUI.Table.TitleRender>
                                 <SortTitleRender onClick={this.sortData} />

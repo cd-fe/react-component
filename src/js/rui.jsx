@@ -36,7 +36,9 @@ import OverlayManager from './managers/OverlayManager.jsx';
 import '../css/common.scss';
 
 var mousewheel = require('jquery-mousewheel');
-mousewheel(window.jQuery || window.$);
+if(typeof mousewheel == 'function') {
+    mousewheel(window.jQuery || window.$);
+}
 
 var RUI = {
     Button:Button,
