@@ -90,7 +90,7 @@ module.exports = React.createClass({
         var li = ul.find('li');
         if (this.props.event == 'mouseenter') {
             $(node).bind(this.props.event, function () {
-                (_this.state.data.length > 1 || _this.state.filter || (_this.props.className != 'rui-theme-2')) && _this.startTimer(function () {
+                (_this.state.data.length > 1 || _this.state.filter || (_this.props.className.indexOf('rui-theme-2') == -1)) && _this.startTimer(function () {
                     if (_this.state.active) {
                         _this.close();
                     } else {
@@ -109,10 +109,10 @@ module.exports = React.createClass({
             });
         } else {
             $(node).bind('mouseleave', function() {
-                (_this.state.data.length > 1 || _this.state.filter || (_this.props.className != 'rui-theme-2')) && _this.onMouseLeave();
+                (_this.state.data.length > 1 || _this.state.filter || (_this.props.className.indexOf('rui-theme-2') == -1)) && _this.onMouseLeave();
             });
             $(node).bind(this.props.event, function () {
-                if(_this.state.data.length > 1 || _this.state.filter || (_this.props.className != 'rui-theme-2')) {
+                if(_this.state.data.length > 1 || _this.state.filter || (_this.props.className.indexOf('rui-theme-2') == -1)) {
                     if (_this.state.active) {
                         _this.close();
                     } else {
@@ -224,7 +224,7 @@ module.exports = React.createClass({
                 <span ref="choose" className="placeholder">{this.state.value.key}</span>
 
                 <div className="rui-select-options-wrap" style={(this.state.data.length == 1 && !_this.state.filter )? {top:offset, zIndex:'1049'} : {top:offset}}>
-                    <div ref="options" className={(_this.state.data.length == 1 && !_this.state.filter && _this.props.className == 'rui-theme-2')? 'rui-select-options one' : 'rui-select-options'}>
+                    <div ref="options" className={(_this.state.data.length == 1 && !_this.state.filter && _this.props.className.indexOf('rui-theme-2') > -1)? 'rui-select-options one' : 'rui-select-options'}>
                         {filter}
                         <ul>
                             {
