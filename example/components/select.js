@@ -63,7 +63,7 @@ var Example = React.createClass({
                         event={'mouseenter'}
                         offset={'0'}
                         callback={this.selectCallback}
-                        className="rui-theme-2">
+                        className="rui-theme-2 short">
                     </RUI.Select>
                     &nbsp;&nbsp;
                     <RUI.Button onClick={this.onClickHandler}>点击</RUI.Button>
