@@ -19,7 +19,7 @@ module.exports = React.createClass({
     getInitialState: function () {
         return {
             active: false,
-            filter: false,//过滤筛选
+            filter: this.props.filter || false,//过滤筛选
             event: this.props.event || 'click',//事件类型mousover,click,dbclick
             data: this.props.data || [],//数据
             value: this.props.value || (this.props.data instanceof Array && this.props.data[0]),//默认值
@@ -90,7 +90,7 @@ module.exports = React.createClass({
         var li = ul.find('li');
         if (this.props.event == 'mouseenter') {
             $(node).bind(this.props.event, function () {
-                (_this.state.data.length > 1 || _this.state.filter ) && _this.startTimer(function () {
+                (_this.state.data.length > 1 || _this.state.filter || (_this.props.className != 'rui-theme-2')) && _this.startTimer(function () {
                     if (_this.state.active) {
                         _this.close();
                     } else {
@@ -109,10 +109,10 @@ module.exports = React.createClass({
             });
         } else {
             $(node).bind('mouseleave', function() {
-                (_this.state.data.length > 1 || _this.state.filter ) && _this.onMouseLeave();
+                (_this.state.data.length > 1 || _this.state.filter || (_this.props.className != 'rui-theme-2')) && _this.onMouseLeave();
             });
             $(node).bind(this.props.event, function () {
-                if(_this.state.data.length > 1 || _this.state.filter) {
+                if(_this.state.data.length > 1 || _this.state.filter || (_this.props.className != 'rui-theme-2')) {
                     if (_this.state.active) {
                         _this.close();
                     } else {
@@ -200,6 +200,7 @@ module.exports = React.createClass({
     },
 
     render: function () {
+
         var _this = this,
             active = this.state.active,
             data = this.state.data,
@@ -223,7 +224,7 @@ module.exports = React.createClass({
                 <span ref="choose" className="placeholder">{this.state.value.key}</span>
 
                 <div className="rui-select-options-wrap" style={(this.state.data.length == 1 && !_this.state.filter )? {top:offset, zIndex:'1049'} : {top:offset}}>
-                    <div ref="options" className={(this.state.data.length == 1 && !_this.state.filter )? 'rui-select-options one' : 'rui-select-options'}>
+                    <div ref="options" className={(_this.state.data.length == 1 && !_this.state.filter && _this.props.className == 'rui-theme-2')? 'rui-select-options one' : 'rui-select-options'}>
                         {filter}
                         <ul>
                             {
