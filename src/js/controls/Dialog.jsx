@@ -6,7 +6,7 @@ import className from '../util/className.jsx';
 import OverlayMixin from '../mixins/OverlayMixin.jsx';
 import ComponentBase from '../mixins/ComponentBase.jsx';
 import Button from './Button.jsx';
-import Draggable from 'react-draggable';
+import Draggable from 'react-draggable-browser';
 
 import '../../css/dialog.scss';
 
