@@ -1,34 +1,69 @@
 @import './function';
 
 .rui-button {
-  @include simple-btn(false, #ededed, $text1);
-  @include prefixer('border-radius', 2px 2px);
+  @include simple-btn($text2, $primary);
+  @include prefixer('border-radius', 6px 6px);
   @include prefixer('transition', background-color .3s ease-out,border-color .3s ease-out);
   @include prefixer('user-select', none);
 
+  border:1px solid $border;
+
+  &.large {
+  }
+
+  &.small {
+  }
+
   &.primary {
-    @include simple-btn(false, $primary, $white);
-    background:#2ea3dd;
+    border:none;
+    @include simple-btn($white, $white);
+    background: $primary;
 
     :hover {
-      background:#30abe8;
+      background:$primary_hover;
     }
 
     :active {
-      background:#2ea3dd;
+      background:$primary_over;
     }
   }
 
   &:hover {
-    background:#e1e1e1;
+    color:$primary_hover;
+    border-color:$primary_hover;
   }
 
   &:active {
-    @include prefixer('box-shadow', inset 0 3px 5px rgba(0,0,0,.15));
-    background:#cecece;
+    color:$primary_over;
+    border-color:$primary_over;
   }
 
   &.disable {
     color:#ccc;
+  }
+
+  &.clicked {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    bottom: -1px;
+    right: -1px;
+    border-radius: inherit;
+    border: 0 solid $primary;
+    opacity: 0.4;
+    animation: buttonEffect 0.32s ease forwards;
+    display: block;
+  }
+}
+
+@keyframes buttonEffect {
+  to {
+    opacity: 0;
+    top: -5px;
+    left: -5px;
+    bottom: -5px;
+    right: -5px;
+    border-width: 5px;
   }
 }
