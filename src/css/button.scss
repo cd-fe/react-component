@@ -3,27 +3,22 @@
 .rui-button {
   @include simple-btn($text2, $primary);
   @include prefixer('border-radius', 6px 6px);
-  @include prefixer('transition', background-color .3s ease-out,border-color .3s ease-out);
   @include prefixer('user-select', none);
 
   border:1px solid $border;
 
-  &.large {
-  }
-
-  &.small {
-  }
-
   &.primary {
     border:none;
-    @include simple-btn($white, $white);
+    color: $white;
     background: $primary;
 
-    :hover {
+    &:hover {
+      color: $white;
       background:$primary_hover;
     }
 
-    :active {
+    &:active {
+      color: $white;
       background:$primary_over;
     }
   }
