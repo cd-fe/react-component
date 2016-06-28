@@ -35,6 +35,14 @@ module.exports = React.createClass({
     clickHandler: function (e) {
         if (!this.props.disable) {
             this.dispatchEvent('click', e);
+
+            var node = ReactDOM.findDOMNode(this);
+            className.removeClass(node, 'clicked');
+            className.addClass(node, 'clicked');
+            clearTimeout(this.clickedTimer);
+            this.clickedTimer = setTimeout(function() {
+                className.removeClass(node, 'clicked');
+            }.bind(this), 350);
         }
     },
     render: function () {
