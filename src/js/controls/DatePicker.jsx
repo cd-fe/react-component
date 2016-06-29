@@ -138,12 +138,12 @@ module.exports = React.createClass({
      * });
      */
     setValue: function (opt) {
-        if (typeof opt == 'string' && this.props.range) {
-            this.setState({
-                value: opt
+        if (!this.props.range) {
+            this.setState(typeof opt == 'object' ? opt : {
+                value:opt
             });
         }
-        if (this.props.range) {
+        else {
             this.setState({
                 startValue: opt.startValue,
                 endValue: opt.endValue,
