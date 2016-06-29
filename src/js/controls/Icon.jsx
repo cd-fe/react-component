@@ -27,8 +27,11 @@ module.exports = React.createClass({
         };
     },
     render: function () {
-        var classes = className(this.props.className, this.getPropClass());
-        return <i {...props} className={classes}>
+        var classes = className(this.props.className, this.getPropClass())
+        if(this.props.name) {
+            classes += ' ' + this.getDefaultClass() + '-' + this.props.name;
+        }
+        return <i {...this.props} className={classes}>&nbsp;&nbsp;
             {this.props.children}
         </i>;
     }

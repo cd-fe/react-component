@@ -30,7 +30,11 @@ module.exports = React.createClass({
              * @type string
              * @desc 当前模式，分为静态(static)和动态(dynamic)
              */
-            mode: 'dynamic'
+            mode: 'dynamic',
+            autoSize:false,
+            maxLengthHandler:function(value, max) {
+
+            }
         };
     },
     getInitialState: function () {
@@ -70,6 +74,6 @@ module.exports = React.createClass({
             value={this.state.value}
             onChange={this.changeHandler}
             className={className(this.props.className, this.getPropClass())}
-            ></textarea>
+        ></textarea>
     }
 });

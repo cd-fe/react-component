@@ -7,6 +7,17 @@
   @include prefixer('transform', translateZ(0));
 
   border:1px solid $border;
+  width:auto;
+
+  &:hover {
+    color:$primary_hover;
+    border-color:$primary_hover;
+  }
+
+  &:active {
+    color:$primary_over;
+    border-color:$primary_over;
+  }
 
   &.primary {
     border:none;
@@ -42,16 +53,6 @@
     &.clicked:after {
       border: 0px solid #27c24c;
     }
-  }
-
-  &:hover {
-    color:$primary_hover;
-    border-color:$primary_hover;
-  }
-
-  &:active {
-    color:$primary_over;
-    border-color:$primary_over;
   }
 
   &.disable,&.disable:hover,&.disable:active {

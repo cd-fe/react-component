@@ -45,12 +45,13 @@
 }
 
 [class*="rui-"] {
-  @include prefixer('transition', background-color .3s ease-out .3s ease-out);
-  @include prefixer('transition', border-color .3s ease-out .3s ease-out);
-  @include prefixer('transition', color .3s ease-out .3s ease-out);
-  @include prefixer('transition', width .3s ease-out .3s ease-out);
+  transition : all .3s ease-out;
 }
 
 *, :after, :before {
   box-sizing:border-box;
+}
+
+.w300 {
+  width:300px;
 }
