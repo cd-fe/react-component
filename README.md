@@ -40,6 +40,11 @@ browser example/index.html
 
 # Release logs
 
+## 0.3.31
+
+* fixed Select bugs
+* fixed Dialog auto-layout bug
+
 ## 0.3.28
 
 * fixed DatePicker bugs

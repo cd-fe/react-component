@@ -18,7 +18,8 @@ module.exports = {
         "jquery": "jQuery",
         "react": "React",
         "react-dom": "ReactDOM",
-        "zepto": "Zepto"
+        "zepto": "Zepto",
+        "react-draggable-browser":true
     },
     module:{
         loaders:[

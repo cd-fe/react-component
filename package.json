@@ -1,7 +1,7 @@
 {
   "name": "react-component-lib",
   "author": "darkty2009",
-  "version": "0.3.29",
+  "version": "0.3.44",
   "description": "a full base ui library to reactjs",
   "license": "MIT",
   "main": "dist/bundle.js",
@@ -50,6 +50,9 @@
     "swiper":"^3.3.1",
     "jquery-mousewheel":"^3.1.13",
     "history":"^2.0.1"
+  },
+  "dependencies":{
+    "react-draggable-browser":"^2.1.3"
   },
   "homepage": "https://github.com/cd-fe/react-component#readme",
   "directories": {

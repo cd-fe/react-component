@@ -6,6 +6,7 @@ import className from '../util/className.jsx';
 import OverlayMixin from '../mixins/OverlayMixin.jsx';
 import ComponentBase from '../mixins/ComponentBase.jsx';
 import Button from './Button.jsx';
+import Draggable from 'react-draggable-browser';
 
 import '../../css/dialog.scss';
 
@@ -83,7 +84,16 @@ var Dialog = React.createClass({
              * <RUI.Dialog buttons="submit,cancel" />
              * <RUI.Dialog buttons="submit" />
              */
-            buttons: null
+            buttons: null,
+            /**
+             * @instance
+             * @default false
+             * @type boolean
+             * @desc 是否可拖拽
+             * @example
+             * <RUI.Dialog draggable={true} />
+             */
+            draggable:false
         };
     },
     /**
@@ -144,13 +154,16 @@ var Dialog = React.createClass({
             node.style.width = width + 'px';
             node.style.marginTop = -1 * (height / 2) + 'px';
             node.style.marginLeft = -1 * (width / 2) + 'px';
+            node.style.top = "50%";
+            node.style.left = "50%";
         } else {
             node.style.width = 'auto';
         }
     },
-    render: function () {
+    _render:function() {
         var allname = className(this.props.className, this.getPropClass());
         var prefix = this.getDefaultClass();
+
         return <div className={allname} style={{display:this.state.show ? 'block' : 'none'}}>
             <div className={prefix+"-content"}>
                 {!this.props.hideTitle && (
@@ -172,6 +185,15 @@ var Dialog = React.createClass({
                 )}
             </div>
         </div>;
+    },
+    render: function () {
+        if(this.props.draggable) {
+            return <Draggable handle=".rui-dialog-header">
+                {this._render()}
+            </Draggable>;
+        }else {
+            return this._render();
+        }
     }
 });
 

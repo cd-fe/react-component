@@ -83,4 +83,10 @@ try {
 
 }
 
+try {
+    window.global = window;
+}catch(e) {
+
+}
+
 module.exports = RUI;

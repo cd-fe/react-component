@@ -19,7 +19,7 @@ module.exports = React.createClass({
     getInitialState: function () {
         return {
             active: false,
-            filter: false,//过滤筛选
+            filter: this.props.filter || false,//过滤筛选
             event: this.props.event || 'click',//事件类型mousover,click,dbclick
             data: this.props.data || [],//数据
             value: this.props.value || (this.props.data instanceof Array && this.props.data[0]),//默认值
@@ -83,24 +83,23 @@ module.exports = React.createClass({
         }
         this.setState(newProps);
     },
-    componentDidMount: function () {
+    doEvent : function() {
         var _this = this;
         var node = ReactDOM.findDOMNode(this);
         var ul = $(node).find('ul');
         var li = ul.find('li');
-        if(_this.state.data.length == 1 && !_this.state.filter) {
-           return false;
-        }
         if (this.props.event == 'mouseenter') {
             $(node).bind(this.props.event, function () {
-
-                _this.startTimer(function () {
+                (_this.state.data.length > 1 || _this.state.filter || (_this.props.className.indexOf('rui-theme-2') == -1)) && _this.startTimer(function () {
                     if (_this.state.active) {
                         _this.close();
                     } else {
                         _this.open();
                     }
                 }, 200);
+                _this.state.data.length > 3 && ul.css({
+                    overflowY : 'scroll'
+                });
             });
             $(node).bind('mouseleave', function () {
                 if (_this.__timer) {
@@ -109,19 +108,29 @@ module.exports = React.createClass({
                 }
             });
         } else {
-            $(node).bind('mouseleave', this.onMouseLeave);
+            $(node).bind('mouseleave', function() {
+                (_this.state.data.length > 1 || _this.state.filter || (_this.props.className.indexOf('rui-theme-2') == -1)) && _this.onMouseLeave();
+            });
             $(node).bind(this.props.event, function () {
-                if (_this.state.active) {
-                    _this.close();
-                } else {
-                    _this.open();
+                if(_this.state.data.length > 1 || _this.state.filter || (_this.props.className.indexOf('rui-theme-2') == -1)) {
+                    if (_this.state.active) {
+                        _this.close();
+                    } else {
+                        _this.open();
+                    }
+                    _this.state.data.length > 3 && ul.css({
+                        overflowY : 'scroll'
+                    });
                 }
             });
         }
-
-        li.size() > 3 && ul.css({
-            overflowY : 'scroll'
-        });
+    },
+    componentDidMount: function () {
+        var _this = this;
+        var node = ReactDOM.findDOMNode(this);
+        var ul = $(node).find('ul');
+        var li = ul.find('li');
+        _this.doEvent();
     },
     onMouseLeave: function () {
         this.close();
@@ -191,6 +200,7 @@ module.exports = React.createClass({
     },
 
     render: function () {
+
         var _this = this,
             active = this.state.active,
             data = this.state.data,
@@ -214,7 +224,7 @@ module.exports = React.createClass({
                 <span ref="choose" className="placeholder">{this.state.value.key}</span>
 
                 <div className="rui-select-options-wrap" style={(this.state.data.length == 1 && !_this.state.filter )? {top:offset, zIndex:'1049'} : {top:offset}}>
-                    <div ref="options" className={(this.state.data.length == 1 && !_this.state.filter )? 'rui-select-options one' : 'rui-select-options'}>
+                    <div ref="options" className={(_this.state.data.length == 1 && !_this.state.filter && _this.props.className.indexOf('rui-theme-2') > -1)? 'rui-select-options one' : 'rui-select-options'}>
                         {filter}
                         <ul>
                             {
