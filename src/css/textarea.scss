@@ -2,7 +2,6 @@
 
 .rui-textarea {
   min-height:32px;
-  width:480px;
   background:#fff;
   box-sizing: border-box;
   border:1px solid #dfdfdf;
@@ -12,6 +11,28 @@
   resize:none;
   padding:8px;
   color:$text2;
+  width:100%;
+  line-height:22px;
+
+  &-container {
+    width:480px;
+  }
+
+  .right {
+    span {
+      color: $text2;
+    }
+  }
+
+  &-limittext {
+    color:$primary;
+    font-size:14px;
+    font-weight:500;
+
+    &.warning {
+      color:$textWarning;
+    }
+  }
 
   &:hover {
     border:1px solid $primary;

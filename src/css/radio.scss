@@ -1,20 +1,61 @@
 @import './function';
 
 .rui-radio {
-  padding-left:25px;
-  background:url("../img/radio.png") no-repeat;
-  background-position:0px 0px;
-  line-height:36px;
+  //background:url("../img/radio.png") no-repeat;
+  //background-position:0px 0px;
+  line-height:32px;
   @include inline-block;
-  margin-right:20px;
-  min-height:36px;
+  margin-right:$gutter;
+  min-height:32px;
+
+  &-selected {
+    padding:0px 7px;
+    margin:0 5px 0 0;
+    border:1px solid $border;
+    border-radius:8px 8px;
+    position:relative;
+  }
+
+  &-circle {
+    background: $primary;
+    border-radius: 5px 5px;
+    position: absolute;
+    padding: 5px;
+    top: 2px;
+    left: 2px;
+    transform:scale(0);
+  }
+
+  &:hover {
+    .rui-radio-selected {
+      border-color:$primary;
+    }
+  }
 
   &.selected {
-    background-position:0px -36px;
+    .rui-radio-selected {
+      border-color:$primary;
+    }
+
+    .rui-radio-circle {
+      transform:scale(1);
+    }
   }
 
   &.disable {
-    background-position:0px -72px;
-    color:#cacaca;
+    &:hover,&.selected {
+      .rui-radio-selected {
+        border-color:$border;
+      }
+    }
+
+    .rui-radio-selected {
+      background:#f6f6f6;
+    }
+
+    .rui-radio-circle {
+      background: $border;
+    }
+    color: $text3;
   }
 }

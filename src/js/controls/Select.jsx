@@ -20,7 +20,7 @@ module.exports = React.createClass({
         return {
             active: false,
             filter: this.props.filter || false,//过滤筛选
-            event: this.props.event || 'click',//事件类型mousover,click,dbclick
+            event: this.props.event || 'mouseenter',//事件类型mousover,click,dbclick
             data: this.props.data || [],//数据
             value: this.props.value || (this.props.data instanceof Array && this.props.data[0]),//默认值
             callback: this.props.callback,//回调
@@ -28,7 +28,7 @@ module.exports = React.createClass({
             reg: this.props.reg,
             placeholder: this.props.placeholder,
             result: this.props.result,
-            maxLen: this.props.maxLen || '200'
+            maxLen: this.props.maxLen || '200',
         };
     },
     getDefaultProps: function () {
@@ -160,7 +160,10 @@ module.exports = React.createClass({
         var _this = this;
         (_this.state.data.length > 1 || _this.state.filter) && _this.close();
         _this.props.stuff && (_this.refs.choose.innerHTML = e.key);
-        _this._choose = e;
+        //_this._choose = e;
+        this.setState({
+            value:e
+        });
         this.props.callback && this.props.callback(e);
     },
     handleFilter: function (source) {
@@ -212,8 +215,7 @@ module.exports = React.createClass({
         if (filterAble) {
             filter = (
                 <div className="filter">
-                    <input type="text" ref="filter" maxLength={_this.state.maxLen} onChange={_this.handleFilter}
-                           placeholder={_this.props.placeholder}/>
+                    <RUI.Input ref="filter" maxLength={_this.state.maxLen} onChange={_this.handleFilter} placeholder={_this.props.placeholder} />
                 </div>
             );
         }
@@ -230,6 +232,7 @@ module.exports = React.createClass({
                             {
                                 data.map(function (item, index) {
                                     return <li
+                                        className={item.key == _this.state.value.key && "choosed"}
                                         onClick={item.value == 'error' ? null : _this.handleClick.bind(_this,item)}
                                         key={index}><a href="javascript:;">{item.key}</a></li>
                                 })

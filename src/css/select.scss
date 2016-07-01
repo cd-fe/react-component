@@ -1,13 +1,5 @@
 @import './function';
 
-%pseudo {
-  width: 0;
-  height: 0;
-  content: "";
-  position: absolute;
-  -webkit-transition: .3s;
-  transition: .3s;
-}
 .filter {
   padding:0 10px;
   input {
@@ -19,91 +11,53 @@
     padding: 0 10px;
     margin:10px 0 0 0;
     line-height: 30px;
-    color: #acacac
+    color: $text2;
   }
 }
 .rui-theme-1 {
   &.rui-select {
-    border: 1px solid #eceaea;
+    border: 1px solid $border;
+    border-radius: 6px 6px;
     &.active {
-      border: 1px solid #74c5ee;
-      &:before{
-        border-top: 4px solid #74c5ee;
+      border:1px solid $primary;
+      border-radius:6px 6px;
+      box-shadow: 0 0 0 2px $primary_border;
+
+      .arrow {
+        background:url(../img/icon/arrow_primary.png) no-repeat;
       }
     }
   }
 
 }
+
+// TODO theme-2 need to refactor
 .rui-theme-2 {
   &.rui-select {
-    border: 1px solid #eceaea;
     text-align:center;
+
+    &.active {
+      .rui-select-options {
+        margin-top:0px;
+      }
+    }
   }
 }
+
 .rui-theme-3 {
   &.rui-select {
     &.active {
-      i {
-        display: block;
-        position: absolute;
-        top: 37px;
-        z-index:1200;
-        &:before {
-          @extend %pseudo;
-          border-bottom: 6px solid #74c5ee;
-          border-right: 6px solid transparent;
-          border-left: 6px solid transparent;
-          left: 14px;
-          top: -6px;
-          z-index: 0;
+      .rui-select-options {
+        border-radius: 6px 6px;
+      }
 
-        }
-        &:after {
-          @extend %pseudo;
-          border-bottom: 5px solid #fff;
-          border-right: 5px solid transparent;
-          border-left: 5px solid transparent;
-          left: 15px;
-          top: -5px;
-          z-index: 1;
-        }
+      .arrow {
+        background:url(../img/icon/arrow_primary.png) no-repeat;
       }
-      &:before{
-        @extend %pseudo;
-        border-top: 4px solid #74c5ee;
-        border-right: 4px solid transparent;
-        border-left: 4px solid transparent;
-        right: 14px;
-        top: 15px;
-        z-index: 0;
-      }
-      &:after{
-        width: 13px;
-        height: 12px;
-        content: "";
-        position: absolute;
-        right: 11px;
-        top: 10px;
-        z-index: 0;
-        -webkit-transition: .3s;
-        transition: .3s;
-        border: 1px solid #74c5ee;
-      }
-    }
-    &:after{
-      width: 13px;
-      height: 12px;
-      content: "";
-      position: absolute;
-      right: 11px;
-      top: 10px;
-      z-index: 0;
-      -webkit-transition: .3s;
-      transition: .3s;
-      border: 1px solid #eceaea;
     }
   }
 }
+
 .rui-select {
   position: relative;
   width:300px;
@@ -123,19 +77,14 @@
           transform: translate(0);
         }
       }
-    }
-    &:before{
-      @extend %pseudo;
-      border-top: 4px solid #787878;
-      border-right: 4px solid transparent;
-      border-left: 4px solid transparent;
-      right: 14px;
-      top: 15px;
-      z-index: 0;
 
+      .arrow {
+        transform:rotate(180deg);
+      }
     }
+
     .placeholder {
-      color:#666;
+      color:$text3;
     }
     .rui-select-options-wrap {
       position: absolute;
@@ -149,36 +98,36 @@
         transition: .45s;
         -webkit-transform: translateY(-100%);
         transform: translateY(-100%);
-        border: 1px solid #74c5ee;
-        box-shadow:0 5px 5px rgba(233, 241, 252, 0.67);
-        margin: 0 12px 20px;
+        border: 1px solid $border;
+        border-radius:6px 6px;
+        box-shadow:0 0 2px $border;
+        margin: 4px 12px 20px;
         background-color: #fff;
+
+        .choosed {
+          background:#f5f5f5;
+        }
+
         &.one {
           display: block;
           -webkit-transform: translateY(0);
           transform: translateY(0);
-          border: 1px solid #eceaea;
-          box-shadow:0 5px 5px rgba(251, 251, 251, 0.67);
-          &:hover {
-            border: 1px solid #74c5ee;
-            box-shadow:0 5px 5px rgba(233, 241, 252, 0.67);
-          }
+          margin-top:0px;
         }
         ul {
           max-height: 108px;
           li {
             display:block;
-            padding:0 1px;
             a {
               display:block;
-              height:36px;
-              line-height:36px;
+              height:32px;
+              line-height:32px;
               padding:0 9px;
-              color:#666;
+              color:$text2;
               cursor: pointer;
               &:hover {
-                color:#2b99cf;
-                background-color:#d6effc;
+                color:$primary;
+                background-color:#dbebfe;
               }
             }
           }
@@ -186,6 +135,13 @@
       }
     }
   .arrow {
-    display:none;
+    position:absolute;
+    display:block;
+    width:16px;
+    height:16px;
+    top:10px;
+    right:10px;
+    background:url('../img/icon/arrow.png') no-repeat;
+    transition:all .3s ease-out;
   }
 }

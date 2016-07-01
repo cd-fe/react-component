@@ -1,3 +1,5 @@
+import '../css/common.scss';
+
 import Button from './controls/Button.jsx';
 import Input from './controls/Input.jsx';
 import Spinner from './controls/Spinner.jsx';
@@ -32,8 +34,6 @@ import TooltipMixin from './mixins/TooltipMixin.jsx';
 
 import DialogManager from './managers/DialogManager.jsx';
 import OverlayManager from './managers/OverlayManager.jsx';
-
-import '../css/common.scss';
 
 var mousewheel = require('jquery-mousewheel');
 if(typeof mousewheel == 'function') {
