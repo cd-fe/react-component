@@ -7,12 +7,12 @@ var CheckboxItemRender = React.createClass({
     componentWillReceiveProps:function(nextProps) {
         if(typeof nextProps.selected != 'undefined') {
             this.setState({
-                selected:!!nextProps.selected
+                selected:nextProps.selected
             });
         }
-    },
-    setData:function(data, field) {
-        this.setState(data);
+        if(typeof nextProps.data != 'undefined') {
+            this.setState(nextProps.data);
+        }
     },
     changeHandler:function() {
         this.props.onClick && this.props.onClick(this.state);
@@ -23,11 +23,8 @@ var CheckboxItemRender = React.createClass({
 });
 
 var OperationItemRender = React.createClass({
-    setData:function(data) {
-        this.setState(data);
-    },
     clickHandler:function() {
-        this.props.onClick && this.props.onClick(this.state);
+        this.props.onClick && this.props.onClick(this.props.data);
     },
     render:function() {
         return <RUI.Button onClick={this.clickHandler}>{this.props.children}</RUI.Button>;
@@ -119,6 +116,7 @@ var Example = React.createClass({
         });
     },
     allCheck:function() {
+        debugger;
         var isAllCheck = this.isAllCheck();
         this.setState({
             data:this.state.data.map(function(item) {

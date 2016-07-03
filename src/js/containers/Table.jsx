@@ -108,6 +108,13 @@ var Table = React.createClass({
     componentDidMount:function() {
         this.forceUpdate();
     },
+    componentWillReceiveProps:function(newProps) {
+        if(newProps && typeof newProps.dataSource != 'undefined') {
+            this.setState({
+                dataSource:newProps.dataSource
+            });
+        }
+    },
     render:function() {
         var _this = this;
         var classes = className(this.props.className, this.getPropClass());
