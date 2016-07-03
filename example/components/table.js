@@ -96,9 +96,9 @@ var Example = React.createClass({
     },
     getData:function() {
         return [
-            {id:1,name:"张三",phone:"1331234123413312341234133123412341331234123413312341234", prov:"北京", role:"管理员超级管理员超级管理员", desc:{tag:'影视 娱乐'}},
-            {id:3,name:"李四",phone:"18912341234133123412341331234123413312341234", prov:"四川", role:"超级管理员超级管理员超级管理员超级管理员", desc:{tag:'IT 编程'}},
-            {id:2,name:"王五",phone:"13512341234133123412341331234123413312341234133123412341331234123413312341234", prov:"杭州", role:"编辑超级管理员超级管理员", desc:{tag:'数码 科技'}}
+            {id:1,name:"张三",phone:"13599018834", prov:"北京", role:"超级管理员", desc:{tag:'影视 娱乐'}},
+            {id:3,name:"李四",phone:"13412341234", prov:"四川", role:"管理员", desc:{tag:'IT 编程'}},
+            {id:2,name:"王五",phone:"18999878899", prov:"杭州", role:"主编", desc:{tag:'数码 科技'}}
         ];
     },
     sortData:function() {
@@ -190,7 +190,7 @@ var Example = React.createClass({
                         <RUI.Column title={"用户名"} dataField={"name"}/>
                         <RUI.Column title={"手机号"} dataField={"phone"} />
                         <RUI.Column title={"省份"} dataField={"prov"} width={75} />
-                        <RUI.Column title={"角色"} dataField={"role"} width={75} />
+                        <RUI.Column title={"角色"} dataField={"role"} />
                         <RUI.Column title={"操作"}>
                             <RUI.Table.ItemRender>
                                 <OperationItemRender onClick={this.tableDelete}>删除</OperationItemRender>

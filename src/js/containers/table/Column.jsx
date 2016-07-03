@@ -58,42 +58,40 @@ var Column = module.exports = React.createClass({
         }
         return render;
     },
-    componentDidMount:function() {
-        this.childrenUpdate();
-    },
-    componentDidUpdate:function() {
-        this.childrenUpdate();
-    },
-    childrenUpdate:function() {
-        var dataField = this.props.dataField;
-        Object.keys(this.refs).forEach(function(key, index) {
-            var data = this.props.source[index];
-            var child = this.refs[key];
-            if(child.setData) {
-                child.setData(data, dataField, key * 1);
-            }else {
-                console.warn('ItemRender must to implement "setData" method.', child);
-            }
-        }.bind(this));
-    },
-    render:function() {
+    renderItem:function(data, index, key) {
+        var _this = this;
         var classes = className(this.props.className, this.getPropClass());
 
         var DefaultRenderClass = this.getDefaultItemRender();
         var DefaultRenderClassProps = DefaultRenderClass.props;
         var _this = this;
-        return <ul {...this.props} className={classes}>
-            {/*<TitleRender>
-                {this.getDefaultTitleRender()}
-            </TitleRender>*/}
-            {this.props.source && this.props.source.map(function(item, index) {
-                return <ItemRender key={index} style={{height:_this.props.itemHeight}}>{React.cloneElement(DefaultRenderClass, merge({
-                    ref:index,
-                    fieldFunction:_this.props.fieldFunction,
-                    itemHeight:_this.props.itemMiddle ? _this.props.itemHeight + 'px' : null
-                }, DefaultRenderClassProps))}</ItemRender>;
-            })}
-        </ul>;
+        return <ItemRender style={{height:_this.props.itemHeight}} key={key}>{React.cloneElement(DefaultRenderClass, merge({
+            fieldFunction:_this.props.fieldFunction,
+            itemHeight:_this.props.itemMiddle ? _this.props.itemHeight + 'px' : null,
+            data:data,
+            index:index,
+            field:_this.props.dataField
+        }, DefaultRenderClassProps))}</ItemRender>;
+    },
+    render:function() {
+        return <div />;
+        //var classes = className(this.props.className, this.getPropClass());
+        //
+        //var DefaultRenderClass = this.getDefaultItemRender();
+        //var DefaultRenderClassProps = DefaultRenderClass.props;
+        //var _this = this;
+        //return <ul {...this.props} className={classes}>
+        //    {/*<TitleRender>
+        //        {this.getDefaultTitleRender()}
+        //    </TitleRender>*/}
+        //    {this.props.source && this.props.source.map(function(item, index) {
+        //        return <ItemRender key={index} style={{height:_this.props.itemHeight}}>{React.cloneElement(DefaultRenderClass, merge({
+        //            ref:index,
+        //            fieldFunction:_this.props.fieldFunction,
+        //            itemHeight:_this.props.itemMiddle ? _this.props.itemHeight + 'px' : null
+        //        }, DefaultRenderClassProps))}</ItemRender>;
+        //    })}
+        //</ul>;
     }
 });
 
