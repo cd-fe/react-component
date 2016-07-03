@@ -7,6 +7,7 @@ import OverlayMixin from '../mixins/OverlayMixin.jsx';
 import ComponentBase from '../mixins/ComponentBase.jsx';
 import Button from './Button.jsx';
 import Draggable from 'react-draggable-browser';
+import Icon from './Icon.jsx';
 
 import '../../css/dialog.scss';
 
@@ -169,7 +170,7 @@ var Dialog = React.createClass({
                 {!this.props.hideTitle && (
                     <div className={prefix+"-header"}>
                         <h4 className={prefix+"-title"}>{this.props.title}</h4>
-                        <Button className={prefix+"-close"} onClick={this.closeHandler}>×</Button>
+                        <Button className={prefix+"-close"} onClick={this.closeHandler}><Icon name="close" /></Button>
                     </div>
                 )}
                 <div className={prefix+"-body"}>

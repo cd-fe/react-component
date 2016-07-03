@@ -156,9 +156,7 @@ module.exports = React.createClass({
             </table>
             {this.props.showTime && (
                 <div className="rui-datepicker-time clearfix">
-                    <RUI.TimePicker ref="time" value={this.state.value} />
-                    <RUI.Button className="rui-datepicker-time-cancel" onClick={this.props.onCancel}>取消</RUI.Button>
-                    <RUI.Button className="rui-datepicker-time-submit primary" onClick={this.onSubmitClick}>保存</RUI.Button>
+                    <RUI.TimePicker ref="time" value={this.state.value} onChange={this.timeChange} />
                 </div>
             )}
         </div>;

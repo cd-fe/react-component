@@ -35,7 +35,7 @@ var Example = React.createClass({
                 <RUI.Button onClick={this.showConfirm}>默认Confirm</RUI.Button>
                 <RUI.Button onClick={this.showConfirmCustom}>自定义Confirm</RUI.Button>
 
-                <RUI.Dialog ref="dialog" title="测试标题" draggable={true} buttons="submit,cancel" onCancel={this.dialogCancel} onSubmit={this.dialogSubmit}>
+                <RUI.Dialog ref="dialog" title="测试标题" buttons="submit,cancel" onCancel={this.dialogCancel} onSubmit={this.dialogSubmit}>
                     <div style={{width:'240px', wordWrap:'break-word'}}>
                         <p>在这里可以自定义任何节点和内容</p>
                     </div>

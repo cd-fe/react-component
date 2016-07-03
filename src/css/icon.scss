@@ -13,6 +13,27 @@
     background:url('../img/icon/loading.png') 0 0 no-repeat;
     @include prefixer('animation', loadingCircle 1s infinite linear);
   }
+
+  &-arrow-left {
+    background:url('../img/icon/arrow_pagination_usable.png') no-repeat;
+  }
+
+  &-arrow-right {
+    background:url('../img/icon/arrow_pagination_usable.png') no-repeat;
+    transform: rotate(180deg);
+  }
+
+  &-more {
+    background:url('../img/icon/more.png') no-repeat;
+  }
+
+  &-close {
+    background:url('../img/icon/close.png') no-repeat;
+  }
+
+  &-calendar {
+    background:url('../img/icon/calendar.png') no-repeat;
+  }
 }
 
 @keyframes loadingCircle {
