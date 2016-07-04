@@ -38,4 +38,21 @@ body {
       }
     }
   }
+
+  .bread {
+    * {
+      margin-right:5px;
+      font-size:14px;
+      color:#666;
+
+      &:hover {
+        color:#4a9df8;
+        text-decoration:none;
+      }
+
+      &.selected {
+        color:#4a9df8;
+      }
+    }
+  }
 }

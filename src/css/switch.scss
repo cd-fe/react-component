@@ -10,34 +10,31 @@ $distance: 67px;
   height:$height;
   position:relative;
   margin-right:$gutter;
-  background:$border;
   border-radius:6px 6px;
+  z-index:4;
   overflow:hidden;
 
   &-normalbg {
+    width:60px;
+    height:28px;
     background:$border;
-    display:inline-block;
     position:absolute;
-    width:$distance;
-    height:$distance;
-    top:-19px;
-    left:-3px;
-    border-radius:$distance/2;
-    transform:scale(1);
-    z-index:2;
+    top:0;
+    left:0;
+    display:block;
+    z-index:1;
   }
 
   &-activebg {
-    background:$primary;
-    display:inline-block;
-    position:absolute;
-    width:$distance;
-    height:$distance;
+    background: $border;
+    width: 67px;
+    height: 67px;
+    z-index: 2;
+    position: absolute;
+    border-radius: 33.5px;
+    transition:all .3s ease-out;
     top:-19px;
     left:-3px;
-    border-radius:$distance/2;
-    transform:scale(0);
-    z-index:1;
   }
 
   &-square {
@@ -53,16 +50,17 @@ $distance: 67px;
   }
 
   &.selected {
-    .rui-switch-activebg {
-      transform:scale(1);
-      z-index:2;
-    }
     .rui-switch-normalbg {
-      transform:scale(0);
-      z-index:1;
+      background:$primary;
+    }
+    .rui-switch-activebg {
+      height:0;
+      width:5px;
+      top:14.5px;
+      left:25.5px;
     }
     .rui-switch-square {
-      left:34px;
+      left:33px;
     }
   }
 }

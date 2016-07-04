@@ -5,8 +5,6 @@ import Layout from './common/layout.jsx';
 import createHashHistory from 'history/lib/createHashHistory';
 const history = useRouterHistory(createHashHistory)({ queryKey: false });
 
-import './common/codemirror.jsx';
-
 var Root = React.createClass({
     onUpdate:function() {
         window._hmt && _hmt.push(['_trackPageview', location.hash.substring(1)]);
@@ -38,7 +36,7 @@ var Root = React.createClass({
     }
 });
 
-var codemirrorResources = require('./common/codemirror.jsx');
+var codemirrorResources = [];//require('./common/codemirror.jsx');
 Promise.all(codemirrorResources).then(function() {
     ReactDOM.render(<Root />, document.getElementById('wrapper'));
 });

@@ -77,6 +77,11 @@ module.exports = React.createClass({
     render:function() {
         return <div className="container">
             <div className="row">
+                <div className="bread">
+                    <span>首页</span>&gt;<RUI.Link>组件列表</RUI.Link>&gt;<RUI.Link className="selected">示例页面</RUI.Link>
+                </div>
+            </div>
+            <div className="row">
                 <RUI.Button className="primary">btn-primary</RUI.Button>
                 <RUI.Button>btn-default</RUI.Button>
                 <RUI.Button className="green">btn-green</RUI.Button>
@@ -152,6 +157,9 @@ module.exports = React.createClass({
                 <RUI.Switch />
                 <RUI.Switch disable={true} />
                 <RUI.Switch disable={true} selected={true} />
+            </div>
+            <div className="row">
+                <RUI.Upload />
             </div>
             <div className="row">
                 <RUI.Pagination pageSize={10} currentPage={2} totalNum={108} />
