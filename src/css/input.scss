@@ -15,6 +15,9 @@
 
   &.disable {
     background:#ececec;
+    &:hover {
+      border-color:$border;
+    }
   }
 
   &:hover {

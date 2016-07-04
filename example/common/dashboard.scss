@@ -1,0 +1,41 @@
+body {
+  background:#fefefe;
+}
+
+.container {
+  width:960px;
+  margin:0 auto 0;
+
+  .row {
+    padding:10px;
+    overflow:visible;
+
+    .rui-select {
+      width:210px;
+    }
+    .rui-theme-3 {
+      margin-left:10px;
+    }
+  }
+
+  .rui-input {
+    margin-right:10px;
+  }
+
+  .form {
+    .line {
+      margin:10px 0;
+
+      &.horizonal {
+        label {
+          width:auto;
+        }
+      }
+
+      label {
+        width:84px;
+        display:inline-block;
+      }
+    }
+  }
+}

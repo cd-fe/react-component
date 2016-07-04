@@ -1,0 +1,16 @@
+@import './function';
+
+.rui-link {
+  color: $primary;
+  line-height:24px;
+
+  &:hover {
+    text-decoration: underline;
+    color:$primary;
+  }
+
+  &:active {
+    text-decoration: underline;
+    color:#428ddf;
+  }
+}

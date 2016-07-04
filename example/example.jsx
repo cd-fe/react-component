@@ -14,6 +14,7 @@ var Root = React.createClass({
     render:function() {
         return <Router history={history} onUpdate={this.onUpdate}>
             <Route path="/" component={Layout}>
+                <Route path="dashboard" component={loader(require('bundle?lazy!babel?presets=react!./common/dashboard.jsx'))}></Route>
                 <Route path="components" component={loader(require('bundle?lazy!./components.jsx'))}>
                     <Route path="button" component={loader(require('bundle?lazy!babel?presets=react!./components/button.js'))}></Route>
                     <Route path="input" component={loader(require('bundle?lazy!babel?presets=react!./components/input.js'))}></Route>

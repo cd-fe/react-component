@@ -1,0 +1,68 @@
+@import './function';
+
+$width: 60px;
+$height: 28px;
+$distance: 67px;
+
+.rui-switch {
+  display:inline-block;
+  width:$width;
+  height:$height;
+  position:relative;
+  margin-right:$gutter;
+  background:$border;
+  border-radius:6px 6px;
+  overflow:hidden;
+
+  &-normalbg {
+    background:$border;
+    display:inline-block;
+    position:absolute;
+    width:$distance;
+    height:$distance;
+    top:-19px;
+    left:-3px;
+    border-radius:$distance/2;
+    transform:scale(1);
+    z-index:2;
+  }
+
+  &-activebg {
+    background:$primary;
+    display:inline-block;
+    position:absolute;
+    width:$distance;
+    height:$distance;
+    top:-19px;
+    left:-3px;
+    border-radius:$distance/2;
+    transform:scale(0);
+    z-index:1;
+  }
+
+  &-square {
+    background:$white;
+    display:inline-block;
+    position:absolute;
+    width:24px;
+    height:24px;
+    left:2px;
+    top:2px;
+    border-radius:6px 6px;
+    z-index:3;
+  }
+
+  &.selected {
+    .rui-switch-activebg {
+      transform:scale(1);
+      z-index:2;
+    }
+    .rui-switch-normalbg {
+      transform:scale(0);
+      z-index:1;
+    }
+    .rui-switch-square {
+      left:34px;
+    }
+  }
+}

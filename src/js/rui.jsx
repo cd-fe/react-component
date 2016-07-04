@@ -1,6 +1,8 @@
 import '../css/common.scss';
 
 import Button from './controls/Button.jsx';
+import Link from './controls/Link.jsx';
+import Icon from './controls/Icon.jsx';
 import Input from './controls/Input.jsx';
 import Spinner from './controls/Spinner.jsx';
 import Textarea from './controls/Textarea.jsx';
@@ -12,6 +14,7 @@ import Checkbox from './controls/Checkbox.jsx';
 import CheckboxGroup from './controls/CheckboxGroup.jsx';
 import Radio from './controls/Radio.jsx';
 import RadioGroup from './controls/RadioGroup.jsx';
+import Switch from './controls/Switch.jsx';
 import Table from './containers/Table.jsx';
 import Column from './containers/table/Column.jsx';
 import DatePicker from './controls/DatePicker.jsx';
@@ -42,6 +45,8 @@ if(typeof mousewheel == 'function') {
 
 var RUI = {
     Button:Button,
+    Link:Link,
+    Icon:Icon,
     Input:Input,
     Spinner:Spinner,
     Textarea:Textarea,
@@ -53,6 +58,7 @@ var RUI = {
     CheckboxGroup:CheckboxGroup,
     Radio:Radio,
     RadioGroup:RadioGroup,
+    Switch:Switch,
     Table:Table,
     Column:Column,
     DatePicker:DatePicker,

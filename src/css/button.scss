@@ -9,6 +9,18 @@
   border:1px solid $border;
   width:auto;
 
+  &.middle {
+    padding:4px 18px 3px;
+  }
+
+  &.small {
+    padding: 2px 18px 1px;
+  }
+
+  >.rui-icon+span {
+    margin-left:5px;
+  }
+
   &:hover {
     color:$primary_hover;
     border-color:$primary_hover;

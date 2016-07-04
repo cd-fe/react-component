@@ -49,7 +49,8 @@
     }
 
     .rui-checkbox-selected {
-      border-color:#f6f6f6;
+      border-color: $border;
+      background:#f6f6f6;
     }
 
     .rui-checkbox-circle {
