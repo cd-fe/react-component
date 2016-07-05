@@ -177,7 +177,16 @@ module.exports = React.createClass({
     togglePopup: function () {
         this.setState({
             popup: !this.state.popup
-        });
+        }, function() {
+            var rootDom = $(ReactDOM.findDOMNode(this));
+            var offset = rootDom.offset().top - window.scrollY;
+            var resultHeight = $(window).height() - offset - 38;
+            if(resultHeight < rootDom.find('.rui-datepicker-popup').height()) {
+                rootDom.addClass('upside');
+            }else {
+                rootDom.removeClass('upside');
+            }
+        }.bind(this));
     },
     hidePopup: function (e) {
         var target = e.target;
