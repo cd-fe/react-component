@@ -63,4 +63,16 @@ $distance: 67px;
       left:33px;
     }
   }
+
+  &.disable {
+    .rui-switch-normalbg {
+      background:#efefef;
+    }
+    .rui-switch-square {
+      background:#ccc;
+    }
+    .rui-switch-activebg {
+      background:transparent;
+    }
+  }
 }
