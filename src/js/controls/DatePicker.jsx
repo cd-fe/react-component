@@ -212,7 +212,7 @@ module.exports = React.createClass({
             this.setState({
                 value: event.data
             }, function () {
-                this.dispatchEvent('change', this.getValue());
+                //this.dispatchEvent('change', this.getValue());
             }.bind(this));
         } else {
             this.setState({
