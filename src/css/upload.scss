@@ -1,7 +1,99 @@
 @import './function';
 
 .rui-upload {
+  .upload-preview {
+    position:absolute;
+    //width:100%;
+    //height:100%;
+    border:none;
+    top:0;
+    left:0;
+  }
+
   &-button {
     position:relative;
+    float:left;
+
+    .rui-button {
+      margin:0;
+    }
+
+    &-content {
+      width:180px;
+      height:120px;
+      border:1px dashed $border;
+      border-radius:6px;
+      background:url(../img/icon/upload_add.png) 50% 50% no-repeat;
+      overflow:hidden;
+      position:relative;
+
+      &:hover {
+        border:1px dashed $primary;
+        background-color:#f7f7f7;
+      }
+    }
+
+    &-progress {
+      position:absolute;
+      width:100%;
+      height:100%;
+      background:rgba(255, 255, 255, 0.7);
+    }
+  }
+
+  &-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  &-info {
+    display:inline-block;
+    float:left;
+    max-width:240px;
+    margin:0 0 0 15px;
+    height:32px;
+    border:1px solid transparent;
+
+    .rui-icon {
+      float:left;
+      margin-top:7px;
+    }
+    
+    .rui-link {
+      float:left;
+      margin-left:10px;
+      height:32px;
+      line-height:32px;
+      overflow:hidden;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+
+    &:hover {
+      border:1px solid $primary;
+
+      .rui-upload-info-clear {
+        opacity:1;
+        pointer-events: auto;
+      }
+    }
+
+    &-clear {
+      opacity:0;
+      pointer-events: none;
+    }
+  }
+
+  &-list {
+    .rui-upload-button {
+      margin-right:10px;
+      margin-top:10px;
+    }
   }
 }

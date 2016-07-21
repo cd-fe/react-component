@@ -162,6 +162,14 @@ module.exports = React.createClass({
                 <RUI.Upload />
             </div>
             <div className="row">
+                <p>默认</p>
+                <RUI.Upload multiple={true} />
+            </div>
+            <div className="row">
+                <p>自动上传</p>
+                <RUI.Upload multiple={true} autoUpload={true} />
+            </div>
+            <div className="row">
                 <RUI.Pagination pageSize={10} currentPage={2} totalNum={108} />
             </div>
             <div className="row">
