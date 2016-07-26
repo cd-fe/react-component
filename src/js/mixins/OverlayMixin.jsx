@@ -8,7 +8,7 @@ import '../../css/mixin/overlay.scss';
 
 import OverlayManager from '../managers/OverlayManager.jsx';
 
-let overlayId = 0;
+let overlayId = [];
 
 module.exports = {
     getInitialState:function() {
@@ -36,12 +36,19 @@ module.exports = {
     },
     updateOverlay:function() {
         if(this.state.overlay && this.state.show) {
-            OverlayManager.getInstance().show();
-            overlayId = this._reactInternalInstance._rootNodeID;
+            var currentId = this._reactInternalInstance._rootNodeID;
+            if(overlayId.indexOf(currentId) < 0) {
+                overlayId.push(currentId);
+                OverlayManager.getInstance().show();
+            }
         }else {
             var currentId = this._reactInternalInstance._rootNodeID;
-            if(currentId == overlayId)
+            if(overlayId.indexOf(currentId) >= 0) {
                 OverlayManager.getInstance().hide();
+
+                var index = overlayId.indexOf(currentId);
+                overlayId.splice(index, 1);
+            }
         }
     }
 };
