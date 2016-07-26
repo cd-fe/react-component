@@ -31,6 +31,7 @@ var UploadButton = React.createClass({
     getInputFile:function() {
         var props = {
             type:'file',
+            name:this.props.name,
             className:'rui-upload-input',
             onChange:this.fileChangeHandler
         };
@@ -40,18 +41,87 @@ var UploadButton = React.createClass({
         if(this.props.multiple) {
             props.multiple = true;
         }
-        return <input {...props} />;
+        return <form id={this._reactInternalInstance._rootNodeID} encType="multipart/form-data" method="post">
+            <input {...props} />
+        </form>;
     },
     fileChangeHandler:function(e) {
-        this.props.onChange(e.target.files, this.props.index);
+        var files = e.target.files;
+        this.setState({
+            progress:0
+        }, ()=>{
+            this.props.onChange(files, this.props.index);
+        });
+    },
+    componentDidUpdate:function() {
+        if(this.props.file && !this.props.file.data && this.props.autoUpload && this.state.progress == 0) {
+            this.applyUpload();
+        }
+    },
+    applyUpload:function() {
+        var validUpload = this.props.beforeUpload ? this.props.beforeUpload(this.props.file, this) : true;
+
+        if(validUpload !== false) {
+            if(typeof validUpload != 'function' || typeof validUpload.then != 'function') {
+                validUpload = new Promise(function(resolve, reject) {
+                    var formData = new FormData(document.getElementById(this._reactInternalInstance._rootNodeID));
+                    $.ajax({
+                        url:this.props.action,
+                        type:'post',
+                        data:formData,
+                        processData: false,
+                        contentType: false,
+                        cache: false,
+                        success:function(response) {
+                            //resolve(response);
+                        },
+                        error:function(response) {
+                            reject(response);
+                        }
+                    })
+                }.bind(this));
+            }
+
+            validUpload.then(function(result) {
+                var validResult = this.props.onUploadComplete ? this.props.onUploadComplete : result;
+                var file = this.props.file;
+                file.data = validResult;
+                this.props.onChange([file], this.props.index);
+
+                this.completeProgress();
+            }.bind(this)).catch(function(e) {
+                this.completeProgress(true);
+            }.bind(this));
+
+            this.startProgress();
+        }
+    },
+    startProgress:function() {
+        if(this.props.autoUpload && this.props.file) {
+            var speed = Math.round(this.props.file.size/200/1024);
+            this._progressTimer = setInterval(function () {
+                this.setState({
+                    progress:Math.min(this.state.progress+speed, 90)
+                });
+            }.bind(this), 1000);
+        }
+    },
+    completeProgress:function(isError) {
+        clearInterval(this._progressTimer);
+        this.setState({
+            progress:isError ? 0 : 100
+        }, ()=>{
+
+        });
     },
     render:function() {
         return <div className="rui-upload-button">
             {this.props.multiple ? (
                 <div className="rui-upload-button-content">
                     {this.props.file && <UploadImage file={this.props.file} />}
-                    {(this.props.file && this.props.autoUpload) && <div className="rui-upload-button-progress">
-
+                    {(this.props.file && this.props.autoUpload && this.state.progress < 100) && <div className={"rui-upload-button-progress"}>
+                        <div className="rui-upload-button-progress-line" style={{left:this.state.progress+'%', width:(100-this.state.progress)+'%'}}></div>
+                        <div className="rui-upload-button-progress-text">{this.state.progress}%</div>
                     </div>}
                     {!this.props.disable && this.getInputFile()}
                 </div>

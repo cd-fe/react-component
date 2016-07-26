@@ -37,7 +37,26 @@
       position:absolute;
       width:100%;
       height:100%;
-      background:rgba(255, 255, 255, 0.7);
+      display:table;
+
+      &-line {
+        background:rgba(255, 255, 255, 0.7);
+        width:100%;
+        height:100%;
+        position:absolute;
+        top:0;
+        left:0;
+      }
+
+      &-text {
+        display:table-cell;
+        vertical-align: middle;
+        width:100%;
+        height:100%;
+        text-align:center;
+        color:$white;
+        font-size:14px;
+      }
     }
   }
 
