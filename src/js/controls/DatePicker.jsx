@@ -141,7 +141,8 @@ module.exports = React.createClass({
     setValue: function (opt) {
         if (!this.props.range) {
             this.setState(typeof opt == 'object' ? opt : {
-                value:opt
+                value:opt,
+                valuePreview:opt
             });
         }
         else {
@@ -178,7 +179,16 @@ module.exports = React.createClass({
     togglePopup: function () {
         this.setState({
             popup: !this.state.popup
-        });
+        }, function() {
+            var rootDom = $(ReactDOM.findDOMNode(this));
+            var offset = rootDom.offset().top - window.scrollY;
+            var resultHeight = $(window).height() - offset - 38;
+            if(resultHeight < rootDom.find('.rui-datepicker-popup').height()) {
+                rootDom.addClass('upside');
+            }else {
+                rootDom.removeClass('upside');
+            }
+        }.bind(this));
     },
     hidePopup: function (e) {
         var target = e.target;
@@ -202,9 +212,9 @@ module.exports = React.createClass({
     onCalendarChange: function (event) {
         if (this.props.range || this.props.showTime) {
             this.setState({
-                value: event.data
+                valuePreview: event.data
             }, function () {
-                this.dispatchEvent('change', this.getValue());
+                //this.dispatchEvent('change', this.getValue());
             }.bind(this));
         } else {
             this.setState({
@@ -242,6 +252,7 @@ module.exports = React.createClass({
     timeCalendarSave: function (time) {
         this.setState({
             value: time,
+            valuePreview: time,
             popup: false
         }, function () {
             this.dispatchEvent('change', this.getValue());
@@ -341,7 +352,7 @@ module.exports = React.createClass({
                         </div>
                     ) : (
                         <Calendar
-                            value={this.state.value || this.dateNow(Date.now())}
+                            value={this.state.valuePreview || this.dateNow(Date.now())}
                             onChange={this.onCalendarChange}
                             showTime={this.props.showTime}
                             onCancel={this.rangeCalendarCancel}
