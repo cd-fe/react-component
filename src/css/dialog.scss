@@ -8,6 +8,22 @@
   box-sizing: border-box;
   z-index:$zindexModal+1;
   border:1px solid $border;
+  opacity:0;
+  -webkit-transform: translate(0, -40px);
+  transform: translate(0, -40px);
+  transition : transform .3s ease-out,opacity .3s ease-out;
+
+  &-active {
+    -webkit-transform: translate(0, 0);
+    transform: translate(0, 0);
+    opacity:1;
+  }
+
+  &-inactive {
+    opacity:0;
+    -webkit-transform: translate(0, -40px);
+    transform: translate(0, -40px);
+  }
 
   &-header {
     clear:both;

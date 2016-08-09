@@ -149,7 +149,7 @@ var Dialog = React.createClass({
     resize: function () {
         var node = ReactDOM.findDOMNode(this);
 
-        if (node.style.display == 'block') {
+        if (this.state.show) {
             var width = node.clientWidth;
             var height = node.clientHeight;
             node.style.width = width + 'px';
@@ -157,15 +157,21 @@ var Dialog = React.createClass({
             node.style.marginLeft = -1 * (width / 2) + 'px';
             node.style.top = "50%";
             node.style.left = "50%";
+
+            clearTimeout(this._activeTimer);
+            this._activeTimer = setTimeout(()=>className.addClass(node, 'rui-dialog-active'), 0);
         } else {
             node.style.width = 'auto';
+            clearTimeout(this._activeTimer);
+            className.removeClass(node, 'rui-dialog-active');
+            this._activeTimer = setTimeout(()=>{node.style.top = "-200%"}, 300);
         }
     },
     _render:function() {
         var allname = className(this.props.className, this.getPropClass());
         var prefix = this.getDefaultClass();
 
-        return <div className={allname} style={{display:this.state.show ? 'block' : 'none'}}>
+        return <div className={allname}>
             <div className={prefix+"-content"}>
                 {!this.props.hideTitle && (
                     <div className={prefix+"-header"}>
