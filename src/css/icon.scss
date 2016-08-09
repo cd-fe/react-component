@@ -8,6 +8,8 @@
   text-transform: none;
   width:18px;
   height:18px;
+  cursor:auto;
+  pointer-events:none;
 
   &-loading {
     background:url('../img/icon/loading.png') 0 0 no-repeat;
