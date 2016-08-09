@@ -103,6 +103,24 @@
         box-shadow:0 0 2px $border;
         margin: 4px 12px 20px;
         background-color: #fff;
+        //外层的border-radius是6px，由于li本身宽度小于外层宽度，所以如果继续用6px会导致出现白色的一层border-radius
+        li:first-child{
+          border-radius: 5px 5px 0 0;
+          &:hover{
+            a{
+              border-radius: 5px 5px 0 0;
+            }
+          }
+
+        }
+        li:last-child{
+          border-radius: 0 0 5px 5px;
+          &:hover{
+            a {
+              border-radius: 0 0 5px 5px;
+            }
+          }
+        }
 
         .choosed {
           background:#f5f5f5;
