@@ -47,8 +47,8 @@
 [class*="rui-"] {
   transition : box-shadow .3s ease-out,left .3s ease-out,top .3s ease-out,opacity .3s ease-out,transform .3s ease-out,border-color .3s ease-out,border-width .3s ease-out,color .3s ease-out,width .3s ease-out,height .3s ease-out,background-color .3s ease-out;
   font-size:12px;
-}
-
-*, :after, :before {
   box-sizing:border-box;
+  :after, :before {
+    box-sizing:border-box;
+  }
 }

@@ -904,7 +904,7 @@ $flexMid:                     true !default; //用于ie10 -ms前缀
   cursor: pointer;
   text-align: center;
   margin:0 0 0 0;
-  padding:6px 18px 5px;
+  padding:5px 18px 4px;
   vertical-align: middle;
   @include prefixer(touch-action, manipulation);
 
