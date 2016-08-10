@@ -12,10 +12,12 @@
   padding:8px;
   color:$text2;
   width:100%;
+  height:100%;
   line-height:22px;
 
   &-container {
-    width:480px;
+    width:100%;
+    height:100%;
   }
 
   .right {
