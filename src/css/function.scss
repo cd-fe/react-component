@@ -789,6 +789,11 @@ $flexMid:                     true !default; //用于ie10 -ms前缀
   @include prefixer(filter, sepia($value), webkit moz);
 }
 
+@mixin opacity($value:1) {
+  opacity:$value;
+  @include prefixer(filter, opacity($value*100), ms);
+}
+
 
 //columns
 //-----------------------------------------------------
@@ -898,7 +903,7 @@ $flexMid:                     true !default; //用于ie10 -ms前缀
   display:inline-block;
   cursor: pointer;
   text-align: center;
-  margin:0 $gutter/2 0;
+  margin:0 0 0 0;
   padding:6px 18px 5px;
   vertical-align: middle;
   @include prefixer(touch-action, manipulation);

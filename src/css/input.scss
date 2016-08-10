@@ -1,21 +1,31 @@
 @import './function';
 
 .rui-input {
-  line-height:36px;
-  height:38px;
+  display:inline-block;
+  line-height:32px;
+  height:32px;
   background:#fff;
   box-sizing: border-box;
-  border:1px solid #eceaea;
+  border:1px solid #dfdfdf;
+  border-radius: 6px 6px;
   margin:0;
-  padding:0;
   outline:none;
   padding:0 10px;
+  color:$text2;
 
   &.disable {
     background:#ececec;
+    &:hover {
+      border-color:$border;
+    }
   }
 
-  &:focus {
-    border:1px solid #74c5ee;
+  &:hover {
+    border-color: $primary;
+  }
+
+  &.focused {
+    border-color: $primary;
+    @include prefixer('box-shadow', 0 0 0 2px $primary_border);
   }
 }

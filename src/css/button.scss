@@ -4,8 +4,32 @@
   @include simple-btn($text2, $primary);
   @include prefixer('border-radius', 6px 6px);
   @include prefixer('user-select', none);
+  @include prefixer('transform', translateZ(0));
 
   border:1px solid $border;
+  width:auto;
+
+  &.middle {
+    padding:4px 18px 3px;
+  }
+
+  &.small {
+    padding: 2px 18px 1px;
+  }
+
+  >.rui-icon+span {
+    margin-left:5px;
+  }
+
+  &:hover {
+    color:$primary_hover;
+    border-color:$primary_hover;
+  }
+
+  &:active {
+    color:$primary_over;
+    border-color:$primary_over;
+  }
 
   &.primary {
     border:none;
@@ -23,29 +47,42 @@
     }
   }
 
-  &:hover {
-    color:$primary_hover;
-    border-color:$primary_hover;
+  &.green {
+    border:none;
+    color: $white;
+    background: #27c24c;
+
+    &:hover {
+      color: $white;
+      background: #3dc85e;
+    }
+
+    &:active {
+      color: $white;
+      background: #23ae44;
+    }
+
+    &.clicked:after {
+      border: 0px solid #27c24c;
+    }
   }
 
-  &:active {
-    color:$primary_over;
-    border-color:$primary_over;
-  }
-
-  &.disable {
+  &.disable,&.disable:hover,&.disable:active {
     color:#ccc;
+    background:#f7f7f7;
+    border:1px solid #dfdfdf;
+    cursor: default;
   }
 
-  &.clicked {
+  &.clicked:after {
     content: '';
     position: absolute;
     top: -1px;
     left: -1px;
     bottom: -1px;
     right: -1px;
-    border-radius: inherit;
-    border: 0 solid $primary;
+    border-radius: 6px 6px;
+    border: 0px solid $primary;
     opacity: 0.4;
     animation: buttonEffect 0.32s ease forwards;
     display: block;

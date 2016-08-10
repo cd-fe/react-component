@@ -1,8 +1,10 @@
+@import './function';
+
 .rui-timepicker {
-  border:1px solid #eceaea;
   width:98px;
   height:34px;
-
+  margin: 0 0px 0 4px;
+  padding-bottom:10px;
   &-span {
     float:left;
     margin-top:7px;
@@ -18,11 +20,12 @@
       width:23px;
       padding:0 2px;
       border:1px solid #fff;
-      line-height:32px;
+      line-height:24px;
       height:auto;
+      margin-top:5px;
 
       &:focus {
-        border:1px solid #eceaea;
+        border:1px solid $primary;
       }
     }
   }

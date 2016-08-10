@@ -1,5 +1,10 @@
+import '../css/common.scss';
+
 import Button from './controls/Button.jsx';
+import Link from './controls/Link.jsx';
+import Icon from './controls/Icon.jsx';
 import Input from './controls/Input.jsx';
+import Upload from './controls/Upload.jsx';
 import Spinner from './controls/Spinner.jsx';
 import Textarea from './controls/Textarea.jsx';
 import Pagination from './controls/Pagination.jsx';
@@ -10,6 +15,7 @@ import Checkbox from './controls/Checkbox.jsx';
 import CheckboxGroup from './controls/CheckboxGroup.jsx';
 import Radio from './controls/Radio.jsx';
 import RadioGroup from './controls/RadioGroup.jsx';
+import Switch from './controls/Switch.jsx';
 import Table from './containers/Table.jsx';
 import Column from './containers/table/Column.jsx';
 import DatePicker from './controls/DatePicker.jsx';
@@ -33,8 +39,6 @@ import TooltipMixin from './mixins/TooltipMixin.jsx';
 import DialogManager from './managers/DialogManager.jsx';
 import OverlayManager from './managers/OverlayManager.jsx';
 
-import '../css/common.scss';
-
 var mousewheel = require('jquery-mousewheel');
 if(typeof mousewheel == 'function') {
     mousewheel(window.jQuery || window.$);
@@ -42,7 +46,10 @@ if(typeof mousewheel == 'function') {
 
 var RUI = {
     Button:Button,
+    Link:Link,
+    Icon:Icon,
     Input:Input,
+    Upload:Upload,
     Spinner:Spinner,
     Textarea:Textarea,
     Pagination:Pagination,
@@ -53,6 +60,7 @@ var RUI = {
     CheckboxGroup:CheckboxGroup,
     Radio:Radio,
     RadioGroup:RadioGroup,
+    Switch:Switch,
     Table:Table,
     Column:Column,
     DatePicker:DatePicker,
@@ -79,6 +87,12 @@ var RUI = {
 
 try {
     window.RUI = RUI;
+}catch(e) {
+
+}
+
+try {
+    window.global = window;
 }catch(e) {
 
 }

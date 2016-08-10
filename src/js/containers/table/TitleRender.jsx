@@ -28,8 +28,8 @@ module.exports = React.createClass({
     },
     render:function() {
         var classes = className(this.props.className, this.getPropClass());
-        return <li {...this.props} className={classes}>
+        return <td {...this.props} className={classes}>
             {this.props.children}
-        </li>;
+        </td>;
     }
 });

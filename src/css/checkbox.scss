@@ -1,20 +1,61 @@
 @import './function';
 
 .rui-checkbox {
-  padding-left:25px;
-  background:url("../img/checkbox.png") no-repeat;
-  background-position:0px 0px;
-  line-height:36px;
-  min-height:36px;
+  line-height:32px;
+  min-height:32px;
   @include inline-block;
-  margin-right:20px;
+  margin-right:$gutter;
+
+  &-selected {
+    padding:0px 7px;
+    margin:0 5px 0 0;
+    border:1px solid $border;
+    border-radius:2px 2px;
+    position:relative;
+  }
+
+  &-circle {
+    position:absolute;
+    top:0;
+    left:0;
+    font-weight:500;
+    color:$primary;
+    width:16px;
+    height:16px;
+    background:url('../img/icon/right.png') no-repeat;
+    transform:scale(0);
+  }
+
+  &:hover {
+    .rui-checkbox-selected {
+      border-color:$primary;
+    }
+  }
 
   &.selected {
-    background-position:0px -36px;
+    .rui-checkbox-selected {
+      border-color:$primary;
+    }
+    .rui-checkbox-circle {
+      transform:scale(1);
+    }
   }
 
   &.disable {
-    background-position:0px -72px;
-    color:#cacaca;
+    &:hover,&.selected {
+      .rui-checkbox-selected {
+        border-color:$border;
+      }
+    }
+
+    .rui-checkbox-selected {
+      border-color: $border;
+      background:#f6f6f6;
+    }
+
+    .rui-checkbox-circle {
+      background:url('../img/icon/right_grey.png') no-repeat;
+    }
+    color: $text3;
   }
 }

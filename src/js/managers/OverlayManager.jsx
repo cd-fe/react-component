@@ -3,6 +3,8 @@
  * @module managers/OverlayManager
  */
 
+let showCount = 0;
+
 module.exports = {
     __overlay:null,
     __autohide:true,
@@ -28,17 +30,23 @@ module.exports = {
         var Overlay = React.createClass({
             getInitialState:function() {
                 return {
-                    show:false
+                    show:false,
+                    count:0
                 };
             },
             show:function() {
+                showCount++;
                 this.setState({
-                    show:true
+                    show:true,
+                    count:showCount
                 });
             },
             hide:function() {
+                showCount--;
+                showCount = Math.max(0, showCount);
                 this.setState({
-                    show:false
+                    show:showCount > 0 ? true : false,
+                    count:showCount
                 });
             },
             render:function() {

@@ -1,0 +1,63 @@
+@import './function';
+
+.rui-icon {
+  display:inline-block;
+  font-style:normal;
+  vertical-align:baseline;
+  text-align:center;
+  text-transform: none;
+  width:18px;
+  height:18px;
+  cursor:auto;
+  pointer-events:none;
+
+  &-loading {
+    background:url('../img/icon/loading.png') 0 0 no-repeat;
+    @include prefixer('animation', loadingCircle 1s infinite linear);
+  }
+
+  &-arrow-left {
+    background:url('../img/icon/arrow_pagination_usable.png') no-repeat;
+  }
+
+  &-arrow-right {
+    background:url('../img/icon/arrow_pagination_usable.png') no-repeat;
+    transform: rotate(180deg);
+  }
+
+  &-more {
+    background:url('../img/icon/more.png') no-repeat;
+  }
+
+  &-close {
+    background:url('../img/icon/close.png') no-repeat;
+  }
+
+  &-calendar {
+    background:url('../img/icon/calendar.png') no-repeat;
+  }
+
+  &-upload {
+    background:url('../img/icon/upload.png') no-repeat;
+  }
+
+  &-attach {
+    background:url('../img/icon/attach.png') no-repeat;
+  }
+}
+
+@keyframes loadingCircle {
+  0% {
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg)
+  }
+
+  to {
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    -webkit-transform: rotate(1turn);
+    transform: rotate(1turn)
+  }
+}

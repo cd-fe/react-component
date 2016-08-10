@@ -5,8 +5,6 @@ import Layout from './common/layout.jsx';
 import createHashHistory from 'history/lib/createHashHistory';
 const history = useRouterHistory(createHashHistory)({ queryKey: false });
 
-import './common/codemirror.jsx';
-
 var Root = React.createClass({
     onUpdate:function() {
         window._hmt && _hmt.push(['_trackPageview', location.hash.substring(1)]);
@@ -14,6 +12,7 @@ var Root = React.createClass({
     render:function() {
         return <Router history={history} onUpdate={this.onUpdate}>
             <Route path="/" component={Layout}>
+                <Route path="dashboard" component={loader(require('bundle?lazy!babel?presets=react!./common/dashboard.jsx'))}></Route>
                 <Route path="components" component={loader(require('bundle?lazy!./components.jsx'))}>
                     <Route path="button" component={loader(require('bundle?lazy!babel?presets=react!./components/button.js'))}></Route>
                     <Route path="input" component={loader(require('bundle?lazy!babel?presets=react!./components/input.js'))}></Route>
@@ -37,7 +36,7 @@ var Root = React.createClass({
     }
 });
 
-var codemirrorResources = require('./common/codemirror.jsx');
+var codemirrorResources = [];//require('./common/codemirror.jsx');
 Promise.all(codemirrorResources).then(function() {
     ReactDOM.render(<Root />, document.getElementById('wrapper'));
 });

@@ -3,18 +3,18 @@
 // animation
 @include animate-fadeInDown;
 
-$outset: #ccc;
-$inset : #fff;
+$outset: #94c7ff;
+$inset : #f6faff;
 
 .rui-tooltip {
   display:none;
-  @include prefixer('border-radius', 2px);
-  background:#fff;
-  border:1px solid #{$outset};
-  color:#{$outset};
-  padding:0 20px;
+  @include prefixer('border-radius', 6px);
+  background:#f6faff;
+  border:1px solid #94c7ff;
+  color:$text2;
+  padding:10px;
   min-width:130px;
-  line-height:36px;
+  line-height:24px;
   position:absolute;
   z-index:1001;
   top:0;
@@ -27,7 +27,7 @@ $inset : #fff;
     height:0;
     line-height:0;
     font-size:0;
-    border:10px solid #{$outset};
+    border:10px solid #94c7ff;
     position:absolute;
 
     &.arrow-top-center {

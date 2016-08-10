@@ -3,46 +3,82 @@
 .rui-table {
   clear: both;
 
+  .rui-table-content {
+    width:100%;
+    border-radius:6px 6px 0 0;
+    overflow:hidden;
+
+    tbody {
+      tr.rui-table-row {
+        border-bottom:1px solid $border;
+        background:#fff;
+
+        &:hover {
+          background:#fbfbfb;
+        }
+
+        .rui-table-column-item {
+          padding-left:20px;
+          word-break:break-all;
+
+          &:first-child {
+            padding-left:30px;
+          }
+          &:last-child {
+            padding-right:30px;
+          }
+        }
+      }
+    }
+  }
+
+  &.odd {
+    .rui-table-content {
+      tr.rui-table-row:nth-child(2) {
+        background:#f9f9f9;
+      }
+    }
+  }
+
+  &.nowrap {
+    .rui-table-content {
+      .rui-table-column-item {
+        //white-space: nowrap;
+        //text-overflow:ellipsis;
+        //overflow: hidden;
+      }
+    }
+  }
+
   &-header {
     width:100%;
-    .rui-table-title {
-      float:left;
-    }
-    float:left;
-    color:#666;
+    color:$text2;
+    font-size:14px;
+    background: #f2f2f2;
+    border-bottom:1px solid $border;
 
-    .rui-table-title:first-child {
+    .rui-table-title {
       padding-left:20px;
     }
+
+    .rui-table-title:first-child {
+      padding-left:30px;
+    }
     .rui-table-title:last-child {
-      padding-right: 20px;
-      text-align:center;
+      padding-right: 30px;
     }
 
   }
 
   &-column {
-    &:first-child {
-      .rui-table-column-item,.rui-table-title {
-        padding-left:20px;
-      }
-    }
-    &:last-child {
-      .rui-table-column-item,.rui-table-title {
-        padding-right: 20px;
-      }
-    }
 
-    float:left;
     color:#666;
     position:relative;
 
     &-item {
-      background:#fff;
       color:#666;
-      line-height:36px;
-      padding:18px 4px 18px 0;
-      word-break: break-word;
+      line-height:24px;
+      padding:9px 0;
     }
 
     .rui-checkbox {
@@ -64,13 +100,16 @@
   }
 
   &-title {
-    line-height: 38px;
-    height:38px;
+    line-height: 48px;
+    height:48px;
     padding:0;
-    background:#f7f7f7;
+    font-size:14px;
+    color:$text2;
+    font-weight:bold;
   }
 
   &-scroller {
+    width:100%;
     position:relative;
     float:left;
   }
