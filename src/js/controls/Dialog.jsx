@@ -148,7 +148,6 @@ var Dialog = React.createClass({
      */
     resize: function () {
         var node = ReactDOM.findDOMNode(this);
-
         if (this.state.show) {
             var width = node.clientWidth;
             var height = node.clientHeight;
