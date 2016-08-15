@@ -227,13 +227,15 @@ module.exports = React.createClass({
     },
     startCalendarChange: function (event) {
         this.setState({
+            startValue: event.data,
             startValuePreview: event.data
-        });
+        }, ()=>this.dispatchEvent('change', this.getValue()));
     },
     endCalendarChange: function (event) {
         this.setState({
+            endValue: event.data,
             endValuePreview: event.data
-        });
+        }, ()=>this.dispatchEvent('change', this.getValue()));
     },
     rangeCalendarCancel: function () {
         this.setState({
@@ -328,7 +330,7 @@ module.exports = React.createClass({
             <Icon name="calendar" style={{position:'absolute',right:'10px',top:'6px'}} />
 
             <div className={defaultClass+'-popup'}>
-                {this.props.range && (<div className={defaultClass+'-row'}>
+                {/*this.props.range && (<div className={defaultClass+'-row'}>
                     <div className={"range-container"}>
                         <div className={"left"}>
                             <span>开始时间： </span><Input value={this.display('start')} onBlur={this.onStartTimeBlur}/>
@@ -339,7 +341,7 @@ module.exports = React.createClass({
                             <Button onClick={this.rangeCalendarSave} className="primary">保存</Button>
                         </div>
                     </div>
-                </div>)}
+                </div>)*/}
                 <div className={defaultClass+'-row'} style={{height:this.props.showTime ? 275 : 'auto'}}>
                     {this.props.range ? (
                         <div className={defaultClass+'-row-range'}>

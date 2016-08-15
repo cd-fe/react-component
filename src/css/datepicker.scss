@@ -35,7 +35,8 @@
   }
 
   @at-root .range &-popup {
-    width:540px;
+    width:462px;
+    background-color:#fff;
 
     .range-container {
       margin-bottom:10px;
@@ -114,17 +115,18 @@
 
         td {
           cursor:pointer;
-          @include prefixer('border-radius', 6px 6px);
+          //@include prefixer('border-radius', 6px 6px);
           width:24px;
 
           >span {
             width:100%;
             display:inline-block;
             border:1px solid $white;
+            box-sizing: border-box;
           }
 
           &>span:hover,&>span.ranged:hover {
-            border-radius:6px 6px;
+            //border-radius:6px 6px;
             border:1px solid $primary;
             color:$text2;
           }
