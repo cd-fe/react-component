@@ -134,8 +134,12 @@ module.exports = React.createClass({
         if (this.props.disable) {
             return;
         }
-
-        var value = (typeof val == 'number' ? val : (this.state.value ? this.state.value : 0)) + direction * this.props.step;
+        //修复this.state.value=="0"时出现NaN的BUG
+        var originalNumber = Number(typeof val == 'number' ? val : (this.state.value ? this.state.value : 0));
+        if(isNaN(originalNumber)){
+            throw new Error("Number is needed");
+        }
+        var value = originalNumber + direction * this.props.step;
         value = Math.max(Math.min(value, this.props.max), this.props.min * 1);
         this.setState({
             value: value
