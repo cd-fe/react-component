@@ -159,6 +159,9 @@ module.exports = React.createClass({
                 <RUI.Switch disable={true} selected={true} />
             </div>
             <div className="row">
+                <RUI.Spinner type="slider" min={0} max={200} fieldFunction={(str)=>str+"像素"} />
+            </div>
+            <div className="row">
                 <RUI.Upload />
             </div>
             <div className="row">

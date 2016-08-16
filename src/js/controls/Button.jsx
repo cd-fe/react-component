@@ -53,7 +53,7 @@ module.exports = React.createClass({
         var props = require('../util/omit.jsx')(this.props, 'onClick');
         return <a {...props} onClick={this.clickHandler} className={classes}>
             {this.props.icon && (
-                <Icon name={this.props.icon} style={{marginRight:'5px'}} />
+                <Icon name={this.props.icon} />
             )}
             {this.props.children}
         </a>;
