@@ -4,7 +4,7 @@
   line-height:32px;
   min-height:32px;
   @include inline-block;
-  margin-right:$gutter;
+  margin-right:10px;
 
   &-selected {
     padding:0px 7px;
