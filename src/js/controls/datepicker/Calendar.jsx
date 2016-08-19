@@ -74,6 +74,17 @@ module.exports = React.createClass({
         event.data = value;
         this.dispatchEvent(event);
     },
+    timeChange: function(event) {
+        var times = event.data;
+        var date = new Date(this.state.value);
+        date.setHours(times.hour);
+        date.setMinutes(times.minute);
+        date.setSeconds(times.second);
+
+        event.data = date.getTime();
+
+        this.dispatchEvent(event);
+    },
     onSubmitClick:function() {
         var times = this.refs.time.getValue();
         var date = new Date(this.state.value);
