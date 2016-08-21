@@ -212,6 +212,7 @@ module.exports = React.createClass({
     onCalendarChange: function (event) {
         if (this.props.range || this.props.showTime) {
             this.setState({
+                value: event.data,
                 valuePreview: event.data
             }, function () {
                 //this.dispatchEvent('change', this.getValue());
@@ -301,7 +302,7 @@ module.exports = React.createClass({
             return formatter.format(this.state.startValue) + '  -  ' + formatter.format(this.state.endValue);
         }
         else if (this.props.showTime) {
-            if (this.state.popup) {
+            if (!this.state.value /*this.state.popup*/) {
                 return undefined;
             }
             return formatter.format(this.state.value);
