@@ -173,6 +173,15 @@ module.exports = React.createClass({
                 <RUI.Upload multiple={true} autoUpload={true} />
             </div>
             <div className="row">
+                <p>图片编辑</p>
+                <RUI.Upload multiple={true} autoUpload={false} editable={{
+                    aspectRatio:400/300,
+                    crop:function(result) {
+                        console.log(result);
+                    }
+                }} />
+            </div>
+            <div className="row">
                 <RUI.Pagination pageSize={10} currentPage={2} totalNum={108} />
             </div>
             <div className="row">

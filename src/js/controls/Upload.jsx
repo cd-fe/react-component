@@ -39,7 +39,7 @@ var UploadButton = React.createClass({
             props.disabled = true;
         }
         if(this.props.multiple) {
-            props.multiple = true;
+            // props.multiple = true;
         }
         return <form id={this._reactInternalInstance._rootNodeID} encType="multipart/form-data" method="post">
             <input {...props} />
@@ -73,7 +73,7 @@ var UploadButton = React.createClass({
                         contentType: false,
                         cache: false,
                         success:function(response) {
-                            //resolve(response);
+                            resolve(response);
                         },
                         error:function(response) {
                             reject(response);
@@ -234,12 +234,14 @@ module.exports = React.createClass({
             onError: null,
             onProgress: null,
             beforeUpload: null,
-            autoUpload:false
+            autoUpload:false,
+            editable:null
         };
     },
     getInitialState:function() {
         return {
-            list:[]
+            list:[],
+            imageEditorConfig:{}
         };
     },
     fileChangeHandler:function(files, index) {
@@ -249,12 +251,49 @@ module.exports = React.createClass({
             list.splice.apply(list, Array.prototype.concat.apply([index, files.length], files));
             this.setState({
                 list:list
+            }, ()=>{
+                this.edit(index);
             });
         }else {
             this.setState({
                 list:files
+            }, ()=>{
+                this.edit(index);
             });
         }
+    },
+    edit:function(index) {
+        if(this.props.editable) {
+            var _this = this;
+            var config = Object.assign({}, this.props.editable);
+            config.crop = function(event) {
+                _this.__editorCropper = {
+                    index:index,
+                    detail:event.detail
+                };
+            };
+            config.data = this.state.list[index];
+            this.setState({
+                imageEditorConfig:config
+            }, ()=>{
+                this.refs.editorDialog.show();
+            });
+        }
+    },
+    editorSubmit:function() {
+        if(this.props.editable) {
+            if(typeof this.props.editable.crop == 'function') {
+                try {
+                    this.__editorCropper.base64 = this.refs.editor.getCropper().getCroppedCanvas().toDataURL('image/png');
+                }catch(e) {
+                    this.__editorCropper.base64 = null;
+                }
+                this.props.editable.crop.call(this.refs.editor, this.__editorCropper);
+            }
+        }
+    },
+    editorCancel:function() {
+        this.__editorCropper && (this.__editorCropper = null);
     },
     clearList:function(e) {
         if(this.props.multiple) {
@@ -264,6 +303,9 @@ module.exports = React.createClass({
                 list:[]
             });
         }
+    },
+    getValue:function() {
+        return this.state.list;
     },
     render: function () {
         var classes = className(this.props.className, this.getPropClass());
@@ -291,6 +333,9 @@ module.exports = React.createClass({
                     }
                 </div>
             }
+            <RUI.Dialog ref="editorDialog" buttons="cancel,submit" title="编辑图片" onSubmit={this.editorSubmit} onCancel={this.editorCancel}>
+                <RUI.ImageEditor ref="editor" {...this.state.imageEditorConfig} />
+            </RUI.Dialog>
             {this.props.children}
         </div>;
     }

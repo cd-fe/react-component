@@ -19,7 +19,10 @@ module.exports = {
         "react": "React",
         "react-dom": "ReactDOM",
         "zepto": "Zepto",
-        "react-draggable-browser":true
+        "react-draggable-browser":"react-draggable-browser",
+        "swiper":"swiper",
+        "cropperjs":"cropperjs",
+        "jquery-mousewheel":"jquery-mousewheel"
     },
     module:{
         loaders:[
