@@ -235,7 +235,8 @@ module.exports = React.createClass({
             onProgress: null,
             beforeUpload: null,
             autoUpload:false,
-            editable:null
+            editable:null,
+            max:-1
         };
     },
     getInitialState:function() {
@@ -314,7 +315,10 @@ module.exports = React.createClass({
             {this.props.multiple ?
                 <div className="rui-upload-list">
                     {this.state.list.concat(null).map(function(file, index) {
-                        return <UploadButton {...props} onChange={this.fileChangeHandler} file={file} key={index} index={index}/>;
+                        if(index < this.props.max || this.props.max < 0) {
+                            return <UploadButton {...props} onChange={this.fileChangeHandler} file={file} key={index} index={index}/>;
+                        }
+                        return null;
                     }.bind(this))}
                 </div> :
                 <div>

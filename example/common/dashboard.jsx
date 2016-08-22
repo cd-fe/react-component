@@ -166,15 +166,15 @@ module.exports = React.createClass({
             </div>
             <div className="row">
                 <p>默认</p>
-                <RUI.Upload multiple={true} />
+                <RUI.Upload multiple={true} className="small-cube" />
             </div>
             <div className="row">
                 <p>自动上传</p>
                 <RUI.Upload multiple={true} autoUpload={true} />
             </div>
             <div className="row">
-                <p>图片编辑</p>
-                <RUI.Upload multiple={true} autoUpload={false} editable={{
+                <p>图片编辑（最多可上传四张图片）</p>
+                <RUI.Upload multiple={true} max={4} autoUpload={false} editable={{
                     aspectRatio:400/300,
                     crop:function(result) {
                         console.log(result);

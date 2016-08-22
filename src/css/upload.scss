@@ -10,6 +10,13 @@
     left:0;
   }
 
+  &.small-cube {
+    .rui-upload-button-content {
+      width:70px;
+      height:70px;
+    }
+  }
+
   &-button {
     position:relative;
     float:left;
@@ -19,8 +26,8 @@
     }
 
     &-content {
-      width:180px;
-      height:120px;
+      width:128px;
+      height:100px;
       border:1px dashed $border;
       border-radius:6px;
       background:url(../img/icon/upload_add.png) 50% 50% no-repeat;

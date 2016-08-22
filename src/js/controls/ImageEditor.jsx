@@ -1,5 +1,5 @@
 /**
- * 图片编辑器
+ *
  * @module controls/ImageEditor
  */
 import className from '../util/className.jsx';
@@ -11,7 +11,7 @@ import 'cropperjs/dist/cropper.css';
 
 var ImageEditor = React.createClass({
     /**
-     * 基础方法
+     *
      * @see {@link module:mixins/ComponentBase}
      */
     mixins: [ComponentBase],
@@ -27,14 +27,14 @@ var ImageEditor = React.createClass({
              * @instance
              * @default dialog
              * @type string
-             * @desc 组件名称
+             * @desc
              */
             cname: "imageeditor",
             /**
              * @instance
              * @default null
              * @type string|object
-             * @desc 待编辑图片，此处可为图片远程链接，本地路径，以及base64
+             * @desc
              */
             data: null
         };
@@ -64,6 +64,8 @@ var ImageEditor = React.createClass({
             if (typeof this.state.data == 'string') {
                 this.setState({
                     image: this.state.data
+                }, ()=>{
+                    ReactDOM.findDOMNode(this.refs.image).style.opacity = 0;
                 });
             }
             else if (window.File && this.state.data instanceof window.File) {
@@ -72,6 +74,8 @@ var ImageEditor = React.createClass({
                 reader.onload = function () {
                     _this.setState({
                         image: this.result
+                    }, ()=>{
+                        ReactDOM.findDOMNode(_this.refs.image).style.opacity = 0;
                     });
                 };
                 reader.readAsDataURL(this.state.data);
@@ -81,6 +85,9 @@ var ImageEditor = React.createClass({
     clearCropper: function () {
         this.cropper && this.cropper.destroy();
         this.cropper = null;
+
+        var image = ReactDOM.findDOMNode(this.refs.image);
+        image && (image.style.opacity = 0);
     },
     getCropper: function () {
         if (!this.cropper && this.refs.image) {

@@ -56,7 +56,7 @@ var config = {
     },
     resolve:{
         alias:{
-            "react-component-lib":"../dist/bundle.js"
+            "react-component-lib":"../src/js/rui.jsx"
         }
     }
 };
