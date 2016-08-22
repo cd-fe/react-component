@@ -215,7 +215,7 @@ module.exports = React.createClass({
                 value: event.data,
                 valuePreview: event.data
             }, function () {
-                //this.dispatchEvent('change', this.getValue());
+                this.dispatchEvent('change', this.getValue());
             }.bind(this));
         } else {
             this.setState({

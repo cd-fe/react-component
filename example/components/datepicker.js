@@ -20,7 +20,7 @@ var Example = React.createClass({
                 </div>
                 <h4 className="final-title">带时间</h4>
                 <div>
-                    <RUI.DatePicker ref="singleDatetimePicker" showTime={true} />
+                    <RUI.DatePicker ref="singleDatetimePicker" showTime={true} onChange={()=>console.log('change')} />
                     <RUI.Button onClick={this.getSinglePickerValue.bind(this, 'singleDatetimePicker')}>获取结果</RUI.Button>
                 </div>
                 <h4 className="final-title">改变显示格式</h4>
