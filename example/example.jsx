@@ -1,3 +1,5 @@
+import RUI from 'react-component-lib';
+
 import { Router, Route, Link, hashHistory, useRouterHistory } from 'react-router';
 import loader from './common/loader.jsx';
 import Layout from './common/layout.jsx';
@@ -7,6 +9,7 @@ const history = useRouterHistory(createHashHistory)({ queryKey: false });
 
 var Root = React.createClass({
     onUpdate:function() {
+        window.RUI = RUI;
         window._hmt && _hmt.push(['_trackPageview', location.hash.substring(1)]);
     },
     render:function() {

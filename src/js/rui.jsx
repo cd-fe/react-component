@@ -25,6 +25,7 @@ import Tree from './controls/Tree.jsx';
 import Slider from './controls/Slider.jsx';
 import Form from './containers/Form.jsx';
 import ScrollView from './containers/ScrollView.jsx';
+import ImageEditor from './controls/ImageEditor.jsx';
 
 import DataSource from './data/DataSource.jsx';
 
@@ -70,6 +71,7 @@ var RUI = {
     Slider:Slider,
     Form:Form,
     ScrollView:ScrollView,
+    ImageEditor:ImageEditor,
 
     DataSource:DataSource,
 

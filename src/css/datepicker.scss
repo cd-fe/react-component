@@ -204,12 +204,20 @@
   &.upside {
     .rui-datepicker-popup {
       top:auto;
-      bottom:56px;
+      bottom:2px;
+      padding:0 0 45px 0;
 
       &-arrow {
         transform:rotate(180deg);
         top:auto;
         bottom:-8px;
+      }
+    }
+    .rui-datepicker-calendar {
+      border-bottom:1px solid $border;
+      &-title {
+        margin-top: 0;
+        border-top: 0;
       }
     }
   }
