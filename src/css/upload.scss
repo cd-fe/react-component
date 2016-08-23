@@ -8,6 +8,26 @@
     border:none;
     top:0;
     left:0;
+    z-index:1;
+  }
+
+  .upload-replace {
+    position:absolute;
+    left:0;
+    bottom:-24px;
+    width:100%;
+    color:$white;
+    text-align:center;
+    background:rgba(0, 0, 0, 0.5);
+    line-height:24px;
+    z-index:1;
+    transition: bottom 0.3s;
+  }
+
+  .has-image:hover {
+    .upload-replace {
+      bottom:0;
+    }
   }
 
   &.small-cube {
@@ -25,6 +45,12 @@
       margin:0;
     }
 
+    &-content.has-image {
+      &:hover {
+        border:1px solid $primary;
+      }
+    }
+
     &-content {
       width:128px;
       height:100px;
@@ -33,6 +59,7 @@
       background:url(../img/icon/upload_add.png) 50% 50% no-repeat;
       overflow:hidden;
       position:relative;
+      z-index:2;
 
       &:hover {
         border:1px dashed $primary;
@@ -75,6 +102,7 @@
     height: 100%;
     opacity: 0;
     cursor: pointer;
+    z-index:3
   }
 
   &-info {
