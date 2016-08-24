@@ -56,6 +56,10 @@
   &-add {
     background:url('../img/icon/add.png') no-repeat;
   }
+
+  &-error {
+    background:url('../img/icon/error_small.png') no-repeat;
+  }
 }
 
 @keyframes loadingCircle {

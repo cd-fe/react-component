@@ -6,7 +6,7 @@ var Example = React.createClass({
             <div className="example">
                 <h4 className="final-title">默认</h4>
                 <div>
-                    <RUI.ScrollView>
+                    {/*<RUI.ScrollView>
                         <h2>theme: "rounded-dots" with less momentum</h2>
                         <hr/>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -21,6 +21,12 @@ var Example = React.createClass({
                         <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                         <hr/>
                         <p>End of content.</p>
+                    </RUI.ScrollView>*/}
+
+                    <RUI.ScrollView id="add" style={{height:'200px'}}>
+                        <h2>theme: "rounded-dots" with less momentum</h2>
+                        <hr/>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                     </RUI.ScrollView>
                 </div>
             </div>

@@ -114,6 +114,11 @@ var UploadButton = React.createClass({
 
         });
     },
+    removeHandler:function(event) {
+        event.stopPropagation();
+
+        this.props.onChange && this.props.onChange(null, this.props.index);
+    },
     render:function() {
         return <div className="rui-upload-button">
             {this.props.multiple ? (
@@ -131,6 +136,9 @@ var UploadButton = React.createClass({
                     点击上传
                     {!this.props.disable && this.getInputFile()}
                 </RUI.Button>
+            )}
+            {(this.props.multiple && this.props.file) && (
+                <RUI.Icon className="rui-upload-button-remove" name="error" onClick={this.removeHandler} />
             )}
         </div>;
     }
@@ -203,7 +211,7 @@ var UploadImage = React.createClass({
         }
     },
     render:function() {
-        return <div style={{width:'100%',height:'100%'}}>
+        return <div style={{width:'100%',height:'100%', background:'#fff'}}>
             <img ref="image" className="upload-preview" onLoad={this.imageLoadComplete} src={this.state.imageData}/>
             <p className="upload-replace">
                 替换
@@ -267,7 +275,11 @@ module.exports = React.createClass({
         if(this.props.multiple) {
             var list = this.state.list;
             files = Array.apply(null, files);
-            list.splice.apply(list, Array.prototype.concat.apply([index, files.length], files));
+            if(files.length) {
+                list.splice.apply(list, Array.prototype.concat.apply([index, files.length], files));
+            }else {
+                list.splice(index, 1);
+            }
             this.setState({
                 list:list
             }, ()=>{

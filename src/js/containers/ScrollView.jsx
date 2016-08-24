@@ -106,7 +106,7 @@ module.exports = React.createClass({
     componentDidMount: function () {
         this.updateScroller();
 
-        var node = $(ReactDOM.findDOMNode(this));
+        var node = $(ReactDOM.findDOMNode(this.refs.content));
         var lastWidth = node.width();
         var lastHeight = node.height();
 
@@ -115,8 +115,9 @@ module.exports = React.createClass({
             this.autoUpdater = setInterval(function () {
                 var width = node.width();
                 var height = node.height();
-
                 if (width != lastWidth || height != lastHeight) {
+                    lastWidth = width;
+                    lastHeight = height;
                     updateScroller();
                 }
             }.bind(this), 50);
@@ -225,22 +226,26 @@ module.exports = React.createClass({
         var node = $(ReactDOM.findDOMNode(this.refs.content));
         var outer = $(ReactDOM.findDOMNode(this));
         if (this.props.horizonal) {
-            var result = parseInt(node.css('marginLeft')) + xd * this.props.scrollAmount;
-            node.css({
-                'marginLeft': result
-            });
-            this.setState({
-                scrollLeft:result
-            });
+            if(this.state.hbarItemWidth) {
+                var result = parseInt(node.css('marginLeft')) + xd * this.props.scrollAmount;
+                node.css({
+                    'marginLeft': result
+                });
+                this.setState({
+                    scrollLeft:result
+                });
+            }
         }
         if (this.props.vertical) {
-            var result = Math.max(-1 * node.height() + outer.height(), Math.min(0, parseInt(node.css('marginTop')) + yd * this.props.scrollAmount));
-            node.css({
-                'marginTop': result
-            });
-            this.setState({
-                scrollTop:result
-            });
+            if(this.state.vbarItemHeight) {
+                var result = Math.max(-1 * node.height() + outer.height(), Math.min(0, parseInt(node.css('marginTop')) + yd * this.props.scrollAmount));
+                node.css({
+                    'marginTop': result
+                });
+                this.setState({
+                    scrollTop: result
+                });
+            }
         }
     },
     render: function () {
