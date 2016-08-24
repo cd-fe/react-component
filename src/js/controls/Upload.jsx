@@ -117,7 +117,7 @@ var UploadButton = React.createClass({
     render:function() {
         return <div className="rui-upload-button">
             {this.props.multiple ? (
-                <div className="rui-upload-button-content">
+                <div className={"rui-upload-button-content" + (this.props.file ? " has-image" : "")}>
                     {this.props.file && <UploadImage file={this.props.file} />}
                     {(this.props.file && this.props.autoUpload && this.state.progress < 100) && <div className={"rui-upload-button-progress"}>
                         <div className="rui-upload-button-progress-line" style={{left:this.state.progress+'%', width:(100-this.state.progress)+'%'}}></div>
@@ -172,9 +172,14 @@ var UploadImage = React.createClass({
             };
             reader.readAsDataURL(this.state.file);
         }
+        else if(this.state.file && typeof this.state.file == 'string') {
+            this.setState({
+                imageData:this.state.file
+            });
+        }
     },
     imageLoadComplete:function() {
-        var img = ReactDOM.findDOMNode(this);
+        var img = ReactDOM.findDOMNode(this.refs.image);
         var imageSize = {
             width:img.width,
             height:img.height
@@ -198,7 +203,12 @@ var UploadImage = React.createClass({
         }
     },
     render:function() {
-        return <img className="upload-preview" onLoad={this.imageLoadComplete} src={this.state.imageData}/>;
+        return <div style={{width:'100%',height:'100%'}}>
+            <img ref="image" className="upload-preview" onLoad={this.imageLoadComplete} src={this.state.imageData}/>
+            <p className="upload-replace">
+                替换
+            </p>
+        </div>;
     }
 });
 
@@ -236,14 +246,22 @@ module.exports = React.createClass({
             beforeUpload: null,
             autoUpload:false,
             editable:null,
-            max:-1
+            max:-1,
+            list:null
         };
     },
     getInitialState:function() {
         return {
-            list:[],
+            list:this.props.list || [],
             imageEditorConfig:{}
         };
+    },
+    componentWillReceiveProps:function(nextProps) {
+        if(typeof nextProps.list != 'undefined' && nextProps.list != this.state.list) {
+            this.setState({
+                list:nextProps.list
+            });
+        }
     },
     fileChangeHandler:function(files, index) {
         if(this.props.multiple) {

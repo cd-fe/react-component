@@ -166,7 +166,7 @@ module.exports = React.createClass({
             </div>
             <div className="row">
                 <p>默认</p>
-                <RUI.Upload multiple={true} className="small-cube" />
+                <RUI.Upload multiple={true} list={["http://p.qq181.com/cms/1212/2012121221524127738.jpg"]} className="small-cube" />
             </div>
             <div className="row">
                 <p>自动上传</p>
