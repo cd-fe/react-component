@@ -43,7 +43,7 @@ var UploadButton = React.createClass({
         if(this.props.multiple) {
             // props.multiple = true;
         }
-        return <form id={this._reactInternalInstance._rootNodeID} encType="multipart/form-data" method="post">
+        return <form ref="form" id={this._reactInternalInstance._rootNodeID} encType="multipart/form-data" method="post">
             <input {...props} />
         </form>;
     },
@@ -118,6 +118,11 @@ var UploadButton = React.createClass({
     },
     removeHandler:function(event) {
         event.stopPropagation();
+
+        if(this.refs.form) {
+            this.refs.form.reset();
+        }
+
         this.props.onDelete && this.props.onDelete(null, this.props.index);
         this.props.onChange && this.props.onChange(null, this.props.index);
     },
@@ -308,11 +313,13 @@ module.exports = React.createClass({
                 };
             };
             config.data = this.state.list[index];
-            this.setState({
-                imageEditorConfig:config
-            }, ()=>{
-                this.refs.editorDialog.show();
-            });
+            if(config.data) {
+                this.setState({
+                    imageEditorConfig: config
+                }, ()=> {
+                    this.refs.editorDialog.show();
+                });
+            }
         }
     },
     editorSubmit:function() {
