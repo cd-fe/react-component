@@ -118,7 +118,7 @@ module.exports = React.createClass({
                 if (width != lastWidth || height != lastHeight) {
                     lastWidth = width;
                     lastHeight = height;
-                    updateScroller();
+                    updateScroller(this.move);
                 }
             }.bind(this), 50);
         }
@@ -196,7 +196,7 @@ module.exports = React.createClass({
     componentWillUnmount:function() {
         clearInterval(this.autoUpdater);
     },
-    updateScroller: function () {
+    updateScroller: function (complete) {
         var node = $(ReactDOM.findDOMNode(this.refs.content));
         var outer = $(ReactDOM.findDOMNode(this));
 
@@ -220,9 +220,12 @@ module.exports = React.createClass({
             update.hbarItemWidth = hscreens < 1 ? 0 : outerWidth / hscreens;
         }
 
-        this.setState(update);
+        this.setState(update, complete);
     },
     move: function (xd, yd) {
+        xd = xd || 0;
+        yd = yd || 0;
+
         var node = $(ReactDOM.findDOMNode(this.refs.content));
         var outer = $(ReactDOM.findDOMNode(this));
         if (this.props.horizonal) {

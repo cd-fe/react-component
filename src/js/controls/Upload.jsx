@@ -20,7 +20,9 @@ var UploadButton = React.createClass({
             onStart: null,
             onError: null,
             beforeUpload: null,
-            file: null
+            file: null,
+            showDelete: false,
+            onDelete: null
         };
     },
     getInitialState:function() {
@@ -116,7 +118,7 @@ var UploadButton = React.createClass({
     },
     removeHandler:function(event) {
         event.stopPropagation();
-
+        this.props.onDelete && this.props.onDelete(null, this.props.index);
         this.props.onChange && this.props.onChange(null, this.props.index);
     },
     render:function() {
@@ -137,7 +139,7 @@ var UploadButton = React.createClass({
                     {!this.props.disable && this.getInputFile()}
                 </RUI.Button>
             )}
-            {(this.props.multiple && this.props.file) && (
+            {(this.props.multiple && this.props.file && this.props.showDelete) && (
                 <RUI.Icon className="rui-upload-button-remove" name="error" onClick={this.removeHandler} />
             )}
         </div>;
@@ -244,12 +246,14 @@ module.exports = React.createClass({
             disable: false,
             useDragDrop: true,
             showProgress: true,
+            showDelete: false,
             multiple: false,
             name: 'image',
             action: '#',
             headers: {},
             onStart: null,
             onError: null,
+            onDelete: null,
             onProgress: null,
             beforeUpload: null,
             autoUpload:false,

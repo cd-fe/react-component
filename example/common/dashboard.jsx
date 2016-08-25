@@ -107,7 +107,7 @@ module.exports = React.createClass({
                 <RUI.Textarea value="心里颇不宁静，今晚在院子里坐着凉快，忽略想起日日走过荷塔，在这满月的光里，总该另有一番样子吧。月亮渐渐地升高。" maxLength={140} />
             </div>
             <div className="row">
-                <RUI.DatePicker />
+                <RUI.DatePicker range={true} />
             </div>
             <div className="row">
                 <RUI.Select data={[{key:'北京', value:1}, {key:'天津', value:2}, {key:'上海', value:3}]}
@@ -159,7 +159,7 @@ module.exports = React.createClass({
                 <RUI.Switch disable={true} selected={true} />
             </div>
             <div className="row">
-                <RUI.Spinner type="slider" step={10} min={0} max={200} fieldFunction={(str)=>str+"像素"} />
+                <RUI.Spinner type="slider" step={10} min={0} max={200} fieldFunction={(str)=>str+"像素"} onChange={(e)=>console.log('change', e)} />
             </div>
             <div className="row">
                 <RUI.Upload />
