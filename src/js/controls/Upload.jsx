@@ -47,13 +47,20 @@ var UploadButton = React.createClass({
             <input {...props} />
         </form>;
     },
+    reset:function() {
+        if(this.refs.form) {
+            this.refs.form.reset();
+        }
+    },
     fileChangeHandler:function(e) {
         var files = e.target.files;
-        this.setState({
-            progress:0
-        }, ()=>{
-            this.props.onChange(files, this.props.index);
-        });
+        if(files.length) {
+            this.setState({
+                progress: 0
+            }, ()=> {
+                this.props.onChange(files, this.props.index);
+            });
+        }
     },
     componentDidUpdate:function() {
         if(this.props.file && !this.props.file.data && this.props.autoUpload && this.state.progress == 0) {
@@ -117,11 +124,9 @@ var UploadButton = React.createClass({
         });
     },
     removeHandler:function(event) {
-        event.stopPropagation();
+        event && event.stopPropagation();
 
-        if(this.refs.form) {
-            this.refs.form.reset();
-        }
+        this.reset();
 
         this.props.onDelete && this.props.onDelete(null, this.props.index);
         this.props.onChange && this.props.onChange(null, this.props.index);
@@ -319,6 +324,10 @@ module.exports = React.createClass({
                 }, ()=> {
                     this.refs.editorDialog.show();
                 });
+            }else {
+                if(this.refs['button' + index]) {
+                    this.refs['button' + index].reset();
+                }
             }
         }
     },
@@ -335,7 +344,11 @@ module.exports = React.createClass({
         }
     },
     editorCancel:function() {
-        this.__editorCropper && (this.__editorCropper = null);
+        if(this.__editorCropper) {
+            this.fileChangeHandler(null, this.__editorCropper.index);
+
+            this.__editorCropper = null;
+        }
     },
     clearList:function(e) {
         if(this.props.multiple) {
@@ -357,7 +370,7 @@ module.exports = React.createClass({
                 <div className="rui-upload-list">
                     {this.state.list.concat(null).map(function(file, index) {
                         if(index < this.props.max || this.props.max < 0) {
-                            return <UploadButton {...props} onChange={this.fileChangeHandler} file={file} key={index} index={index}/>;
+                            return <UploadButton {...props} onChange={this.fileChangeHandler} file={file} key={index} index={index} ref={"button" + index}/>;
                         }
                         return null;
                     }.bind(this))}

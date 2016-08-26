@@ -229,26 +229,54 @@ module.exports = React.createClass({
         var node = $(ReactDOM.findDOMNode(this.refs.content));
         var outer = $(ReactDOM.findDOMNode(this));
         if (this.props.horizonal) {
+            var result = 0;
             if(this.state.hbarItemWidth) {
-                var result = parseInt(node.css('marginLeft')) + xd * this.props.scrollAmount;
-                node.css({
-                    'marginLeft': result
-                });
-                this.setState({
-                    scrollLeft:result
-                });
+                result = parseInt(node.css('marginLeft')) + xd * this.props.scrollAmount;
             }
+
+            this.scrollLeft(-1 * result);
         }
         if (this.props.vertical) {
+            var result = 0;
             if(this.state.vbarItemHeight) {
-                var result = Math.max(-1 * node.height() + outer.height(), Math.min(0, parseInt(node.css('marginTop')) + yd * this.props.scrollAmount));
-                node.css({
-                    'marginTop': result
-                });
-                this.setState({
-                    scrollTop: result
-                });
+                result = Math.max(-1 * node.height() + outer.height(), Math.min(0, parseInt(node.css('marginTop')) + yd * this.props.scrollAmount));
             }
+
+            this.scrollTop(-1 * result);
+        }
+    },
+    scrollTop:function(result) {
+        result = -1 * (result || 0);
+
+        if(this.props.vertical) {
+            var node = $(ReactDOM.findDOMNode(this.refs.content));
+            var outer = $(ReactDOM.findDOMNode(this));
+
+            result = Math.min(0, Math.max(outer.height() - node.height(), result));
+
+            node.css({
+                'marginTop': result
+            });
+            this.setState({
+                scrollTop: result
+            });
+        }
+    },
+    scrollLeft:function(result) {
+        result = -1 * (result || 0);
+
+        if(this.props.horizonal) {
+            var node = $(ReactDOM.findDOMNode(this.refs.content));
+            var outer = $(ReactDOM.findDOMNode(this));
+
+            result = Math.min(0, Math.max(outer.width() - node.width(), result));
+
+            node.css({
+                'marginLeft': result
+            });
+            this.setState({
+                scrollLeft:result
+            });
         }
     },
     render: function () {
