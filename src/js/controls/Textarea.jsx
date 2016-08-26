@@ -34,7 +34,8 @@ module.exports = React.createClass({
             autoSize:false,
             showMaxLength:true,
             maxLengthHandler:function(value, max) {
-                return max - (value||"").length;
+                // 非常神奇，在Chrome下，一个\r或者\n居然被浏览器算做两个字符
+                return max - (value||"").replace(/[\r\n]/g, '**').length;
             }
         };
     },
