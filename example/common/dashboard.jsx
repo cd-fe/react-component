@@ -175,7 +175,7 @@ module.exports = React.createClass({
             <div className="row">
                 <p>图片编辑（最多可上传四张图片）</p>
                 <RUI.Upload multiple={true} max={4} autoUpload={false} showDelete={true} editable={{
-                    aspectRatio:400/300,
+                    aspectRatio:100/100,
                     crop:function(result) {
                         console.log(result);
                     }
