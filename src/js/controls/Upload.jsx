@@ -335,7 +335,7 @@ module.exports = React.createClass({
         if(this.props.editable) {
             if(typeof this.props.editable.crop == 'function') {
                 try {
-                    this.__editorCropper.base64 = this.refs.editor.getCropper().getCroppedCanvas().toDataURL('image/png');
+                    this.__editorCropper.base64 = this.refs.editor.getCropper().getCroppedCanvas().toDataURL('image/jpeg');
                 }catch(e) {
                     this.__editorCropper.base64 = null;
                 }
