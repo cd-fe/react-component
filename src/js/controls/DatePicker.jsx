@@ -301,6 +301,9 @@ module.exports = React.createClass({
             if (this.state.popup) {
                 return undefined;
             }
+            if (!this.state.value) {
+                return "";
+            }
             return formatter.format(this.state.value);
         } else {
             if (!this.state.value) {
