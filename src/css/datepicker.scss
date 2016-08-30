@@ -176,4 +176,17 @@
       margin-left:10px;
     }
   }
+
+  &.upside {
+    .rui-datepicker-popup {
+      top:auto;
+      bottom:56px;
+
+      &-arrow {
+        transform:rotate(180deg);
+        top:auto;
+        bottom:-8px;
+      }
+    }
+  }
 }

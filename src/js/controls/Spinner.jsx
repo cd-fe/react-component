@@ -140,7 +140,7 @@ module.exports = React.createClass({
         this.setState({
             value: value
         }, function () {
-            this.props.onChange && this.props.onChange.call(null, this.state.value);
+            this.props.onChange && this.props.onChange.call(null, this.state.value, this);
         }.bind(this));
     },
     changeHandler: function (e) {

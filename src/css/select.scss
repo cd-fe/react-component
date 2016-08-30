@@ -155,8 +155,14 @@
         background-color: #fff;
         &.one {
           display: block;
-           -webkit-transform: translateY(0);
-           transform: translateY(0);
+          -webkit-transform: translateY(0);
+          transform: translateY(0);
+          border: 1px solid #eceaea;
+          box-shadow:0 5px 5px rgba(251, 251, 251, 0.67);
+          &:hover {
+            border: 1px solid #74c5ee;
+            box-shadow:0 5px 5px rgba(233, 241, 252, 0.67);
+          }
         }
         ul {
           max-height: 108px;

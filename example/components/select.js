@@ -1,4 +1,21 @@
 var Example = React.createClass({
+    getInitialState: function () {
+        return {
+            data: [{key:'查看',value:'1'}]
+        };
+    },
+    onClickHandler:function(e) {
+        this.setState({
+            data : [
+                {key:'查看1',value:'1'},
+                {key:'查看2',value:'2'},
+                {key:'查看3',value:'3'},
+                {key:'查看4',value:'3'},
+                {key:'查看5',value:'3'},
+                {key:'查看6',value:'3'}
+            ]
+        });
+    },
     render:function() {
         return <div className="example-input">
             <h2 className="title">下拉选框<span>Select</span></h2>
@@ -40,14 +57,16 @@ var Example = React.createClass({
                 <h4 className="final-title">选项只有一个</h4>
                 <div>
                     <RUI.Select
-                        data={[{key:'查看',value:'1'}]}
+                        data={this.state.data}
                         value={{key:'查看',value:'1'}}
                         stuff={true}
                         event={'mouseenter'}
                         offset={'0'}
                         callback={this.selectCallback}
-                        className="rui-theme-2">
+                        className="rui-theme-2 short">
                     </RUI.Select>
+                    &nbsp;&nbsp;
+                    <RUI.Button onClick={this.onClickHandler}>点击</RUI.Button>
                 </div>
             </div>
             <h3 className="sub-title">源码</h3>
