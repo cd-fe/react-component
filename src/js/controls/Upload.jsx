@@ -310,12 +310,17 @@ module.exports = React.createClass({
     edit:function(index) {
         if(this.props.editable) {
             var _this = this;
-            var config = Object.assign({}, this.props.editable);
+            var config = Object.assign({
+                viewMode:1
+            }, this.props.editable);
             config.crop = function(event) {
                 _this.__editorCropper = {
                     index:index,
                     detail:event.detail
                 };
+            };
+            config.ready = function(event) {
+
             };
             config.data = this.state.list[index];
             if(config.data) {
@@ -334,10 +339,20 @@ module.exports = React.createClass({
     editorSubmit:function() {
         if(this.props.editable) {
             if(typeof this.props.editable.crop == 'function') {
+                var cropper = this.refs.editor.getCropper();
                 try {
-                    this.__editorCropper.base64 = this.refs.editor.getCropper().getCroppedCanvas().toDataURL('image/jpeg');
+                    this.__editorCropper.base64 = cropper.getCroppedCanvas().toDataURL('image/jpeg');
                 }catch(e) {
                     this.__editorCropper.base64 = null;
+                }
+
+                if(this.__editorCropper.base64) {
+                    var list = this.state.list;
+                    list[this.__editorCropper.index] = this.__editorCropper.base64;
+
+                    this.setState({
+                        list:list
+                    });
                 }
                 this.props.editable.crop.call(this.refs.editor, this.__editorCropper);
             }
