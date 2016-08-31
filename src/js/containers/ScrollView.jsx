@@ -107,6 +107,7 @@ module.exports = React.createClass({
         this.updateScroller();
 
         var node = $(ReactDOM.findDOMNode(this.refs.content));
+        var vbar,hbar;
         var lastWidth = node.width();
         var lastHeight = node.height();
 
@@ -134,7 +135,7 @@ module.exports = React.createClass({
         }
 
         if(this.props.vertical) {
-            var vbar = $(ReactDOM.findDOMNode(this.refs.vbar));
+            vbar = $(ReactDOM.findDOMNode(this.refs.vbar));
             var vbarItem = $(ReactDOM.findDOMNode(this.refs.vbaritem));
 
             var entryPoint = null;
@@ -183,7 +184,7 @@ module.exports = React.createClass({
             }.bind(this));
         }
 
-        node.on('mouseenter', function(e) {
+        node.add(vbar).add(hbar).on('mouseenter', function(e) {
             this.setState({
                 active:true
             });
