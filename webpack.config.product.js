@@ -36,11 +36,11 @@ module.exports = {
             },
             {
                 test:/\.(scss|sass)?$/,
-                loader:'style!css!sass'
+                loader:'style?singleton!css!sass'
             },
             {
                 test:/\.css?$/,
-                loader:'style!css'
+                loader:'style?singleton!css'
             },
             {
                 test:/\.(jpg|png|gif|jpeg)?$/,
