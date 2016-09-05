@@ -22,7 +22,8 @@ var UploadButton = React.createClass({
             beforeUpload: null,
             file: null,
             showDelete: false,
-            onDelete: null
+            onDelete: null,
+            actionData: null
         };
     },
     getInitialState:function() {
@@ -47,6 +48,9 @@ var UploadButton = React.createClass({
             <input {...props} />
         </form>;
     },
+    setValue:function(file) {
+        this.props.onChange([file], this.props.index);
+    },
     reset:function() {
         if(this.refs.form) {
             this.refs.form.reset();
@@ -56,17 +60,17 @@ var UploadButton = React.createClass({
         var files = e.target.files;
         if(files.length) {
             this.setState({
-                progress: 0
+                progress: 0,
             }, ()=> {
                 this.props.onChange(files, this.props.index);
             });
         }
     },
-    componentDidUpdate:function() {
-        if(this.props.file && !this.props.file.data && this.props.autoUpload && this.state.progress == 0) {
-            this.applyUpload();
-        }
-    },
+    //componentDidUpdate:function() {
+    //    if(this.props.file && !this.props.file.data && this.props.autoUpload && this.state.progress == 0 && !this.state.isError) {
+    //        this.applyUpload();
+    //    }
+    //},
     applyUpload:function() {
         var validUpload = this.props.beforeUpload ? this.props.beforeUpload(this.props.file, this) : true;
 
@@ -74,12 +78,13 @@ var UploadButton = React.createClass({
             if(typeof validUpload != 'function' || typeof validUpload.then != 'function') {
                 validUpload = new Promise(function(resolve, reject) {
                     var formData = new FormData(document.getElementById(this._reactInternalInstance._rootNodeID));
+                    if(this.props.actionData) {
+                        formData = this.props.actionData(this.props.file, formData);
+                    }
                     $.ajax({
                         url:this.props.action,
                         type:'post',
                         data:formData,
-                        processData: false,
-                        contentType: false,
                         cache: false,
                         success:function(response) {
                             resolve(response);
@@ -92,7 +97,7 @@ var UploadButton = React.createClass({
             }
 
             validUpload.then(function(result) {
-                var validResult = this.props.onUploadComplete ? this.props.onUploadComplete : result;
+                var validResult = this.props.onUploadComplete ? this.props.onUploadComplete(result) : result;
                 var file = this.props.file;
                 file.data = validResult;
                 this.props.onChange([file], this.props.index);
@@ -120,7 +125,9 @@ var UploadButton = React.createClass({
         this.setState({
             progress:isError ? 0 : 100
         }, ()=>{
-
+            if(isError) {
+                this.reset();
+            }
         });
     },
     removeHandler:function(event) {
@@ -319,9 +326,6 @@ module.exports = React.createClass({
                     detail:event.detail
                 };
             };
-            config.ready = function(event) {
-
-            };
             config.data = this.state.list[index];
             if(config.data) {
                 this.setState({
@@ -338,22 +342,32 @@ module.exports = React.createClass({
     },
     editorSubmit:function() {
         if(this.props.editable) {
-            if(typeof this.props.editable.crop == 'function') {
-                var cropper = this.refs.editor.getCropper();
-                try {
-                    this.__editorCropper.base64 = cropper.getCroppedCanvas().toDataURL('image/jpeg');
-                }catch(e) {
-                    this.__editorCropper.base64 = null;
+            var cropper = this.refs.editor.getCropper();
+            try {
+                var imageType = "image/jpeg";
+                if(this.state.imageEditorConfig.data) {
+                    if(this.state.imageEditorConfig.data.type) {
+                        imageType = this.state.imageEditorConfig.data.type;
+                    }
                 }
+                this.__editorCropper.base64 = cropper.getCroppedCanvas().toDataURL('image/png');
+            }catch(e) {
+                this.__editorCropper.base64 = null;
+            }
 
-                if(this.__editorCropper.base64) {
-                    var list = this.state.list;
-                    list[this.__editorCropper.index] = this.__editorCropper.base64;
+            if(this.__editorCropper.base64) {
+                var list = this.state.list;
+                list[this.__editorCropper.index] = this.__editorCropper.base64;
 
-                    this.setState({
-                        list:list
-                    });
-                }
+                this.setState({
+                    list:list
+                }, ()=>{
+                    if(this.props.autoUpload) {
+                        this.refs['button' + this.__editorCropper.index].applyUpload(this.__editorCropper);
+                    }
+                });
+            }
+            if(this.props.editable && this.props.editable.crop) {
                 this.props.editable.crop.call(this.refs.editor, this.__editorCropper);
             }
         }

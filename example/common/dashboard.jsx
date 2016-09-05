@@ -74,6 +74,17 @@ module.exports = React.createClass({
             })
         });
     },
+    formatActionData:function(file) {
+        var data = (file || "").split(',');
+        var suffix = data[0].match(/data:image\/(.+);base64/);
+        return {
+            suffix:suffix[1],
+            data:data[1]
+        };
+    },
+    uploadComplete:function(result) {
+        return result.imageUrl;
+    },
     render:function() {
         return <div className="container">
             <div className="row">
@@ -170,7 +181,14 @@ module.exports = React.createClass({
             </div>
             <div className="row">
                 <p>自动上传</p>
-                <RUI.Upload multiple={true} autoUpload={true} />
+                <RUI.Upload multiple={true} autoUpload={true}
+                            action="http://image.berbon.com/image/upload/base64zoom"
+                            actionData={this.formatActionData}
+                            onUploadComplete={this.uploadComplete}
+                            editable={{
+                                aspectRatio:1
+                            }}
+                />
             </div>
             <div className="row">
                 <p>图片编辑（最多可上传四张图片）</p>
