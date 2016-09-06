@@ -86,6 +86,9 @@ var UploadButton = React.createClass({
                         type:'post',
                         data:formData,
                         cache: false,
+                        xhrFields: {
+                            withCredentials: true
+                        },
                         success:function(response) {
                             resolve(response);
                         },
