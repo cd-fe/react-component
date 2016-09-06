@@ -297,27 +297,20 @@ module.exports = React.createClass({
     },
     fileChangeHandler:function(files, index) {
         if(this.props.multiple) {
-            var list = this.state.list;
+            var list = Array.apply(null, this.state.list);
             files = Array.apply(null, files);
             if(files.length) {
                 list.splice.apply(list, Array.prototype.concat.apply([index, files.length], files));
             }else {
                 list.splice(index, 1);
             }
-            this.setState({
-                list:list
-            }, ()=>{
-                this.edit(index);
-            });
+
+            this.edit(index, list);
         }else {
-            this.setState({
-                list:files
-            }, ()=>{
-                this.edit(index);
-            });
+            this.edit(index, files);
         }
     },
-    edit:function(index) {
+    edit:function(index, list) {
         if(this.props.editable) {
             var _this = this;
             var config = Object.assign({
@@ -329,7 +322,7 @@ module.exports = React.createClass({
                     detail:event.detail
                 };
             };
-            config.data = this.state.list[index];
+            config.data = list[index];
             if(config.data) {
                 this.setState({
                     imageEditorConfig: config
@@ -341,6 +334,10 @@ module.exports = React.createClass({
                     this.refs['button' + index].reset();
                 }
             }
+        }else {
+            this.setState({
+                list:list
+            });
         }
     },
     editorSubmit:function() {
