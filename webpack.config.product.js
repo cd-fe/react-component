@@ -33,11 +33,11 @@ module.exports = {
             },
             {
                 test:/\.(scss|sass)?$/,
-                loader:'style!css!sass'
+                loader:'style/url!css!sass'
             },
             {
                 test:/\.css?$/,
-                loader:'style!css'
+                loader:'style/url!css'
             },
             {
                 test:/\.(jpg|png|gif|jpeg)?$/,
