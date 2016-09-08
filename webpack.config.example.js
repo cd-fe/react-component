@@ -38,11 +38,11 @@ var config = {
             },
             {
                 test:/\.(scss|sass)?$/,
-                loader:'style/url!css!sass'
+                loader:'style!css!sass'
             },
             {
                 test:/\.css?$/,
-                loader:'style/url!css'
+                loader:'style!css'
             },
             {
                 test: /\.md$/,
