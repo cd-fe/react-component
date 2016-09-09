@@ -275,6 +275,7 @@ module.exports = React.createClass({
             onError: null,
             onDelete: null,
             onProgress: null,
+            beforeEdit: null,
             beforeUpload: null,
             autoUpload:false,
             editable:null,
@@ -324,6 +325,11 @@ module.exports = React.createClass({
             };
             config.data = list[index];
             if(config.data) {
+                var beforeEditResult = this.props.beforeEdit ? this.props.beforeEdit(config, _this) : null;
+                if(beforeEditResult === false) {
+                    return;
+                }
+
                 this.setState({
                     imageEditorConfig: config
                 }, ()=> {
@@ -350,7 +356,7 @@ module.exports = React.createClass({
                         imageType = this.state.imageEditorConfig.data.type;
                     }
                 }
-                this.__editorCropper.base64 = cropper.getCroppedCanvas().toDataURL('image/png');
+                this.__editorCropper.base64 = cropper.getCroppedCanvas().toDataURL(imageType);
             }catch(e) {
                 this.__editorCropper.base64 = null;
             }
