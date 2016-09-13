@@ -124,9 +124,10 @@ module.exports = React.createClass({
                 <RUI.Select data={[{key:'北京', value:1}, {key:'天津', value:2}, {key:'上海', value:3}]}
                             stuff={true}
                 />
+                <RUI.Select data={[{key:'北京', value:1}]} stuff={true} className="rui-theme-2" offset={'0'} />
                 <RUI.Select data={[{key:'北京', value:1}, {key:'天津', value:2}, {key:'上海', value:3}]}
                             stuff={true} className="rui-theme-3"
-                />
+                    />
             </div>
             <div className="row">
                 <div className="form">

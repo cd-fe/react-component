@@ -219,6 +219,9 @@ module.exports = React.createClass({
                 </div>
             );
         }
+
+        var isSpecial = _this.state.data.length == 1 && _this.props.offset == '0';
+
         return (
 
             <div ref="container" className={final}>
@@ -232,7 +235,7 @@ module.exports = React.createClass({
                             {
                                 data.map(function (item, index) {
                                     return <li
-                                        className={item.key == _this.state.value.key && "choosed"}
+                                        className={(item.key == _this.state.value.key && !isSpecial) && "choosed"}
                                         onClick={item.value == 'error' ? null : _this.handleClick.bind(_this,item)}
                                         key={index}><a href="javascript:;">{item.key}</a></li>
                                 })
