@@ -1,10 +1,14 @@
 @import './function';
 
 .rui-spinner {
+  position:relative;
+
   &-input {
+    position:relative;
     width: 52px;
-    border: none;
+    text-align:center;
     outline: none;
+    z-index:1;
   }
 
   &-button {
