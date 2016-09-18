@@ -47,14 +47,14 @@ var Dialog = React.createClass({
              * @type string
              * @desc 弹出层取消按钮文本
              */
-            cancelText: '取消',
+            cancelText: '取　消',
             /**
              * @instance
              * @default 确认
              * @type string
              * @desc 弹出层确认按钮文本
              */
-            submitText: '确认',
+            submitText: '确　认',
             /**
              * @instance
              * @default null
