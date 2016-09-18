@@ -27,6 +27,11 @@
         background:url(../img/icon/arrow_primary.png) no-repeat;
       }
     }
+
+    &.noactive {
+      border:1px solid $border;
+      box-shadow:0 0 0 0;
+    }
   }
 
 }
@@ -135,7 +140,7 @@
           border:1px solid $border;
         }
         ul {
-          max-height: 108px;
+          max-height: 120px;
           li {
             display:block;
             a {

@@ -211,7 +211,7 @@ module.exports = React.createClass({
             final = active ? deClass + ' active' : deClass,
             filter,
             filterAble = this.props.filter,
-            offset = this.props.offset ? this.props.offset : '100%';
+            offset = this.props.offset ? Number(this.props.offset) : '100%';
         if (filterAble) {
             filter = (
                 <div className="filter">
@@ -221,6 +221,13 @@ module.exports = React.createClass({
         }
 
         var isSpecial = _this.state.data.length == 1 && _this.props.offset == '0';
+        if(!isSpecial && this.props.className.indexOf('rui-theme-1') > -1 && typeof offset == 'number') {
+            offset = offset - 5;
+        }
+
+        if(offset != '100%') {
+            final += ' noactive';
+        }
 
         return (
 
@@ -228,8 +235,8 @@ module.exports = React.createClass({
                 <i className="arrow"></i>
                 <span ref="choose" className="placeholder">{this.state.value.key}</span>
 
-                <div className="rui-select-options-wrap" style={(this.state.data.length == 1 && !_this.state.filter )? {top:offset, zIndex:'1049'} : {top:offset}}>
-                    <div ref="options" className={(_this.state.data.length == 1 && !_this.state.filter && _this.props.className.indexOf('rui-theme-2') > -1)? 'rui-select-options one' : 'rui-select-options'}>
+                <div className="rui-select-options-wrap" style={isSpecial ? {top:offset, zIndex:'1049'} : {top:offset}}>
+                    <div ref="options" className={isSpecial? 'rui-select-options one' : 'rui-select-options'}>
                         {filter}
                         <ul>
                             {
