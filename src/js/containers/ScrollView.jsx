@@ -106,7 +106,8 @@ module.exports = React.createClass({
     componentDidMount: function () {
         this.updateScroller();
 
-        var node = $(ReactDOM.findDOMNode(this));
+        var node = $(ReactDOM.findDOMNode(this.refs.content));
+        var vbar,hbar;
         var lastWidth = node.width();
         var lastHeight = node.height();
 
@@ -115,9 +116,10 @@ module.exports = React.createClass({
             this.autoUpdater = setInterval(function () {
                 var width = node.width();
                 var height = node.height();
-
                 if (width != lastWidth || height != lastHeight) {
-                    updateScroller();
+                    lastWidth = width;
+                    lastHeight = height;
+                    updateScroller(this.move);
                 }
             }.bind(this), 50);
         }
@@ -133,7 +135,7 @@ module.exports = React.createClass({
         }
 
         if(this.props.vertical) {
-            var vbar = $(ReactDOM.findDOMNode(this.refs.vbar));
+            vbar = $(ReactDOM.findDOMNode(this.refs.vbar));
             var vbarItem = $(ReactDOM.findDOMNode(this.refs.vbaritem));
 
             var entryPoint = null;
@@ -182,7 +184,7 @@ module.exports = React.createClass({
             }.bind(this));
         }
 
-        node.on('mouseenter', function(e) {
+        node.add(vbar).add(hbar).on('mouseenter', function(e) {
             this.setState({
                 active:true
             });
@@ -195,7 +197,7 @@ module.exports = React.createClass({
     componentWillUnmount:function() {
         clearInterval(this.autoUpdater);
     },
-    updateScroller: function () {
+    updateScroller: function (complete) {
         var node = $(ReactDOM.findDOMNode(this.refs.content));
         var outer = $(ReactDOM.findDOMNode(this));
 
@@ -219,27 +221,62 @@ module.exports = React.createClass({
             update.hbarItemWidth = hscreens < 1 ? 0 : outerWidth / hscreens;
         }
 
-        this.setState(update);
+        this.setState(update, complete);
     },
     move: function (xd, yd) {
+        xd = xd || 0;
+        yd = yd || 0;
+
         var node = $(ReactDOM.findDOMNode(this.refs.content));
         var outer = $(ReactDOM.findDOMNode(this));
         if (this.props.horizonal) {
-            var result = parseInt(node.css('marginLeft')) + xd * this.props.scrollAmount;
+            var result = 0;
+            if(this.state.hbarItemWidth) {
+                result = parseInt(node.css('marginLeft')) + xd * this.props.scrollAmount;
+            }
+
+            this.scrollLeft(-1 * result);
+        }
+        if (this.props.vertical) {
+            var result = 0;
+            if(this.state.vbarItemHeight) {
+                result = Math.max(-1 * node.height() + outer.height(), Math.min(0, parseInt(node.css('marginTop')) + yd * this.props.scrollAmount));
+            }
+
+            this.scrollTop(-1 * result);
+        }
+    },
+    scrollTop:function(result) {
+        result = -1 * (result || 0);
+
+        if(this.props.vertical) {
+            var node = $(ReactDOM.findDOMNode(this.refs.content));
+            var outer = $(ReactDOM.findDOMNode(this));
+
+            result = Math.min(0, Math.max(outer.height() - node.height(), result));
+
+            node.css({
+                'marginTop': result
+            });
+            this.setState({
+                scrollTop: result
+            });
+        }
+    },
+    scrollLeft:function(result) {
+        result = -1 * (result || 0);
+
+        if(this.props.horizonal) {
+            var node = $(ReactDOM.findDOMNode(this.refs.content));
+            var outer = $(ReactDOM.findDOMNode(this));
+
+            result = Math.min(0, Math.max(outer.width() - node.width(), result));
+
             node.css({
                 'marginLeft': result
             });
             this.setState({
                 scrollLeft:result
-            });
-        }
-        if (this.props.vertical) {
-            var result = Math.max(-1 * node.height() + outer.height(), Math.min(0, parseInt(node.css('marginTop')) + yd * this.props.scrollAmount));
-            node.css({
-                'marginTop': result
-            });
-            this.setState({
-                scrollTop:result
             });
         }
     },

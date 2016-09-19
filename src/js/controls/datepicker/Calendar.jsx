@@ -74,6 +74,17 @@ module.exports = React.createClass({
         event.data = value;
         this.dispatchEvent(event);
     },
+    timeChange: function(event) {
+        var times = event.data;
+        var date = new Date(this.state.value);
+        date.setHours(times.hour);
+        date.setMinutes(times.minute);
+        date.setSeconds(times.second);
+
+        event.data = date.getTime();
+
+        this.dispatchEvent(event);
+    },
     onSubmitClick:function() {
         var times = this.refs.time.getValue();
         var date = new Date(this.state.value);
@@ -156,9 +167,7 @@ module.exports = React.createClass({
             </table>
             {this.props.showTime && (
                 <div className="rui-datepicker-time clearfix">
-                    <RUI.TimePicker ref="time" value={this.state.value} />
-                    <RUI.Button className="rui-datepicker-time-cancel" onClick={this.props.onCancel}>取消</RUI.Button>
-                    <RUI.Button className="rui-datepicker-time-submit primary" onClick={this.onSubmitClick}>保存</RUI.Button>
+                    <RUI.TimePicker ref="time" value={this.state.value} onChange={this.timeChange} />
                 </div>
             )}
         </div>;

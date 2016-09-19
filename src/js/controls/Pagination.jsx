@@ -5,6 +5,7 @@
 
 import className from '../util/className.jsx';
 import ComponentBase from '../mixins/ComponentBase.jsx';
+import Icon from '../controls/Icon.jsx';
 
 import '../../css/pagination.scss';
 
@@ -97,16 +98,16 @@ module.exports = React.createClass({
         var list = [];
         var pageNumber = this.props.totalNum < this.props.pageSize ? 1 : Math.ceil(this.props.totalNum / this.props.pageSize);
         for (var i = start; (i > 0) && (i <= pageNumber) && (i <= end); i++) {
-            list.push(<a key={start+'-'+end+'-'+i}
+            list.push(<RUI.Button key={start+'-'+end+'-'+i}
                          href="javascript:;"
                          onClick={this.click.bind(this, i)}
-                         className={"pagination-num "+(i == this.state.currentPage ? 'select' : '')}>{i}</a>);
+                         className={"pagination-num "+(i == this.state.currentPage ? 'select' : '')}>{i}</RUI.Button>);
         }
 
         return list;
     },
     renderBreak: function (index) {
-        return <span key={index} className="break">...</span>;
+        return <Icon className="break" name="more" key={index} />;
     },
     renderPage: function () {
         var preview = 5;
@@ -153,18 +154,19 @@ module.exports = React.createClass({
     render: function () {
         var allname = className(this.props.className, this.getPropClass());
         var prefix = this.getDefaultClass();
+        var pageNumber = this.props.totalNum <= this.props.pageSize ? 1 : Math.ceil(this.props.totalNum / this.props.pageSize);
         return <div className={allname}>
             <div className={prefix+"-detail"}>
-                <p>共 <span>{this.props.totalNum}</span> 条，当前第 <span>{this.state.currentPage}</span> 页 </p>
+                <p>共 <span>{this.props.totalNum}</span> 条 共<span>{pageNumber}</span> 页 </p>
             </div>
             <div className={prefix+"-list"}>
-                <a href="javascript:;" className={prefix+"-home"} onClick={this.changePageToFirst}>&lt;&lt;</a>
-                <a href="javascript:;" className={prefix+"-prev " + (this.getOffsetStatus(-1) ? '' : 'disable')}
-                   onClick={this.changePage.bind(this, -1)}>&lt;</a>
+                {/*<RUI.Button href="javascript:;" className={prefix+"-home"} onClick={this.changePageToFirst}>&lt;&lt;</RUI.Button>*/}
+                <RUI.Button href="javascript:;" className={prefix+"-prev " + (this.getOffsetStatus(-1) ? '' : 'disable')}
+                   onClick={this.changePage.bind(this, -1)}><Icon name="arrow-left" /></RUI.Button>
                 {this.renderPage()}
-                <a href="javascript:;" className={prefix+"-next " + (this.getOffsetStatus(1) ? '' : 'disable')}
-                   onClick={this.changePage.bind(this, 1)}>&gt;</a>
-                <a href="javascript:;" className={prefix+"-end"} onClick={this.changePageToLast}>&gt;&gt;</a>
+                <RUI.Button href="javascript:;" className={prefix+"-next " + (this.getOffsetStatus(1) ? '' : 'disable')}
+                   onClick={this.changePage.bind(this, 1)}><Icon name="arrow-right" /></RUI.Button>
+                {/*<RUI.Button href="javascript:;" className={prefix+"-end"} onClick={this.changePageToLast}>&gt;&gt;</RUI.Button>*/}
             </div>
         </div>
     }

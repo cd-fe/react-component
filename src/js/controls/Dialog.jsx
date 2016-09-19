@@ -7,6 +7,7 @@ import OverlayMixin from '../mixins/OverlayMixin.jsx';
 import ComponentBase from '../mixins/ComponentBase.jsx';
 import Button from './Button.jsx';
 import Draggable from 'react-draggable-browser';
+import Icon from './Icon.jsx';
 
 import '../../css/dialog.scss';
 
@@ -46,14 +47,14 @@ var Dialog = React.createClass({
              * @type string
              * @desc 弹出层取消按钮文本
              */
-            cancelText: '取消',
+            cancelText: '取 消',
             /**
              * @instance
              * @default 确认
              * @type string
              * @desc 弹出层确认按钮文本
              */
-            submitText: '确认',
+            submitText: '确 认',
             /**
              * @instance
              * @default null
@@ -147,29 +148,34 @@ var Dialog = React.createClass({
      */
     resize: function () {
         var node = ReactDOM.findDOMNode(this);
-
-        if (node.style.display == 'block') {
+        if (this.state.show) {
             var width = node.clientWidth;
             var height = node.clientHeight;
-            node.style.width = width + 'px';
+            //node.style.width = width + 'px';
             node.style.marginTop = -1 * (height / 2) + 'px';
             node.style.marginLeft = -1 * (width / 2) + 'px';
             node.style.top = "50%";
             node.style.left = "50%";
+
+            clearTimeout(this._activeTimer);
+            this._activeTimer = setTimeout(()=>className.addClass(node, 'rui-dialog-active'), 0);
         } else {
             node.style.width = 'auto';
+            clearTimeout(this._activeTimer);
+            className.removeClass(node, 'rui-dialog-active');
+            this._activeTimer = setTimeout(()=>{node.style.top = "-200%"}, 300);
         }
     },
     _render:function() {
         var allname = className(this.props.className, this.getPropClass());
         var prefix = this.getDefaultClass();
 
-        return <div className={allname} style={{display:this.state.show ? 'block' : 'none'}}>
+        return <div className={allname}>
             <div className={prefix+"-content"}>
                 {!this.props.hideTitle && (
                     <div className={prefix+"-header"}>
                         <h4 className={prefix+"-title"}>{this.props.title}</h4>
-                        <Button className={prefix+"-close"} onClick={this.closeHandler}>×</Button>
+                        <Button className={prefix+"-close"} onClick={this.closeHandler}><Icon name="close" /></Button>
                     </div>
                 )}
                 <div className={prefix+"-body"}>

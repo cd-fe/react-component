@@ -1,0 +1,10 @@
+@import './function';
+
+.rui-imageeditor {
+  width:480px;
+  height:320px;
+
+  &-content {
+    width:100%;
+  }
+}

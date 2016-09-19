@@ -1,0 +1,78 @@
+@import './function';
+
+$width: 60px;
+$height: 28px;
+$distance: 67px;
+
+.rui-switch {
+  display:inline-block;
+  width:$width;
+  height:$height;
+  position:relative;
+  margin-right:10px;
+  border-radius:6px 6px;
+  z-index:4;
+  overflow:hidden;
+
+  &-normalbg {
+    width:60px;
+    height:28px;
+    background:$border;
+    position:absolute;
+    top:0;
+    left:0;
+    display:block;
+    z-index:1;
+  }
+
+  &-activebg {
+    background: $border;
+    width: 67px;
+    height: 67px;
+    z-index: 2;
+    position: absolute;
+    border-radius: 33.5px;
+    transition:all .3s ease-out;
+    top:-19px;
+    left:-3px;
+  }
+
+  &-square {
+    background:$white;
+    display:inline-block;
+    position:absolute;
+    width:24px;
+    height:24px;
+    left:2px;
+    top:2px;
+    border-radius:6px 6px;
+    z-index:3;
+  }
+
+  &.selected {
+    .rui-switch-normalbg {
+      background:$primary;
+    }
+    .rui-switch-activebg {
+      height:0;
+      width:5px;
+      top:14.5px;
+      left:25.5px;
+    }
+    .rui-switch-square {
+      left:34px;
+    }
+  }
+
+  &.disable {
+    .rui-switch-normalbg {
+      background:#efefef;
+    }
+    .rui-switch-square {
+      background:#ccc;
+    }
+    .rui-switch-activebg {
+      background:transparent;
+    }
+  }
+}

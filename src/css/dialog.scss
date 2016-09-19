@@ -2,33 +2,44 @@
 
 .rui-dialog {
   position:fixed;
-  top:0;
-  left:0;
+  top:-400%;
+  left:400%;
   background:$white;
   box-sizing: border-box;
-  padding:0 14px;
   z-index:$zindexModal+1;
+  border:1px solid $border;
+  opacity:0;
+  -webkit-transform: translate(0, -40px);
+  transform: translate(0, -40px);
+  transition : transform .3s ease-out,opacity .3s ease-out;
+
+  &-active {
+    -webkit-transform: translate(0, 0);
+    transform: translate(0, 0);
+    opacity:1;
+  }
+
+  &-inactive {
+    opacity:0;
+    -webkit-transform: translate(0, -40px);
+    transform: translate(0, -40px);
+  }
 
   &-header {
     clear:both;
-    height:50px;
-    border-bottom:1px solid #e2e2e2;
+    height:52px;
+    border-bottom:1px solid $border;
+    padding:0 20px;
   }
 
   &-close {
     position:absolute;
-    right:8px;
+    right:14px;
     top:14px;
-    background:url(../img/close.png) no-repeat;
-    width:24px;
-    height:24px;
+    width:18px;
+    height:18px;
     padding:0;
-    line-height:9999px;
-    overflow:hidden;
-
-    &:hover {
-      background:url(../img/close.png) no-repeat;
-    }
+    border:0;
   }
 
   &-title {
@@ -38,13 +49,14 @@
   }
 
   &-body {
-    min-width:120px;
-    margin-top:10px;
+    min-width:340px;
+    padding:20px 20px 40px;
+    line-height:24px;
   }
 
   &-footer {
-    margin:10px 0;
-    text-align:center;
+    text-align:right;
+    padding:0 20px 20px;
 
     .rui-button:first-child {
       margin-right:10px;

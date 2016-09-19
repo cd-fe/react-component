@@ -21,8 +21,7 @@ var config = {
             "jquery": "jQuery",
             "react": "React",
             "react-dom": "ReactDOM",
-            "zepto": "Zepto",
-
+            "zepto": "Zepto"
         },
         require('webpack-require-http')
     ],
@@ -47,9 +46,18 @@ var config = {
             {
                 test: /\.md$/,
                 loader: "html!markdown"
+            },
+            {
+                test:/\.(jpg|png|gif|jpeg)?$/,
+                loader:'url'
             }
         ],
         noParse:[react]
+    },
+    resolve:{
+        alias:{
+            "react-component-lib":"../src/js/rui.jsx"
+        }
     }
 };
 

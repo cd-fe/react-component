@@ -25,6 +25,9 @@ module.exports = {
         if(this.props.disable) {
             classes.push('disable');
         }
+        if(this.props.grid) {
+            classes.push('grid' + this.props.grid);
+        }
 
         return classes.join(' ');
     },

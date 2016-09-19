@@ -80,6 +80,9 @@ module.exports = React.createClass({
         var classes = className(this.props.className, this.getPropClass());
         classes += ' ' + this.getToggleResult();
 
-        return <label {...this.props} className={classes}>{this.props.children}</label>
+        return <label {...this.props} className={classes}>
+            <span className="rui-checkbox-selected"><span className="rui-checkbox-circle"></span></span>
+            {this.props.children}
+        </label>;
     }
 });

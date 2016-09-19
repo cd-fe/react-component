@@ -47,13 +47,14 @@
     "bundle-loader": "^0.5.4",
     "markdown-loader": "^0.1.7",
     "webpack-require-http": "latest",
-    "swiper": "^3.3.1",
-    "jquery-mousewheel": "^3.1.13",
     "history": "^2.0.1"
   },
   "dependencies": {
+    "swiper": "^3.3.1",
     "node-sass": "^3.8.0",
-    "react-draggable-browser": "^2.1.3"
+    "react-draggable-browser": "^2.1.3",
+    "cropperjs":"^0.8.0",
+    "jquery-mousewheel": "^3.1.13"
   },
   "homepage": "https://github.com/cd-fe/react-component#readme",
   "directories": {

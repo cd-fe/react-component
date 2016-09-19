@@ -9,6 +9,7 @@ import ComponentBase from '../mixins/ComponentBase.jsx';
 import Input from './Input.jsx';
 import Calendar from './datepicker/Calendar.jsx';
 import Button from './Button.jsx';
+import Icon from './Icon.jsx';
 
 import DateFormatter from '../formatters/DateFormatter.jsx';
 
@@ -211,9 +212,10 @@ module.exports = React.createClass({
     onCalendarChange: function (event) {
         if (this.props.range || this.props.showTime) {
             this.setState({
+                value: event.data,
                 valuePreview: event.data
             }, function () {
-                //this.dispatchEvent('change', this.getValue());
+                this.dispatchEvent('change', this.getValue());
             }.bind(this));
         } else {
             this.setState({
@@ -226,13 +228,15 @@ module.exports = React.createClass({
     },
     startCalendarChange: function (event) {
         this.setState({
+            startValue: event.data,
             startValuePreview: event.data
-        });
+        }, ()=>this.dispatchEvent('change', this.getValue()));
     },
     endCalendarChange: function (event) {
         this.setState({
+            endValue: event.data,
             endValuePreview: event.data
-        });
+        }, ()=>this.dispatchEvent('change', this.getValue()));
     },
     rangeCalendarCancel: function () {
         this.setState({
@@ -298,7 +302,7 @@ module.exports = React.createClass({
             return formatter.format(this.state.startValue) + '  -  ' + formatter.format(this.state.endValue);
         }
         else if (this.props.showTime) {
-            if (this.state.popup) {
+            if (!this.state.value /*this.state.popup*/) {
                 return undefined;
             }
             if (!this.state.value) {
@@ -326,12 +330,11 @@ module.exports = React.createClass({
         }
 
         return <div className={classes}>
-            <Input mode="static" value={this.display()} className={defaultClass+"-input-icon"}
-                   onClick={this.togglePopup}/>
+            <Input mode="static" value={this.display()} onClick={this.togglePopup} placeholder="请选择日期"/>
+            <Icon name="calendar" style={{position:'absolute',right:'10px',top:'6px'}} />
 
             <div className={defaultClass+'-popup'}>
-                <div className={defaultClass+'-popup-arrow'}/>
-                {this.props.range && (<div className={defaultClass+'-row'}>
+                {/*this.props.range && (<div className={defaultClass+'-row'}>
                     <div className={"range-container"}>
                         <div className={"left"}>
                             <span>开始时间： </span><Input value={this.display('start')} onBlur={this.onStartTimeBlur}/>
@@ -342,8 +345,8 @@ module.exports = React.createClass({
                             <Button onClick={this.rangeCalendarSave} className="primary">保存</Button>
                         </div>
                     </div>
-                </div>)}
-                <div className={defaultClass+'-row'} style={{height:this.props.showTime ? 280 : 'auto'}}>
+                </div>)*/}
+                <div className={defaultClass+'-row'} style={{height:this.props.showTime ? 275 : 'auto'}}>
                     {this.props.range ? (
                         <div className={defaultClass+'-row-range'}>
                             <Calendar source={{start:this.state.startValuePreview, end:this.state.endValuePreview}}

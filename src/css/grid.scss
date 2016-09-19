@@ -1,0 +1,26 @@
+@import './setting';
+
+.wrapper {
+  margin: 0 auto;
+}
+
+.row {
+  width: 100%;
+  max-width: $max-width;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+@for $i from 1 through 23 {
+  .grid#{$i} {
+    float: left;
+    margin-left: $gutter / 2;
+    margin-right: $gutter / 2;
+    width: $colWidth * $i + $gutter * ($i - 1);
+  }
+}
+
+.grid24 {
+  float:left;
+  width: 100%;
+}
