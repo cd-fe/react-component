@@ -54,7 +54,7 @@ module.exports = React.createClass({
     },
     getInitialState: function () {
         return {
-            value: this.props.value || "",
+            value: typeof this.props.value == 'number' ? (this.props.value+"") : (this.props.value || ""),
             change: this.props.onChange
         }
     },
