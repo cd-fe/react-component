@@ -9,8 +9,13 @@ var Example = React.createClass({
         RUI.DialogManager.alert("自定义弹出层的确认按钮点击了");
     },
     showAlert:function() {
-        RUI.DialogManager.alert('弹出提示', '自定义标题', function() {
-            RUI.DialogManager.alert('alert的确定按钮点击了');
+        RUI.DialogManager.alert({
+            title:'弹出提示',
+            message:'自定义标题',
+            submit:function() {
+                RUI.DialogManager.alert('alert的确定按钮点击了');
+            },
+            submitText:'知道了'
         });
     },
     showConfirm:function() {
@@ -22,7 +27,8 @@ var Example = React.createClass({
             title:'自定义标题',
             submit:function() {
                 RUI.DialogManager.alert('确定按钮被点击了');
-            }
+            },
+            submitText:'删除吧'
         });
     },
     componentDidMount:function() {
