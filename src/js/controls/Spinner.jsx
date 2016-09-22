@@ -201,13 +201,13 @@ module.exports = React.createClass({
         }
         var value = originalNumber + direction * this.props.step;
         value = Math.max(Math.min(value, this.props.max), this.props.min * 1);
-        if(value != this.state.value) {
-            this.setState({
-                value: value
-            }, function () {
-                this.props.onChange && this.props.onChange.call(null, this.state.value, this);
-            }.bind(this));
-        }
+
+        var isSame = value == this.state.value;
+        this.setState({
+            value: value
+        }, function () {
+            (!isSame && this.props.onChange) && this.props.onChange.call(null, this.state.value, this);
+        }.bind(this));
     },
     changeHandler: function (e) {
         var value = e.target ? e.target.value : e.data;

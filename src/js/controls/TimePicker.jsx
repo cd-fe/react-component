@@ -61,7 +61,8 @@ module.exports = React.createClass({
             fieldFunction: function (str) {
                 return str.toString().length < 2 ? '0' + str : str;
             },
-            onChange:this.changeHandler
+            onChange:this.changeHandler,
+            eventType:'change'
         };
 
         return {
