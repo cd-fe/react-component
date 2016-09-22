@@ -60,6 +60,10 @@
   &-error {
     background:url('../img/icon/error_small.png') no-repeat;
   }
+
+  &-resize {
+    background:url('../img/icon/resize.png') no-repeat;
+  }
 }
 
 @keyframes loadingCircle {

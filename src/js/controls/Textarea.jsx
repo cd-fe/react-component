@@ -31,6 +31,7 @@ module.exports = React.createClass({
              * @desc 当前模式，分为静态(static)和动态(dynamic)
              */
             mode: 'dynamic',
+            resize:false,
             autoSize:false,
             showMaxLength:true,
             maxLengthHandler:function(value, max) {
@@ -53,8 +54,15 @@ module.exports = React.createClass({
     getValue: function () {
         return this.state.value;
     },
+    autoSizeHandler:function(value) {
+        // TODO
+    },
     changeHandler: function (e) {
         if (this.props.mode == 'dynamic') {
+            if(this.props.autoSize) {
+                this.autoSizeHandler(e.target.value);
+            }
+
             this.setState({
                 value: e.target.value
             });
@@ -73,8 +81,13 @@ module.exports = React.createClass({
     render: function () {
         var props = omit(this.props, 'type', 'onChange', 'value', 'readonly');
         var showNumber = this.props.maxLengthHandler(this.state.value, this.props.maxLength);
+
         return <div className="rui-textarea-container">
+            {props.resize && (
+                <RUI.Icon name="resize" />
+            )}
             <textarea ref="textarea" {...props}
+                style={props.resize ? {resize:'vertical'} : {}}
                 value={this.state.value}
                 onChange={this.changeHandler}
                 className={className(this.props.className, this.getPropClass())}

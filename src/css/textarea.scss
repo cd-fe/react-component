@@ -14,10 +14,19 @@
   width:100%;
   height:100%;
   line-height:22px;
+  transition : box-shadow .3s ease-out,left .3s ease-out,top .3s ease-out,opacity .3s ease-out,transform .3s ease-out,border-color .3s ease-out,border-width .3s ease-out,color .3s ease-out,width .3s ease-out,background-color .3s ease-out;
 
   &-container {
+    position:relative;
     width:100%;
     height:100%;
+
+    .rui-icon-resize {
+      position: absolute;
+      right: 0;
+      bottom: 5px;
+      cursor: nesw-resize;
+    }
   }
 
   .right {

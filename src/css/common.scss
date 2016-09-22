@@ -52,3 +52,7 @@
     box-sizing:border-box;
   }
 }
+
+input::-webkit-input-placeholder {
+  color:#ccc;
+}

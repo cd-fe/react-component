@@ -10,8 +10,23 @@ var Example = React.createClass({
     onEnterHandler:function(e) {
         RUI.DialogManager.alert('enter') ;
     },
-    customMaxLength:function(value) {
-
+    customMaxLength:function(val) {
+        if(!val) {
+            return 140;
+        }
+        var len = 0;
+        for (var i = 0; i < val.length; i++) {
+            var a = val.charAt(i);
+            if (a.match(/[^\x00-\xff]/ig) != null)
+            {
+                len += 2;
+            }
+            else
+            {
+                len += 1;
+            }
+        }
+        return Math.max(0, 140 - len);
     },
     render:function() {
         return <div className="example-input">
@@ -27,19 +42,19 @@ var Example = React.createClass({
                 </div>
                 <h4 className="final-title">文本域</h4>
                 <div>
-                    <RUI.Textarea value={this.state.init} />
+                    <RUI.Textarea value={this.state.init} resize={true} />
                 </div>
                 <h4 className="final-title">字数提示</h4>
                 <div>
-                    <RUI.Textarea maxLength={140} />
+                    <RUI.Textarea maxLength={140} resize={true} />
                 </div>
                 <h4 className="final-title">自定义字数提示规则</h4>
                 <div>
-                    <RUI.Textarea maxLengthHandler={this.customMaxLength} placeholder="一个汉字算两个字符" />
+                    <RUI.Textarea maxLength={140} maxLengthHandler={this.customMaxLength} placeholder="一个汉字算两个字符" />
                 </div>
                 <h4 className="final-title">根据内容自动缩放</h4>
                 <div>
-
+                    <RUI.Textarea autoSize={true} />
                 </div>
             </div>
             <h3 className="sub-title">源码</h3>
