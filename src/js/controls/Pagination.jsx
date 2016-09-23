@@ -17,7 +17,7 @@ module.exports = React.createClass({
     mixins: [ComponentBase],
     getInitialState: function () {
         return {
-            currentPage: this.props.currentPage
+            currentPage: Number(this.props.currentPage)
         };
     },
     getDefaultProps: function () {
@@ -65,7 +65,7 @@ module.exports = React.createClass({
     },
     componentWillReceiveProps: function (props) {
         this.setState({
-            currentPage: props.currentPage
+            currentPage: Number(props.currentPage)
         });
     },
     click: function (index) {

@@ -1,9 +1,9 @@
 var Example = React.createClass({
     getPageConfig:function() {
         return {
-            pageSize:10,
+            pageSize:20,
             currentPage:1,
-            totalNum:88
+            totalNum:43
         };
     },
     onPageChange:function(currentPage) {
