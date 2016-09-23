@@ -5,6 +5,7 @@
 
 import className from '../util/className.jsx';
 import omit from '../util/omit.jsx';
+import empty from '../util/empty.jsx';
 import ComponentBase from '../mixins/ComponentBase.jsx';
 import Input from './Input.jsx';
 import Calendar from './datepicker/Calendar.jsx';
@@ -14,6 +15,8 @@ import Icon from './Icon.jsx';
 import DateFormatter from '../formatters/DateFormatter.jsx';
 
 import '../../css/datepicker.scss';
+
+let now = Date.now();
 
 module.exports = React.createClass({
     /**
@@ -52,7 +55,7 @@ module.exports = React.createClass({
              * Date.now()
              * 1460600493335
              */
-            value: null,
+            value: Date.now(),
             /**
              * @instance
              * @default null
@@ -160,21 +163,30 @@ module.exports = React.createClass({
             $('body').bind('mousedown', this.hidePopup);
         }
     },
+    shoudEqual: function(newValue, value) {
+        var formatter = this.props.formatter;
+        var newValueString = formatter.setTime(newValue).toString();
+        var valueString = formatter.setTime(value).toString();
+
+        return newValueString == valueString;
+    },
     componentWillReceiveProps: function (newProps) {
         var update = {};
-        if (newProps.value) {
+        if (!this.shoudEqual(newProps.value, this.state.value)) {
             update.value = newProps.value;
         }
-        if (newProps.startValue) {
+        if (!this.shoudEqual(newProps.startValue, this.state.startValue)) {
             update.startValue = newProps.startValue;
             update.startValuePreview = newProps.startValue;
         }
-        if (newProps.endValue) {
+        if (!this.shoudEqual(newProps.endValue, this.state.endValue)) {
             update.endValue = newProps.endValue;
             update.endValuePreview = newProps.endValue;
         }
 
-        this.setState(update);
+        if(!empty(update)) {
+            this.setState(update);
+        }
     },
     togglePopup: function () {
         this.setState({
@@ -350,15 +362,15 @@ module.exports = React.createClass({
                     {this.props.range ? (
                         <div className={defaultClass+'-row-range'}>
                             <Calendar source={{start:this.state.startValuePreview, end:this.state.endValuePreview}}
-                                      value={this.state.startValuePreview || this.dateNow(Date.now())}
+                                      value={this.state.startValuePreview || this.dateNow(now)}
                                       onChange={this.startCalendarChange} range={"start"}/>
                             <Calendar source={{start:this.state.startValuePreview, end:this.state.endValuePreview}}
-                                      value={this.state.endValuePreview || this.dateNow(Date.now() + 86400 * 1000)}
+                                      value={this.state.endValuePreview || this.dateNow(now + 86400 * 1000)}
                                       onChange={this.endCalendarChange} range={"end"}/>
                         </div>
                     ) : (
                         <Calendar
-                            value={this.state.valuePreview || this.dateNow(Date.now())}
+                            value={this.state.valuePreview || this.dateNow(now)}
                             onChange={this.onCalendarChange}
                             showTime={this.props.showTime}
                             onCancel={this.rangeCalendarCancel}
