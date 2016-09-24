@@ -164,7 +164,7 @@ module.exports = React.createClass({
         }
     },
     shoudEqual: function(newValue, value) {
-        var formatter = this.props.formatter;
+        var formatter = this.getDateFormatter();
         var newValueString = formatter.setTime(newValue).toString();
         var valueString = formatter.setTime(value).toString();
 
@@ -295,8 +295,11 @@ module.exports = React.createClass({
         }
         return date.getTime();
     },
+    getDateFormatter:function() {
+        return (this.props.formatter || new DateFormatter(this.props.showTime ? "Y-m-d  H:i:s" : "Y-m-d"));
+    },
     display: function (type) {
-        var formatter = (this.props.formatter || new DateFormatter(this.props.showTime ? "Y-m-d  H:i:s" : "Y-m-d"));
+        var formatter = this.getDateFormatter();
         if (type) {
             if (type == 'start' && this.state.startValuePreview) {
                 return formatter.format(this.state.startValuePreview);
