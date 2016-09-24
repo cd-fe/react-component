@@ -35,7 +35,7 @@ var Example = React.createClass({
                 </div>
                 <h4 className="final-title">日历开始结束</h4>
                 <div>
-                    <RUI.DatePicker value={Date.now()} formatter={new RUI.DateFormatter("Y-m-d")} range={true} onChange={this.datePickerChange} />
+                    <RUI.DatePicker startValue={''} endValue={''} formatter={new RUI.DateFormatter("Y-m-d")} range={true} onChange={this.datePickerChange} />
                 </div>
                 <h4 className="final-title">外层设置范围</h4>
                 <div>
