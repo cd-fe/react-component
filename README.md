@@ -5,6 +5,8 @@
 
 ## todolist
 
+* Input & Textarea ![Done][1]
+* Validate
 * Pagination ![Done][1]
 * Table ![Done][1]
 * Checkbox ![Done][1]
@@ -16,13 +18,12 @@
 * Datepicker ![Done][1]
 * Message
 * Form ![Done][1]
-* DataSource
 * Dialog ![Done][1]
-* Upload
+* Upload ![Done][1]
 * Tab
 * Accordion
 * AutoComplete
-* Progress
+* Progress ![Done][`]
 * Tooltip ![Done][1]
 * Slider ![Done][1]
 * Button ![Done][1]
@@ -53,8 +54,10 @@ React is so big, I expect to split it into a common file, and Browser will cache
 
 ```
 npm install
-npm run lib
+// Mac & Linux
 npm run example
+// Windows
+npm run example-win
 
 browser example/index.html
 ```
