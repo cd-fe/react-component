@@ -24,14 +24,14 @@ var Example = React.createClass({
                 <div>
                     <RUI.Button className="primary" icon="loading">加载中…</RUI.Button>
                     <RUI.Button
-                        className="primary"
+                        className=""
                         onClick={()=>this.setState({success:true})}
                         icon={this.state.success&&'success'}
                         iconHideDelay={3000}>
                         点击后成功
                     </RUI.Button>
                     <RUI.Button
-                        className="primary"
+                        className=""
                         onClick={()=>this.setState({error:true})}
                         icon={this.state.error&&'error'}
                         iconHideDelay={3000}>

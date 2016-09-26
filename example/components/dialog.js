@@ -31,10 +31,6 @@ var Example = React.createClass({
             submitText:'删除吧'
         });
     },
-    componentDidMount:function() {
-        RUI.DialogManager.alert("提示1");
-        RUI.DialogManager.confirm("提示2");
-    },
     render:function() {
         return <div className="example-button">
             <h2 className="title">弹出层<span>Dialog</span></h2>

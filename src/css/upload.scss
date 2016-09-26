@@ -24,9 +24,13 @@
     transition: bottom 0.3s;
   }
 
-  .has-image:hover {
-    .upload-replace {
-      bottom:0;
+  .has-image {
+    border:1px solid $border;
+
+    &:hover {
+      .upload-replace {
+        bottom:0;
+      }
     }
   }
 
