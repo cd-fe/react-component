@@ -1,6 +1,6 @@
 /**
  * 按钮组件
- * @module controls/Button
+ * @module controls/Upload
  */
 
 import className from '../util/className.jsx';
@@ -252,7 +252,7 @@ module.exports = React.createClass({
         return {
             /**
              * @instance
-             * @default button
+             * @default upload
              * @type string
              * @desc 组件名称
              */
@@ -264,22 +264,124 @@ module.exports = React.createClass({
              * @desc 设置按钮是否禁用
              */
             disable: false,
+            /**
+             * @instance
+             * @default true
+             * @type boolean
+             * @desc 是否启用拖拽上传文件
+             */
             useDragDrop: true,
+            /**
+             * @instance
+             * @default true
+             * @type boolean
+             * @desc 是否显示上传进度，该属性仅在autoUpload为true时生效
+             */
             showProgress: true,
+            /**
+             * @instance
+             * @default false
+             * @type boolean
+             * @desc 是否显示删除按钮
+             */
             showDelete: false,
+            /**
+             * @instance
+             * @default false
+             * @type boolean
+             * @desc 是否多文件上传
+             */
             multiple: false,
+            /**
+             * @instance
+             * @default image
+             * @type string
+             * @desc 文件上传接口中，图片数据所对应的字段名
+             */
             name: 'image',
+            /**
+             * @instance
+             * @default #
+             * @type string
+             * @desc 文件上传接口地址
+             */
             action: '#',
+            /**
+             * @instance
+             * @default {}
+             * @type object
+             * @desc 文件上传中自定义的header
+             */
             headers: {},
+            /**
+             * @instance
+             * @default null
+             * @type function
+             * @desc 开始上传时的回调函数
+             */
             onStart: null,
+            /**
+             * @instance
+             * @default null
+             * @type function
+             * @desc 上传失败时的回调函数
+             */
             onError: null,
+            /**
+             * @instance
+             * @default null
+             * @type function
+             * @desc 删除当前图片时的回调，该回调仅在showDelete为true时生效
+             */
             onDelete: null,
+            /**
+             * @instance
+             * @default null
+             * @type function
+             * @desc 上传进度的回调函数，不过现在是模拟的假进度，所以这个回调暂时没用
+             */
             onProgress: null,
+            /**
+             * @instance
+             * @default null
+             * @type function
+             * @desc 裁剪图片前的回调函数，该回调函数return false时，可阻止弹出裁剪窗口，开发者可提前验证图片大小以及文件类型等必要验证条件
+             */
             beforeEdit: null,
+            /**
+             * @instance
+             * @default null
+             * @type function
+             * @desc 开始上传前的回调函数
+             */
             beforeUpload: null,
+            /**
+             * @instance
+             * @default false
+             * @type boolean
+             * @desc 是否启用自动上传，当为true时，请设置必要的 action 和 name 属性
+             */
             autoUpload:false,
+            /**
+             * @instance
+             * @default null
+             * @type object
+             * @desc 当不为null时，则开启图片编辑，图片编辑的参数来自 CropperJS
+             */
             editable:null,
+            /**
+             * @instance
+             * @default -1
+             * @type number
+             * @desc 当multiple为true，该属性设置可选择的最大文件数
+             */
             max:-1,
+            /**
+             * @instance
+             * @default null
+             * @type array
+             * @desc 当前上传组件的数据
+             */
             list:null
         };
     },
@@ -394,6 +496,11 @@ module.exports = React.createClass({
             });
         }
     },
+    /**
+     * 获取当前组件处理后的图片列表
+     * @instance
+     * @return {*}
+     */
     getValue:function() {
         return this.state.list;
     },

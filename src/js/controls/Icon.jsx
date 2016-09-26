@@ -18,11 +18,31 @@ module.exports = React.createClass({
         return {
             /**
              * @instance
-             * @default button
+             * @default icon
              * @type string
              * @desc 组件名称
              */
             cname: 'icon',
+            /**
+             * @instance
+             * @default
+             * @type string
+             * @desc icon名称,默认提供如下icon:
+             * loading
+             * arrow-left
+             * arrow-right
+             * more
+             * close
+             * calendar
+             * upload
+             * attach
+             * search
+             * subtract
+             * add
+             * success
+             * error
+             * resize
+             */
             name: ''
         };
     },

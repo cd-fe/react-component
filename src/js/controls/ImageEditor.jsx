@@ -34,7 +34,7 @@ var ImageEditor = React.createClass({
              * @instance
              * @default null
              * @type string|object
-             * @desc
+             * @desc 待编辑的图片数据，可以是File对象，也可以是image base64字符串
              */
             data: null
         };
@@ -89,6 +89,12 @@ var ImageEditor = React.createClass({
         var image = ReactDOM.findDOMNode(this.refs.image);
         image && (image.style.opacity = 0);
     },
+    /**
+     * 获取CropperJS创建的实例
+     * @instance
+     * @desc 图片裁剪使用第三方CropperJS完成，此处可完全获取CropperJS实例，开发者可根据CropperJS文档完全自主操作
+     * @return {null|*}
+     */
     getCropper: function () {
         if (!this.cropper && this.refs.image) {
             this.cropper = new Cropper(ReactDOM.findDOMNode(this.refs.image), this.props);

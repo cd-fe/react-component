@@ -31,9 +31,36 @@ module.exports = React.createClass({
              * @desc 当前模式，分为静态(static)和动态(dynamic)
              */
             mode: 'dynamic',
+            /**
+             * @instance
+             * @default false
+             * @type boolean
+             * @desc 是否使用垂直改变文本域大小功能
+             */
             resize:false,
             autoSize:false,
+            /**
+             * @instance
+             * @default true
+             * @type boolean
+             * @desc 是否显示文本字数限制，该属性必须与maxLength同时存在时才会生效
+             */
             showMaxLength:true,
+            /**
+             * @instance
+             * @default undefined
+             * @type number
+             * @desc 该文本域可输入的最大字符长度，该属性效果根据浏览器实现为准
+             */
+            maxLength:undefined,
+            /**
+             * @instance
+             * @default function
+             * @param value
+             * @param max
+             * @return {number}
+             * @desc “可输入文本长度”的自定义函数，开发者可根据自己的规则进行显示，例如一个汉字作为两个字符长度
+             */
             maxLengthHandler:function(value, max) {
                 // 非常神奇，在Chrome下，一个\r或者\n居然被浏览器算做两个字符
                 return max - (value||"").replace(/[\r\n]/g, '**').length;
