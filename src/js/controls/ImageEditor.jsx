@@ -11,7 +11,7 @@ import 'cropperjs/dist/cropper.css';
 
 var ImageEditor = React.createClass({
     /**
-     *
+     * 基础方法
      * @see {@link module:mixins/ComponentBase}
      */
     mixins: [ComponentBase],
@@ -27,7 +27,7 @@ var ImageEditor = React.createClass({
              * @instance
              * @default dialog
              * @type string
-             * @desc
+             * @desc 组件名称
              */
             cname: "imageeditor",
             /**
