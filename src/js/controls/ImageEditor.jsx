@@ -1,5 +1,5 @@
 /**
- *
+ * 图片编辑
  * @module controls/ImageEditor
  */
 import className from '../util/className.jsx';
