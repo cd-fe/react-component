@@ -31,6 +31,12 @@ module.exports = React.createClass({
              * @desc 设置按钮是否禁用
              */
             disable: false,
+            /**
+             * @instance
+             * @default null
+             * @type ReactComponent | RUI.Icon
+             * @desc 设置按钮左侧的icon，通常情况下使用RUI.Icon组件与之配合
+             */
             icon: null,
             iconHideDelay: 3000
         };

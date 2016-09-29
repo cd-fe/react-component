@@ -1,6 +1,6 @@
 /**
  * 单选框组件
- * @module controls/Radio
+ * @module controls/Switch
  */
 
 import className from '../util/className.jsx';
@@ -20,7 +20,7 @@ module.exports = React.createClass({
         return {
             /**
              * @instance
-             * @default radio
+             * @default switch
              * @type string
              * @desc 组件名称
              */

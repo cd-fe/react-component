@@ -56,7 +56,7 @@ var config = {
     },
     resolve:{
         alias:{
-            "react-component-lib":"../src/js/rui.jsx"
+            "react-component-lib":ENV == 'development' ? "../src/js/rui.jsx" : '../dist/bundle.js'
         }
     }
 };

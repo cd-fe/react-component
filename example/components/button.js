@@ -8,6 +8,16 @@ var Example = React.createClass({
     onClickHandler:function(e) {
         RUI.DialogManager.alert("click:" + e, "提示");
     },
+    successClick:function() {
+        this.setState({
+            success:true
+        });
+    },
+    errorClick:function() {
+        this.setState({
+            error:true
+        });
+    },
     render:function() {
         return <div className="example-button">
             <h2 className="title">按钮<span>Button</span></h2>
@@ -24,15 +34,15 @@ var Example = React.createClass({
                 <div>
                     <RUI.Button className="primary" icon="loading">加载中…</RUI.Button>
                     <RUI.Button
-                        className="primary"
-                        onClick={()=>this.setState({success:true})}
+                        className=""
+                        onClick={this.successClick}
                         icon={this.state.success&&'success'}
                         iconHideDelay={3000}>
                         点击后成功
                     </RUI.Button>
                     <RUI.Button
-                        className="primary"
-                        onClick={()=>this.setState({error:true})}
+                        className=""
+                        onClick={this.errorClick}
                         icon={this.state.error&&'error'}
                         iconHideDelay={3000}>
                         点击后失败

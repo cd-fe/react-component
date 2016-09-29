@@ -54,7 +54,7 @@ var Example = React.createClass({
                 </div>
                 <h4 className="final-title">根据内容自动缩放</h4>
                 <div>
-                    <RUI.Textarea autoSize={true} />
+                    <RUI.Textarea autoSize={true} value="// JUST TODO" />
                 </div>
             </div>
             <h3 className="sub-title">源码</h3>
