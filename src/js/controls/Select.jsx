@@ -169,7 +169,7 @@ module.exports = React.createClass({
     handleFilter: function (source) {
         var _this = this, res;
         var reg = _this.props.reg || /.*/;
-        var value = _this.refs.filter.value;
+        var value = ReactDOM.findDOMNode(_this.refs.filter).value;
         var result;
         if (_this.props.filter) {
             if (reg.test(value)) {
