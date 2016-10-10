@@ -69,7 +69,7 @@ var Column = module.exports = React.createClass({
         //var DefaultRenderClassProps = DefaultRenderClass.props;
         var ItemRenderProps = DefaultRenderClass.item ? DefaultRenderClass.item.props : {};
         var DefaultRenderClassProps = DefaultRenderClass.render ? DefaultRenderClass.render.props : {};
-        var classes = className((this.props.className||"") + " " + (ItemRenderProps.className+""), this.getPropClass());
+        var classes = className((this.props.className||"") + " " + (ItemRenderProps.className||""), this.getPropClass());
         var _this = this;
         return <ItemRender {...ItemRenderProps} className={classes} style={{height:_this.props.itemHeight}} key={key}>{React.cloneElement(DefaultRenderClass.render, merge({
             fieldFunction:_this.props.fieldFunction,
