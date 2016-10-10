@@ -25,7 +25,8 @@ module.exports = React.createClass({
                     render = <ItemRenderDefault data={column.props.title || column.props.dataField} />;
                 }
                 var TitleClassProps = result.item ? result.item.props : {};
-                return <TitleRender {...TitleClassProps} className={column.props.titleClassName} key={index} style={{width:column.props.width, height:column.props.titleHeight}}>
+                var titleClasses = className(column.props.titleClassName || "", TitleClassProps.className || "");
+                return <TitleRender {...TitleClassProps} className={titleClasses} key={index} style={{width:column.props.width, height:column.props.titleHeight}}>
                     {render}
                 </TitleRender>;
             })}
