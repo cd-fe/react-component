@@ -41,31 +41,37 @@ var Column = module.exports = React.createClass({
              * @type string
              * @desc 内容单元格显示的字段内容
              */
-            dataField: null
+            dataField: null,
+            titleClassName: ""
         };
     },
     getDefaultTitleRender:function() {
-        var render = Column.findExistRender('table-title', this.props.children);
+        var render = Column.findExistRender('table-title', this.props.children).render;
         if(!render) {
             render = <ItemRenderDefault label={this.props.title || this.props.dataField} style={{height:this.props.titleHeight}} />;
         }
         return render;
     },
     getDefaultItemRender:function() {
-        var render = Column.findExistRender('table-column-item', this.props.children);
+        var result = Column.findExistRender('table-column-item', this.props.children);
+        var render = result.render;
         if(!render) {
             render = <ItemRenderDefault />;
         }
-        return render;
+        return {
+            item:result.item,
+            render:render
+        };
     },
     renderItem:function(data, index, key) {
         var _this = this;
         var classes = className(this.props.className, this.getPropClass());
-
         var DefaultRenderClass = this.getDefaultItemRender();
-        var DefaultRenderClassProps = DefaultRenderClass.props;
+        //var DefaultRenderClassProps = DefaultRenderClass.props;
+        var ItemRenderProps = DefaultRenderClass.item ? DefaultRenderClass.item.props : {};
+        var DefaultRenderClassProps = DefaultRenderClass.render ? DefaultRenderClass.render.props : {};
         var _this = this;
-        return <ItemRender style={{height:_this.props.itemHeight}} key={key}>{React.cloneElement(DefaultRenderClass, merge({
+        return <ItemRender {...ItemRenderProps} className={classes} style={{height:_this.props.itemHeight}} key={key}>{React.cloneElement(DefaultRenderClass.render, merge({
             fieldFunction:_this.props.fieldFunction,
             itemHeight:_this.props.itemMiddle ? _this.props.itemHeight + 'px' : null,
             data:data,
@@ -96,15 +102,19 @@ var Column = module.exports = React.createClass({
 });
 
 Column.findExistRender = function(cname, childlist) {
+    var exist = null;
     var render = null;
     if(childlist) {
         var children = childlist instanceof Array ? childlist : [childlist];
-        var exist = children.find(function(child) {
+        exist = children.find(function(child) {
             return child.props.cname == cname;
         });
         if(exist) {
             render = exist.props.children;
         }
     }
-    return render;
+    return {
+        item:exist,
+        render:render
+    };
 };

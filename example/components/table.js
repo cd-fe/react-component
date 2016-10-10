@@ -116,7 +116,6 @@ var Example = React.createClass({
         });
     },
     allCheck:function() {
-        debugger;
         var isAllCheck = this.isAllCheck();
         this.setState({
             data:this.state.data.map(function(item) {
@@ -158,13 +157,13 @@ var Example = React.createClass({
                 <h4 className="final-title">自定义标题格</h4>
                 <div>
                     <RUI.Table dataSource={sourceData}>
-                        <RUI.Column dataField={"id"} width={80}>
-                            <RUI.Table.TitleRender>
+                        <RUI.Column dataField={"id"} width={80} className="some-custom" titleClassName="another-header">
+                            <RUI.Table.TitleRender className="custom-header">
                                 <SortTitleRender onClick={this.sortData} />
                             </RUI.Table.TitleRender>
                         </RUI.Column>
                         <RUI.Column title={"头像"}>
-                            <RUI.Table.ItemRender>
+                            <RUI.Table.ItemRender className="custom-avatar">
                                 <img src="http://5doe.com/custom/demo/images/wave_photo_1.jpg" style={{height:80}} />
                             </RUI.Table.ItemRender>
                         </RUI.Column>
