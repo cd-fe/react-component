@@ -54,7 +54,7 @@ module.exports = React.createClass({
     },
     getInitialState: function () {
         return {
-            value: this.props.value || "",
+            value: typeof this.props.value == 'number' ? (this.props.value+"") : (this.props.value || ""),
             change: this.props.onChange
         }
     },
@@ -71,7 +71,26 @@ module.exports = React.createClass({
             this.setState({
                 value: e.target.value
             });
-            this.state.change && this.state.change.call(null, e);
+            this.state.change && this.state.change.call(null, e, this);
+        }
+    },
+    focusHandler: function(e) {
+        this.props.onFocus && this.props.onFocus(e, this);
+
+        var node = ReactDOM.findDOMNode(this);
+        className.addClass(node, 'focused');
+    },
+    blurHandler: function(e) {
+        this.props.onBlur && this.props.onBlur(e, this);
+
+        var node = ReactDOM.findDOMNode(this);
+        className.removeClass(node, 'focused');
+    },
+    keyDownHandler: function(e) {
+        this.props.onKeyDown && this.props.onKeyDown(e);
+        // enter
+        if(e && e.keyCode == 13) {
+            this.props.onEnter && this.props.onEnter(e, this);
         }
     },
     componentWillReceiveProps: function (nextProps) {
@@ -85,7 +104,7 @@ module.exports = React.createClass({
         this.setState(update);
     },
     render: function () {
-        var props = omit(this.props, 'onChange', 'value', 'readonly');
+        var props = omit(this.props, 'onFocus', 'onChange', 'value', 'readonly');
 
         if (this.props.disable) {
             props.disabled = true;
@@ -95,7 +114,10 @@ module.exports = React.createClass({
             type={this.props.type}
             value={this.state.value+""}
             onChange={this.changeHandler}
+            onFocus={this.focusHandler}
+            onBlur={this.blurHandler}
+            onKeyDown={this.keyDownHandler}
             className={className(this.props.className, this.getPropClass())}
-            ></input>
+        ></input>;
     }
 });

@@ -1,4 +1,7 @@
 var Example = React.createClass({
+    componentDidMount:function() {
+        this.refs.view.scrollTop(9999);
+    },
     render:function() {
         return <div className="example-scrollview">
             <h2 className="title">滚动容器<span>ScrollView</span></h2>
@@ -6,7 +9,7 @@ var Example = React.createClass({
             <div className="example">
                 <h4 className="final-title">默认</h4>
                 <div>
-                    <RUI.ScrollView>
+                    <RUI.ScrollView ref="view">
                         <h2>theme: "rounded-dots" with less momentum</h2>
                         <hr/>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>

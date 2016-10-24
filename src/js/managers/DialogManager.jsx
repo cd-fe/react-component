@@ -32,16 +32,19 @@ module.exports = {
                     alertMessage:"",
                     alertTitle:"",
                     alertSubmit:null,
+                    alertSubmitText:undefined,
                     confirmTitle:"",
                     confirmMessage:"",
-                    confirmSubmit:null
+                    confirmSubmit:null,
+                    confirmSubmitText:undefined
                 }
             },
             showAlert:function(opt) {
                 this.setState({
                     alertMessage:opt.message,
                     alertTitle:opt.title,
-                    alertSubmit:opt.submit
+                    alertSubmit:opt.submit,
+                    alertSubmitText:opt.submitText || undefined
                 }, function() {
                     this.refs.alert.show();
                 }.bind(this));
@@ -50,7 +53,8 @@ module.exports = {
                 this.setState({
                     confirmMessage:opt.message,
                     confirmTitle:opt.title,
-                    confirmSubmit:opt.submit
+                    confirmSubmit:opt.submit,
+                    confirmSubmitText:opt.submitText || undefined
                 }, function() {
                     this.refs.confirm.show();
                 }.bind(this));
@@ -61,8 +65,19 @@ module.exports = {
             },
             render:function() {
                 return <div>
-                    <Dialog ref="alert" title={this.state.alertTitle} buttons={'submit'} onSubmit={this.state.alertSubmit} style={{'min-width':'200px'}}>{this.state.alertMessage}</Dialog>
-                    <Dialog ref="confirm" title={this.state.confirmTitle} buttons={'cancel,submit'} onSubmit={this.state.confirmSubmit}>
+                    <Dialog ref="alert"
+                            title={this.state.alertTitle}
+                            buttons={'submit'}
+                            onSubmit={this.state.alertSubmit}
+                            style={{'min-width':'200px'}}
+                            submitText={this.state.alertSubmitText}>
+                        {this.state.alertMessage}
+                    </Dialog>
+                    <Dialog ref="confirm"
+                            title={this.state.confirmTitle}
+                            buttons={'cancel,submit'}
+                            onSubmit={this.state.confirmSubmit}
+                            submitText={this.state.confirmSubmitText}>
                         {this.state.confirmMessage}
                     </Dialog>
                 </div>

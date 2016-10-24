@@ -74,14 +74,29 @@ module.exports = React.createClass({
         event.data = value;
         this.dispatchEvent(event);
     },
+    timeChange: function(event) {
+        var times = event.data;
+        if(times) {
+            var date = new Date(this.state.value);
+            date.setHours(times.hour);
+            date.setMinutes(times.minute);
+            date.setSeconds(times.second);
+
+            event.data = date.getTime();
+
+            this.dispatchEvent(event);
+        }
+    },
     onSubmitClick:function() {
         var times = this.refs.time.getValue();
-        var date = new Date(this.state.value);
-        date.setHours(times.hour);
-        date.setMinutes(times.minute);
-        date.setSeconds(times.second);
+        if(times) {
+            var date = new Date(this.state.value);
+            date.setHours(times.hour);
+            date.setMinutes(times.minute);
+            date.setSeconds(times.second);
 
-        this.props.onSave && this.props.onSave(date.getTime());
+            this.props.onSave && this.props.onSave(date.getTime());
+        }
     },
     render: function () {
         var _this = this;
@@ -111,6 +126,13 @@ module.exports = React.createClass({
                     if(_this.props.range == 'end') {
                         var formatStartTime = new Date(_this.props.source.start);
                         if(date.compare(formatStartTime) < 0) {
+                            classes.push('disabled');
+                        }
+                    }
+
+                    if(_this.props.range == 'start') {
+                        var formatEndTime = new Date(_this.props.source.end);
+                        if(date.compare(formatEndTime) > 0) {
                             classes.push('disabled');
                         }
                     }
@@ -156,9 +178,7 @@ module.exports = React.createClass({
             </table>
             {this.props.showTime && (
                 <div className="rui-datepicker-time clearfix">
-                    <RUI.TimePicker ref="time" value={this.state.value} />
-                    <RUI.Button className="rui-datepicker-time-cancel" onClick={this.props.onCancel}>取消</RUI.Button>
-                    <RUI.Button className="rui-datepicker-time-submit primary" onClick={this.onSubmitClick}>保存</RUI.Button>
+                    <RUI.TimePicker ref="time" value={this.state.value} onChange={this.timeChange} />
                 </div>
             )}
         </div>;

@@ -7,12 +7,12 @@ var CheckboxItemRender = React.createClass({
     componentWillReceiveProps:function(nextProps) {
         if(typeof nextProps.selected != 'undefined') {
             this.setState({
-                selected:!!nextProps.selected
+                selected:nextProps.selected
             });
         }
-    },
-    setData:function(data, field) {
-        this.setState(data);
+        if(typeof nextProps.data != 'undefined') {
+            this.setState(nextProps.data);
+        }
     },
     changeHandler:function() {
         this.props.onClick && this.props.onClick(this.state);
@@ -23,11 +23,8 @@ var CheckboxItemRender = React.createClass({
 });
 
 var OperationItemRender = React.createClass({
-    setData:function(data) {
-        this.setState(data);
-    },
     clickHandler:function() {
-        this.props.onClick && this.props.onClick(this.state);
+        this.props.onClick && this.props.onClick(this.props.data);
     },
     render:function() {
         return <RUI.Button onClick={this.clickHandler}>{this.props.children}</RUI.Button>;
@@ -96,9 +93,9 @@ var Example = React.createClass({
     },
     getData:function() {
         return [
-            {id:1,name:"张三",phone:"1331234123413312341234133123412341331234123413312341234", prov:"北京", role:"管理员超级管理员超级管理员", desc:{tag:'影视 娱乐'}},
-            {id:3,name:"李四",phone:"18912341234133123412341331234123413312341234", prov:"四川", role:"超级管理员超级管理员超级管理员超级管理员", desc:{tag:'IT 编程'}},
-            {id:2,name:"王五",phone:"13512341234133123412341331234123413312341234133123412341331234123413312341234", prov:"杭州", role:"编辑超级管理员超级管理员", desc:{tag:'数码 科技'}}
+            {id:1,name:"张三",phone:"13599018834", prov:"北京", role:"超级管理员", desc:{tag:'影视 娱乐'}},
+            {id:3,name:"李四",phone:"13412341234", prov:"四川", role:"管理员", desc:{tag:'IT 编程'}},
+            {id:2,name:"王五",phone:"18999878899", prov:"杭州", role:"主编", desc:{tag:'数码 科技'}}
         ];
     },
     sortData:function() {
@@ -160,13 +157,13 @@ var Example = React.createClass({
                 <h4 className="final-title">自定义标题格</h4>
                 <div>
                     <RUI.Table dataSource={sourceData}>
-                        <RUI.Column dataField={"id"} width={80}>
-                            <RUI.Table.TitleRender>
+                        <RUI.Column dataField={"id"} width={80} className="column-item-1" titleClassName="column-title-1">
+                            <RUI.Table.TitleRender className="render-title-2">
                                 <SortTitleRender onClick={this.sortData} />
                             </RUI.Table.TitleRender>
                         </RUI.Column>
                         <RUI.Column title={"头像"}>
-                            <RUI.Table.ItemRender>
+                            <RUI.Table.ItemRender className="render-item-2">
                                 <img src="http://5doe.com/custom/demo/images/wave_photo_1.jpg" style={{height:80}} />
                             </RUI.Table.ItemRender>
                         </RUI.Column>
@@ -190,7 +187,7 @@ var Example = React.createClass({
                         <RUI.Column title={"用户名"} dataField={"name"}/>
                         <RUI.Column title={"手机号"} dataField={"phone"} />
                         <RUI.Column title={"省份"} dataField={"prov"} width={75} />
-                        <RUI.Column title={"角色"} dataField={"role"} width={75} />
+                        <RUI.Column title={"角色"} dataField={"role"} />
                         <RUI.Column title={"操作"}>
                             <RUI.Table.ItemRender>
                                 <OperationItemRender onClick={this.tableDelete}>删除</OperationItemRender>

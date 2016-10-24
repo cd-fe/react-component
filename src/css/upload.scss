@@ -1,0 +1,173 @@
+@import './function';
+
+.rui-upload {
+  .upload-preview {
+    position:absolute;
+    //width:100%;
+    //height:100%;
+    border:none;
+    top:0;
+    left:0;
+    z-index:1;
+  }
+
+  .upload-replace {
+    position:absolute;
+    left:0;
+    bottom:-24px;
+    width:100%;
+    color:$white;
+    text-align:center;
+    background:rgba(0, 0, 0, 0.5);
+    line-height:24px;
+    z-index:1;
+    transition: bottom 0.3s;
+  }
+
+  .has-image {
+    border:1px solid $border;
+
+    &:hover {
+      .upload-replace {
+        bottom:0;
+      }
+    }
+  }
+
+  &.small-cube {
+    .rui-upload-button-content {
+      width:70px;
+      height:70px;
+    }
+  }
+
+  &-button {
+    position:relative;
+    float:left;
+
+    .rui-button {
+      margin:0;
+    }
+
+    &:hover {
+      .rui-upload-button-remove {
+        opacity:1;
+      }
+    }
+
+    &-remove {
+      position:absolute;
+      top:-4px;
+      right:-4px;
+      z-index:4;
+      opacity:0;
+      pointer-events: auto;
+      cursor:pointer;
+    }
+
+    &-content.has-image {
+      &:hover {
+        border:1px solid $primary;
+      }
+    }
+
+    &-content {
+      width:128px;
+      height:100px;
+      border:1px dashed $border;
+      border-radius:6px;
+      background:$white url(../img/icon/upload_add.png) 50% 50% no-repeat;
+      overflow:hidden;
+      position:relative;
+      z-index:2;
+
+      &:hover {
+        border:1px dashed $primary;
+        background-color:#f7f7f7;
+      }
+    }
+
+    &-progress {
+      position:absolute;
+      width:100%;
+      height:100%;
+      display:table;
+
+      &-line {
+        background:rgba(255, 255, 255, 0.7);
+        width:100%;
+        height:100%;
+        position:absolute;
+        top:0;
+        left:0;
+      }
+
+      &-text {
+        display:table-cell;
+        vertical-align: middle;
+        width:100%;
+        height:100%;
+        text-align:center;
+        color:$white;
+        font-size:14px;
+      }
+    }
+  }
+
+  &-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    z-index:3
+  }
+
+  &-info {
+    display:inline-block;
+    float:left;
+    max-width:240px;
+    margin:0 0 0 15px;
+    height:32px;
+    border:1px solid transparent;
+
+    .rui-icon {
+      float:left;
+      margin-top:7px;
+    }
+    
+    .rui-link {
+      float:left;
+      margin-left:10px;
+      height:32px;
+      line-height:32px;
+      overflow:hidden;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+
+    &:hover {
+      border:1px solid $primary;
+
+      .rui-upload-info-clear {
+        opacity:1;
+        pointer-events: auto;
+      }
+    }
+
+    &-clear {
+      opacity:0;
+      pointer-events: none;
+    }
+  }
+
+  &-list {
+    .rui-upload-button {
+      margin-right:10px;
+      margin-top:10px;
+    }
+  }
+}

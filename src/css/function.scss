@@ -789,6 +789,11 @@ $flexMid:                     true !default; //用于ie10 -ms前缀
   @include prefixer(filter, sepia($value), webkit moz);
 }
 
+@mixin opacity($value:1) {
+  opacity:$value;
+  @include prefixer(filter, opacity($value*100), ms);
+}
+
 
 //columns
 //-----------------------------------------------------
@@ -894,24 +899,22 @@ $flexMid:                     true !default; //用于ie10 -ms前缀
 // @include simple-btn;
 // @include simple-btn(true);
 // @include simple-btn($bgColor:$green);
-@mixin simple-btn($formbtn:false, $bgColor: $white, $textColor:$text1){
+@mixin simple-btn($textColor:$text2, $textColor2:$primary_hover){
+  display:inline-block;
   cursor: pointer;
   text-align: center;
+  margin:0 0 0 0;
+  padding:5px 18px 4px;
+  vertical-align: middle;
+  background-color:$white;
+  @include prefixer(touch-action, manipulation);
 
   font-size: 14px;
-  padding:10px 20px;
-  @if $formbtn {
-    height: 36px;
-  }@else{
-    line-height: 36px;
-  }
+  line-height:1.5;
   color: $textColor;
-  background-color: $bgColor;
-  border:0 none;
 
-  &:hover{
-    color: $textColor;
-    background-color: darken($bgColor,5%);
+  &:hover {
+    color: $textColor2;
   }
 }
 

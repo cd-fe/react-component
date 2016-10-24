@@ -27,7 +27,6 @@ var Example = React.createClass({
                         data={[{key:'查看',value:'1'}, {key:'编辑',value:'2'}, {key:'删除',value:'3'}]}
                         value={{key:'查看',value:'1'}}
                         stuff={true}
-                        event={'click'}
                         className="rui-theme-1">
                     </RUI.Select>
                 </div>
@@ -60,7 +59,6 @@ var Example = React.createClass({
                         data={this.state.data}
                         value={{key:'查看',value:'1'}}
                         stuff={true}
-                        event={'mouseenter'}
                         offset={'0'}
                         callback={this.selectCallback}
                         className="rui-theme-2 short">

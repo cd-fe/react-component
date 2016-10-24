@@ -9,8 +9,13 @@ var Example = React.createClass({
         RUI.DialogManager.alert("自定义弹出层的确认按钮点击了");
     },
     showAlert:function() {
-        RUI.DialogManager.alert('弹出提示', '自定义标题', function() {
-            RUI.DialogManager.alert('alert的确定按钮点击了');
+        RUI.DialogManager.alert({
+            title:'弹出提示',
+            message:'自定义标题',
+            submit:function() {
+                RUI.DialogManager.alert('alert的确定按钮点击了');
+            },
+            submitText:'知道了'
         });
     },
     showConfirm:function() {
@@ -22,7 +27,8 @@ var Example = React.createClass({
             title:'自定义标题',
             submit:function() {
                 RUI.DialogManager.alert('确定按钮被点击了');
-            }
+            },
+            submitText:'删除吧'
         });
     },
     render:function() {
@@ -35,7 +41,7 @@ var Example = React.createClass({
                 <RUI.Button onClick={this.showConfirm}>默认Confirm</RUI.Button>
                 <RUI.Button onClick={this.showConfirmCustom}>自定义Confirm</RUI.Button>
 
-                <RUI.Dialog ref="dialog" title="测试标题" buttons="submit,cancel" onCancel={this.dialogCancel} onSubmit={this.dialogSubmit}>
+                <RUI.Dialog ref="dialog" title="测试标题" draggable={false} buttons="submit,cancel" onCancel={this.dialogCancel} onSubmit={this.dialogSubmit}>
                     <div style={{width:'240px', wordWrap:'break-word'}}>
                         <p>在这里可以自定义任何节点和内容</p>
                     </div>

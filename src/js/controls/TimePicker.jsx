@@ -46,6 +46,12 @@ module.exports = React.createClass({
             });
         }
     },
+    changeHandler:function() {
+        var event = this.createEvent('change');
+        event.data = this.getValue();
+
+        this.dispatchEvent(event);
+    },
     getSpinnerProps: function () {
         var formatter = new Formatter();
         formatter.setTime(this.state.value);
@@ -54,7 +60,9 @@ module.exports = React.createClass({
             className: 'rui-timerpicker-spinner',
             fieldFunction: function (str) {
                 return str.toString().length < 2 ? '0' + str : str;
-            }
+            },
+            onChange:this.changeHandler,
+            eventType:'change'
         };
 
         return {

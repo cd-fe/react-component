@@ -45,6 +45,9 @@ var Example = React.createClass({
                 <div>
                     <RUI.Spinner {...this.state} />
                 </div>
+                <div style={{marginTop:'20px'}}>
+                    <RUI.Spinner type="slider" {...this.state} />
+                </div>
             </div>
             <h3 className="sub-title">源码</h3>
             <div className="source">

@@ -20,7 +20,7 @@ module.exports = React.createClass({
         return {
             active: false,
             filter: this.props.filter || false,//过滤筛选
-            event: this.props.event || 'click',//事件类型mousover,click,dbclick
+            event: this.props.event || 'mouseenter',//事件类型mousover,click,dbclick
             data: this.props.data || [],//数据
             value: this.props.value || (this.props.data instanceof Array && this.props.data[0]),//默认值
             callback: this.props.callback,//回调
@@ -28,7 +28,7 @@ module.exports = React.createClass({
             reg: this.props.reg,
             placeholder: this.props.placeholder,
             result: this.props.result,
-            maxLen: this.props.maxLen || '200'
+            maxLen: this.props.maxLen || '200',
         };
     },
     getDefaultProps: function () {
@@ -160,13 +160,16 @@ module.exports = React.createClass({
         var _this = this;
         (_this.state.data.length > 1 || _this.state.filter) && _this.close();
         _this.props.stuff && (_this.refs.choose.innerHTML = e.key);
-        _this._choose = e;
+        //_this._choose = e;
+        this.setState({
+            value:e
+        });
         this.props.callback && this.props.callback(e);
     },
     handleFilter: function (source) {
         var _this = this, res;
         var reg = _this.props.reg || /.*/;
-        var value = _this.refs.filter.value;
+        var value = ReactDOM.findDOMNode(_this.refs.filter).value;
         var result;
         if (_this.props.filter) {
             if (reg.test(value)) {
@@ -208,28 +211,38 @@ module.exports = React.createClass({
             final = active ? deClass + ' active' : deClass,
             filter,
             filterAble = this.props.filter,
-            offset = this.props.offset ? this.props.offset : '100%';
+            offset = this.props.offset ? Number(this.props.offset) : '100%';
         if (filterAble) {
             filter = (
                 <div className="filter">
-                    <input type="text" ref="filter" maxLength={_this.state.maxLen} onChange={_this.handleFilter}
-                           placeholder={_this.props.placeholder}/>
+                    <RUI.Input ref="filter" maxLength={_this.state.maxLen} onChange={_this.handleFilter} placeholder={_this.props.placeholder} />
                 </div>
             );
         }
+
+        var isSpecial = _this.state.data.length == 1 && _this.props.offset == '0';
+        if(!isSpecial && this.props.className.indexOf('rui-theme-1') > -1 && typeof offset == 'number') {
+            offset = offset - 5;
+        }
+
+        if(offset != '100%') {
+            final += ' noactive';
+        }
+
         return (
 
             <div ref="container" className={final}>
                 <i className="arrow"></i>
                 <span ref="choose" className="placeholder">{this.state.value.key}</span>
 
-                <div className="rui-select-options-wrap" style={(this.state.data.length == 1 && !_this.state.filter )? {top:offset, zIndex:'1049'} : {top:offset}}>
-                    <div ref="options" className={(_this.state.data.length == 1 && !_this.state.filter && _this.props.className.indexOf('rui-theme-2') > -1)? 'rui-select-options one' : 'rui-select-options'}>
+                <div className="rui-select-options-wrap" style={isSpecial ? {top:offset, zIndex:'1049'} : {top:offset}}>
+                    <div ref="options" className={isSpecial? 'rui-select-options one' : 'rui-select-options'}>
                         {filter}
                         <ul>
                             {
                                 data.map(function (item, index) {
                                     return <li
+                                        className={(item.key == _this.state.value.key && !isSpecial) && "choosed"}
                                         onClick={item.value == 'error' ? null : _this.handleClick.bind(_this,item)}
                                         key={index}><a href="javascript:;">{item.key}</a></li>
                                 })

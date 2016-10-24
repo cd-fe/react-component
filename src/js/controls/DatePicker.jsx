@@ -9,6 +9,7 @@ import ComponentBase from '../mixins/ComponentBase.jsx';
 import Input from './Input.jsx';
 import Calendar from './datepicker/Calendar.jsx';
 import Button from './Button.jsx';
+import Icon from './Icon.jsx';
 
 import DateFormatter from '../formatters/DateFormatter.jsx';
 
@@ -138,12 +139,13 @@ module.exports = React.createClass({
      * });
      */
     setValue: function (opt) {
-        if (typeof opt == 'string' && this.props.range) {
-            this.setState({
-                value: opt
+        if (!this.props.range) {
+            this.setState(typeof opt == 'object' ? opt : {
+                value:opt,
+                valuePreview:opt
             });
         }
-        if (this.props.range) {
+        else {
             this.setState({
                 startValue: opt.startValue,
                 endValue: opt.endValue,
@@ -177,7 +179,16 @@ module.exports = React.createClass({
     togglePopup: function () {
         this.setState({
             popup: !this.state.popup
-        });
+        }, function() {
+            var rootDom = $(ReactDOM.findDOMNode(this));
+            var offset = rootDom.offset().top - window.scrollY;
+            var resultHeight = $(window).height() - offset - 38;
+            if(resultHeight < rootDom.find('.rui-datepicker-popup').height()) {
+                rootDom.addClass('upside');
+            }else {
+                rootDom.removeClass('upside');
+            }
+        }.bind(this));
     },
     hidePopup: function (e) {
         var target = e.target;
@@ -201,7 +212,8 @@ module.exports = React.createClass({
     onCalendarChange: function (event) {
         if (this.props.range || this.props.showTime) {
             this.setState({
-                value: event.data
+                value: event.data,
+                valuePreview: event.data
             }, function () {
                 this.dispatchEvent('change', this.getValue());
             }.bind(this));
@@ -216,13 +228,15 @@ module.exports = React.createClass({
     },
     startCalendarChange: function (event) {
         this.setState({
+            startValue: event.data,
             startValuePreview: event.data
-        });
+        }, ()=>this.dispatchEvent('change', this.getValue()));
     },
     endCalendarChange: function (event) {
         this.setState({
+            endValue: event.data,
             endValuePreview: event.data
-        });
+        }, ()=>this.dispatchEvent('change', this.getValue()));
     },
     rangeCalendarCancel: function () {
         this.setState({
@@ -241,6 +255,7 @@ module.exports = React.createClass({
     timeCalendarSave: function (time) {
         this.setState({
             value: time,
+            valuePreview: time,
             popup: false
         }, function () {
             this.dispatchEvent('change', this.getValue());
@@ -287,8 +302,11 @@ module.exports = React.createClass({
             return formatter.format(this.state.startValue) + '  -  ' + formatter.format(this.state.endValue);
         }
         else if (this.props.showTime) {
-            if (this.state.popup) {
+            if (!this.state.value /*this.state.popup*/) {
                 return undefined;
+            }
+            if (!this.state.value) {
+                return "";
             }
             return formatter.format(this.state.value);
         } else {
@@ -312,24 +330,23 @@ module.exports = React.createClass({
         }
 
         return <div className={classes}>
-            <Input mode="static" value={this.display()} className={defaultClass+"-input-icon"}
-                   onClick={this.togglePopup}/>
+            <Input mode="static" value={this.display()} onClick={this.togglePopup} placeholder="请选择日期"/>
+            <Icon name="calendar" style={{position:'absolute',right:'10px',top:'6px'}} />
 
             <div className={defaultClass+'-popup'}>
-                <div className={defaultClass+'-popup-arrow'}/>
-                {this.props.range && (<div className={defaultClass+'-row'}>
-                    <div className={"range-container"}>
-                        <div className={"left"}>
-                            <span>开始时间： </span><Input value={this.display('start')} onBlur={this.onStartTimeBlur}/>
-                            <span className="end">结束时间： </span><Input value={this.display('end')} onBlur={this.onEndTimeBlur}/>
-                        </div>
-                        <div className={"right"}>
-                            <Button onClick={this.rangeCalendarCancel}>取消</Button>
-                            <Button onClick={this.rangeCalendarSave} className="primary">保存</Button>
-                        </div>
-                    </div>
-                </div>)}
-                <div className={defaultClass+'-row'} style={{height:this.props.showTime ? 280 : 'auto'}}>
+                {/*this.props.range && (<div className={defaultClass+'-row'}>
+                 <div className={"range-container"}>
+                 <div className={"left"}>
+                 <span>开始时间： </span><Input value={this.display('start')} onBlur={this.onStartTimeBlur}/>
+                 <span className="end">结束时间： </span><Input value={this.display('end')} onBlur={this.onEndTimeBlur}/>
+                 </div>
+                 <div className={"right"}>
+                 <Button onClick={this.rangeCalendarCancel}>取消</Button>
+                 <Button onClick={this.rangeCalendarSave} className="primary">保存</Button>
+                 </div>
+                 </div>
+                 </div>)*/}
+                <div className={defaultClass+'-row'} style={{height:this.props.showTime ? 275 : 'auto'}}>
                     {this.props.range ? (
                         <div className={defaultClass+'-row-range'}>
                             <Calendar source={{start:this.state.startValuePreview, end:this.state.endValuePreview}}
@@ -341,7 +358,7 @@ module.exports = React.createClass({
                         </div>
                     ) : (
                         <Calendar
-                            value={this.state.value || this.dateNow(Date.now())}
+                            value={this.state.valuePreview || this.dateNow(Date.now())}
                             onChange={this.onCalendarChange}
                             showTime={this.props.showTime}
                             onCancel={this.rangeCalendarCancel}

@@ -15,6 +15,7 @@ var Example = React.createClass({
                     <RUI.Checkbox value="type_1" selected={1} onChange={this.valueChange}>初始已选</RUI.Checkbox>
                     <RUI.Checkbox value="type_2">初始未选</RUI.Checkbox>
                     <RUI.Checkbox value="type_3" selected={0} disable={true}>禁用状态</RUI.Checkbox>
+                    <RUI.Checkbox value="type_3" selected={1} disable={true}>禁用状态</RUI.Checkbox>
                 </div>
                 <h4 className="final-title">组</h4>
                 <div>

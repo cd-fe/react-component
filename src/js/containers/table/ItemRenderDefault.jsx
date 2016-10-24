@@ -3,11 +3,6 @@ import ComponentBase from '../../mixins/ComponentBase.jsx';
 
 module.exports = React.createClass({
     mixins:[ComponentBase],
-    getInitialState:function() {
-        return {
-            label:this.props.label
-        };
-    },
     getDefaultProps:function() {
         return {
             fieldFunction:function(val) {
@@ -15,16 +10,13 @@ module.exports = React.createClass({
             }
         };
     },
-    setData:function(data, field, index) {
-        var fieldValue = typeof field == 'undefined' ? data : eval(`(data['${(field+"").split('.').join('\'][\'')}'])`);
-        this.setState({
-            label:this.props.fieldFunction(fieldValue, data, index),
-            data:data
-        });
-    },
     render:function() {
-        return <span {...this.props} style={{lineHeight:this.props.itemHeight}}>
-            {this.state.label || ""}
+        var field = this.props.field;
+        var index = this.props.index;
+        var data = this.props.data;
+        var fieldValue = typeof field == 'undefined' ? data : eval(`(data['${(field+"").split('.').join('\'][\'')}'])`);
+        return <span {...this.props}>
+            {this.props.fieldFunction(fieldValue, data, index) || ""}
         </span>;
     }
 });

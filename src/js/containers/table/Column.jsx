@@ -41,72 +41,80 @@ var Column = module.exports = React.createClass({
              * @type string
              * @desc 内容单元格显示的字段内容
              */
-            dataField: null
+            dataField: null,
+            titleClassName: ""
         };
     },
     getDefaultTitleRender:function() {
-        var render = Column.findExistRender('table-title', this.props.children);
+        var render = Column.findExistRender('table-title', this.props.children).render;
         if(!render) {
             render = <ItemRenderDefault label={this.props.title || this.props.dataField} style={{height:this.props.titleHeight}} />;
         }
         return render;
     },
     getDefaultItemRender:function() {
-        var render = Column.findExistRender('table-column-item', this.props.children);
+        var result = Column.findExistRender('table-column-item', this.props.children);
+        var render = result.render;
         if(!render) {
             render = <ItemRenderDefault />;
         }
-        return render;
+        return {
+            item:result.item,
+            render:render
+        };
     },
-    componentDidMount:function() {
-        this.childrenUpdate();
-    },
-    componentDidUpdate:function() {
-        this.childrenUpdate();
-    },
-    childrenUpdate:function() {
-        var dataField = this.props.dataField;
-        Object.keys(this.refs).forEach(function(key, index) {
-            var data = this.props.source[index];
-            var child = this.refs[key];
-            if(child.setData) {
-                child.setData(data, dataField, key * 1);
-            }else {
-                console.warn('ItemRender must to implement "setData" method.', child);
-            }
-        }.bind(this));
+    renderItem:function(data, index, key) {
+        var _this = this;
+        var DefaultRenderClass = this.getDefaultItemRender();
+        //var DefaultRenderClassProps = DefaultRenderClass.props;
+        var ItemRenderProps = DefaultRenderClass.item ? DefaultRenderClass.item.props : {};
+        var DefaultRenderClassProps = DefaultRenderClass.render ? DefaultRenderClass.render.props : {};
+        var classes = className((this.props.className||"") + " " + (ItemRenderProps.className||""), this.getPropClass());
+        var _this = this;
+        return <ItemRender {...ItemRenderProps} className={classes} style={{height:_this.props.itemHeight}} key={key}>{React.cloneElement(DefaultRenderClass.render, merge({
+            fieldFunction:_this.props.fieldFunction,
+            itemHeight:_this.props.itemMiddle ? _this.props.itemHeight + 'px' : null,
+            data:data,
+            index:index,
+            field:_this.props.dataField
+        }, DefaultRenderClassProps))}</ItemRender>;
     },
     render:function() {
-        var classes = className(this.props.className, this.getPropClass());
-
-        var DefaultRenderClass = this.getDefaultItemRender();
-        var DefaultRenderClassProps = DefaultRenderClass.props;
-        var _this = this;
-        return <ul {...this.props} className={classes}>
-            {/*<TitleRender>
-                {this.getDefaultTitleRender()}
-            </TitleRender>*/}
-            {this.props.source && this.props.source.map(function(item, index) {
-                return <ItemRender key={index} style={{height:_this.props.itemHeight}}>{React.cloneElement(DefaultRenderClass, merge({
-                    ref:index,
-                    fieldFunction:_this.props.fieldFunction,
-                    itemHeight:_this.props.itemMiddle ? _this.props.itemHeight + 'px' : null
-                }, DefaultRenderClassProps))}</ItemRender>;
-            })}
-        </ul>;
+        return <div />;
+        //var classes = className(this.props.className, this.getPropClass());
+        //
+        //var DefaultRenderClass = this.getDefaultItemRender();
+        //var DefaultRenderClassProps = DefaultRenderClass.props;
+        //var _this = this;
+        //return <ul {...this.props} className={classes}>
+        //    {/*<TitleRender>
+        //        {this.getDefaultTitleRender()}
+        //    </TitleRender>*/}
+        //    {this.props.source && this.props.source.map(function(item, index) {
+        //        return <ItemRender key={index} style={{height:_this.props.itemHeight}}>{React.cloneElement(DefaultRenderClass, merge({
+        //            ref:index,
+        //            fieldFunction:_this.props.fieldFunction,
+        //            itemHeight:_this.props.itemMiddle ? _this.props.itemHeight + 'px' : null
+        //        }, DefaultRenderClassProps))}</ItemRender>;
+        //    })}
+        //</ul>;
     }
 });
 
 Column.findExistRender = function(cname, childlist) {
+    var exist = null;
     var render = null;
     if(childlist) {
         var children = childlist instanceof Array ? childlist : [childlist];
-        var exist = children.find(function(child) {
+        exist = children.find(function(child) {
             return child.props.cname == cname;
         });
         if(exist) {
             render = exist.props.children;
         }
     }
-    return render;
+    return {
+        item:exist,
+        render:render
+    };
 };
