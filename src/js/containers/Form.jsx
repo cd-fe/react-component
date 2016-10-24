@@ -9,6 +9,7 @@
 
 import ComponentBase from '../mixins/ComponentBase.jsx';
 import className from '../util/className.jsx';
+import Row from './form/Row.jsx';
 import Control from './form/Control.jsx';
 import Reset from './form/Reset.jsx';
 import Submit from './form/Submit.jsx';
@@ -43,10 +44,10 @@ var Form = React.createClass({
         };
     },
     serializeArray:function() {
-        var list = Object.keys(this.refs || []).map(function(ref) {
-            return this.refs[ref];
+        let list = [];
+        Object.keys(this.refs || []).forEach(function(ref) {
+            list = list.concat(this.refs[ref].getValue());
         }.bind(this));
-
         var array = [];
         list.forEach(function(item) {
             var result = item && item.getValue && item.getValue();
@@ -57,7 +58,6 @@ var Form = React.createClass({
                 });
             }
         });
-
         return array;
     },
     serializeObject:function() {
@@ -100,17 +100,18 @@ var Form = React.createClass({
             {React.Children.map(this.props.children, function(child, index) {
                 var props = Object.assign({
                     form:this,
-                    ref:'control' + index
+                    index : index,
+                    ref:'row_' + index
                 }, child.props);
-
                 return React.cloneElement(child, props);
             }.bind(this))}
         </form>;
     }
 });
-
+Form.Row = Row;
 Form.Control = Control;
 Form.Submit = Submit;
 Form.Reset = Reset;
+
 
 module.exports = Form;

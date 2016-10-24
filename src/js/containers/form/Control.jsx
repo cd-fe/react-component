@@ -16,7 +16,7 @@ var Label = React.createClass({
 
 var Content = React.createClass({
     render:function() {
-        return <div className={"rui-form-content"}>{this.props.children}</div>
+        return <div className={"rui-form-content is-validating has-feedback"}>{this.props.children}</div>
     }
 });
 
@@ -61,14 +61,18 @@ var Control = React.createClass({
     render:function() {
         var ControlMap = Control.findControlMap(this.props.type);
 
+        //is-success, is-error, is-warn, is-validating
         var props = omit(this.props, 'cname');
 
         return <div {...this.props} className={className(this.props.className, this.getPropClass())}>
             <Label>{this.props.label}</Label>
             <Content>
-                <ControlMap.tag {...props} {...ControlMap.props} ref="content">
-                    {this.props.children}
-                </ControlMap.tag>
+                <span className="input-wrapper">
+                    <ControlMap.tag {...props} {...ControlMap.props} ref="content">
+                        {this.props.children}
+                    </ControlMap.tag>
+                </span>
+                <div className="form-explain">错误信息</div>
             </Content>
         </div>;
     }

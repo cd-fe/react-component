@@ -1,0 +1,48 @@
+/**
+ * 表单行组件
+ * @module containers/form/Control
+ */
+
+import ComponentBase from '../../mixins/ComponentBase.jsx';
+
+import omit from '../../util/omit.jsx';
+import className from '../../util/className.jsx';
+var Row = React.createClass({
+    /**
+     * 基础方法
+     * @see {@link module:mixins/ComponentBase}
+     */
+    mixins:[ComponentBase],
+    getDefaultProps:function() {
+        return {
+            /**
+             * @instance
+             * @default control
+             * @type string
+             * @desc 组件名称r
+             */
+            cname:'row'
+        };
+    },
+    getValue:function() {
+       return Object.keys(this.refs).map(function(ref) {
+            return this.refs[ref];
+       }.bind(this));
+    },
+    render:function() {
+        var classes = className(this.props.className, this.getPropClass());
+        return (
+            <div {...this.props} className={classes}>
+                {React.Children.map(this.props.children, function(child, index) {
+                    var props = Object.assign({
+                        form:this.props.form,
+                        ref:['control',this.props.index ,index].join('_')
+                    }, child.props);
+                    return React.cloneElement(child, props);
+                }.bind(this))}
+            </div>
+        )
+    }
+});
+
+module.exports = Row;
