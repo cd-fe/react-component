@@ -49,7 +49,32 @@ module.exports = React.createClass({
              *      console.log(event.target.value);
              * }
              */
-            onChange: null
+            onChange: null,
+            /**
+             * @instance
+             * @default true
+             * @type boolean
+             * @desc 是否显示文本字数限制，该属性必须与maxLength同时存在时才会生效
+             */
+            showMaxLength:false,
+            /**
+             * @instance
+             * @default undefined
+             * @type number
+             * @desc 该文本域可输入的最大字符长度，该属性效果根据浏览器实现为准
+             */
+            maxLength:undefined,
+            /**
+             * @instance
+             * @default function
+             * @param value
+             * @param max
+             * @return {number}
+             * @desc “可输入文本长度”的自定义函数，开发者可根据自己的规则进行显示，例如一个汉字作为两个字符长度
+             */
+            maxLengthHandler:function(value, max) {
+                return max - (value||"").replace(/[\r\n]/g, '**').length;
+            }
         };
     },
     getInitialState: function () {
@@ -106,19 +131,25 @@ module.exports = React.createClass({
     },
     render: function () {
         var props = omit(this.props, 'onFocus', 'onChange', 'value', 'readonly');
+        var showNumber = this.props.maxLengthHandler(this.state.value, this.props.maxLength);
 
         if (this.props.disable) {
             props.disabled = true;
         }
 
-        return <input {...props}
-            type={this.props.type}
-            value={this.state.value+""}
-            onChange={this.changeHandler}
-            onFocus={this.focusHandler}
-            onBlur={this.blurHandler}
-            onKeyDown={this.keyDownHandler}
-            className={className(this.props.className, this.getPropClass())}
-        ></input>;
+        return <div className="rui-input-container">
+            <input {...props}
+                   type={this.props.type}
+                   value={this.state.value+""}
+                   onChange={this.changeHandler}
+                   onFocus={this.focusHandler}
+                   onBlur={this.blurHandler}
+                   onKeyDown={this.keyDownHandler}
+                   className={className(this.props.className, this.getPropClass())}
+            ></input>
+            {(this.props.maxLength && this.props.showMaxLength) && (
+                <div className="rui-input-limittext">{}</div>
+            )}
+        </div>;
     }
 });
