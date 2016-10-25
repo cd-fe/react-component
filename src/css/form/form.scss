@@ -74,23 +74,23 @@
   background-position: 0 -16px;
 }
 
-.is-warn .rui-input, .is-warn .rui-input:focus, .is-warn .rui-input:hover {
+.is-warning .rui-input, .is-warning .rui-input:focus, .is-warning .rui-input:hover {
   border-color: #ff9010;
   outline: 0;
   box-shadow: 0 0 0 2px rgba(255,85,0,.2);
 }
-.is-warn .form-explain{
+.is-warning .form-explain{
   color: #ff9010;
 }
-.is-warn.has-feedback:after {
+.is-warning.has-feedback:after {
   background: url('../../img/tip_status.png') 0 0 no-repeat;
   background-position: 0 -32px;
 }
 
 .is-success .rui-input, .is-success .rui-input:focus, .is-success .rui-input:hover {
-   border-color: #00bf57;
+   //border-color: #00bf57;
    outline: 0;
-   box-shadow: 0 0 0 2px rgba(177,235,204,.38);
+   //box-shadow: 0 0 0 2px rgba(177,235,204,.38);
  }
 .is-success .form-explain{
   color: #00bf57;
@@ -119,4 +119,17 @@
   animation: loadingCircle 1s infinite linear;
   content: "\E6AE";
   color: #999;
+}
+
+
+.required {
+  display: inline-block;
+  margin-right: 4px;
+  vertical-align: middle;
+  font {
+    family: SimSun;
+    style : normal;
+    size:12px;
+  }
+  color: #f50;
 }

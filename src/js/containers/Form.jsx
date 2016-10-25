@@ -9,12 +9,13 @@
 
 import ComponentBase from '../mixins/ComponentBase.jsx';
 import className from '../util/className.jsx';
+import Pubsub from './form/Pubsub.jsx';
 import Row from './form/Row.jsx';
 import Control from './form/Control.jsx';
 import Reset from './form/Reset.jsx';
 import Submit from './form/Submit.jsx';
 
-import '../../css/form.scss';
+import '../../css/form/form.scss';
 
 var Form = React.createClass({
     /**
@@ -49,8 +50,10 @@ var Form = React.createClass({
             list = list.concat(this.refs[ref].getValue());
         }.bind(this));
         var array = [];
-        list.forEach(function(item) {
+        list.forEach(function(item, index) {
             var result = item && item.getValue && item.getValue();
+            //TODO 验证数据
+            Pubsub.publish('Check_UID' + index,[result]);
             if(result) {
                 array.push({
                     name:item.props.name,
@@ -99,9 +102,11 @@ var Form = React.createClass({
         return <form {...this.props} className={classes} onSubmit={this.submitHandler}>
             {React.Children.map(this.props.children, function(child, index) {
                 var props = Object.assign({
-                    form:this,
-                    index : index,
-                    ref:'row_' + index
+                    form : this,
+                    index : this.props.children.length,
+                    sindex : index,
+                    ref:'row_' + index,
+                    //validateStatus : this.state.validateStatus[index]
                 }, child.props);
                 return React.cloneElement(child, props);
             }.bind(this))}

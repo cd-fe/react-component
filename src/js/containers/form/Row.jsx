@@ -1,6 +1,6 @@
 /**
  * 表单行组件
- * @module containers/form/Control
+ * @module containers/form/Row
  */
 
 import ComponentBase from '../../mixins/ComponentBase.jsx';
@@ -34,9 +34,12 @@ var Row = React.createClass({
         return (
             <div {...this.props} className={classes}>
                 {React.Children.map(this.props.children, function(child, index) {
+                    console.log('length',this.props.children);
                     var props = Object.assign({
                         form:this.props.form,
-                        ref:['control',this.props.index ,index].join('_')
+                        index:this.props.index + index,
+                        ref:['control',this.props.index ,index].join('_'),
+                        //validateStatus : this.props.form.validateStatus[this.props.index][index]
                     }, child.props);
                     return React.cloneElement(child, props);
                 }.bind(this))}

@@ -163,8 +163,9 @@ module.exports = React.createClass({
         //_this._choose = e;
         this.setState({
             value:e
+        },function() {
+            this.props.callback && this.props.callback(e);
         });
-        this.props.callback && this.props.callback(e);
     },
     handleFilter: function (source) {
         var _this = this, res;
