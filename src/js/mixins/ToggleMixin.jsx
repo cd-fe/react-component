@@ -38,7 +38,9 @@ module.exports = {
             }
 
             this.toggleValues = values;
-            this.toggleValue = this.props.selected ? 1 : 0;
+            this.toggleValue = typeof this.props.selected != 'undefined' ?
+                (this.props.selected ? 1 : 0) :
+                (this.props.defaultSelected ? 1 : 0);
 
             this.forceUpdate();
         }

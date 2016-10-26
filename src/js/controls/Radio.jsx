@@ -28,10 +28,17 @@ module.exports = React.createClass({
             /**
              * @instance
              * @default 0
-             * @type number
+             * @type boolean
              * @desc 当前组件选中状态，值为: 0 和 1
              */
-            selected: 0,
+            selected: undefined,
+            /**
+             * @instance
+             * @default 0
+             * @type boolean
+             * @desc 首次渲染时的默认值
+             */
+            defaultSelected: undefined,
             /**
              * @instance
              * @default
@@ -73,7 +80,9 @@ module.exports = React.createClass({
     },
     componentDidMount: function () {
         this.toggleValues = ['', 'selected'];
-        this.toggleValue = this.props.selected ? 1 : 0;
+        this.toggleValue = typeof this.props.selected != 'undefined' ?
+            (this.props.selected ? 1 : 0) :
+            (this.props.defaultSelected ? 1 : 0);
 
         var node = ReactDOM.findDOMNode(this);
         $(node).bind('click', this.clickHandler);

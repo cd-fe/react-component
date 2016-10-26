@@ -38,7 +38,14 @@ module.exports = React.createClass({
              * @type boolean
              * @desc 当前是否选中
              */
-            selected: false
+            selected: undefined,
+            /**
+             * @instance
+             * @default false
+             * @type boolean
+             * @desc 初次渲染，默认选中状态
+             */
+            defaultSelected: undefined
         };
     },
     componentDidMount: function () {
