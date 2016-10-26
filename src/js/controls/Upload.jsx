@@ -4,8 +4,10 @@
  */
 
 import className from '../util/className.jsx';
+import ids from '../util/id.jsx';
 import ComponentBase from '../mixins/ComponentBase.jsx';
 import Icon from './Icon.jsx';
+import FormManager from '../managers/FormManager.jsx';
 
 import '../../css/upload.scss';
 
@@ -31,11 +33,24 @@ var UploadButton = React.createClass({
             progress:0
         };
     },
-    getInputFile:function() {
+    componentDidMount:function() {
+        this.formId = ids();
+        this.updateForm();
+    },
+    updateForm:function() {
+        this.form = this.destroyForm();
+        if(!this.props.disable) {
+            this.form = this.createForm();
+        }
+    },
+    destroyForm:function() {
+        return FormManager.destroy(this.formId);
+    },
+    createForm:function() {
         var props = {
             type:'file',
             name:this.props.name,
-            className:'rui-upload-input',
+            class:'rui-upload-input',
             onChange:this.fileChangeHandler
         };
         if(this.props.disable) {
@@ -44,17 +59,24 @@ var UploadButton = React.createClass({
         if(this.props.multiple) {
             // props.multiple = true;
         }
-        return <form ref="form" id={this._reactInternalInstance._rootNodeID} encType="multipart/form-data" method="post">
-            <input {...props} />
-        </form>;
+
+        return FormManager.create({
+            id:'form' + this.formId,
+            encType:"multipart/form-data",
+            method:"post"
+        }, props);
     },
     setValue:function(file) {
         this.props.onChange([file], this.props.index);
     },
     reset:function() {
-        if(this.refs.form) {
-            this.refs.form.reset();
+        var form = FormManager.get("form" + this.formId);
+        if(form) {
+            form.reset();
         }
+    },
+    clickHandler:function() {
+        $('[id="'+'form' + this.formId+'"] input').click();
     },
     fileChangeHandler:function(e) {
         var files = e.target.files;
@@ -142,21 +164,19 @@ var UploadButton = React.createClass({
         this.props.onChange && this.props.onChange(null, this.props.index);
     },
     render:function() {
-        return <div className="rui-upload-button">
+        return <div className="rui-upload-button" disabled={this.props.disable ? 1 : 0} id={this._reactInternalInstance._rootNodeID}>
             {this.props.multiple ? (
-                <div className={"rui-upload-button-content" + (this.props.file ? " has-image" : "")}>
+                <div className={"rui-upload-button-content" + (this.props.file ? " has-image" : "")} onClick={this.clickHandler}>
                     {this.props.file && <UploadImage file={this.props.file} />}
                     {(this.props.file && this.props.autoUpload && this.state.progress < 100) && <div className={"rui-upload-button-progress"}>
                         <div className="rui-upload-button-progress-line" style={{left:this.state.progress+'%', width:(100-this.state.progress)+'%'}}></div>
                         <div className="rui-upload-button-progress-text">{this.state.progress}%</div>
                     </div>}
-                    {!this.props.disable && this.getInputFile()}
                 </div>
             ) : (
                 <RUI.Button onClick={this.clickHandler}>
                     <RUI.Icon name="upload" />
                     点击上传
-                    {!this.props.disable && this.getInputFile()}
                 </RUI.Button>
             )}
             {(this.props.multiple && this.props.file && this.props.showDelete) && (
