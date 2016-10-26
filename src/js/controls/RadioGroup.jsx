@@ -82,7 +82,7 @@ module.exports = React.createClass({
     render: function () {
         var children = null;
         if (this.props.children) {
-            children = this.props.children.map(function (child, index) {
+            children = React.Children.map(this.props.children, function (child, index) {
                 var props = {
                     key: index
                 };

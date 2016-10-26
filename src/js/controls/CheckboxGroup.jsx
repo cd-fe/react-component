@@ -48,7 +48,7 @@ module.exports = React.createClass({
     render: function () {
         var children = [];
         if (this.props.children) {
-            children = this.props.children.map(function (child, index) {
+            children = React.Children.map(this.props.children, function (child, index) {
                 var props = clone(child.props);
                 if (props && !empty(props)) {
                     if (props.onChange) {
