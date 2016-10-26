@@ -34,11 +34,10 @@ var Row = React.createClass({
         return (
             <div {...this.props} className={classes}>
                 {React.Children.map(this.props.children, function(child, index) {
-                    console.log('length',this.props.children);
                     var props = Object.assign({
                         form:this.props.form,
-                        index:this.props.index + index,
-                        ref:['control',this.props.index ,index].join('_'),
+                        ref:['Control',this.props.index ,index].join('_'),
+                        mark : ['Control',this.props.index ,index].join('_')
                         //validateStatus : this.props.form.validateStatus[this.props.index][index]
                     }, child.props);
                     return React.cloneElement(child, props);

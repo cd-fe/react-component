@@ -53,13 +53,25 @@ var Control = React.createClass({
              * @desc 表单行组件显示的文本内容
              */
             label: null,
+            /**
+             * @instance
+             * @type string
+             * @desc 验证状态，可选值有is-success, is-error, is-warning, is-validating
+             */
+            validateStatus : '',
+            /**
+             * @instance
+             * @type string
+             * @desc 表单组件验证描述
+             */
+            explain : ''
 
-            validateStatus : ''
         };
     },
     getInitialState : function() {
         return {
-            validateStatus : this.props.validateStatus
+            validateStatus : this.props.validateStatus,
+            explain : this.props.explain
         }
     },
     /**
@@ -71,30 +83,38 @@ var Control = React.createClass({
         return this.refs.content.getValue && (this.refs.content.getValue() || null);
     },
     componentDidMount : function() {
-        Pubsub.subscribe('Check_UID' + this.props.index, function (key, value) {
-            console.dir('+++++++++++++++++++');
-            console.dir(value[0]);
+        //TODO 验证顺序不一致，待优化
+        this.props.required && Pubsub.subscribe('Check_UID_' + this.props.mark, function (key, value) {
             Check(value[0], this);
         }.bind(this));
+
+    },
+    buildMsg : function() {
+        var status = this.state.validateStatus;
+        var type = this.props.type;
+        var html = null;
+
+        switch(status) {
+            case 'is-warning' :
+                html = <div className="form-explain">{this.state.explain}</div>;
+                break;
+            case 'is-error' :
+                html = <div className="form-explain">{this.state.explain}</div>;
+                break;
+            case 'is-validating' :
+                break;
+            case 'is-success' :
+                break;
+        }
+        return html;
     },
     render:function() {
         var ControlMap = Control.findControlMap(this);
 
         var props = omit(this.props, 'cname');
 
-        //is-success, is-error, is-warn, is-validating
-        /*var arrts = {
-            type : '',//组件类型
-            rquired : true,
-            reg : '',//配有常用正则，也可以采用正则表达式
-            requiredMsg : '必填信息',
-            explain : '格式不正确',
-            validator : function() {},//验证函数
-            trigger : '',//触发事件
-            validateStatus : '',//success' | 'warning' | 'error' | 'validating';
-            remote : ''//远程
-        };*/
         var cls;
+
         if(this.state.validateStatus) {
             cls = "rui-form-content " + (this.state.validateStatus)
         }else {
@@ -106,40 +126,18 @@ var Control = React.createClass({
 
         return <div {...this.props} className={className(this.props.className, this.getPropClass())}>
                     <label className={"rui-form-label"}>{this.props.required ?  (<i className="required">*</i>) : null}{this.props.label}</label>
-                    <div className={cls}>
+                    {this.props.desc && this.props.desc.ldesc}
+                    <div className={className(cls,this.props.wcname)}>
                         <span className="input-wrapper">
                             <ControlMap.tag {...props} {...ControlMap.props} ref="content">
                                 {this.props.children}
                             </ControlMap.tag>
                         </span>
                         {
-                            (function(e) {
-                                var status = e.state.validateStatus;
-                                var type = e.props.type;
-                                var html = null;
-
-
-                                switch(status) {
-                                    case 'is-warning' :
-                                        html = <div className="form-explain">{e.props.explain}</div>;
-                                        break;
-                                    case 'is-error' :
-                                        html = <div className="form-explain">{e.props.requireMsg}</div>;
-                                        break;
-                                    case 'is-validating' :
-                                        break;
-                                    case 'is-success' :
-                                        break;
-                                }
-
-                                if(e.props.remote) {
-                                    html = <div className="form-explain">{e.state.remoteMsg}</div>
-                                }
-
-                                return html;
-                            })(this)
+                           this.buildMsg()
                         }
                     </div>
+                    {this.props.desc && this.props.desc.rdesc}
                 </div>;
     }
 });
@@ -210,8 +208,6 @@ Control.findControlMap = function(rc) {
         result.props[evt] = function(e) {
             window.setTimeout(function() {
                 var value = rc.getValue() || '';
-                console.dir('1231313131231231231232');
-                console.dir(rc);
                 Check(value, rc);
             },0);
         };

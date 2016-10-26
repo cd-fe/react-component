@@ -1,13 +1,17 @@
 var Example = React.createClass({
     submitHandler:function(data, form) {
-        alert(JSON.stringify(data));
-        return false;
+        //
+        console.dir(data);
     },
     commonFunc : function(e) {
         console.log(e);
     },
+    nameCheck : function(value) {
+        console.log('namecheck======================= ' + value);
+    },
     render:function() {
         var selectData = [
+            { key:'请选择', value:0 },
             { key:'管理员', value:1 },
             { key:'编辑', value:2 },
             { key:'审查', value:3 }
@@ -17,68 +21,12 @@ var Example = React.createClass({
             <h2 className="title">表单<span>Form</span></h2>
             <h3 className="sub-title">演示</h3>
             <div className="example">
-                {/*
-                 <h4 className="final-title">垂直布局</h4>
-                 <div>
-                 <RUI.Form className="horizonal">
-                 <RUI.Form.Row>
-                 <RUI.Form.Control name="name" label="用户名：" placeholder="请输入邮箱" />
-                 </RUI.Form.Row>
-                 <RUI.Form.Row>
-                 <RUI.Form.Control name="name" label="手机号：" placeholder="请输入手机号" />
-                 </RUI.Form.Row>
-                 </RUI.Form>
-                 </div>
-                 <h4 className="final-title">水平布局</h4>
-                 <div>
-                 <RUI.Form className="horizonal">
-                 <RUI.Form.Row>
-                 <RUI.Form.Control name="name" label="用户名：" placeholder="请输入邮箱" />
-                 <RUI.Form.Control name="name" label="手机号：" placeholder="请输入手机号" />
-                 <RUI.Form.Control name="interest" label="兴趣：" type="checkbox">
-                 <RUI.Checkbox value="1">科技</RUI.Checkbox>
-                 <RUI.Checkbox value="2">摄影</RUI.Checkbox>
-                 <RUI.Checkbox value="3">旅游</RUI.Checkbox>
-                 <RUI.Checkbox value="4">娱乐</RUI.Checkbox>
-                 </RUI.Form.Control>
-                 </RUI.Form.Row>
-                 </RUI.Form>
-                 </div>
-                 <h4 className="final-title">提交与重置</h4>
-                 <div>
-                 <RUI.Form className="horizonal">
-                 <RUI.Form.Row>
-                 <RUI.Form.Control name="name" label="用户名：" placeholder="请输入邮箱或者手机号" />
-                 </RUI.Form.Row>
-                 <RUI.Form.Row>
-                 <RUI.Form.Control name="password" label="密码：" type="password" placeholder="请输入密码" />
-                 </RUI.Form.Row>
-                 <RUI.Form.Row>
-                 <RUI.Form.Control name="interest" label="兴趣：" type="checkbox">
-                 <RUI.Checkbox value="1">科技</RUI.Checkbox>
-                 <RUI.Checkbox value="2">摄影</RUI.Checkbox>
-                 <RUI.Checkbox value="3">旅游</RUI.Checkbox>
-                 <RUI.Checkbox value="4">娱乐</RUI.Checkbox>
-                 </RUI.Form.Control>
-                 </RUI.Form.Row>
-                 <RUI.Form.Row>
-                 <RUI.Form.Control name="male" label="性别：" type="radio">
-                 <RUI.Radio value="1">男</RUI.Radio>
-                 <RUI.Radio value="0">女</RUI.Radio>
-                 </RUI.Form.Control>
-                 </RUI.Form.Row>
-                 <RUI.Form.Row>
-                 <RUI.Form.Control name="role" label="角色：" type="select" data={selectData} />
-                 </RUI.Form.Row>
-                 <RUI.Form.Row>
-                 <RUI.Form.Submit>保存</RUI.Form.Submit>
-                 </RUI.Form.Row>
-                 </RUI.Form>
-                 </div>
-                */}
                 <h4 className="final-title">验证</h4>
                 <div>
                     <RUI.Form className="horizonal" onSubmit={this.submitHandler}>
+                        <RUI.Form.Row>
+                            <p style={{paddingBottom:'5px',fontSize:'16px',fontWeight:'bold',borderBottom: "1px dashed #dadada"}}>输入框</p>
+                        </RUI.Form.Row>
                         <RUI.Form.Row>
                             <RUI.Form.Control
                                 label="倍棒账号："
@@ -87,9 +35,10 @@ var Example = React.createClass({
 
                                 type="input"
                                 remote={{
-                                    url:"https://openapi.youku.com/v2/videos/show.json?client_id=599c0d569cbd70d7&video_id=XMTc3MzM5OTc3Ng==",
-                                    type : 'post',
-                                    data : {}
+                                    url:"../../src/js/containers/form/remote.json",
+                                    type : 'get',
+                                    dataType : 'json',
+                                    data : 'key'
                                 }}
                                 required={true}
                                 reg={/^[0-9]+$/}
@@ -115,9 +64,50 @@ var Example = React.createClass({
                                 explain="手机号合格不正确"
                                 trigger={'onBlur|onChange'}
                                 validator={this.phoneCheck}
-                                validateStatus=""
 
                             />
+                        </RUI.Form.Row>
+                        <RUI.Form.Row>
+                            <RUI.Form.Control
+                                label="QQ："
+                                name="phone"
+
+                                type="input"
+                                validator={this.QQCheck}
+                            />
+                        </RUI.Form.Row>
+
+                        <RUI.Form.Row>
+                            <RUI.Form.Control
+                                desc={{
+                                    ldesc : <i className="desc">每人每日有</i>,
+                                    rdesc : <i className="desc">抽奖机会</i>
+                                }}
+                                label="抽奖机会："
+                                name="times"
+                                wcname="width_80"
+                                type="input"
+                                reg={'number'}
+                                validator={this.timesCheck}
+                            />
+                        </RUI.Form.Row>
+
+                        <RUI.Form.Row>
+                            <RUI.Form.Control
+                                desc={{
+                                    ldesc : '',
+                                    rdesc : <i className="desc"><strong>%</strong> <em className="grey">这意味着每十次抽奖3次获奖</em></i>
+                                }}
+                                label="获奖概率："
+                                name="times"
+                                wcname="width_80"
+                                type="input"
+                                reg={'number'}
+                                validator={this.timesCheck}
+                            />
+                        </RUI.Form.Row>
+                        <RUI.Form.Row>
+                            <p style={{paddingBottom:'5px',fontSize:'16px',fontWeight:'bold',borderBottom: "1px dashed #dadada"}}>其它</p>
                         </RUI.Form.Row>
                         <RUI.Form.Row>
                             <RUI.Form.Control
@@ -179,7 +169,7 @@ var Example = React.createClass({
                                 validator={this.interestCheck}
                                 validateStatus=""
                             >
-                                <RUI.Checkbox value="1">科技</RUI.Checkbox>
+                                <RUI.Checkbox value="1" selected={'1'}>科技</RUI.Checkbox>
                                 <RUI.Checkbox value="2">摄影</RUI.Checkbox>
                                 <RUI.Checkbox value="3">旅游</RUI.Checkbox>
                                 <RUI.Checkbox value="4">娱乐</RUI.Checkbox>
@@ -191,9 +181,9 @@ var Example = React.createClass({
                                 label="角色："
 
                                 type="select"
-                                required={true}
+                                /*required={true}*/
                                 requireMsg="请选择角色"
-                                value={{key:'选择',value:'2'}}
+                                stuff={true}
                                 trigger={'onChange'}
                                 validator={this.commonFunc}
                                 validateStatus=""

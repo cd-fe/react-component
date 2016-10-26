@@ -44,39 +44,56 @@ var Form = React.createClass({
             }
         };
     },
-    serializeArray:function() {
-        let list = [];
-        Object.keys(this.refs || []).forEach(function(ref) {
-            list = list.concat(this.refs[ref].getValue());
-        }.bind(this));
-        var array = [];
-        list.forEach(function(item, index) {
-            var result = item && item.getValue && item.getValue();
-            //TODO 验证数据
-            Pubsub.publish('Check_UID' + index,[result]);
-            if(result) {
-                array.push({
-                    name:item.props.name,
-                    value:result
-                });
-            }
-        });
-        return array;
-    },
-    serializeObject:function() {
-        var array = this.serializeArray();
+    serializeObject:function(array) {
         var data = {};
         array.forEach(function(item) {
             data[item.name] = item.value;
         });
         return data;
     },
+    serializeArray:function() {
+        var list = [], refs = [],array = [];
+
+        Object.keys(this.refs || []).forEach(function(ref) {
+            refs = refs.concat(Object.keys(this.refs[ref].refs));
+            list = list.concat(this.refs[ref].getValue());
+        }.bind(this));
+
+        list.forEach(function(item, index) {
+            var result = item && item.getValue && item.getValue();
+            //TODO 验证数据
+            Pubsub.publish('Check_UID_' + refs[index],[result]);
+           if(item.toString() == '[object Object]') {
+                array.push({
+                    name:item.props.name,
+                    required:item.props.required || false,
+                    value:result
+                });
+            }
+        });
+
+        //filter
+        array = array.filter(function(item, index) {
+            return typeof item.name !== 'undefined'
+        });
+        //获取必选项
+        var isValid = array.filter(function(item, index) {
+                                return !!item.required})
+                            .every(function(item, index) {
+                                return !!item.value
+                            });
+        if(isValid) {
+            array = this.serializeObject(array);
+        }
+        return isValid ? array : isValid;
+    },
     submitHandler:function(e) {
-        var result = this.props.onSubmit(this.serializeObject(), this);
-        if(result === false) {
+        var result = this.serializeArray();
+        if(result) {
+            this.props.onSubmit(result, this);
+        }else {
             e && e.nativeEvent.preventDefault();
         }
-        return result;
     },
     /**
      * 提交表单，该方法会触发 props.onSubmit 回调
@@ -103,9 +120,8 @@ var Form = React.createClass({
             {React.Children.map(this.props.children, function(child, index) {
                 var props = Object.assign({
                     form : this,
-                    index : this.props.children.length,
-                    sindex : index,
-                    ref:'row_' + index,
+                    ref:'Row_' + index,
+                    index:index
                     //validateStatus : this.state.validateStatus[index]
                 }, child.props);
                 return React.cloneElement(child, props);

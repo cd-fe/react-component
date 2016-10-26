@@ -28,9 +28,14 @@
   float:left;
   position: relative;
   zoom: 1;
-  .rui-input {
-    padding: 0 20px 0 10px
+  .input-wrapper {
+    width:100%;
+    .rui-input {
+      width:100%;
+      padding: 0 20px 0 10px
+    }
   }
+
 }
 .rui-form-label {
   float:left;
@@ -132,4 +137,16 @@
     size:12px;
   }
   color: #f50;
+}
+.width_80 {
+  width:80px;
+}
+.desc{
+  float: left;
+  font-style: normal;
+  margin:8px 5px 0;
+}
+.grey {
+  font-style: normal;
+  color:#cacaca;
 }

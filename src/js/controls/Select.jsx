@@ -131,6 +131,7 @@ module.exports = React.createClass({
         var ul = $(node).find('ul');
         var li = ul.find('li');
         _this.doEvent();
+
     },
     onMouseLeave: function () {
         this.close();
@@ -164,7 +165,10 @@ module.exports = React.createClass({
         this.setState({
             value:e
         },function() {
-            this.props.callback && this.props.callback(e);
+            if (_this.dispatchEvent) {
+                _this.dispatchEvent('change', _this.getValue());
+            }
+            _this.props.callback && _this.props.callback(e);
         });
     },
     handleFilter: function (source) {
@@ -198,13 +202,10 @@ module.exports = React.createClass({
         var _this = this;
         return _this._choose ? _this._choose : _this.state.value;
     },
-
     getValue: function () {
         return this._getChoose();
     },
-
     render: function () {
-
         var _this = this,
             active = this.state.active,
             data = this.state.data,
@@ -232,7 +233,7 @@ module.exports = React.createClass({
 
         return (
 
-            <div ref="container" className={final}>
+            <div ref="container" className={final} onChange={this.props.onChange}>
                 <i className="arrow"></i>
                 <span ref="choose" className="placeholder">{this.state.value.key}</span>
 
