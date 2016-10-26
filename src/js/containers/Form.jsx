@@ -21,6 +21,14 @@ var Form = React.createClass({
      * @see {@link module:mixins/ComponentBase}
      */
     mixins:[ComponentBase],
+    contextTypes: {
+        form:React.PropTypes
+    },
+    getChildContext:function() {
+        return {
+            form:this
+        };
+    },
     getDefaultProps:function() {
         return {
             /**

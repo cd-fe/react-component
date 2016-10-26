@@ -37,11 +37,11 @@ var Control = React.createClass({
             cname:'control',
             /**
              * @instance
-             * @default input
+             * @default null
              * @type string
              * @desc 表单行内的表单输入类型，可选值有 input, password, checkbox, radio 等
              */
-            type: 'input',
+            type: null,
             /**
              * @instance
              * @type string
@@ -66,13 +66,18 @@ var Control = React.createClass({
         var ControlMap = Control.findControlMap(this.props.type, this.props);
 
         var props = omit(this.props, 'cname');
+        if(!ControlMap && this.props.children instanceof Array) {
+            throw new Error('custom Form.Control have to own single child.');
+        }
 
         return <div {...this.props} className={"clearfix " + className(this.props.className, this.getPropClass())}>
             <Label className={this.props.labelClassName} style={this.props.labelStyle}>{this.props.label}</Label>
             <Content className={this.props.contentClassName} style={this.props.contentStyle}>
-                <ControlMap.tag {...props} {...ControlMap.props} ref="content">
+                {ControlMap ? (<ControlMap.tag {...props} {...ControlMap.props} ref="content">
                     {this.props.children}
-                </ControlMap.tag>
+                </ControlMap.tag>) : (
+                    this.props.children
+                )}
             </Content>
         </div>;
     }
@@ -80,9 +85,10 @@ var Control = React.createClass({
 
 Control.findControlMap = function(type, props) {
     var result = null;
+    if(!type) {
+        return result;
+    }
 
-    type = type || 'input';
-    
     if(type == 'password') {
         result = {
             tag:'Input',

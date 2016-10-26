@@ -92,7 +92,7 @@ module.exports = React.createClass({
                     <span>首页</span>&gt;<RUI.Link>组件列表</RUI.Link>&gt;<RUI.Link className="selected">示例页面</RUI.Link>
                 </div>
             </div>
-            <RUI.Form>
+            <RUI.Form onSubmit={(value)=>console.log(value)}>
                 <div className="row">
                     <RUI.Button className="primary">btn-primary</RUI.Button>
                     <RUI.Button>btn-default</RUI.Button>
@@ -113,7 +113,7 @@ module.exports = React.createClass({
                     <RUI.Input disable={true} placeholder="禁用" />
                 </div>
                 <div className="row">
-                    <RUI.Textarea placeholder="请输入大段的内容" />
+                        <RUI.Textarea placeholder="请输入大段的内容" />
                 </div>
                 <div className="row">
                     <RUI.Textarea value="心里颇不宁静，今晚在院子里坐着凉快，忽略想起日日走过荷塔，在这满月的光里，总该另有一番样子吧。月亮渐渐地升高。" maxLength={140} />
@@ -232,6 +232,8 @@ module.exports = React.createClass({
                         </RUI.Column>
                     </RUI.Table>
                 </div>
+
+                <RUI.Form.Submit />
             </RUI.Form>
         </div>;
     }
