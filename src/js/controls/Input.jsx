@@ -53,8 +53,9 @@ module.exports = React.createClass({
         };
     },
     getInitialState: function () {
+        var value = typeof this.props.value == 'number' ? (this.props.value+"") : (this.props.value || "");
         return {
-            value: typeof this.props.value == 'number' ? (this.props.value+"") : (this.props.value || ""),
+            value: value ? value : (this.props.defaultValue || ""),
             change: this.props.onChange
         }
     },
