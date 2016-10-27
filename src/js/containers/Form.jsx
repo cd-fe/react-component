@@ -9,11 +9,13 @@
 
 import ComponentBase from '../mixins/ComponentBase.jsx';
 import className from '../util/className.jsx';
+import Pubsub from './form/Pubsub.jsx';
+import Row from './form/Row.jsx';
 import Control from './form/Control.jsx';
 import Reset from './form/Reset.jsx';
 import Submit from './form/Submit.jsx';
 
-import '../../css/form.scss';
+import '../../css/form/form.scss';
 
 var Form = React.createClass({
     /**
@@ -21,8 +23,9 @@ var Form = React.createClass({
      * @see {@link module:mixins/ComponentBase}
      */
     mixins:[ComponentBase],
-    contextTypes: {
-        form:React.PropTypes
+    controls:[],
+    childContextTypes: {
+        form:React.PropTypes.object
     },
     getChildContext:function() {
         return {
@@ -50,38 +53,55 @@ var Form = React.createClass({
             }
         };
     },
-    serializeArray:function() {
-        var list = Object.keys(this.refs || []).map(function(ref) {
-            return this.refs[ref];
-        }.bind(this));
-
-        var array = [];
-        list.forEach(function(item) {
-            var result = item && item.getValue && item.getValue();
-            if(result) {
-                array.push({
-                    name:item.props.name,
-                    value:result
-                });
-            }
-        });
-
-        return array;
-    },
-    serializeObject:function() {
-        var array = this.serializeArray();
+    serializeObject:function(array) {
         var data = {};
         array.forEach(function(item) {
             data[item.name] = item.value;
         });
         return data;
     },
-    submitHandler:function(e) {
-        var result = this.props.onSubmit(this.serializeObject(), this);
-        if(result === false) {
-            e && e.nativeEvent.preventDefault();
+    serializeArray:function() {
+        var array = [];
+        this.controls.forEach(function(item, index) {
+            var result = item && item.getValue && item.getValue();
+            //TODO 验证数据
+           if(item.toString() == '[object Object]') {
+                array.push({
+                    name:item.props.name,
+                    required:item.props.required || false,
+                    value:result
+                });
+            }
+        });
+
+        //filter
+        array = array.filter(function(item, index) {
+            return typeof item.name !== 'undefined'
+        });
+        //获取必选项
+        var isValid = array.filter(function(item, index) {
+                                return !!item.required})
+                            .every(function(item, index) {
+                                return !!item.value
+                            });
+        if(isValid) {
+            array = this.serializeObject(array);
         }
-        return result;
+        return isValid ? array : isValid;
+    },
+    register:function(control) {
+        this.controls.push(control);
+    },
+    submitHandler:function(e) {
+        var result = this.serializeArray();
+        if(result) {
+            var prevent = this.props.onSubmit(result, this);
+            if(prevent !== false) {
+                return;
+            }
+        }
+
+        e && e.nativeEvent.preventDefault();
     },
     /**
      * 提交表单，该方法会触发 props.onSubmit 回调
@@ -107,18 +127,20 @@ var Form = React.createClass({
         return <form {...this.props} className={classes} onSubmit={this.submitHandler}>
             {React.Children.map(this.props.children, function(child, index) {
                 var props = Object.assign({
-                    form:this,
-                    ref:'control' + index
+                    form : this,
+                    ref:'Row_' + index,
+                    index:index
+                    //validateStatus : this.state.validateStatus[index]
                 }, child.props);
-
                 return React.cloneElement(child, props);
             }.bind(this))}
         </form>;
     }
 });
-
+Form.Row = Row;
 Form.Control = Control;
 Form.Submit = Submit;
 Form.Reset = Reset;
+
 
 module.exports = Form;

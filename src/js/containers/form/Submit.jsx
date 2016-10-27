@@ -4,8 +4,11 @@
  */
 
 module.exports = React.createClass({
+    contextTypes:{
+        form:React.PropTypes.object
+    },
     clickHandler:function() {
-        this.props.form && this.props.form.submit();
+        this.context.form && this.context.form.submit();
     },
     render:function() {
         return <RUI.Button className="primary" onClick={this.clickHandler}>{this.props.children || '保存'}</RUI.Button>;

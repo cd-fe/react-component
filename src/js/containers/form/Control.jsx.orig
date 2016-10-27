@@ -31,9 +31,6 @@ var Control = React.createClass({
      * @see {@link module:mixins/ComponentBase}
      */
     mixins:[ComponentBase],
-    contextTypes:{
-        form:React.PropTypes.object
-    },
     getDefaultProps:function() {
         return {
             /**
@@ -45,17 +42,18 @@ var Control = React.createClass({
             cname:'control',
             /**
              * @instance
-             * @default null
+             * @default input
              * @type string
              * @desc 表单行内的表单输入类型，可选值有 input, password, checkbox, radio 等
              */
-            type: null,
+            type: 'input',
             /**
              * @instance
              * @type string
              * @desc 表单行组件显示的文本内容
              */
             label: null,
+<<<<<<< HEAD
             /**
              * @instance
              * @type string
@@ -69,6 +67,12 @@ var Control = React.createClass({
              */
             explain : ''
 
+=======
+            contentClassName: "",
+            labelClassName: "",
+            contentStyle: {},
+            labelStyle: {}
+>>>>>>> cd-fe/master
         };
     },
     getInitialState : function() {
@@ -87,12 +91,10 @@ var Control = React.createClass({
     },
     componentDidMount : function() {
         //TODO 验证顺序不一致，待优化
-        //this.props.required && Pubsub.subscribe('Check_UID_' + this.props.mark, function (key, value) {
-        //    Check(value[0], this);
-        //}.bind(this));
-        if(this.context.form) {
-            this.context.form.register(this);
-        }
+        this.props.required && Pubsub.subscribe('Check_UID_' + this.props.mark, function (key, value) {
+            Check(value[0], this);
+        }.bind(this));
+
     },
     buildMsg : function() {
         var status = this.state.validateStatus;
@@ -114,12 +116,10 @@ var Control = React.createClass({
         return html;
     },
     render:function() {
+<<<<<<< HEAD
         var ControlMap = Control.findControlMap(this);
 
         var props = omit(this.props, 'cname');
-        //if(!ControlMap && this.props.children instanceof Array) {
-        //    throw new Error('custom Form.Control have to own single child.');
-        //}
 
         var cls;
 
@@ -132,37 +132,46 @@ var Control = React.createClass({
             cls = cls + ' has-feedback'
         }
 
-        return <div {...this.props} className={className(this.props.className, this.getPropClass()) + " " + cls}>
-            <span className="input-wrapper">
-                {ControlMap ? (<ControlMap.tag {...props} {...ControlMap.props} ref="content">
-                    {this.props.children}
-                </ControlMap.tag>) : (
-                    React.Children.map(this.props.children, function(child, index) {
-                        if(child.props && typeof child.props.name != 'undefined') {
-                            return React.cloneElement(child, Object.assign({
-                                ref:"content"
-                            }, child.psop));
+        return <div {...this.props} className={className(this.props.className, this.getPropClass())}>
+                    <label className={"rui-form-label"}>{this.props.required ?  (<i className="required">*</i>) : null}{this.props.label}</label>
+                    {this.props.desc && this.props.desc.ldesc}
+                    <div className={className(cls,this.props.wcname)}>
+                        <span className="input-wrapper">
+                            <ControlMap.tag {...props} {...ControlMap.props} ref="content">
+                                {this.props.children}
+                            </ControlMap.tag>
+                        </span>
+                        {
+                           this.buildMsg()
                         }
-                        return null;
-                    })
-                )}
-            </span>
-            {
-               this.buildMsg()
-            }
-        </div>;
+                    </div>
+                    {this.props.desc && this.props.desc.rdesc}
+                </div>;
     }
 });
 
 Control.findControlMap = function(rc) {
-    var result = null;
-    var props = rc.props;
+=======
+        var ControlMap = Control.findControlMap(this.props.type, this.props);
 
-    if(!props.type) {
-        return;
+        var props = omit(this.props, 'cname');
+
+        return <div {...this.props} className={"clearfix " + className(this.props.className, this.getPropClass())}>
+            <Label className={this.props.labelClassName} style={this.props.labelStyle}>{this.props.label}</Label>
+            <Content className={this.props.contentClassName} style={this.props.contentStyle}>
+                <ControlMap.tag {...props} {...ControlMap.props} ref="content">
+                    {this.props.children}
+                </ControlMap.tag>
+            </Content>
+        </div>;
     }
+});
 
-    var type = rc.props.type;
+Control.findControlMap = function(type, props) {
+>>>>>>> cd-fe/master
+    var result = null;
+
+    var type = rc.props.type || 'input';
     if(type == 'input') {
         result = {
             tag:'Input',
@@ -220,16 +229,16 @@ Control.findControlMap = function(rc) {
         };
     }
     //绑定事件
-    //rc.props.trigger && rc.props.trigger.split('|').forEach(function(evt) {
-    //
-    //    result.props[evt] = function(e) {
-    //        window.setTimeout(function() {
-    //            var value = rc.getValue() || '';
-    //            Check(value, rc);
-    //        },0);
-    //    };
-    //
-    //});
+    rc.props.trigger && rc.props.trigger.split('|').forEach(function(evt) {
+
+        result.props[evt] = function(e) {
+            window.setTimeout(function() {
+                var value = rc.getValue() || '';
+                Check(value, rc);
+            },0);
+        };
+
+    });
 
     result.tag = RUI[result.tag];
     result.props = Object.assign(result.props || {}, omit(props, 'type', 'cname', 'label'));

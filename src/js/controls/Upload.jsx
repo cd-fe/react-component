@@ -414,7 +414,7 @@ module.exports = React.createClass({
     componentWillReceiveProps:function(nextProps) {
         if(typeof nextProps.list != 'undefined' && nextProps.list != this.state.list) {
             this.setState({
-                list:nextProps.list
+                list:nextProps.list || []
             });
         }
     },
