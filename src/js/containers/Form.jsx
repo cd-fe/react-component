@@ -14,7 +14,7 @@ import Row from './form/Row.jsx';
 import Control from './form/Control.jsx';
 import Reset from './form/Reset.jsx';
 import Submit from './form/Submit.jsx';
-
+import Check from './form/Check.jsx';
 import '../../css/form/form.scss';
 
 var Form = React.createClass({
@@ -63,27 +63,31 @@ var Form = React.createClass({
     serializeArray:function() {
         var array = [];
         this.controls.forEach(function(item, index) {
-            var result = item && item.getValue && item.getValue();
+            var value = item && item.getValue && item.getValue();
             //TODO 验证数据
-           if(item.toString() == '[object Object]') {
+
+            var result = Check(item.getValue(),item,item.props.rule) && item.props.rule.callback(item);
+
+            if(item.toString() == '[object Object]') {
                 array.push({
                     name:item.props.name,
-                    required:item.props.required || false,
-                    value:result
+                    value:value,
+                    result:result
+
                 });
             }
-        });
+        }.bind(this));
 
-        //filter
+        //filter 得到所有表单control
         array = array.filter(function(item, index) {
             return typeof item.name !== 'undefined'
         });
+
+
         //获取必选项
-        var isValid = array.filter(function(item, index) {
-                                return !!item.required})
-                            .every(function(item, index) {
-                                return !!item.value
-                            });
+        var isValid = array.every(function(item, index) {
+                            return !!item.result
+                        });
         if(isValid) {
             array = this.serializeObject(array);
         }
@@ -95,13 +99,11 @@ var Form = React.createClass({
     submitHandler:function(e) {
         var result = this.serializeArray();
         if(result) {
-            var prevent = this.props.onSubmit(result, this);
-            if(prevent !== false) {
-                return;
-            }
+            console.dir(result);
+        }else {
+            e && e.nativeEvent.preventDefault();
+            return false;
         }
-
-        e && e.nativeEvent.preventDefault();
     },
     /**
      * 提交表单，该方法会触发 props.onSubmit 回调
@@ -129,8 +131,8 @@ var Form = React.createClass({
                 var props = Object.assign({
                     form : this,
                     ref:'Row_' + index,
+                    rule : this.props.rules,
                     index:index
-                    //validateStatus : this.state.validateStatus[index]
                 }, child.props);
                 return React.cloneElement(child, props);
             }.bind(this))}
@@ -141,6 +143,5 @@ Form.Row = Row;
 Form.Control = Control;
 Form.Submit = Submit;
 Form.Reset = Reset;
-
 
 module.exports = Form;

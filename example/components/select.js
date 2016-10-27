@@ -4,6 +4,9 @@ var Example = React.createClass({
             data: [{key:'查看',value:'1'}]
         };
     },
+    filterHandle : function() {
+        return [];
+    },
     onClickHandler:function(e) {
         this.setState({
             data : [
@@ -47,6 +50,8 @@ var Example = React.createClass({
                         data={[{key:'查看',value:'1'}, {key:'a',value:'1'}, {key:'aa',value:'1'}, {key:'b',value:'1'}, {key:'bba',value:'1'}]}
                         value={{key:'查看',value:'1'}}
                         filter={true}
+                        maxLen="11"
+                        result="暂无相关信息"
                         className="rui-theme-3"
                         stuff={true}
                         filterCallback={this.filterHandle}>

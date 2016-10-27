@@ -33,25 +33,25 @@ var Row = React.createClass({
     },
     render:function() {
         var classes = className(this.props.className, this.getPropClass());
+        var controlRule = this.props.rule[this.props.type];
         return (
             <div {...this.props} className={classes}>
                 <label className={"rui-form-label"}>{this.props.required ?  (<i className="required">*</i>) : null}<span>{this.props.label}</span></label>
                 <div className={"rui-form-content"}>
-                    {this.props.children}
+                    {React.Children.map(this.props.children, function(child, index) {
+                        var props = Object.assign({
+                            index : this.props.index,
+                            sub : index,
+                            rule : (controlRule && controlRule.validator&&controlRule.validator[index].rules) || ''
+                        }, child.props);
+                        return React.cloneElement(child, props);
+                    }.bind(this))}
                 </div>
             </div>
         )
     }
 });
 
-//{React.Children.map(this.props.children, function(child, index) {
-//    var props = Object.assign({
-//        form:this.props.form,
-//        ref:['Control',this.props.index ,index].join('_'),
-//        mark : ['Control',this.props.index ,index].join('_')
-//        //validateStatus : this.props.form.validateStatus[this.props.index][index]
-//    }, child.props);
-//    return React.cloneElement(child, props);
-//}.bind(this))}
+
 
 module.exports = Row;

@@ -9,21 +9,6 @@ import omit from '../../util/omit.jsx';
 import className from '../../util/className.jsx';
 
 import Check from './Check.jsx';
-import Pubsub from './Pubsub.jsx';
-
-/*var Label = React.createClass({
-    render:function() {
-        return <label className={"rui-form-label"}>{this.props.children}</label>;
-    }
-});*/
-
-/*
-var Content = React.createClass({
-    render:function() {
-        return <div className={"rui-form-content is-validating has-feedback"}>{this.props.children}</div>
-    }
-});
-*/
 
 var Control = React.createClass({
     /**
@@ -114,6 +99,7 @@ var Control = React.createClass({
         return html;
     },
     render:function() {
+
         var ControlMap = Control.findControlMap(this);
 
         var props = omit(this.props, 'cname');
@@ -124,9 +110,9 @@ var Control = React.createClass({
         var cls;
 
         if(this.state.validateStatus) {
-            cls = "rui-form-content " + (this.state.validateStatus)
+            cls = "rui-form-unit " + (this.state.validateStatus)
         }else {
-            cls = "rui-form-content";
+            cls = "rui-form-unit";
         }
         if(this.props.type == 'input' || this.props.type == 'password') {
             cls = cls + ' has-feedback'
@@ -219,17 +205,18 @@ Control.findControlMap = function(rc) {
             tag:type.substring(0, 1).toUpperCase() + type.substring(1)
         };
     }
+
     //绑定事件
-    //rc.props.trigger && rc.props.trigger.split('|').forEach(function(evt) {
-    //
-    //    result.props[evt] = function(e) {
-    //        window.setTimeout(function() {
-    //            var value = rc.getValue() || '';
-    //            Check(value, rc);
-    //        },0);
-    //    };
-    //
-    //});
+    var rowType = rc.context.form.props.children[rc.props.index].props.type;
+    var rules = rc.context.form.props.rules[rowType].validator[rc.props.sub].rules;
+
+    rules.trigger && rules.trigger.split('|').forEach(function(evt) {
+        result.props[evt] = function(e) {
+            window.setTimeout(function() {
+                Check(rc.getValue(),rc,rules) && rules.callback && rules.callback(rc);
+            }, 0);
+        };
+    });
 
     result.tag = RUI[result.tag];
     result.props = Object.assign(result.props || {}, omit(props, 'type', 'cname', 'label'));

@@ -16,21 +16,6 @@ module.exports = React.createClass({
      */
     mixins: [ComponentBase, TimerMixin],
     _choose: null,
-    getInitialState: function () {
-        return {
-            active: false,
-            filter: this.props.filter || false,//过滤筛选
-            event: this.props.event || 'mouseenter',//事件类型mousover,click,dbclick
-            data: this.props.data || [],//数据
-            value: this.props.value || (this.props.data instanceof Array && this.props.data[0]),//默认值
-            callback: this.props.callback,//回调
-            offset: this.props.offset,
-            reg: this.props.reg,
-            placeholder: this.props.placeholder,
-            result: this.props.result,
-            maxLen: this.props.maxLen || '200',
-        };
-    },
     getDefaultProps: function () {
         return {
             /**
@@ -70,68 +55,81 @@ module.exports = React.createClass({
              * @example
              * <RUI.Select data={[{key:'查看',value:'1'}, {key:'编辑',value:'2'}, {key:'删除',value:'3'}]} />
              */
-            data: []
+            data: [],
+            /**
+             * @instance
+             * @default empty function
+             * @type function
+             * @desc 下拉确定回调
+             */
+            callback: function() {},
+            /**
+             * @instance
+             * @default 100%
+             * @type string
+             * @desc 下拉框垂直偏移量
+             */
+            offset: '',
+            /**
+             * @instance
+             * @default null
+             * @type RegExp
+             * @desc 搜索过滤规则
+             */
+            reg: null,
+            /**
+             * @instance
+             * @default ''
+             * @type string
+             * @desc 搜索框默认占位符
+             */
+            placeholder: '',
+            /**
+             * @instance
+             * @default ''
+             * @type string
+             * @desc 搜索异常时提示信息
+             */
+            result: '',
+            /**
+             * @instance
+             * @default '200'
+             * @type string
+             * @desc 搜索框允许输入长度
+             */
+            maxLen: '200',
+            /**
+             * @instance
+             * @default 3
+             * @type number
+             * @desc 可见下拉选项个数，超过出现滚动条
+             */
+            optionsLimit: 3
+        };
+    },
+    getInitialState: function () {
+        var value = this.props.value || (this.props.data instanceof Array && this.props.data[0]);
+        return {
+            active: false,
+            filter: this.props.filter,
+            event: this.props.event,
+            data: this.props.data,
+            value: value,
+            choosedKey : value.key || '请选择'
         };
     },
     componentWillReceiveProps: function (nextProps) {
         var newProps = {};
-        if (typeof nextProps.data != 'undefined') {
-            newProps.data = nextProps.data;
-        }
-        if (typeof nextProps.value != 'undefined') {
-            newProps.value = nextProps.value;
-        }
+        typeof nextProps.data != 'undefined' && (newProps.data = nextProps.data);
+        typeof nextProps.value != 'undefined' && (newProps.value = nextProps.value);
         this.setState(newProps);
     },
-    doEvent : function() {
-        var _this = this;
-        var node = ReactDOM.findDOMNode(this);
-        var ul = $(node).find('ul');
-        var li = ul.find('li');
-        if (this.props.event == 'mouseenter') {
-            $(node).bind(this.props.event, function () {
-                (_this.state.data.length > 1 || _this.state.filter || (_this.props.className.indexOf('rui-theme-2') == -1)) && _this.startTimer(function () {
-                    if (_this.state.active) {
-                        _this.close();
-                    } else {
-                        _this.open();
-                    }
-                }, 200);
-                _this.state.data.length > 3 && ul.css({
-                    overflowY : 'scroll'
-                });
-            });
-            $(node).bind('mouseleave', function () {
-                if (_this.__timer) {
-                    _this.stopTimer();
-                    _this.onMouseLeave();
-                }
-            });
-        } else {
-            $(node).bind('mouseleave', function() {
-                (_this.state.data.length > 1 || _this.state.filter || (_this.props.className.indexOf('rui-theme-2') == -1)) && _this.onMouseLeave();
-            });
-            $(node).bind(this.props.event, function () {
-                if(_this.state.data.length > 1 || _this.state.filter || (_this.props.className.indexOf('rui-theme-2') == -1)) {
-                    if (_this.state.active) {
-                        _this.close();
-                    } else {
-                        _this.open();
-                    }
-                    _this.state.data.length > 3 && ul.css({
-                        overflowY : 'scroll'
-                    });
-                }
-            });
-        }
+    getThisNode : function() {
+        return ReactDOM.findDOMNode(this);
     },
     componentDidMount: function () {
         var _this = this;
-        var node = ReactDOM.findDOMNode(this);
-        var ul = $(node).find('ul');
-        var li = ul.find('li');
         _this.doEvent();
-
     },
     onMouseLeave: function () {
         this.close();
@@ -157,13 +155,63 @@ module.exports = React.createClass({
             }
         }, 100);
     },
+    isShowLists : function() {
+        //特殊情况下，不展示下拉列表
+        return (this.state.data.length > 1 || this.props.filter || (this.props.className.indexOf('rui-theme-2') == -1));
+    },
+    scrollLists : function(node) {
+        //展示滚动条
+        (this.state.data.length > this.props.optionsLimit) && node.css({
+            overflowY : 'scroll'
+        });
+    },
+    doEvent : function() {
+        var _this = this;
+        var node = this.getThisNode();
+        var ul = $(node).find('ul');
+        var li = ul.find('li');
+
+        if (this.props.event == 'mouseenter') {
+            $(node).bind(this.props.event, function () {
+                (_this.isShowLists()) && _this.startTimer(function () {
+                    if (_this.state.active) {
+                        _this.close();
+                    } else {
+                        _this.open();
+                    }
+                }, 200);
+               _this.scrollLists(ul);
+            });
+            $(node).bind('mouseleave', function () {
+                if (_this.__timer) {
+                    _this.stopTimer();
+                    _this.onMouseLeave();
+                }
+            });
+        } else {
+            $(node).bind('mouseleave', function() {
+                (_this.isShowLists()) && _this.onMouseLeave();
+            });
+            $(node).bind(this.props.event, function () {
+                if(_this.isShowLists()) {
+                    if (_this.state.active) {
+                        _this.close();
+                    } else {
+                        _this.open();
+                    }
+                    _this.scrollLists(ul);
+                }
+            });
+        }
+    },
     handleClick: function (e) {
         var _this = this;
-        (_this.state.data.length > 1 || _this.state.filter) && _this.close();
-        _this.props.stuff && (_this.refs.choose.innerHTML = e.key);
-        //_this._choose = e;
+
+        this.isShowLists() && this.close();
+        this.props.stuff && (this.state.choosedKey = e.key);
+
         this.setState({
-            value:e
+            value : e
         },function() {
             if (_this.dispatchEvent) {
                 _this.dispatchEvent('change', _this.getValue());
@@ -173,80 +221,84 @@ module.exports = React.createClass({
     },
     handleFilter: function (source) {
         var _this = this, res;
-        var reg = _this.props.reg || /.*/;
-        var value = ReactDOM.findDOMNode(_this.refs.filter).value;
+        var reg = this.props.reg;
+        var value = ReactDOM.findDOMNode(this.refs.filter).value;
         var result;
-        if (_this.props.filter) {
-            if (reg.test(value)) {
-                if (_this.props.filterCallback) {
-                    result = _this.props.filterCallback(value);
-
+        if (this.props.filter) {
+            if (!reg || reg.test(value)) {
+                if (this.props.filterCallback) {
+                    result = this.props.filterCallback(value);
                     if (result && result.length > 0) {
-                        _this.setState({
+                        this.setState({
                             data: result
                         })
                     } else {
-                        _this.setState({
+                        this.setState({
                             data: [{key: this.props.result, value: 'error'}]
                         })
                     }
                 }
-            } else {
-                _this.setState({
+            }else {
+                this.setState({
                     data: [{key: this.props.result, value: 'error'}]
                 })
             }
         }
     },
     _getChoose: function () {
-        var _this = this;
-        return _this._choose ? _this._choose : _this.state.value;
+        return this.state.value;
     },
     getValue: function () {
         return this._getChoose();
     },
+    getFilterHtml : function() {
+        return this.props.filter ? (
+            <div className="filter">
+                <RUI.Input ref="filter" maxLength={this.props.maxLen} onChange={this.handleFilter} placeholder={this.props.placeholder} />
+            </div>
+        ) : null;
+    },
     render: function () {
         var _this = this,
+            style = {},
             active = this.state.active,
             data = this.state.data,
             deClass = className(this.props.className, this.getPropClass()),
+            optCls = 'rui-select-options',
             final = active ? deClass + ' active' : deClass,
-            filter,
-            filterAble = this.props.filter,
             offset = this.props.offset ? Number(this.props.offset) : '100%';
-        if (filterAble) {
-            filter = (
-                <div className="filter">
-                    <RUI.Input ref="filter" maxLength={_this.state.maxLen} onChange={_this.handleFilter} placeholder={_this.props.placeholder} />
-                </div>
-            );
-        }
 
-        var isSpecial = _this.state.data.length == 1 && _this.props.offset == '0';
-        if(!isSpecial && this.props.className.indexOf('rui-theme-1') > -1 && typeof offset == 'number') {
+        var except = (data.length == 1 && this.props.offset == '0');
+
+        (offset != '100%') && (final = className(final, 'noactive'));
+
+        if(!except && this.props.className.indexOf('rui-theme-1') > -1 && typeof offset == 'number') {
             offset = offset - 5;
         }
-
-        if(offset != '100%') {
-            final += ' noactive';
+        style.top = offset;
+        if(except) {
+            style.zIndex = '1049';
+            optCls += ' one'
         }
-
         return (
-
-            <div ref="container" className={final} onChange={this.props.onChange}>
+            <div className={final} onChange={this.props.onChange}>
                 <i className="arrow"></i>
-                <span ref="choose" className="placeholder">{this.state.value.key}</span>
-
-                <div className="rui-select-options-wrap" style={isSpecial ? {top:offset, zIndex:'1049'} : {top:offset}}>
-                    <div ref="options" className={isSpecial? 'rui-select-options one' : 'rui-select-options'}>
-                        {filter}
+                <span ref="choose" className="placeholder">{this.state.choosedKey}</span>
+                <div className="rui-select-options-wrap" style={style}>
+                    <div ref="options" className={optCls}>
+                        {this.getFilterHtml()}
                         <ul>
                             {
                                 data.map(function (item, index) {
-                                    return <li
-                                        className={(item.key == _this.state.value.key && !isSpecial) && "choosed"}
-                                        onClick={item.value == 'error' ? null : _this.handleClick.bind(_this,item)}
-                                        key={index}><a href="javascript:;">{item.key}</a></li>
+                                    return (
+                                        <li
+                                            key={index}
+                                            className={(item.key == _this.state.value.key && !except) && "choosed"}
+                                            onClick={item.value == 'error' ? null : _this.handleClick.bind(_this,item)}
+                                        >
+                                            <a href="javascript:;">{item.key}</a>
+                                        </li>
+                                    )
                                 })
                             }
                         </ul>

@@ -24,7 +24,7 @@
 .rui-control {
   float:left;
 }
-.rui-form-content {
+.rui-form-unit {
   float:left;
   position: relative;
   zoom: 1;
@@ -49,13 +49,13 @@
   }
 }
 
-.rui-form-content {
+.rui-form-unit {
 
 }
 .form-explain {
   margin-top:3px;
 }
-.rui-form-content:after {
+.rui-form-unit:after {
   position: absolute;
   display: inline-block;
   top: 8px;
