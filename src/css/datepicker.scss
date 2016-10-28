@@ -10,17 +10,17 @@
   }
 
   &.range {
-    width:190px;
+    width:213px;
 
     >.rui-input {
-      width:190px;
+      width:213px;
     }
 
     &.timestatus {
-      width:300px;
+      width:323px;
 
       >.rui-input {
-        width:300px;
+        width:323px;
       }
     }
   }
@@ -180,6 +180,12 @@
     }
   }
 
+  >.rui-icon-close {
+    display:none;
+    pointer-events:auto;
+    cursor: pointer;
+  }
+
   &.active {
     >.rui-input {
       position:relative;
@@ -187,6 +193,10 @@
     }
     >.rui-icon-calendar {
       z-index:1101;
+    }
+    >.rui-icon-close {
+      z-index:1101;
+      display:block;
     }
     .rui-datepicker-popup {
       display:block;

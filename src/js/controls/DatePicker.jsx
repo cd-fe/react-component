@@ -21,7 +21,7 @@ module.exports = React.createClass({
      * @see {@link module:mixins/ComponentBase}
      */
     mixins: [ComponentBase],
-    getInitialState: function () {
+    initValues:function(force) {
         var status = {
             popup: false,
             value: this.props.value
@@ -32,6 +32,29 @@ module.exports = React.createClass({
             status.startValuePreview = this.props.startValue || this.props.value;
             status.endValuePreview = this.props.endValue || this.props.value + 86400 * 1000;
         }
+        return status;
+    },
+    clearValues:function() {
+        var status = {
+            popup:false
+        };
+        if(this.props.range) {
+            status.startValue = undefined;
+            status.startValuePreview = this.props.value ? this.props.value : Date.now();
+            status.endValue = undefined;
+            if(this.props.showTime) {
+                status.endValuePreview = this.props.value ? this.props.value + 1000 : Date.now() + 1000;
+            }else {
+                status.endValuePreview = this.props.value ? this.props.value + 86400 * 1000 : Date.now() + 86400 * 1000;
+            }
+        }else {
+            status.value = Date.now();
+        }
+
+        this.setState(status);
+    },
+    getInitialState: function () {
+        var status = this.initValues();
         return status;
     },
     getDefaultProps: function () {
@@ -338,6 +361,7 @@ module.exports = React.createClass({
 
         return <div className={classes}>
             <Input mode="static" value={this.display()} onClick={this.togglePopup} placeholder="请选择日期"/>
+            <Icon name="close" style={{position:'absolute', right:'33px', top:'7px'}} onClick={this.clearValues} />
             <Icon name="calendar" style={{position:'absolute',right:'10px',top:'6px'}} />
 
             <div className={defaultClass+'-popup'}>
