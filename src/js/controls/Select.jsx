@@ -244,7 +244,7 @@ module.exports = React.createClass({
                                     return <li
                                         className={(item.key == _this.state.value.key && !isSpecial) && "choosed"}
                                         onClick={item.value == 'error' ? null : _this.handleClick.bind(_this,item)}
-                                        key={index}><a href="javascript:;">{item.key}</a></li>
+                                        key={index}><a href="javascript:;" title={item.key}>{item.key}</a></li>
                                 })
                             }
                         </ul>
