@@ -27,6 +27,7 @@ module.exports = React.createClass({
             value: this.props.value
         };
         if (status.value) {
+            status.valuePreview = status.value || Date.now();
             status.startValue = this.props.startValue || this.props.value;
             status.endValue = this.props.endValue || this.props.value + 86400 * 1000;
             status.startValuePreview = this.props.startValue || this.props.value;
