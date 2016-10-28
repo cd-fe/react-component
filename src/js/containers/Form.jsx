@@ -108,7 +108,7 @@ var Form = React.createClass({
         this.controls.forEach(function(item, index) {
             var value = item && item.getValue && item.getValue();
             //TODO 验证数据
-            var result = Check(item) && item.context.rule.validator[item.props.name].rules.callback(item);
+            var result = Check(item) && item.context.rule.validator[item.props.name].rules.callback && item.context.rule.validator[item.props.name].rules.callback(item);
 
             this.fields.push({
                 name:item.props.name,

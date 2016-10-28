@@ -9,7 +9,7 @@ import omit from '../../util/omit.jsx';
 import className from '../../util/className.jsx';
 
 import Check from './Check.jsx';
-import CF from './commonFunc.jsx';
+import CF from './CommonFunc.jsx';
 
 var Control = React.createClass({
     /**

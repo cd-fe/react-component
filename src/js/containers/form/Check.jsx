@@ -29,12 +29,18 @@ const checksFunc = {
         var value = rc.getValue();
         var rule = rc.context.rule.validator[rc.props.name].rules;
         var result = false;
+        console.log('CF.getReg(rule.filter.reg).test(value)')
+        console.log(CF.getReg(rule.filter.reg).test(value))
         if(!(CF.getReg(rule.filter.reg).test(value))) {
             rc.setState({
                 validateStatus : 'is-error',
                 explain : rule.filter.msg || '输入格式不正确'
             });
         }else {
+            rc.setState({
+                validateStatus : 'is-success',
+                explain : ''
+            });
             result = true;
         }
         return result;

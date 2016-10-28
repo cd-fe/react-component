@@ -1,6 +1,7 @@
 var Example = React.createClass({
     formRules : function() {
-        let _this = this;
+        var _this = this;
+
         return {
             activity : {
                 required : true,
@@ -11,12 +12,12 @@ var Example = React.createClass({
                                 msg: '活动名称不能为空'
                             },
                             filter: {
-                                reg: 'name',//验证规则，，正则表达式
+                                reg: 'name',//验证规则
                                 msg: '活动名称格式不正确'
                             },
                             trigger: 'onBlur|onChange',
                             callback: function(rc) {
-                                _this.doEvt(rc);
+                                return true;
                             }
                         }
                     }
@@ -30,13 +31,9 @@ var Example = React.createClass({
                             required: {
                                 msg: '请选择开始时间'
                             },
-                            /*filter: {
-                                reg: 'phone',//验证规则，，正则表达式
-                                msg: ''
-                            },*/
-                            trigger: 'onBlur|onChange',
-                                callback: function(rc) {
-                                _this.doMob(rc);
+                            trigger: 'onChange',
+                            callback: function(rc) {
+                                return true;
                             }
                         }
                     },
@@ -45,13 +42,19 @@ var Example = React.createClass({
                             required: {
                                 msg: '请选择结束时间'
                             },
-                            /*filter: {
-                                reg: 'phone',//验证规则，，正则表达式
-                                msg: ''
-                            },*/
-                            trigger: 'onBlur|onChange',
-                                callback: function(rc) {
-                                _this.doMob(rc);
+                            trigger: 'onChange',
+                            callback: function(rc) {
+                                var form = _this.refs.form;
+                                var start = form.getSingleFieldValue('start');
+                                var end = form.getSingleFieldValue('end');
+                                if(start > end) {
+                                    form.setFieldCheckStatus('end',{
+                                        validateStatus : 'is-error',
+                                        explain : '结束时间不能小于开始时间'
+                                    })
+                                    return false;
+                                }
+                                return true;
                             }
                         }
                     }
@@ -62,17 +65,7 @@ var Example = React.createClass({
                 validator : {
                     'people' : {
                         rules: {
-                           /* required: {
-                                msg: '活动名称不能为空'
-                            },
-                            filter: {
-                                reg: 'name',//验证规则，，正则表达式
-                                msg: '活动名称格式不正确'
-                            },*/
-                            trigger: 'onBlur|onChange',
-                            callback: function(rc) {
-                                _this.doPeople && _this.doPeople(rc);
-                            }
+
                         }
                     }
                 }
@@ -82,28 +75,33 @@ var Example = React.createClass({
                 validator : {
                     'limit' : {
                         rules: {
-                            /* required: {
-                             msg: '活动名称不能为空'
-                             },
-                             filter: {
-                             reg: 'name',//验证规则，，正则表达式
-                             msg: '活动名称格式不正确'
-                             },*/
-                            trigger: 'onBlur|onChange',
+                            trigger: 'onChange',
                             callback: function(rc) {
-
+                                var value = rc.getValue();
+                                var form = _this.refs.form;
+                                if(value == '1') {
+                                    _this.setState({
+                                        numberDisable : true,
+                                        number : ''
+                                    });
+                                    _this.refs.form.setFieldCheckStatus('number',{
+                                        validateStatus : '',
+                                        explain : ''
+                                    })
+                                }else {
+                                    _this.setState({
+                                        numberDisable : false
+                                    });
+                                }
                             }
                         }
                     },
                     'number' : {
                         rules: {
-                            /* required: {
-                             msg: '活动名称不能为空'
+                            filter: {
+                                 reg: /^[1-9]$/,
+                                 msg: '1-9的数'
                              },
-                             filter: {
-                             reg: 'name',//验证规则，，正则表达式
-                             msg: '活动名称格式不正确'
-                             },*/
                             trigger: 'onBlur|onChange',
                             callback: function(rc) {
 
@@ -217,9 +215,17 @@ var Example = React.createClass({
     getInitialState : function() {
         return {
             rules : this.formRules(),
-            explain : this.props.explain
+            explain : this.props.explain,
+            numberDisable : true,
+            number : '',
         }
     },
+    doNumber : function(e){
+        this.setState({
+            number:e.target.value
+        });
+    },
+
     doEvt : function(rc) {
         console.log('自定义')
         return true;
@@ -327,8 +333,10 @@ var Example = React.createClass({
                             <RUI.Form.Control
                                 name="number"
                                 type="input"
-                                placeholder=""
-                                onChange={this.disable}
+                                disable={this.state.numberDisable}
+                                placeholder="请输入1-9的数"
+                                value={this.state.number}
+                                onChange={this.doNumber}
 
                             />
                             <span className="deco">人参与</span>
