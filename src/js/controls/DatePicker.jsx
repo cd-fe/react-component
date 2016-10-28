@@ -178,7 +178,10 @@ module.exports = React.createClass({
     },
     togglePopup: function () {
         this.setState({
-            popup: !this.state.popup
+            popup: !this.state.popup,
+            value: this.state.value || Date.now(),
+            startValue: this.state.startValue || Date.now(),
+            endValue: this.state.endValue || Date.now()
         }, function() {
             var rootDom = $(ReactDOM.findDOMNode(this));
             var offset = rootDom.offset().top - window.scrollY;
@@ -229,13 +232,17 @@ module.exports = React.createClass({
     startCalendarChange: function (event) {
         this.setState({
             startValue: event.data,
-            startValuePreview: event.data
+            startValuePreview: event.data,
+            endValue: this.state.endValue,
+            endValuePreview: this.state.endValuePreview || this.state.endValue
         }, ()=>this.dispatchEvent('change', this.getValue()));
     },
     endCalendarChange: function (event) {
         this.setState({
             endValue: event.data,
-            endValuePreview: event.data
+            endValuePreview: event.data,
+            startValue: this.state.startValue,
+            startValuePreview: this.state.startValuePreview || this.state.startValue
         }, ()=>this.dispatchEvent('change', this.getValue()));
     },
     rangeCalendarCancel: function () {
@@ -351,10 +358,10 @@ module.exports = React.createClass({
                         <div className={defaultClass+'-row-range'}>
                             <Calendar source={{start:this.state.startValuePreview, end:this.state.endValuePreview}}
                                       value={this.state.startValuePreview || this.dateNow(Date.now())}
-                                      onChange={this.startCalendarChange} range={"start"}/>
+                                      onChange={this.startCalendarChange} range={"start"} showTime={this.props.showTime}/>
                             <Calendar source={{start:this.state.startValuePreview, end:this.state.endValuePreview}}
-                                      value={this.state.endValuePreview || this.dateNow(Date.now() + 86400 * 1000)}
-                                      onChange={this.endCalendarChange} range={"end"}/>
+                                      value={this.state.endValuePreview || (this.dateNow(Date.now() + (this.props.showTime ? 1000 : 86400 * 1000)))}
+                                      onChange={this.endCalendarChange} range={"end"} showTime={this.props.showTime}/>
                         </div>
                     ) : (
                         <Calendar
