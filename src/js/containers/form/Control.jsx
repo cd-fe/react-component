@@ -9,6 +9,7 @@ import omit from '../../util/omit.jsx';
 import className from '../../util/className.jsx';
 
 import Check from './Check.jsx';
+import CF from './commonFunc.jsx';
 
 var Control = React.createClass({
     /**
@@ -17,7 +18,8 @@ var Control = React.createClass({
      */
     mixins:[ComponentBase],
     contextTypes:{
-        form:React.PropTypes.object
+        form:React.PropTypes.object,
+        rule:React.PropTypes.object
     },
     getDefaultProps:function() {
         return {
@@ -72,9 +74,6 @@ var Control = React.createClass({
     },
     componentDidMount : function() {
         //TODO 验证顺序不一致，待优化
-        //this.props.required && Pubsub.subscribe('Check_UID_' + this.props.mark, function (key, value) {
-        //    Check(value[0], this);
-        //}.bind(this));
         if(this.context.form) {
             this.context.form.register(this);
         }
@@ -99,16 +98,13 @@ var Control = React.createClass({
         return html;
     },
     render:function() {
-
         var ControlMap = Control.findControlMap(this);
 
-        var props = omit(this.props, 'cname');
+        var props = omit(this.props, 'cname','onChange');
         //if(!ControlMap && this.props.children instanceof Array) {
         //    throw new Error('custom Form.Control have to own single child.');
         //}
-
         var cls;
-
         if(this.state.validateStatus) {
             cls = "rui-form-unit " + (this.state.validateStatus)
         }else {
@@ -120,14 +116,14 @@ var Control = React.createClass({
 
         return <div {...this.props} className={className(this.props.className, this.getPropClass()) + " " + cls}>
             <span className="input-wrapper">
-                {ControlMap ? (<ControlMap.tag {...props} {...ControlMap.props} ref="content">
+                {ControlMap ? (<ControlMap.tag    {...ControlMap.props} {...props}  ref="content">
                     {this.props.children}
                 </ControlMap.tag>) : (
                     React.Children.map(this.props.children, function(child, index) {
                         if(child.props && typeof child.props.name != 'undefined') {
                             return React.cloneElement(child, Object.assign({
                                 ref:"content"
-                            }, child.psop));
+                            }, child.props));
                         }
                         return null;
                     })
@@ -139,11 +135,9 @@ var Control = React.createClass({
         </div>;
     }
 });
-
 Control.findControlMap = function(rc) {
     var result = null;
     var props = rc.props;
-
     if(!props.type) {
         return;
     }
@@ -200,6 +194,22 @@ Control.findControlMap = function(rc) {
         };
     }
 
+    if(type == 'datePicker') {
+        result = {
+            tag:'DatePicker',
+            props:{
+                type:'DatePicker',
+            }
+        };
+    }
+    if(type == 'textarea') {
+        result = {
+            tag:'Textarea',
+            props:{
+                type:'Textarea',
+            }
+        };
+    }
     if(!result) {
         result = {
             tag:type.substring(0, 1).toUpperCase() + type.substring(1)
@@ -207,20 +217,19 @@ Control.findControlMap = function(rc) {
     }
 
     //绑定事件
-    var rowType = rc.context.form.props.children[rc.props.index].props.type;
-    var rules = rc.context.form.props.rules[rowType].validator[rc.props.sub].rules;
-
-    rules.trigger && rules.trigger.split('|').forEach(function(evt) {
-        result.props[evt] = function(e) {
-            window.setTimeout(function() {
-                Check(rc.getValue(),rc,rules) && rules.callback && rules.callback(rc);
-            }, 0);
-        };
-    });
+    var rules = rc.context.rule.validator[rc.props.name].rules;
 
     result.tag = RUI[result.tag];
     result.props = Object.assign(result.props || {}, omit(props, 'type', 'cname', 'label'));
-
+    //TODO 后续完善
+    rules.trigger && rules.trigger.split('|').forEach(function(evt) {
+        result.props[evt] = function(e) {
+            window.setTimeout(function() {
+                Check(rc) && rules.callback && rules.callback(rc);
+            }, 0);
+            console.log('系统定义');
+        };
+    });
     return result;
 };
 

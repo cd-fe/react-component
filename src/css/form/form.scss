@@ -150,3 +150,18 @@
   font-style: normal;
   color:#cacaca;
 }
+.split {
+  float: left;
+  width:10px;
+  height:1px;
+}
+.deco {
+  float: left;
+  display: inline;
+  margin: 6px 0 0 5px;
+}
+.deco-l {
+  float: left;
+  display: inline;
+  margin: 6px 5px 0 0;
+}

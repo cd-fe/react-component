@@ -24,6 +24,7 @@ var Form = React.createClass({
      */
     mixins:[ComponentBase],
     controls:[],
+    fields : [],
     childContextTypes: {
         form:React.PropTypes.object
     },
@@ -53,6 +54,73 @@ var Form = React.createClass({
             }
         };
     },
+    //获取所有 control 实例
+    register:function(control) {
+        this.controls.push(control);
+    },
+    getControl : function(str) {
+        var exits;
+        if(str) {
+            exits = this.controls.findIndex(function(item, index) {
+                return item.props.name == str
+            });
+        }
+        return exits > -1 ?  this.controls[exits] : null
+    },
+    getSingleFieldValue : function(str) {
+        let control = null;
+        if(str) {
+            control = this.getControl(str);
+        }
+        return control ? control.getValue() : control;
+    },
+    getSingleFieldRule : function(str) {
+        let control = null;
+        if(str) {
+            control = this.getControl(str);
+        }
+        return control ? control.props.rule : control
+    },
+    getAllFieldValues : function() {
+        var array = [];
+        this.controls.forEach(function(item, index) {
+            var value = item && item.getValue && item.getValue();
+            array.push({
+                name:item.props.name,
+                value:value
+            });
+        }.bind(this));
+        return array;
+    },
+    getAllFieldsInfo : function(str) {
+        return this.fields.length == 0 ? this.getAllFieldValues() : this.fields;
+    },
+    setFieldCheckStatus : function(str, status) {
+        var control = this.getControl(str);
+        control && control.setState({
+            validateStatus : status.validateStatus,
+            explain : status.explain
+        });
+    },
+    validate : function() {
+        let pass;
+        this.fields = [];//清空
+        this.controls.forEach(function(item, index) {
+            var value = item && item.getValue && item.getValue();
+            //TODO 验证数据
+            var result = Check(item) && item.context.rule.validator[item.props.name].rules.callback(item);
+
+            this.fields.push({
+                name:item.props.name,
+                value:value,
+                checkStatus:result//true false
+            });
+        }.bind(this));
+        pass = this.fields.some(function(item, index) {
+            return item.checkStatus
+        });
+        return !pass ? pass : this.getAllFieldsInfo();
+    },
     serializeObject:function(array) {
         var data = {};
         array.forEach(function(item) {
@@ -60,45 +128,11 @@ var Form = React.createClass({
         });
         return data;
     },
-    serializeArray:function() {
-        var array = [];
-        this.controls.forEach(function(item, index) {
-            var value = item && item.getValue && item.getValue();
-            //TODO 验证数据
-
-            var result = Check(item.getValue(),item,item.props.rule) && item.props.rule.callback(item);
-
-            if(item.toString() == '[object Object]') {
-                array.push({
-                    name:item.props.name,
-                    value:value,
-                    result:result
-
-                });
-            }
-        }.bind(this));
-
-        //filter 得到所有表单control
-        array = array.filter(function(item, index) {
-            return typeof item.name !== 'undefined'
-        });
-
-
-        //获取必选项
-        var isValid = array.every(function(item, index) {
-                            return !!item.result
-                        });
-        if(isValid) {
-            array = this.serializeObject(array);
-        }
-        return isValid ? array : isValid;
-    },
-    register:function(control) {
-        this.controls.push(control);
-    },
     submitHandler:function(e) {
-        var result = this.serializeArray();
+        let result = this.validate();
         if(result) {
+            result = this.serializeObject(result);
+            console.log('输出结果');
             console.dir(result);
         }else {
             e && e.nativeEvent.preventDefault();
@@ -113,7 +147,8 @@ var Form = React.createClass({
         var result = this.submitHandler();
         if(result !== false) {
             var form = ReactDOM.findDOMNode(this);
-            form.submit();
+            console.log('数据正常，可以提交');
+            //form.submit();
         }
     },
     /**
@@ -129,10 +164,8 @@ var Form = React.createClass({
         return <form {...this.props} className={classes} onSubmit={this.submitHandler}>
             {React.Children.map(this.props.children, function(child, index) {
                 var props = Object.assign({
-                    form : this,
                     ref:'Row_' + index,
                     rule : this.props.rules,
-                    index:index
                 }, child.props);
                 return React.cloneElement(child, props);
             }.bind(this))}

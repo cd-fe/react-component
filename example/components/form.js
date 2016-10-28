@@ -1,63 +1,249 @@
-var rules = {
-    acc: {
-        validator: [
-            {
-                type: 'input',
-                rules: {
-                    required: {
-                        msg: '账号不能为空'
-                    },
-                    filter: {
-                        reg: /^[0-9]+$/,//验证规则，，正则表达式
-                        msg: '账号格式不正确'
-                    },
-                    trigger: 'onBlur|onChange',
-                    callback: function(rc) {
-                        if(rc.getValue() == '1') {
-                            rc.setState({
-                                validateStatus : 'is-error',
-                                explain : '数字不能为1'
-                            });
-                            return false;
+var Example = React.createClass({
+    formRules : function() {
+        let _this = this;
+        return {
+            activity : {
+                required : true,
+                validator : {
+                    'evt' : {
+                        rules: {
+                            required: {
+                                msg: '活动名称不能为空'
+                            },
+                            filter: {
+                                reg: 'name',//验证规则，，正则表达式
+                                msg: '活动名称格式不正确'
+                            },
+                            trigger: 'onBlur|onChange',
+                            callback: function(rc) {
+                                _this.doEvt(rc);
+                            }
                         }
-                        //showError();
                     }
                 }
             },
-            {
-                type: 'input',
-                rules: {
-                    required: {
-                        msg: '手机号不能为空'
-                    },
-                    filter: {
-                        reg: 'phone',//验证规则，，正则表达式
-                        msg: '手机号格式不正确'
-                    },
-                    trigger: 'onBlur|onChange',
-                    callback: function(rc) {
-                        //远程在此校验
-                        console.log(rc.getValue());
-                        if(rc.getValue() == '15008229012') {
-                            rc.setState({
-                                validateStatus : 'is-error',
-                                explain : '数字不能15008229012'
-                            });
-                            return false;
+            time : {
+                required : true,
+                validator : {
+                    'start' : {
+                        rules: {
+                            required: {
+                                msg: '请选择开始时间'
+                            },
+                            /*filter: {
+                                reg: 'phone',//验证规则，，正则表达式
+                                msg: ''
+                            },*/
+                            trigger: 'onBlur|onChange',
+                                callback: function(rc) {
+                                _this.doMob(rc);
+                            }
                         }
-                        //showError();
+                    },
+                    'end' :{
+                        rules: {
+                            required: {
+                                msg: '请选择结束时间'
+                            },
+                            /*filter: {
+                                reg: 'phone',//验证规则，，正则表达式
+                                msg: ''
+                            },*/
+                            trigger: 'onBlur|onChange',
+                                callback: function(rc) {
+                                _this.doMob(rc);
+                            }
+                        }
+                    }
+                }
+            },
+            people : {
+                required : false,
+                validator : {
+                    'people' : {
+                        rules: {
+                           /* required: {
+                                msg: '活动名称不能为空'
+                            },
+                            filter: {
+                                reg: 'name',//验证规则，，正则表达式
+                                msg: '活动名称格式不正确'
+                            },*/
+                            trigger: 'onBlur|onChange',
+                            callback: function(rc) {
+                                _this.doPeople && _this.doPeople(rc);
+                            }
+                        }
+                    }
+                }
+            },
+            plimit : {
+                required : false,
+                validator : {
+                    'limit' : {
+                        rules: {
+                            /* required: {
+                             msg: '活动名称不能为空'
+                             },
+                             filter: {
+                             reg: 'name',//验证规则，，正则表达式
+                             msg: '活动名称格式不正确'
+                             },*/
+                            trigger: 'onBlur|onChange',
+                            callback: function(rc) {
+
+                            }
+                        }
+                    },
+                    'number' : {
+                        rules: {
+                            /* required: {
+                             msg: '活动名称不能为空'
+                             },
+                             filter: {
+                             reg: 'name',//验证规则，，正则表达式
+                             msg: '活动名称格式不正确'
+                             },*/
+                            trigger: 'onBlur|onChange',
+                            callback: function(rc) {
+
+                            }
+                        }
+                    }
+                }
+            },
+            rewardType : {
+                required : true,
+                validator : {
+                    'reward' : {
+                        rules: {
+                            required: {
+                                msg: '请选择派奖方式'
+                             },
+                             /*filter: {
+                                 reg: 'name',//验证规则，，正则表达式
+                                 msg: '活动名称格式不正确'
+                                 },*/
+                            trigger: 'onBlur|onChange',
+                            callback: function(rc) {
+
+                            }
+                        }
+                    }
+                }
+            },
+            chance: {
+                required : false,
+                validator: {
+                    'chance' :{
+                        rules: {
+                            required: {
+                                msg: '机会不能为空'
+                            },
+                            filter: {
+                                reg: /^[0-9]+$/,//验证规则，，正则表达式
+                                msg: '机会只能为数字'
+                            },
+                            trigger: 'onBlur|onChange',
+                            callback: function(rc) {
+                                //_this.doName(rc);
+                            }
+                        }
+                    }
+                }
+            },
+            cover: {
+                required : true,
+                validator: {
+                    'cover' :{
+                        rules: {
+                            required: {
+                                msg: '图片不能为空'
+                            },
+                            /*filter: {
+                                reg: /^[0-9]+$/,//验证规则，，正则表达式
+                                    msg: '账号格式不正确'
+                            },*/
+                            trigger: 'onBlur|onChange',
+                            callback: function(rc) {
+                                //_this.doName(rc);
+                            }
+                        }
+                    }
+                }
+            },
+            desc: {
+                required : true,
+                validator: {
+                    'desc' :{
+                        rules: {
+                            required: {
+                                msg: '描述不能为空'
+                            },
+                            /*filter: {
+                             reg: /^[0-9]+$/,//验证规则，，正则表达式
+                             msg: '账号格式不正确'
+                             },*/
+                            trigger: 'onBlur|onChange',
+                            callback: function(rc) {
+                                //_this.doName(rc);
+                            }
+                        }
+                    }
+                }
+            },
+            descType: {
+                required : true,
+                validator: {
+                    'descType' :{
+                        rules: {
+                            required: {
+                                msg: '请至少选择一个类型'
+                            },
+                            /*filter: {
+                             reg: /^[0-9]+$/,//验证规则，，正则表达式
+                             msg: '账号格式不正确'
+                             },*/
+                            trigger: 'onBlur|onChange',
+                            callback: function(rc) {
+                                //_this.doName(rc);
+                            }
+                        }
                     }
                 }
             }
-        ]
-    }
-};
-
-var Example = React.createClass({
+        }
+    },
     getInitialState : function() {
         return {
-            rules : rules,
+            rules : this.formRules(),
             explain : this.props.explain
+        }
+    },
+    doEvt : function(rc) {
+        console.log('自定义')
+        return true;
+    },
+    doName : function(rc) {
+        if(rc.getValue() == '1') {
+            rc.setState({
+                validateStatus : 'is-error',
+                explain : '数字不能为1'
+            });
+            return false;
+        }else {
+            return true;
+        }
+    },
+    doMob : function(rc) {
+        if(rc.getValue() == '15008229012') {
+            rc.setState({
+                validateStatus : 'is-error',
+                explain : '数字不能15008229012'
+            });
+            return false;
+        }else {
+            return true;
         }
     },
     submitHandler:function(data, form) {
@@ -71,6 +257,16 @@ var Example = React.createClass({
     nameCheck : function(value) {
         //console.log('namecheck======================= ' + value);
     },
+    onClickHandler : function() {
+        this.refs.form.setFieldCheckStatus('mob', {
+            validateStatus : 'is-success',
+            explain : '信息输入正确',
+        });
+    },
+    disable : function() {
+        //console.log('触发onchange事件');
+        console.log('自定义');
+    },
     render:function() {
         var selectData = [
             { key:'请选择', value:0 },
@@ -78,144 +274,127 @@ var Example = React.createClass({
             { key:'编辑', value:2 },
             { key:'审查', value:3 }
         ];
-
         return <div className="example-form">
             <h2 className="title">表单<span>Form</span></h2>
             <h3 className="sub-title">演示</h3>
             <div className="example">
                 <h4 className="final-title">验证</h4>
+                {/*<p><RUI.Button onClick={this.onClickHandler}>点击</RUI.Button></p>*/}
                 <div>
-                    <RUI.Form className="horizonal" onSubmit={this.submitHandler} rules={this.state.rules}>
+                    <RUI.Form ref="form" className="horizonal" onSubmit={this.submitHandler} rules={this.state.rules}>
                         <RUI.Form.Row>
-                            <p style={{paddingBottom:'5px',fontSize:'16px',fontWeight:'bold',borderBottom: "1px dashed #dadada"}}>输入框</p>
+                            <p style={{paddingBottom:'5px',fontSize:'16px',fontWeight:'bold',borderBottom: "1px dashed #dadada"}}>基本设置</p>
                         </RUI.Form.Row>
-                        <RUI.Form.Row label="倍棒账号：" type="acc">
+                        <RUI.Form.Row label="活动名称：" type="activity">
                             <RUI.Form.Control
-                                name="name"
+                                name="evt"
                                 type="input"
-                                placeholder="请输入倍棒账号"
-
-                            />
-                            <RUI.Form.Control
-                                name="name"
-                                type="input"
-                                placeholder="请输入手机号"
-
+                                onChange={this.doEvt}
+                                placeholder="最多输入15个字"
                             />
                         </RUI.Form.Row>
-                        {/*<RUI.Form.Row label="手机号：">
-                         <RUI.Form.Control
-                         name="phone"
-                         placeholder="请输入手机号"
-                         type="input"
-                         remote=""
-                         required={true}
-                         reg={'phone'}
-                         requireMsg="手机号不能为空"
-                         explain="手机号合格不正确"
-                         trigger={'onBlur|onChange'}
-                         validator={this.phoneCheck}
-                         />
-                         </RUI.Form.Row>
-                         <RUI.Form.Row label="QQ：">
-                         <RUI.Form.Control
-                         name="phone"
+                        <RUI.Form.Row label="活动时间：" type="time">
+                            <RUI.Form.Control
+                                name="start"
+                                type="datePicker"
+                            />
+                            <span className="split"></span>
+                            <RUI.Form.Control
+                                name="end"
+                                type="datePicker"
+                            >
+                           </RUI.Form.Control>
+                        </RUI.Form.Row>
 
-                         type="input"
-                         validator={this.QQCheck}
-                         />
-                         </RUI.Form.Row>
-                         <RUI.Form.Row label="抽奖机会：">
-                         <i className="desc">每人每日有</i>
-                         <RUI.Form.Control>
-                         <RUI.Input name="times" />
-                         </RUI.Form.Control>
-                         <i className="desc">抽奖机会</i>
-                         </RUI.Form.Row>
+                        <RUI.Form.Row label="参与人数：" type="people">
+                            <RUI.Form.Control
+                                defaultValue={"1"}
+                                name="people"
+                                type="radio">
+                                <RUI.Radio value="1">隐藏</RUI.Radio>
+                                <RUI.Radio value="0">显示</RUI.Radio>
+                            </RUI.Form.Control>
+                        </RUI.Form.Row>
 
-                         <RUI.Form.Row label="获奖概率：">
-                         <RUI.Form.Control
-                         name="times"
-                         wcname="width_80"
-                         type="input"
-                         reg={'number'}
-                         validator={this.timesCheck}
-                         >
-                         </RUI.Form.Control>
-                         <i className="desc"><strong>%</strong> <em className="grey">这意味着每十次抽奖3次获奖</em></i>
-                         </RUI.Form.Row>
-                         <RUI.Form.Row>
-                         <p style={{paddingBottom:'5px',fontSize:'16px',fontWeight:'bold',borderBottom: "1px dashed #dadada"}}>其它</p>
-                         </RUI.Form.Row>
-                         <RUI.Form.Row label="性别：">
-                         <RUI.Form.Control
-                         name="male"
-                         type="radio"
+                        <RUI.Form.Row label="参与人数限制：" type="plimit">
+                            <RUI.Form.Control
+                                defaultValue={"1"}
+                                name="limit"
+                                type="radio">
+                                <RUI.Radio value="1">不限</RUI.Radio>
+                                <RUI.Radio value="0">限制</RUI.Radio>
+                            </RUI.Form.Control>
+                            <RUI.Form.Control
+                                name="number"
+                                type="input"
+                                placeholder=""
+                                onChange={this.disable}
 
-                         required={true}
-                         requireMsg="请选择性别"
-                         trigger={'onBlur|onChange'}
-                         validator={this.maleCheck}
-                         validateStatus="">
-                         <RUI.Radio value="1">男</RUI.Radio>
-                         <RUI.Radio value="0">女</RUI.Radio>
-                         </RUI.Form.Control>
-                         </RUI.Form.Row>
-                         <RUI.Form.Row label="密码">
-                         <RUI.Form.Control
-                         name="password"
-                         placeholder="请输入密码"
-                         type="password"
-                         required={true}
-                         reg={'pass'}
-                         requireMsg="密码不能为空"
-                         explain="密码为数组、英文字母组合"
-                         trigger={'onBlur|onChange'}
-                         validator={this.psCheck}
-                         validateStatus=""
-                         />
-                         <RUI.Form.Control
-                         name="cpassword"
-                         placeholder="请确认密码"
-                         type="password"
-                         required={true}
-                         reg={'pass'}
-                         requireMsg="密码不能为空"
-                         explain="密码为数组、英文字母组合"
-                         trigger={'onBlur|onChange'}
-                         validator={this.rpsCheck}
-                         validateStatus=""
-                         />
-                         </RUI.Form.Row>
-                         <RUI.Form.Row label="兴趣：">
-                         <RUI.Form.Control
-                         name="interest"
-                         type="checkbox"
-                         required={true}
-                         requireMsg="请选择兴趣"
-                         trigger={'onChange'}
-                         validator={this.interestCheck}
-                         validateStatus=""
-                         >
-                         <RUI.Checkbox value="1" selected={'1'}>科技</RUI.Checkbox>
-                         <RUI.Checkbox value="2">摄影</RUI.Checkbox>
-                         <RUI.Checkbox value="3">旅游</RUI.Checkbox>
-                         <RUI.Checkbox value="4">娱乐</RUI.Checkbox>
-                         </RUI.Form.Control>
-                         </RUI.Form.Row>
-                         <RUI.Form.Row label="角色：">
-                         <RUI.Form.Control
-                         name="role"
-                         type="select"
-                         required={true}
-                         requireMsg="请选择角色"
-                         stuff={true}
-                         trigger={'onChange'}
-                         validator={this.commonFunc}
-                         validateStatus=""
-                         data={selectData}
-                         />
-                         </RUI.Form.Row>*/}
+                            />
+                            <span className="deco">人参与</span>
+                        </RUI.Form.Row>
+                        <RUI.Form.Row>
+                            <p style={{paddingBottom:'5px',fontSize:'16px',fontWeight:'bold',borderBottom: "1px dashed #dadada"}}>派奖方式</p>
+                        </RUI.Form.Row>
+
+                        <RUI.Form.Row label="派奖方式：" type="rewardType">
+                            <RUI.Form.Control
+                                name="reward"
+                                type="select"
+                                stuff={true}
+                                data={selectData}
+                            />
+                            <span className="deco grey">参与活动即可抽奖</span>
+                        </RUI.Form.Row>
+
+                        <RUI.Form.Row label="每日抽奖机会：" type="chance">
+                            <span className="deco-l">每人每日有</span>
+                            <RUI.Form.Control
+                                name="chance"
+                                type="input"
+                                placeholder="请输入"
+
+                            />
+                            <span className="deco">抽奖机会</span>
+                        </RUI.Form.Row>
+
+                        <RUI.Form.Row>
+                            <p style={{paddingBottom:'5px',fontSize:'16px',fontWeight:'bold',borderBottom: "1px dashed #dadada"}}>活动首页设置</p>
+                        </RUI.Form.Row>
+
+                        <RUI.Form.Row label="图片设置：" type="cover">
+                            <RUI.Form.Control
+                                name="cover"
+                                type="upload"
+                                multiple={true}
+                                placeholder="请上传图片"
+                                list={[]}
+                                onChange={this.disable}
+                            />
+                        </RUI.Form.Row>
+                        <RUI.Form.Row>
+                            <p style={{paddingBottom:'5px',fontSize:'16px',fontWeight:'bold',borderBottom: "1px dashed #dadada"}}>文案描述</p>
+                        </RUI.Form.Row>
+
+                        <RUI.Form.Row label="文案描述：" type="desc">
+                            <RUI.Form.Control
+                                name="desc"
+                                type="textarea"
+                                placeholder="文案描述"
+                                onChange={this.disable}
+                            />
+                        </RUI.Form.Row>
+
+                        <RUI.Form.Row label="描述类型：" type="descType">
+                            <RUI.Form.Control
+                                name="descType"
+                                type="checkbox">
+                                <RUI.Checkbox value="1" defaultSelected={0}>科技</RUI.Checkbox>
+                                <RUI.Checkbox value="2" defaultSelected={0}>摄影</RUI.Checkbox>
+                                <RUI.Checkbox value="3" defaultSelected={0}>旅游</RUI.Checkbox>
+                                <RUI.Checkbox value="4" defaultSelected={0}>娱乐</RUI.Checkbox>
+                            </RUI.Form.Control>
+                        </RUI.Form.Row>
                         <RUI.Form.Row>
                             <RUI.Form.Submit>保存</RUI.Form.Submit>
                             <RUI.Form.Reset>重置</RUI.Form.Reset>

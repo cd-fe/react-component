@@ -6,7 +6,9 @@ import CF from './CommonFunc.jsx';
 
 const checksFunc = {
     //必填校验
-    required : function(value, rc, rule) {
+    required : function(rc) {
+        var value = rc.getValue();
+        var rule = rc.context.rule.validator[rc.props.name].rules;
         var result = false;
         if(CF.isNull(value) || value == '' || CF.checkboxAndSelectNoChecked(value)) {
             rc.setState({
@@ -23,7 +25,9 @@ const checksFunc = {
         return result;
     },
     //过滤校验
-    filter : function(value, rc, rule) {
+    filter : function(rc) {
+        var value = rc.getValue();
+        var rule = rc.context.rule.validator[rc.props.name].rules;
         var result = false;
         if(!(CF.getReg(rule.filter.reg).test(value))) {
             rc.setState({
@@ -36,7 +40,9 @@ const checksFunc = {
         return result;
     },
     //远程校验
-    remote : function(value, rc, rule) {
+    remote : function(rc) {
+        var value = rc.getValue();
+        var rule = rc.context.rule.validator[rc.props.name].rules;
         var {remote} = rc.props;
         return new Promise(function(resolve, reject) {
             $.ajax({
@@ -70,19 +76,20 @@ const checksFunc = {
     },
 };
 //steps ['required', 'filter']
-function makeChecks(stepsArr, value, rc,rule) {
+function makeChecks(stepsArr, rc) {
     for(var i = 0; i< stepsArr.length; i++) {
-        if(!checksFunc[stepsArr[i]](value, rc, rule)) {
+        if(!checksFunc[stepsArr[i]](rc)) {
             break;
         }
     }
     return i == stepsArr.length
 }
 
-module.exports = function(value, rc, rule) {
+module.exports = function(rc) {
+    var rule =  rc.context.rule.validator[rc.props.name].rules;
     var {required, filter, callback} = rule;
     var checksArr =[];
     required && checksArr.push('required');
     filter && checksArr.push('filter');
-    return makeChecks(checksArr, value, rc,rule);
+    return makeChecks(checksArr, rc);
 };

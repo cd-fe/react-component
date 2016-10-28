@@ -23,6 +23,7 @@ module.exports = {
         }
     },
     checkboxAndSelectNoChecked : function(src) {
+        console.dir(src);
         if(this.type(src) === '[object Array]') {
             //checkedbox
             return src.every(function(item, index) {
@@ -32,5 +33,15 @@ module.exports = {
             //selected
             return src.key == '请选择'
         }
+    },
+    filterArray : function(a, b) {
+        var result = [];
+        var c = b.toString();
+        for(var i=0;i<a.length;i++) {
+            if(c.indexOf(a[i].toString())>-1) {
+                result.push(a[i]);
+            }
+        }
+        return result;
     }
 };
