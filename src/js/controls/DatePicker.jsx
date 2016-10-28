@@ -51,7 +51,9 @@ module.exports = React.createClass({
             status.value = Date.now();
         }
 
-        this.setState(status);
+        this.setState(status, ()=>{
+            this.dispatchEvent('change', this.getValue());
+        });
     },
     getInitialState: function () {
         var status = this.initValues();
