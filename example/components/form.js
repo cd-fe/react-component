@@ -1,7 +1,28 @@
 var Example = React.createClass({
+    formatUploadData:function(file) {
+        var data = (file || "").split(',');
+        var suffix = data[0].match(/data:image\/(.+);base64/);
+        return {
+            suffix:suffix[1],
+            baseStr:data[1]
+        };
+    },
+    checkImgSizeAndType : function(file, limit) {
+        if (!(/^(jpg|png|jpeg|bmp)$/gi.test(file.data.type.split('/')[1]))) {
+            RUI.DialogManager.alert("上传图片只允许JPEG、JPG、PNG、BMP格式的图片!");
+            return false;
+        }
+        if((file.data.size/(1024*1024)).toFixed(2) > limit) {
+            RUI.DialogManager.alert('上传图片大小只允许'+limit+'M的图片!');
+            return false;
+        }
+        return true;
+    },
+    uploadCheck : function(e) {
+        return this.checkImgSizeAndType(e, 2);
+    },
     formRules : function() {
         var _this = this;
-
         return {
             activity : {
                 required : true,
@@ -15,8 +36,36 @@ var Example = React.createClass({
                                 reg: 'name',//验证规则
                                 msg: '活动名称格式不正确'
                             },
-                            trigger: 'onBlur|onChange',
+                            remote : true,
+                            trigger: 'onBlur',
                             callback: function(rc) {
+                                //远程校验
+                                var form = _this.refs.form;
+                                $.ajax({
+                                    url:'http://shop.berbon.com/react-component/src/js/containers/form/remotes.json',
+                                    type:'get',
+                                    dataType : 'json',
+                                    data:{},
+                                    cache: false,
+                                    beforeSend : function() {
+                                        form.setFieldCheckStatus('evt',{
+                                            validateStatus : 'is-validating',
+                                            explain : ''
+                                        });
+                                    },
+                                    success:function(response) {
+                                        form.setFieldCheckStatus('evt',{
+                                            validateStatus : 'is-success',
+                                            explain : ''
+                                        });
+                                    },
+                                    error:function() {
+                                        form.setFieldCheckStatus('evt',{
+                                            validateStatus : 'is-error',
+                                            explain : '网络错误,请稍后再试！'
+                                        });
+                                    }
+                                });
                                 return true;
                             }
                         }
@@ -51,7 +100,7 @@ var Example = React.createClass({
                                     form.setFieldCheckStatus('end',{
                                         validateStatus : 'is-error',
                                         explain : '结束时间不能小于开始时间'
-                                    })
+                                    });
                                     return false;
                                 }
                                 return true;
@@ -93,18 +142,32 @@ var Example = React.createClass({
                                         numberDisable : false
                                     });
                                 }
+                                return true;
                             }
                         }
                     },
                     'number' : {
                         rules: {
-                            filter: {
-                                 reg: /^[1-9]$/,
-                                 msg: '1-9的数'
-                             },
                             trigger: 'onBlur|onChange',
                             callback: function(rc) {
-
+                                var form = _this.refs.form;
+                                var limit = form.getSingleFieldValue('limit');
+                                if(limit == '0') {
+                                    if(/^[1-9]$/.test(rc.getValue())) {
+                                        form.setFieldCheckStatus('number',{
+                                            validateStatus : 'is-success',
+                                            explain : ''
+                                        });
+                                        return true;
+                                    }else {
+                                        form.setFieldCheckStatus('number',{
+                                            validateStatus : 'is-error',
+                                            explain : '1-9的数'
+                                        });
+                                        return false;
+                                    }
+                                }
+                                return true;
                             }
                         }
                     }
@@ -118,13 +181,9 @@ var Example = React.createClass({
                             required: {
                                 msg: '请选择派奖方式'
                              },
-                             /*filter: {
-                                 reg: 'name',//验证规则，，正则表达式
-                                 msg: '活动名称格式不正确'
-                                 },*/
                             trigger: 'onBlur|onChange',
                             callback: function(rc) {
-
+                                return true;
                             }
                         }
                     }
@@ -135,16 +194,13 @@ var Example = React.createClass({
                 validator: {
                     'chance' :{
                         rules: {
-                            required: {
-                                msg: '机会不能为空'
-                            },
                             filter: {
-                                reg: /^[0-9]+$/,//验证规则，，正则表达式
+                                reg: 'number',
                                 msg: '机会只能为数字'
                             },
                             trigger: 'onBlur|onChange',
                             callback: function(rc) {
-                                //_this.doName(rc);
+                                return true;
                             }
                         }
                     }
@@ -158,13 +214,9 @@ var Example = React.createClass({
                             required: {
                                 msg: '图片不能为空'
                             },
-                            /*filter: {
-                                reg: /^[0-9]+$/,//验证规则，，正则表达式
-                                    msg: '账号格式不正确'
-                            },*/
-                            trigger: 'onBlur|onChange',
+                            trigger: 'onUploadComplete',
                             callback: function(rc) {
-                                //_this.doName(rc);
+                                return true;
                             }
                         }
                     }
@@ -178,13 +230,9 @@ var Example = React.createClass({
                             required: {
                                 msg: '描述不能为空'
                             },
-                            /*filter: {
-                             reg: /^[0-9]+$/,//验证规则，，正则表达式
-                             msg: '账号格式不正确'
-                             },*/
                             trigger: 'onBlur|onChange',
                             callback: function(rc) {
-                                //_this.doName(rc);
+                                return true;
                             }
                         }
                     }
@@ -198,13 +246,9 @@ var Example = React.createClass({
                             required: {
                                 msg: '请至少选择一个类型'
                             },
-                            /*filter: {
-                             reg: /^[0-9]+$/,//验证规则，，正则表达式
-                             msg: '账号格式不正确'
-                             },*/
                             trigger: 'onBlur|onChange',
                             callback: function(rc) {
-                                //_this.doName(rc);
+                                return true;
                             }
                         }
                     }
@@ -212,12 +256,17 @@ var Example = React.createClass({
             }
         }
     },
+    componentDidMount : function() {
+        //执行某项表单元校验
+        this.refs.form.validateSingleField('evt');
+    },
     getInitialState : function() {
         return {
             rules : this.formRules(),
             explain : this.props.explain,
             numberDisable : true,
             number : '',
+            list : []
         }
     },
     doNumber : function(e){
@@ -225,43 +274,20 @@ var Example = React.createClass({
             number:e.target.value
         });
     },
-
-    doEvt : function(rc) {
-        console.log('自定义')
-        return true;
-    },
-    doName : function(rc) {
-        if(rc.getValue() == '1') {
-            rc.setState({
-                validateStatus : 'is-error',
-                explain : '数字不能为1'
-            });
-            return false;
-        }else {
-            return true;
-        }
-    },
-    doMob : function(rc) {
-        if(rc.getValue() == '15008229012') {
-            rc.setState({
-                validateStatus : 'is-error',
-                explain : '数字不能15008229012'
-            });
-            return false;
-        }else {
-            return true;
-        }
-    },
     submitHandler:function(data, form) {
-        //
+        //RUI.DialogManager.alert(JSON.stringify(data));
         console.dir(data);
         return false;
     },
-    commonFunc : function(e) {
-        console.log(e);
-    },
-    nameCheck : function(value) {
-        //console.log('namecheck======================= ' + value);
+    complete : function(res,s) {
+        var form = this.refs.form;
+        var uploadList = form.getSingleFieldValue('cover');
+        if(uploadList.length > 0) {
+            form.setFieldCheckStatus('cover',{
+                validateStatus : '',
+                explain : ''
+            });
+        }
     },
     onClickHandler : function() {
         this.refs.form.setFieldCheckStatus('mob', {
@@ -270,7 +296,6 @@ var Example = React.createClass({
         });
     },
     disable : function() {
-        //console.log('触发onchange事件');
         console.log('自定义');
     },
     render:function() {
@@ -285,9 +310,8 @@ var Example = React.createClass({
             <h3 className="sub-title">演示</h3>
             <div className="example">
                 <h4 className="final-title">验证</h4>
-                {/*<p><RUI.Button onClick={this.onClickHandler}>点击</RUI.Button></p>*/}
                 <div>
-                    <RUI.Form ref="form" className="horizonal" onSubmit={this.submitHandler} rules={this.state.rules}>
+                    <RUI.Form ref="form" key={this.state.key} className="horizonal" onSubmit={this.submitHandler} rules={this.state.rules}>
                         <RUI.Form.Row>
                             <p style={{paddingBottom:'5px',fontSize:'16px',fontWeight:'bold',borderBottom: "1px dashed #dadada"}}>基本设置</p>
                         </RUI.Form.Row>
@@ -295,7 +319,7 @@ var Example = React.createClass({
                             <RUI.Form.Control
                                 name="evt"
                                 type="input"
-                                onChange={this.doEvt}
+                                defaultValue="sd"
                                 placeholder="最多输入15个字"
                             />
                         </RUI.Form.Row>
@@ -358,6 +382,7 @@ var Example = React.createClass({
                         <RUI.Form.Row label="每日抽奖机会：" type="chance">
                             <span className="deco-l">每人每日有</span>
                             <RUI.Form.Control
+                                className="width_80"
                                 name="chance"
                                 type="input"
                                 placeholder="请输入"
@@ -374,10 +399,20 @@ var Example = React.createClass({
                             <RUI.Form.Control
                                 name="cover"
                                 type="upload"
+
                                 multiple={true}
+                                autoUpload={true}
+                                beforeEdit={this.uploadCheck}
+                                action="http://image.berbon.com/image/upload/base64zoom"
+                                actionData={this.formatUploadData}
+                                beforeEdit={this.uploadCheck}
+                                onUploadComplete={this.complete}
+
+                                editable={{
+                                    aspectRatio:1
+                                }}
                                 placeholder="请上传图片"
-                                list={[]}
-                                onChange={this.disable}
+                                list={this.state.list}
                             />
                         </RUI.Form.Row>
                         <RUI.Form.Row>
@@ -405,7 +440,7 @@ var Example = React.createClass({
                         </RUI.Form.Row>
                         <RUI.Form.Row>
                             <RUI.Form.Submit>保存</RUI.Form.Submit>
-                            <RUI.Form.Reset>重置</RUI.Form.Reset>
+                            {/*<RUI.Form.Reset>重置</RUI.Form.Reset>*/}
                         </RUI.Form.Row>
                     </RUI.Form>
                 </div>

@@ -9,7 +9,6 @@
 
 import ComponentBase from '../mixins/ComponentBase.jsx';
 import className from '../util/className.jsx';
-import Pubsub from './form/Pubsub.jsx';
 import Row from './form/Row.jsx';
 import Control from './form/Control.jsx';
 import Reset from './form/Reset.jsx';
@@ -102,21 +101,32 @@ var Form = React.createClass({
             explain : status.explain
         });
     },
-    validate : function() {
-        let pass;
+    validateSingleField : function(str) {
+        var control = null;
+        var result = null;
+        if(str) {
+            control = this.getControl(str);
+        }
+        if(control) {
+            result = Check(control) && control.context.rule.validator[control.props.name].rules.callback && control.context.rule.validator[control.props.name].rules.callback(control);
+        }
+        return result;
+    },
+    validateAllFields : function() {
+        var pass,callback,result,value,rules,remote;
         this.fields = [];//清空
         this.controls.forEach(function(item, index) {
-            var value = item && item.getValue && item.getValue();
-            //TODO 验证数据
-            var result = Check(item) && item.context.rule.validator[item.props.name].rules.callback && item.context.rule.validator[item.props.name].rules.callback(item);
-
+            value = item && item.getValue && item.getValue();
+            rules = item.context.rule.validator[item.props.name].rules;
+            callback = rules.callback;
+            result = callback ? (Check(item) && callback(item)) : Check(item);
             this.fields.push({
                 name:item.props.name,
                 value:value,
                 checkStatus:result//true false
             });
         }.bind(this));
-        pass = this.fields.some(function(item, index) {
+        pass = this.fields.every(function(item, index) {
             return item.checkStatus
         });
         return !pass ? pass : this.getAllFieldsInfo();
@@ -129,11 +139,10 @@ var Form = React.createClass({
         return data;
     },
     submitHandler:function(e) {
-        let result = this.validate();
+        var result = this.validateAllFields();
         if(result) {
             result = this.serializeObject(result);
-            console.log('输出结果');
-            console.dir(result);
+            return result;
         }else {
             e && e.nativeEvent.preventDefault();
             return false;
@@ -147,8 +156,7 @@ var Form = React.createClass({
         var result = this.submitHandler();
         if(result !== false) {
             var form = ReactDOM.findDOMNode(this);
-            console.log('数据正常，可以提交');
-            //form.submit();
+            this.props.onSubmit(result);
         }
     },
     /**

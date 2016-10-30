@@ -1,6 +1,5 @@
 module.exports = function(obj) {
-    var keys = Array.prototype.slice.call(arguments, 1);
-
+    var keys =arguments[1] instanceof Array ? arguments[1] :   Array.prototype.slice.call(arguments, 1);
     var result = {};
 
     for(var key in obj) {

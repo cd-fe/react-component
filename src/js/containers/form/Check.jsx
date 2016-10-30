@@ -5,44 +5,76 @@
 import CF from './CommonFunc.jsx';
 
 const checksFunc = {
+    //校验表单元
+    checkFormUnit : function(type, value) {
+        var result = true;
+        switch(type) {
+            case 'input':
+            case 'datePicker':
+            case 'textarea':
+                result = (!CF.isNull(value) && value != '');
+                break;
+            case 'select':
+                result = (value.key != '请选择');
+                break;
+            case 'upload':
+                result = value.length;
+                break;
+            case 'checkbox':
+                result = value.some(function(item, index) {
+                    return item.defaultSelected == 0
+                });
+                break;
+        }
+        return result;
+    },
     //必填校验
     required : function(rc) {
         var value = rc.getValue();
         var rule = rc.context.rule.validator[rc.props.name].rules;
         var result = false;
-        if(CF.isNull(value) || value == '' || CF.checkboxAndSelectNoChecked(value)) {
-            rc.setState({
-                validateStatus : 'is-error',
-                explain : rule.required.msg || '输入不能为空'
-            });
-        }else {
+        if(this.checkFormUnit(rc.props.type, value)) {
             rc.setState({
                 validateStatus : 'is-success',
                 explain : ''
             });
             result = true;
+        }else {
+            rc.setState({
+                validateStatus : 'is-error',
+                explain : rule.required.msg || '输入不能为空'
+            });
         }
         return result;
+
     },
     //过滤校验
     filter : function(rc) {
         var value = rc.getValue();
         var rule = rc.context.rule.validator[rc.props.name].rules;
         var result = false;
-        console.log('CF.getReg(rule.filter.reg).test(value)')
-        console.log(CF.getReg(rule.filter.reg).test(value))
-        if(!(CF.getReg(rule.filter.reg).test(value))) {
-            rc.setState({
-                validateStatus : 'is-error',
-                explain : rule.filter.msg || '输入格式不正确'
-            });
+        //非必填项时，输入不为空的情况下验证
+        if(value) {
+            if(!(CF.getReg(rule.filter.reg).test(value))) {
+                rc.setState({
+                    validateStatus : 'is-error',
+                    explain : rule.filter.msg || '输入格式不正确'
+                });
+            }else {
+                rc.setState({
+                    validateStatus : 'is-success',
+                    explain : ''
+                });
+                result = true;
+            }
         }else {
             rc.setState({
-                validateStatus : 'is-success',
+                validateStatus : '',
                 explain : ''
             });
             result = true;
         }
+
         return result;
     },
     //远程校验
@@ -83,12 +115,17 @@ const checksFunc = {
 };
 //steps ['required', 'filter']
 function makeChecks(stepsArr, rc) {
-    for(var i = 0; i< stepsArr.length; i++) {
-        if(!checksFunc[stepsArr[i]](rc)) {
-            break;
+    if(stepsArr.length > 0) {
+        for(var i = 0; i< stepsArr.length; i++) {
+            if(!checksFunc[stepsArr[i]](rc)) {
+                break;
+            }
         }
+        return i == stepsArr.length
+    }else {
+        return true;
     }
-    return i == stepsArr.length
+
 }
 
 module.exports = function(rc) {

@@ -73,7 +73,7 @@ var Control = React.createClass({
         return this.refs.content.getValue && (this.refs.content.getValue() || null);
     },
     componentDidMount : function() {
-        //TODO 验证顺序不一致，待优化
+
         if(this.context.form) {
             this.context.form.register(this);
         }
@@ -100,7 +100,14 @@ var Control = React.createClass({
     render:function() {
         var ControlMap = Control.findControlMap(this);
 
-        var props = omit(this.props, 'cname','onChange');
+        var filters = CF.filterArray( Object.keys(this.props),Object.keys(ControlMap.props)).filter(function(item, index){
+            return /^on.+/.test(item)
+         });
+
+        filters = filters.concat(['cname','className']);
+
+        var props = omit(this.props, filters);
+
         //if(!ControlMap && this.props.children instanceof Array) {
         //    throw new Error('custom Form.Control have to own single child.');
         //}
@@ -135,99 +142,66 @@ var Control = React.createClass({
         </div>;
     }
 });
-Control.findControlMap = function(rc) {
+Control.MakeControlByType = function(type) {
     var result = null;
+    switch(type) {
+        case 'input':
+        case 'upload':
+            result = {
+                tag:type.substring(0, 1).toUpperCase() + type.substring(1),
+                props:{
+                    type:'type'
+                }
+            };
+            break;
+        case 'password':
+            result = {
+                tag:'Input',
+                props:{
+                    type:'password'
+                }
+            };
+            break;
+        case 'checkbox':
+            result = {
+                tag:'CheckboxGroup',
+                props:{
+                    type:'CheckboxGroup'
+                }
+            };
+            break;
+        case 'radio':
+            result = {
+                tag:'RadioGroup',
+                props:{
+                    type:'RadioGroup'
+                }
+            };
+            break;
+    }
+    return result
+};
+Control.findControlMap = function(rc) {
     var props = rc.props;
     if(!props.type) {
         return;
     }
-
     var type = rc.props.type;
-    if(type == 'input') {
-        result = {
-            tag:'Input',
-            props:{
-                type:'input',
-            }
-        };
-    }
-    if(type == 'password') {
-        result = {
-            tag:'Input',
-            props:{
-                type:'password',
-            }
-        };
-    }
-    if(type == 'checkbox') {
-        result = {
-            tag:'CheckboxGroup',
-            props:{
-                type:'CheckboxGroup',
-            }
-        };
-    }
-    if(type == 'radio') {
-        result = {
-            tag:'RadioGroup',
-            props:{
-                type:'RadioGroup',
-            }
-        };
-    }
-
-    if(type == 'upload') {
-        result = {
-            tag:'Upload',
-            props:{
-                type:'Upload',
-            }
-        };
-    }
-
-    if(type == 'select') {
-        result = {
-            tag:'Select',
-            props:{
-                type:'Select',
-            }
-        };
-    }
-
-    if(type == 'datePicker') {
-        result = {
-            tag:'DatePicker',
-            props:{
-                type:'DatePicker',
-            }
-        };
-    }
-    if(type == 'textarea') {
-        result = {
-            tag:'Textarea',
-            props:{
-                type:'Textarea',
-            }
-        };
-    }
+    var result = this.MakeControlByType(type);
     if(!result) {
         result = {
             tag:type.substring(0, 1).toUpperCase() + type.substring(1)
         };
     }
 
-    //绑定事件
     var rules = rc.context.rule.validator[rc.props.name].rules;
 
     result.tag = RUI[result.tag];
-    result.props = Object.assign(result.props || {}, omit(props, 'type', 'cname', 'label'));
-    //TODO 后续完善
+    result.props = Object.assign(result.props || {}, omit(props, 'type', 'cname', 'label','className'));
+
     rules.trigger && rules.trigger.split('|').forEach(function(evt) {
         result.props[evt] = function(e) {
-            window.setTimeout(function() {
-                Check(rc) && rules.callback && rules.callback(rc);
-            }, 0);
-            console.log('系统定义');
+            Check(rc) && rules.callback && rules.callback(rc);
         };
     });
     return result;

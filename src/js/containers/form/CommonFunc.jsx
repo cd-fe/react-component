@@ -22,18 +22,6 @@ module.exports = {
             return false;
         }
     },
-    checkboxAndSelectNoChecked : function(src) {
-        console.dir(src);
-        if(this.type(src) === '[object Array]') {
-            //checkedbox
-            return src.every(function(item, index) {
-                return item.selected == 0
-            });
-        }else if(this.type(src) === '[object Object]'){
-            //selected
-            return src.key == '请选择'
-        }
-    },
     filterArray : function(a, b) {
         var result = [];
         var c = b.toString();
