@@ -55,7 +55,14 @@ module.exports = React.createClass({
              * @type number
              * @desc 显示多少时间(ms)后自动消失
              */
-            duration: 5000
+            duration: 5000,
+            /**
+             * @instance
+             * @default true
+             * @type boolean
+             * @desc 是否自动消失
+             */
+            autoHide: true
         };
     },
     componentDidMount: function () {
@@ -102,15 +109,22 @@ module.exports = React.createClass({
         });
     },
     onMouseLeave: function () {
-        this.resetTimer(function () {
-            this.setState({
-                show: false
-            });
-        }.bind(this), 100);
+        if(this.props.autoHide) {
+            this.resetTimer(function () {
+                this.setState({
+                    show: false
+                });
+            }.bind(this), 100);
+        }
     },
     hide:function() {
         this.setState({
             show:false
+        });
+    },
+    show:function() {
+        this.setState({
+            show:true
         });
     },
     componentDidUpdate: function () {
@@ -194,7 +208,7 @@ module.exports = React.createClass({
             position.top = ($(this.parentNode).outerHeight() - $(node).outerHeight()) / 2
         }
         if (align.indexOf('bottom') >= 0) {
-            position.top = $(node).outerHeight() + 15;
+            position.top = $(this.parentNode).outerHeight() + 15;
         }
         if (align.indexOf('left') >= 0) {
             position.left = -1 * $(node).outerWidth() - 15
