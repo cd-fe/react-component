@@ -186,13 +186,7 @@ var Form = React.createClass({
     render:function() {
         var classes = className(this.props.className, this.getPropClass());
         return <form {...this.props} className={classes} onSubmit={this.submitHandler}>
-            {React.Children.map(this.props.children, function(child, index) {
-                var props = Object.assign({
-                    ref:'Row_' + index,
-                    rule : this.props.rules,
-                }, child.props);
-                return React.cloneElement(child, props);
-            }.bind(this))}
+            {this.props.children}
         </form>;
     }
 });
