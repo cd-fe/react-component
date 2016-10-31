@@ -14,6 +14,7 @@ import Control from './form/Control.jsx';
 import Reset from './form/Reset.jsx';
 import Submit from './form/Submit.jsx';
 import Check from './form/Check.jsx';
+import CF from './form/CommonFunc.jsx';
 import '../../css/form/form.scss';
 
 var Form = React.createClass({
@@ -78,7 +79,7 @@ var Form = React.createClass({
         if(str) {
             control = this.getControl(str);
         }
-        return control ? control.props.rule : control
+        return control ? CF.getSingleFieldRules(control) : control
     },
     getAllFieldValues : function() {
         var array = [];
@@ -109,8 +110,8 @@ var Form = React.createClass({
             control = this.getControl(str);
         }
         if(control) {
-            if(control.context.rule) {
-                rules = control.context.rule.validator[control.props.name].rules;
+            rules = CF.getSingleFieldRules(control);
+            if(rules) {
                 result = Check(control) && rules.callback && rules.callback(control);
             }else {
                 result = true;
@@ -123,8 +124,8 @@ var Form = React.createClass({
         this.fields = [];//清空
         this.controls.forEach(function(item, index) {
             value = item && item.getValue && item.getValue();
-            if(item.context.rule) {
-                rules = item.context.rule.validator[item.props.name].rules;
+            rules = CF.getSingleFieldRules(item);
+            if(rules) {
                 callback = rules.callback;
                 result = callback ? (Check(item) && callback(item)) : Check(item);
                 this.fields.push({

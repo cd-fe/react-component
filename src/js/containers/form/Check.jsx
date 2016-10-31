@@ -22,6 +22,7 @@ const checksFunc = {
                 break;
             case 'checkbox':
                 result = value.some(function(item, index) {
+                    //TODO bug待修复
                     return item.defaultSelected == 0
                 });
                 break;
@@ -31,50 +32,56 @@ const checksFunc = {
     //必填校验
     required : function(rc) {
         var value = rc.getValue();
-        var rule = rc.context.rule && rc.context.rule.validator[rc.props.name].rules;
+        var rule = CF.getSingleFieldRules(rc);
         var result = false;
-        if(this.checkFormUnit(rc.props.type, value)) {
-            rc.setState({
-                validateStatus : 'is-success',
-                explain : ''
-            });
-            result = true;
-        }else {
-            rc.setState({
-                validateStatus : 'is-error',
-                explain : rule.required.msg || '输入不能为空'
-            });
-        }
-        return result;
-
-    },
-    //过滤校验
-    filter : function(rc) {
-        var value = rc.getValue();
-        var rule = rc.context.rule && rc.context.rule.validator[rc.props.name].rules;
-        var result = false;
-        //非必填项时，输入不为空的情况下验证
-        if(value) {
-            if(!(CF.getReg(rule.filter.reg).test(value))) {
-                rc.setState({
-                    validateStatus : 'is-error',
-                    explain : rule.filter.msg || '输入格式不正确'
-                });
-            }else {
+        if(rule) {
+            if(this.checkFormUnit(rc.props.type, value)) {
                 rc.setState({
                     validateStatus : 'is-success',
                     explain : ''
                 });
                 result = true;
+            }else {
+                rc.setState({
+                    validateStatus : 'is-error',
+                    explain : rule.required.msg || '输入不能为空'
+                });
             }
         }else {
-            rc.setState({
-                validateStatus : '',
-                explain : ''
-            });
             result = true;
         }
-
+        return result;
+    },
+    //过滤校验
+    filter : function(rc) {
+        var value = rc.getValue();
+        var rule = CF.getSingleFieldRules(rc);
+        var result = false;
+        //非必填项时，输入不为空的情况下验证
+        if(rule) {
+            if(value) {
+                if(!(CF.getReg(rule.filter.reg).test(value))) {
+                    rc.setState({
+                        validateStatus : 'is-error',
+                        explain : rule.filter.msg || '输入格式不正确'
+                    });
+                }else {
+                    rc.setState({
+                        validateStatus : 'is-success',
+                        explain : ''
+                    });
+                    result = true;
+                }
+            }else {
+                rc.setState({
+                    validateStatus : '',
+                    explain : ''
+                });
+                result = true;
+            }
+        }else {
+            result = true;
+        }
         return result;
     }
 };
@@ -94,8 +101,8 @@ function makeChecks(stepsArr, rc) {
 }
 
 module.exports = function(rc) {
-    if(rc.context.rule) {
-        var rule =  rc.context.rule.validator[rc.props.name].rules;
+    var rule = CF.getSingleFieldRules(rc);
+    if(rule) {
         var {required, filter, callback} = rule;
         var checksArr =[];
         required && checksArr.push('required');

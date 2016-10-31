@@ -26,17 +26,12 @@ var Row = React.createClass({
             required:false
         };
     },
-    childContextTypes: {
-        rule : React.PropTypes.object
-    },
-    getChildContext:function() {
-        return {
-            rule:this.props.rule[this.props.type]
-        };
+    contextTypes: {
+        form : React.PropTypes.object
     },
     render:function() {
         var classes = className(this.props.className, this.getPropClass());
-        var controlRule = this.props.rule[this.props.type];
+        var controlRule = this.context.form.props.rules[this.props.type];
         return (
             <div {...this.props} className={classes}>
                 <label className={"rui-form-label"}>{controlRule && controlRule.required ?  (<i className="required">*</i>) : null}<span>{this.props.label}</span></label>

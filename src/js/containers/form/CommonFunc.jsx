@@ -31,5 +31,12 @@ module.exports = {
             }
         }
         return result;
+    },
+    getSingleFieldRules : function(rc) {
+        if(rc) {
+            return (rc.props.rowType && rc.context.form.props.rules && rc.context.form.props.rules[rc.props.rowType] && rc.context.form.props.rules[rc.props.rowType].validator && rc.context.form.props.rules[rc.props.rowType].validator[rc.props.name].rules);
+        }else {
+            return null;
+        }
     }
 };
