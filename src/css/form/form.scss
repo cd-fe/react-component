@@ -107,10 +107,7 @@ $checkMaps: (
       .rui-input {
         &,&:focus,&:hover {
           outline: 0;
-          @if  $label == error {
-            border-color: map-get($map,border-color);
-            box-shadow: map-get($map,box-shadow);
-          }@if $label == warn {
+          @if ($label != success and $label != validating){
             border-color: map-get($map,border-color);
             box-shadow: map-get($map,box-shadow);
           }
