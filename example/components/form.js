@@ -40,7 +40,7 @@ var Example = React.createClass({
                             trigger: 'onBlur',
                             callback: function(rc) {
                                 //远程校验
-                                var form = _this.refs.form;
+                               /* var form = _this.refs.form;
                                 $.ajax({
                                     url:'http://shop.berbon.com/react-component/src/js/containers/form/remotes.json',
                                     type:'get',
@@ -65,7 +65,7 @@ var Example = React.createClass({
                                             explain : '网络错误,请稍后再试！'
                                         });
                                     }
-                                });
+                                });*/
                                 return true;
                             }
                         }
@@ -214,7 +214,6 @@ var Example = React.createClass({
                             required: {
                                 msg: '图片不能为空'
                             },
-                            trigger: 'onUploadComplete',
                             callback: function(rc) {
                                 return true;
                             }
@@ -289,14 +288,8 @@ var Example = React.createClass({
             });
         }
     },
-    onClickHandler : function() {
-        this.refs.form.setFieldCheckStatus('mob', {
-            validateStatus : 'is-success',
-            explain : '信息输入正确',
-        });
-    },
     disable : function() {
-        console.log('自定义');
+        //console.log('自定义');
     },
     render:function() {
         var selectData = [
