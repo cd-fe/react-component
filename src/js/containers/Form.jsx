@@ -112,7 +112,7 @@ var Form = React.createClass({
         if(control) {
             rules = CF.getSingleFieldRules(control);
             if(rules) {
-                result = Check(control) && rules.callback && rules.callback(control);
+                result = Check(control,control.getValue()) && rules.callback && rules.callback(control,control.getValue());
             }else {
                 result = true;
             }
@@ -127,7 +127,7 @@ var Form = React.createClass({
             rules = CF.getSingleFieldRules(item);
             if(rules) {
                 callback = rules.callback;
-                result = callback ? (Check(item) && callback(item)) : Check(item);
+                result = callback ? (Check(item,value) && callback(item,value)) : Check(item,value);
                 this.fields.push({
                     name:item.props.name,
                     value:value,

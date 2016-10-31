@@ -108,11 +108,14 @@ module.exports = React.createClass({
     render: function () {
         var props = omit(this.props, 'type', 'onChange', 'value', 'readonly');
         var showNumber = this.props.maxLengthHandler(this.state.value, this.props.maxLength);
-
+        if (this.props.disable) {
+            props.disabled = true;
+        }
         return <div className="rui-textarea-container">
             {props.resize && (
                 <RUI.Icon name="resize" />
             )}
+
             <textarea ref="textarea" {...props}
                 style={props.resize ? {resize:'vertical'} : {}}
                 value={this.state.value}

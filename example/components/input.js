@@ -35,7 +35,7 @@ var Example = React.createClass({
             <div className="example">
                 <h4 className="final-title">输入框</h4>
                 <div>
-                    <RUI.Input value={this.state.init} onChange={this.onInputChange} /><br/>
+                    <RUI.Input value={this.state.init} disable={true} onChange={this.onInputChange} /><br/>
                     <RUI.Input mode="static" value={"不可修改"}/><br/>
                     <RUI.Input className="medium" placeholder="保留正常结点属性"/><br/>
                     <RUI.Input grid={24} onEnter={this.onEnterHandler} />
@@ -50,7 +50,7 @@ var Example = React.createClass({
                 </div>
                 <h4 className="final-title">自定义字数提示规则</h4>
                 <div>
-                    <RUI.Textarea maxLength={140} maxLengthHandler={this.customMaxLength} placeholder="一个汉字算两个字符" />
+                    <RUI.Textarea disable={true} maxLength={140} maxLengthHandler={this.customMaxLength} placeholder="一个汉字算两个字符" />
                 </div>
                 <h4 className="final-title">根据内容自动缩放</h4>
                 <div>

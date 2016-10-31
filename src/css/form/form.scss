@@ -177,3 +177,10 @@ $checkMaps: (
   display: inline;
   margin: 6px 5px 0 0;
 }
+
+.username {
+  background: #fafafa;
+  padding: 10px 0 10px 100px;
+  margin-bottom: 20px;
+  @extend %clearfix;
+}

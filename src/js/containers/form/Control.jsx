@@ -200,7 +200,8 @@ Control.findControlMap = function(rc) {
     rules && rules.trigger && rules.trigger.split('|').forEach(function(evt) {
         result.props[evt] = function(e) {
            window.setTimeout(function() {
-               Check(rc) && rules.callback && rules.callback(rc);
+               var value = rc.getValue();
+               Check(rc, value) && rules.callback && rules.callback(rc,value);
            },0);
         };
     });

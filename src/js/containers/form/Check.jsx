@@ -30,8 +30,7 @@ const checksFunc = {
         return result;
     },
     //必填校验
-    required : function(rc) {
-        var value = rc.getValue();
+    required : function(rc,value) {
         var rule = CF.getSingleFieldRules(rc);
         var result = false;
         if(rule) {
@@ -53,8 +52,7 @@ const checksFunc = {
         return result;
     },
     //过滤校验
-    filter : function(rc) {
-        var value = rc.getValue();
+    filter : function(rc,value) {
         var rule = CF.getSingleFieldRules(rc);
         var result = false;
         //非必填项时，输入不为空的情况下验证
@@ -86,10 +84,10 @@ const checksFunc = {
     }
 };
 //steps ['required', 'filter']
-function makeChecks(stepsArr, rc) {
+function makeChecks(stepsArr, rc, value) {
     if(stepsArr.length > 0) {
         for(var i = 0; i< stepsArr.length; i++) {
-            if(!checksFunc[stepsArr[i]](rc)) {
+            if(!checksFunc[stepsArr[i]](rc, value)) {
                 break;
             }
         }
@@ -100,14 +98,14 @@ function makeChecks(stepsArr, rc) {
 
 }
 
-module.exports = function(rc) {
+module.exports = function(rc, value) {
     var rule = CF.getSingleFieldRules(rc);
     if(rule) {
         var {required, filter, callback} = rule;
         var checksArr =[];
         required && checksArr.push('required');
         filter && checksArr.push('filter');
-        return makeChecks(checksArr, rc);
+        return makeChecks(checksArr, rc, value);
     }else {
         return true;
     }

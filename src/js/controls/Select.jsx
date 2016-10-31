@@ -104,7 +104,14 @@ module.exports = React.createClass({
              * @type number
              * @desc 可见下拉选项个数，超过出现滚动条
              */
-            optionsLimit: 3
+            optionsLimit: 3,
+            /**
+             * @instance
+             * @default false
+             * @type boolean
+             * @desc 是否禁用
+             */
+            disable: false
         };
     },
     getInitialState: function () {
@@ -114,6 +121,7 @@ module.exports = React.createClass({
             filter: this.props.filter,
             event: this.props.event,
             data: this.props.data,
+            disable: this.props.disable,
             value: value,
             choosedKey : value.key || '请选择'
         };
@@ -122,14 +130,14 @@ module.exports = React.createClass({
         var newProps = {};
         typeof nextProps.data != 'undefined' && (newProps.data = nextProps.data);
         typeof nextProps.value != 'undefined' && (newProps.value = nextProps.value);
+        typeof nextProps.disable != 'undefined' && (newProps.disable = nextProps.disable);
         this.setState(newProps);
     },
     getThisNode : function() {
         return ReactDOM.findDOMNode(this);
     },
     componentDidMount: function () {
-        var _this = this;
-        _this.doEvent();
+        this.doEvent()
     },
     onMouseLeave: function () {
         this.close();
@@ -170,10 +178,9 @@ module.exports = React.createClass({
         var node = this.getThisNode();
         var ul = $(node).find('ul');
         var li = ul.find('li');
-
         if (this.props.event == 'mouseenter') {
             $(node).bind(this.props.event, function () {
-                (_this.isShowLists()) && _this.startTimer(function () {
+                (!_this.state.disable) && (_this.isShowLists()) && _this.startTimer(function () {
                     if (_this.state.active) {
                         _this.close();
                     } else {
@@ -183,17 +190,17 @@ module.exports = React.createClass({
                _this.scrollLists(ul);
             });
             $(node).bind('mouseleave', function () {
-                if (_this.__timer) {
+                if ((!_this.state.disable) && _this.__timer) {
                     _this.stopTimer();
                     _this.onMouseLeave();
                 }
             });
         } else {
             $(node).bind('mouseleave', function() {
-                (_this.isShowLists()) && _this.onMouseLeave();
+                (!_this.state.disable) &&(_this.isShowLists()) && _this.onMouseLeave();
             });
             $(node).bind(this.props.event, function () {
-                if(_this.isShowLists()) {
+                if((!_this.state.disable) && _this.isShowLists()) {
                     if (_this.state.active) {
                         _this.close();
                     } else {
@@ -272,6 +279,9 @@ module.exports = React.createClass({
 
         (offset != '100%') && (final = className(final, 'noactive'));
 
+        if(this.state.disable) {
+            final = className(final, 'disable');
+        }
         if(!except && this.props.className.indexOf('rui-theme-1') > -1 && typeof offset == 'number') {
             offset = offset - 5;
         }
