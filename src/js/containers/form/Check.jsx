@@ -76,42 +76,7 @@ const checksFunc = {
         }
 
         return result;
-    },
-    //远程校验
-    remote : function(rc) {
-        var value = rc.getValue();
-        var rule = rc.context.rule.validator[rc.props.name].rules;
-        var {remote} = rc.props;
-        return new Promise(function(resolve, reject) {
-            $.ajax({
-                url:remote.url,
-                type:remote.type,
-                dataType : remote.dataType,
-                data:{
-                    [remote.key] : value
-                },
-                cache: false,
-                beforeSend : function() {
-                    rc.setState({
-                        validateStatus : 'is-validating'
-                    });
-                },
-                success:function(response) {
-                    rc.setState({
-                        validateStatus : 'is-success'
-                    });
-                    resolve(response);
-                },
-                error:function() {
-                    rc.setState({
-                        validateStatus : 'is-error',
-                        explain : '网络错误,请稍后再试！'
-                    });
-                    reject('error');
-                }
-            });
-        })
-    },
+    }
 };
 //steps ['required', 'filter']
 function makeChecks(stepsArr, rc) {
