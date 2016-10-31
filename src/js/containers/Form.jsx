@@ -104,11 +104,13 @@ var Form = React.createClass({
     validateSingleField : function(str) {
         var control = null;
         var result = null;
+        var rules = null;
         if(str) {
             control = this.getControl(str);
         }
         if(control) {
-            result = Check(control) && control.context.rule.validator[control.props.name].rules.callback && control.context.rule.validator[control.props.name].rules.callback(control);
+            rules = control.context.rule.validator[control.props.name].rules;
+            result = Check(control) && rules.callback && rules.callback(control);
         }
         return result;
     },

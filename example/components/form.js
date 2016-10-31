@@ -36,8 +36,7 @@ var Example = React.createClass({
                                 reg: 'name',//验证规则
                                 msg: '活动名称格式不正确'
                             },
-                            remote : true,
-                            trigger: 'onBlur',
+                            trigger: 'onBlur|onChange',
                             callback: function(rc) {
                                 //远程校验
                                /* var form = _this.refs.form;

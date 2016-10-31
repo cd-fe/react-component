@@ -201,7 +201,9 @@ Control.findControlMap = function(rc) {
 
     rules.trigger && rules.trigger.split('|').forEach(function(evt) {
         result.props[evt] = function(e) {
-            Check(rc) && rules.callback && rules.callback(rc);
+           window.setTimeout(function() {
+               Check(rc) && rules.callback && rules.callback(rc);
+           },0);
         };
     });
     return result;
