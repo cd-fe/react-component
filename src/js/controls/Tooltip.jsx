@@ -108,6 +108,11 @@ module.exports = React.createClass({
             });
         }.bind(this), 100);
     },
+    hide:function() {
+        this.setState({
+            show:false
+        });
+    },
     componentDidUpdate: function () {
         var node = ReactDOM.findDOMNode(this);
         $(node).css(this.getPosition(node));
