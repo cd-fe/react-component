@@ -303,58 +303,64 @@ var Example = React.createClass({
             <div className="example">
                 <h4 className="final-title">验证</h4>
                 <div>
-                    <RUI.Form ref="form" key={this.state.key} className="horizonal" onSubmit={this.submitHandler} rules={{}}>
+                    <RUI.Form ref="form" className="horizonal" onSubmit={this.submitHandler} rules={this.state.rules}>
                         <RUI.Form.Row>
                             <p style={{paddingBottom:'5px',fontSize:'16px',fontWeight:'bold',borderBottom: "1px dashed #dadada"}}>基本设置</p>
                         </RUI.Form.Row>
-                        <RUI.Form.Row label="活动名称：" type="activity">
-                            <RUI.Form.Control
-                                rowType="activity"
-                                name="evt"
-                                type="input"
-                                defaultValue="sd"
-                                placeholder="最多输入15个字"
-                            />
-                        </RUI.Form.Row>
-                        <RUI.Form.Row label="活动时间：" type="time">
-                           <div> <RUI.Form.Control
-                               name="start"
-                               type="datePicker"
-                               rowType="time"
-                           />
+                        {/*可以随意DOM元素*/}
+                       <div>
+                           <RUI.Form.Row label="活动名称：" >
+                               <RUI.Form.Control
+                                   rowType="activity"
+                                   name="evt"
+                                   type="input"
+                                   defaultValue="sd"
+                                   placeholder="最多输入15个字"
+                               />
+                           </RUI.Form.Row>
+                       </div>
+
+                        <RUI.Form.Row label="活动时间：">
+                           <div>
+                               <RUI.Form.Control
+                                   rowType="time"
+                                   name="start"
+                                   type="datePicker"
+                                />
                                <span className="split"></span>
                                <RUI.Form.Control
+                                   rowType="time"
                                    name="end"
                                    type="datePicker"
-                                   rowType="time"
                                >
-                               </RUI.Form.Control></div>
+                               </RUI.Form.Control>
+                           </div>
                         </RUI.Form.Row>
 
-                        <RUI.Form.Row label="参与人数：" type="people">
+                        <RUI.Form.Row label="参与人数：">
                             <RUI.Form.Control
+                                rowType="people"
                                 defaultValue={"1"}
                                 name="people"
-                                rowType="people"
                                 type="radio">
                                 <RUI.Radio value="1">隐藏</RUI.Radio>
                                 <RUI.Radio value="0">显示</RUI.Radio>
                             </RUI.Form.Control>
                         </RUI.Form.Row>
 
-                        <RUI.Form.Row label="参与人数限制：" type="plimit">
+                        <RUI.Form.Row label="参与人数限制：">
                             <RUI.Form.Control
+                                rowType="plimit"
                                 defaultValue={"1"}
                                 name="limit"
-                                rowType="plimit"
                                 type="radio">
                                 <RUI.Radio value="1">不限</RUI.Radio>
                                 <RUI.Radio value="0">限制</RUI.Radio>
                             </RUI.Form.Control>
                             <RUI.Form.Control
+                                rowType="plimit"
                                 name="number"
                                 type="input"
-                                rowType="plimit"
                                 disable={this.state.numberDisable}
                                 placeholder="请输入1-9的数"
                                 value={this.state.number}
@@ -367,10 +373,11 @@ var Example = React.createClass({
                             <p style={{paddingBottom:'5px',fontSize:'16px',fontWeight:'bold',borderBottom: "1px dashed #dadada"}}>派奖方式</p>
                         </RUI.Form.Row>
 
-                        <RUI.Form.Row label="派奖方式：" type="rewardType">
+                        <RUI.Form.Row label="派奖方式：">
                             <RUI.Form.Control
-                                name="reward"
                                 rowType="rewardType"
+                                name="reward"
+                                className="width_120"
                                 type="select"
                                 stuff={true}
                                 data={selectData}
@@ -378,12 +385,12 @@ var Example = React.createClass({
                             <span className="deco grey">参与活动即可抽奖</span>
                         </RUI.Form.Row>
 
-                        <RUI.Form.Row label="每日抽奖机会：" type="chance">
+                        <RUI.Form.Row label="每日抽奖机会：">
                             <span className="deco-l">每人每日有</span>
                             <RUI.Form.Control
+                                rowType="chance"
                                 className="width_80"
                                 name="chance"
-                                rowType="chance"
                                 type="input"
                                 placeholder="请输入"
 
@@ -395,11 +402,11 @@ var Example = React.createClass({
                             <p style={{paddingBottom:'5px',fontSize:'16px',fontWeight:'bold',borderBottom: "1px dashed #dadada"}}>活动首页设置</p>
                         </RUI.Form.Row>
 
-                        <RUI.Form.Row label="图片设置：" type="cover">
+                        <RUI.Form.Row label="图片设置：">
                             <RUI.Form.Control
+                                rowType="cover"
                                 name="cover"
                                 type="upload"
-                                rowType="cover"
                                 multiple={true}
                                 autoUpload={true}
                                 beforeEdit={this.uploadCheck}
@@ -419,20 +426,20 @@ var Example = React.createClass({
                             <p style={{paddingBottom:'5px',fontSize:'16px',fontWeight:'bold',borderBottom: "1px dashed #dadada"}}>文案描述</p>
                         </RUI.Form.Row>
 
-                        <RUI.Form.Row label="文案描述：" type="desc">
+                        <RUI.Form.Row label="文案描述：">
                             <RUI.Form.Control
+                                rowType="desc"
                                 name="desc"
                                 type="textarea"
-                                rowType="desc"
                                 placeholder="文案描述"
                                 onChange={this.disable}
                             />
                         </RUI.Form.Row>
 
-                        <RUI.Form.Row label="描述类型：" type="descType">
+                        <RUI.Form.Row label="描述类型：">
                             <RUI.Form.Control
-                                name="descType"
                                 rowType="descType"
+                                name="descType"
                                 type="checkbox">
                                 <RUI.Checkbox value="1" defaultSelected={0}>科技</RUI.Checkbox>
                                 <RUI.Checkbox value="2" defaultSelected={0}>摄影</RUI.Checkbox>

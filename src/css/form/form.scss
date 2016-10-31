@@ -53,6 +53,9 @@
       width:100%;
       padding: 0 20px 0 10px
     }
+    .rui-select {
+      width:100%;
+    }
   }
   &:after {
     position: absolute;
@@ -146,6 +149,9 @@ $checkMaps: (
 //example css
 .width_80 {
   width:80px;
+}
+.width_120 {
+  width:120px;
 }
 .desc{
   float: left;
