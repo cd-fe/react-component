@@ -303,12 +303,13 @@ var Example = React.createClass({
             <div className="example">
                 <h4 className="final-title">验证</h4>
                 <div>
-                    <RUI.Form ref="form" key={this.state.key} className="horizonal" onSubmit={this.submitHandler} rules={this.state.rules}>
+                    <RUI.Form ref="form" key={this.state.key} className="horizonal" onSubmit={this.submitHandler} rules={{}}>
                         <RUI.Form.Row>
                             <p style={{paddingBottom:'5px',fontSize:'16px',fontWeight:'bold',borderBottom: "1px dashed #dadada"}}>基本设置</p>
                         </RUI.Form.Row>
                         <RUI.Form.Row label="活动名称：" type="activity">
                             <RUI.Form.Control
+                                rowType="activity"
                                 name="evt"
                                 type="input"
                                 defaultValue="sd"
@@ -316,22 +317,25 @@ var Example = React.createClass({
                             />
                         </RUI.Form.Row>
                         <RUI.Form.Row label="活动时间：" type="time">
-                            <RUI.Form.Control
-                                name="start"
-                                type="datePicker"
-                            />
-                            <span className="split"></span>
-                            <RUI.Form.Control
-                                name="end"
-                                type="datePicker"
-                            >
-                           </RUI.Form.Control>
+                           <div> <RUI.Form.Control
+                               name="start"
+                               type="datePicker"
+                               rowType="time"
+                           />
+                               <span className="split"></span>
+                               <RUI.Form.Control
+                                   name="end"
+                                   type="datePicker"
+                                   rowType="time"
+                               >
+                               </RUI.Form.Control></div>
                         </RUI.Form.Row>
 
                         <RUI.Form.Row label="参与人数：" type="people">
                             <RUI.Form.Control
                                 defaultValue={"1"}
                                 name="people"
+                                rowType="people"
                                 type="radio">
                                 <RUI.Radio value="1">隐藏</RUI.Radio>
                                 <RUI.Radio value="0">显示</RUI.Radio>
@@ -342,6 +346,7 @@ var Example = React.createClass({
                             <RUI.Form.Control
                                 defaultValue={"1"}
                                 name="limit"
+                                rowType="plimit"
                                 type="radio">
                                 <RUI.Radio value="1">不限</RUI.Radio>
                                 <RUI.Radio value="0">限制</RUI.Radio>
@@ -349,6 +354,7 @@ var Example = React.createClass({
                             <RUI.Form.Control
                                 name="number"
                                 type="input"
+                                rowType="plimit"
                                 disable={this.state.numberDisable}
                                 placeholder="请输入1-9的数"
                                 value={this.state.number}
@@ -364,6 +370,7 @@ var Example = React.createClass({
                         <RUI.Form.Row label="派奖方式：" type="rewardType">
                             <RUI.Form.Control
                                 name="reward"
+                                rowType="rewardType"
                                 type="select"
                                 stuff={true}
                                 data={selectData}
@@ -376,6 +383,7 @@ var Example = React.createClass({
                             <RUI.Form.Control
                                 className="width_80"
                                 name="chance"
+                                rowType="chance"
                                 type="input"
                                 placeholder="请输入"
 
@@ -391,7 +399,7 @@ var Example = React.createClass({
                             <RUI.Form.Control
                                 name="cover"
                                 type="upload"
-
+                                rowType="cover"
                                 multiple={true}
                                 autoUpload={true}
                                 beforeEdit={this.uploadCheck}
@@ -415,6 +423,7 @@ var Example = React.createClass({
                             <RUI.Form.Control
                                 name="desc"
                                 type="textarea"
+                                rowType="desc"
                                 placeholder="文案描述"
                                 onChange={this.disable}
                             />
@@ -423,6 +432,7 @@ var Example = React.createClass({
                         <RUI.Form.Row label="描述类型：" type="descType">
                             <RUI.Form.Control
                                 name="descType"
+                                rowType="descType"
                                 type="checkbox">
                                 <RUI.Checkbox value="1" defaultSelected={0}>科技</RUI.Checkbox>
                                 <RUI.Checkbox value="2" defaultSelected={0}>摄影</RUI.Checkbox>

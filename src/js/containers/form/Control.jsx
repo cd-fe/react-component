@@ -193,13 +193,12 @@ Control.findControlMap = function(rc) {
             tag:type.substring(0, 1).toUpperCase() + type.substring(1)
         };
     }
-
-    var rules = rc.context.rule.validator[rc.props.name].rules;
+    var rules = rc.context.form.props.rules[rc.props.rowType] && rc.context.form.props.rules[rc.props.rowType].validator[rc.props.name].rules;
 
     result.tag = RUI[result.tag];
-    result.props = Object.assign(result.props || {}, omit(props, 'type', 'cname', 'label','className'));
+    result.props = Object.assign(result.props || {}, omit(props, 'type', 'cname', 'label','className')  );
 
-    rules.trigger && rules.trigger.split('|').forEach(function(evt) {
+    rules && rules.trigger && rules.trigger.split('|').forEach(function(evt) {
         result.props[evt] = function(e) {
            window.setTimeout(function() {
                Check(rc) && rules.callback && rules.callback(rc);

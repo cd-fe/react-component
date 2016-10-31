@@ -31,7 +31,7 @@ const checksFunc = {
     //必填校验
     required : function(rc) {
         var value = rc.getValue();
-        var rule = rc.context.rule.validator[rc.props.name].rules;
+        var rule = rc.context.rule && rc.context.rule.validator[rc.props.name].rules;
         var result = false;
         if(this.checkFormUnit(rc.props.type, value)) {
             rc.setState({
@@ -51,7 +51,7 @@ const checksFunc = {
     //过滤校验
     filter : function(rc) {
         var value = rc.getValue();
-        var rule = rc.context.rule.validator[rc.props.name].rules;
+        var rule = rc.context.rule && rc.context.rule.validator[rc.props.name].rules;
         var result = false;
         //非必填项时，输入不为空的情况下验证
         if(value) {
@@ -94,10 +94,14 @@ function makeChecks(stepsArr, rc) {
 }
 
 module.exports = function(rc) {
-    var rule =  rc.context.rule.validator[rc.props.name].rules;
-    var {required, filter, callback} = rule;
-    var checksArr =[];
-    required && checksArr.push('required');
-    filter && checksArr.push('filter');
-    return makeChecks(checksArr, rc);
+    if(rc.context.rule) {
+        var rule =  rc.context.rule.validator[rc.props.name].rules;
+        var {required, filter, callback} = rule;
+        var checksArr =[];
+        required && checksArr.push('required');
+        filter && checksArr.push('filter');
+        return makeChecks(checksArr, rc);
+    }else {
+        return true;
+    }
 };

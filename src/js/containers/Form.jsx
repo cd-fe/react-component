@@ -109,8 +109,12 @@ var Form = React.createClass({
             control = this.getControl(str);
         }
         if(control) {
-            rules = control.context.rule.validator[control.props.name].rules;
-            result = Check(control) && rules.callback && rules.callback(control);
+            if(control.context.rule) {
+                rules = control.context.rule.validator[control.props.name].rules;
+                result = Check(control) && rules.callback && rules.callback(control);
+            }else {
+                result = true;
+            }
         }
         return result;
     },
@@ -119,14 +123,23 @@ var Form = React.createClass({
         this.fields = [];//清空
         this.controls.forEach(function(item, index) {
             value = item && item.getValue && item.getValue();
-            rules = item.context.rule.validator[item.props.name].rules;
-            callback = rules.callback;
-            result = callback ? (Check(item) && callback(item)) : Check(item);
-            this.fields.push({
-                name:item.props.name,
-                value:value,
-                checkStatus:result//true false
-            });
+            if(item.context.rule) {
+                rules = item.context.rule.validator[item.props.name].rules;
+                callback = rules.callback;
+                result = callback ? (Check(item) && callback(item)) : Check(item);
+                this.fields.push({
+                    name:item.props.name,
+                    value:value,
+                    checkStatus:result//true false
+                });
+            }else {
+                this.fields.push({
+                    name:item.props.name,
+                    value:value,
+                    checkStatus:true
+                });
+            }
+
         }.bind(this));
         pass = this.fields.every(function(item, index) {
             return item.checkStatus
