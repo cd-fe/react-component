@@ -163,7 +163,7 @@ var Table = React.createClass({
 
         var renderItems = <table className="rui-table-content">
             {this.props.showTitle && <Header columns={children} />}
-            {(this.state.dataSource && this.state.dataSource && this.refs['column0']) ? (
+            {(this.state.dataSource && (this.state.dataSource.length > 0) && this.refs['column0']) ? (
                 <tbody>
                     {
                         this.state.dataSource.map(function(item, index) {
