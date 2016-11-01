@@ -285,6 +285,11 @@ var Example = React.createClass({
     componentDidMount : function() {
         //执行某项表单元校验
         this.refs.form.validateSingleField('evt');
+
+    },
+    componentWillUnmount : function() {
+        //必须清除
+        this.refs.form.controls.length = 0
     },
     getInitialState : function() {
         return {
@@ -293,7 +298,7 @@ var Example = React.createClass({
             numberDisable : true,
             number : '',
             disable : true,
-            list : []
+            list : ['http://10.2.50.38/images/ae13c4d4dcea406c133ebb6d6f31dca6_1477965048481.JPEG_614_614.JPEG']
         }
     },
     doNumber : function(e){
@@ -455,7 +460,7 @@ var Example = React.createClass({
                                 actionData={this.formatUploadData}
                                 beforeEdit={this.uploadCheck}
                                 onUploadComplete={this.complete}
-
+                                disable={true}
                                 editable={{
                                     aspectRatio:1
                                 }}

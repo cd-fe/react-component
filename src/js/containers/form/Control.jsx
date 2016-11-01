@@ -120,7 +120,7 @@ var Control = React.createClass({
             cls = cls + ' has-feedback'
         }
 
-        return <div {...this.props} className={className(this.props.className, this.getPropClass()) + " " + cls}>
+        return <div {...this.props} key={1} className={className(this.props.className, this.getPropClass()) + " " + cls}>
             <span className="input-wrapper">
                 {ControlMap ? (<ControlMap.tag    {...ControlMap.props} {...props}  ref="content">
                     {this.props.children}
