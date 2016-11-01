@@ -285,11 +285,6 @@ var Example = React.createClass({
     componentDidMount : function() {
         //执行某项表单元校验
         this.refs.form.validateSingleField('evt');
-
-    },
-    componentWillUnmount : function() {
-        //必须清除
-        this.refs.form.controls.length = 0
     },
     getInitialState : function() {
         return {

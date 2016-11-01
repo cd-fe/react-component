@@ -183,6 +183,10 @@ var Form = React.createClass({
         var form = ReactDOM.findDOMNode(this);
         form.reset();
     },
+    componentWillUnmount : function() {
+        //必须清除
+        this.controls.length = 0
+    },
     render:function() {
         var classes = className(this.props.className, this.getPropClass());
         return <form {...this.props} className={classes} onSubmit={this.submitHandler}>
