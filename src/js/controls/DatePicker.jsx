@@ -128,7 +128,8 @@ module.exports = React.createClass({
              *      // event.data === instance.getValue()
              * }
              */
-            onChange: null
+            onChange: null,
+            disable: false
         };
     },
     /**
@@ -203,6 +204,9 @@ module.exports = React.createClass({
         this.setState(update);
     },
     togglePopup: function () {
+        if(this.props.disable) {
+            return;
+        }
         this.setState({
             popup: !this.state.popup,
             value: this.state.value || Date.now(),
@@ -363,7 +367,7 @@ module.exports = React.createClass({
         }
 
         return <div className={classes}>
-            <Input mode="static" value={this.display()} onClick={this.togglePopup} placeholder="请选择日期"/>
+            <Input mode="static" value={this.display()} onClick={this.togglePopup} placeholder="请选择日期" disable={this.props.disable} />
             <Icon name="close" style={{position:'absolute', right:'33px', top:'7px'}} onClick={this.clearValues} />
             <Icon name="calendar" style={{position:'absolute',right:'10px',top:'6px'}} />
 
