@@ -73,7 +73,12 @@ var Control = React.createClass({
     },
     componentDidMount : function() {
         if(this.context.form) {
-            this.context.form.register(this);
+            this.context.form.register(this, 'add');
+        }
+    },
+    componentWillUnmount : function() {
+        if(this.context.form) {
+            this.context.form.register(this, 'del');
         }
     },
     buildMsg : function() {

@@ -23,7 +23,8 @@ var Example = React.createClass({
     },
     testClick : function() {
         this.setState({
-            disable : false
+            disable : false,
+            hide : false,
         });
     },
     formRules : function() {
@@ -293,6 +294,7 @@ var Example = React.createClass({
             numberDisable : true,
             number : '',
             disable : true,
+            hide : true,
             list : ['http://10.2.50.38/images/ae13c4d4dcea406c133ebb6d6f31dca6_1477965048481.JPEG_614_614.JPEG']
         }
     },
@@ -355,15 +357,17 @@ var Example = React.createClass({
                             <p style={{paddingBottom:'5px',fontSize:'16px',fontWeight:'bold',borderBottom: "1px dashed #dadada"}}>基本设置</p>
                         </RUI.Form.Row>
                         {/*可以随意DOM元素*/}
-                        <div className="username">
-                            <RUI.Form.Control
-                                rowType="username"
-                                name="user"
-                                type="input"
-                                value={this.state.value}
-                                placeholder="最多输入15个字"
-                            />
-                        </div>
+                        {
+                            this.state.hide && (<div className="username">
+                                <RUI.Form.Control
+                                    rowType="username"
+                                    name="user"
+                                    type="input"
+                                    value={this.state.value}
+                                    placeholder="最多输入15个字"
+                                />
+                            </div>)
+                        }
                        <div>
                            <RUI.Form.Row label="活动名称：" >
                                <RUI.Form.Control
