@@ -60,17 +60,15 @@ var Form = React.createClass({
     },
     //获取所有 control 实例
     register:function(control,type) {
-        var contorls = this.state.controls;
+        var controls = this.state.controls;
         if(type == 'add') {
-            contorls.push(control);
+            this.state.controls.push(control);
         }else if(type == 'del') {
-            contorls = contorls.filter(function(item, index) {
+            this.state.controls = controls.filter(function(item, index) {
                 return control.props.name != item.props.name
             });
         }
-        this.setState({
-            controls : contorls
-        });
+        this.setState({});
     },
     getControl : function(str) {
         var exits;
