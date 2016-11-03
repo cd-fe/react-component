@@ -284,7 +284,7 @@ var Example = React.createClass({
     },
     componentDidMount : function() {
         //执行某项表单元校验
-        this.refs.form.validateSingleField('evt');
+        this.refs.forms.validateSingleField('evt');
     },
     getInitialState : function() {
         return {
@@ -319,6 +319,9 @@ var Example = React.createClass({
     disable : function() {
         //console.log('自定义');
     },
+    submitHandlers : function() {
+
+    },
     render:function() {
         var selectData = [
             { key:'请选择', value:0 },
@@ -333,6 +336,20 @@ var Example = React.createClass({
             <div className="example">
                 <h4 className="final-title">验证</h4>
                 <div>
+                    <RUI.Form ref="forms" className="horizonal" onSubmit={this.submitHandlers} rules={this.state.rules}>
+                        <div>
+                            <RUI.Form.Row label="活动名称：" >
+                                <RUI.Form.Control
+                                    rowType="activity"
+                                    name="evt"
+                                    type="input"
+                                    defaultValue="sd"
+                                    placeholder="最多输入15个字"
+                                />
+                            </RUI.Form.Row>
+                        </div>
+                    </RUI.Form>
+                    <hr/>
                     <RUI.Form ref="form" className="horizonal" onSubmit={this.submitHandler} rules={this.state.rules}>
                         <RUI.Form.Row>
                             <p style={{paddingBottom:'5px',fontSize:'16px',fontWeight:'bold',borderBottom: "1px dashed #dadada"}}>基本设置</p>

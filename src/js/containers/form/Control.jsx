@@ -72,7 +72,6 @@ var Control = React.createClass({
         return this.refs.content.getValue && (this.refs.content.getValue() || null);
     },
     componentDidMount : function() {
-
         if(this.context.form) {
             this.context.form.register(this);
         }
