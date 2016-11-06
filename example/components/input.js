@@ -4,6 +4,11 @@ var Example = React.createClass({
             init:"在这儿显示初始字符"
         }
     },
+    componentDidMount:function() {
+        setTimeout(()=>{
+            this.refs.async.setValue("0123456789");
+        }, 10);
+    },
     onInputChange:function(e) {
         RUI.DialogManager.alert("change:" + e.target.value, "提示");
     },
@@ -42,7 +47,7 @@ var Example = React.createClass({
                 </div>
                 <h4 className="final-title">文本域</h4>
                 <div>
-                    <RUI.Textarea value={this.state.init} resize={true} />
+                    <RUI.Textarea value={this.state.init} resize={true} ref="async" />
                 </div>
                 <h4 className="final-title">字数提示</h4>
                 <div>
