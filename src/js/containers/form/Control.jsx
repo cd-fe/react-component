@@ -72,9 +72,13 @@ var Control = React.createClass({
         return this.refs.content.getValue && (this.refs.content.getValue() || null);
     },
     componentDidMount : function() {
-
         if(this.context.form) {
-            this.context.form.register(this);
+            this.context.form.register(this, 'add');
+        }
+    },
+    componentWillUnmount : function() {
+        if(this.context.form) {
+            this.context.form.register(this, 'del');
         }
     },
     buildMsg : function() {
@@ -200,7 +204,8 @@ Control.findControlMap = function(rc) {
     rules && rules.trigger && rules.trigger.split('|').forEach(function(evt) {
         result.props[evt] = function(e) {
            window.setTimeout(function() {
-               Check(rc) && rules.callback && rules.callback(rc);
+               var value = rc.getValue();
+               Check(rc, value) && rules.callback && rules.callback(rc,value);
            },0);
         };
     });

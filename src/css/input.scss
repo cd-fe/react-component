@@ -15,6 +15,7 @@
 
   &.disable {
     background:#ececec;
+    cursor: not-allowed;
     &:hover {
       border-color:$border;
     }

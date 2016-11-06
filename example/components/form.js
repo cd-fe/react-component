@@ -21,9 +21,38 @@ var Example = React.createClass({
     uploadCheck : function(e) {
         return this.checkImgSizeAndType(e, 2);
     },
+    testClick : function() {
+        this.setState({
+            disable : false,
+            hide : false,
+        });
+    },
     formRules : function() {
         var _this = this;
         return {
+            username : {
+                required : true,
+                validator : {
+                    'user' : {
+                        rules: {
+                            required: {
+                                msg: '姓名不能为空'
+                            },
+                            filter: {
+                                reg: 'number',//验证规则
+                                msg: '姓名格式不正确'
+                            },
+                            trigger: 'onBlur|onChange',
+                            callback: function(rc,v) {
+                                _this.setState({
+                                    value : v
+                                });
+                                return true;
+                            }
+                        }
+                    }
+                }
+            },
             activity : {
                 required : true,
                 validator : {
@@ -256,7 +285,7 @@ var Example = React.createClass({
     },
     componentDidMount : function() {
         //执行某项表单元校验
-        this.refs.form.validateSingleField('evt');
+        this.refs.forms.validateSingleField('evt');
     },
     getInitialState : function() {
         return {
@@ -264,7 +293,9 @@ var Example = React.createClass({
             explain : this.props.explain,
             numberDisable : true,
             number : '',
-            list : []
+            disable : true,
+            hide : true,
+            list : ['http://10.2.50.38/images/ae13c4d4dcea406c133ebb6d6f31dca6_1477965048481.JPEG_614_614.JPEG']
         }
     },
     doNumber : function(e){
@@ -290,6 +321,9 @@ var Example = React.createClass({
     disable : function() {
         //console.log('自定义');
     },
+    submitHandlers : function() {
+
+    },
     render:function() {
         var selectData = [
             { key:'请选择', value:0 },
@@ -300,14 +334,40 @@ var Example = React.createClass({
         return <div className="example-form">
             <h2 className="title">表单<span>Form</span></h2>
             <h3 className="sub-title">演示</h3>
+            <RUI.Button className="primary" onClick={this.testClick}>测试</RUI.Button>
             <div className="example">
                 <h4 className="final-title">验证</h4>
                 <div>
+                    <RUI.Form ref="forms" className="horizonal" onSubmit={this.submitHandlers} rules={this.state.rules}>
+                        <div>
+                            <RUI.Form.Row label="活动名称：" >
+                                <RUI.Form.Control
+                                    rowType="activity"
+                                    name="evt"
+                                    type="input"
+                                    defaultValue="sd"
+                                    placeholder="最多输入15个字"
+                                />
+                            </RUI.Form.Row>
+                        </div>
+                    </RUI.Form>
+                    <hr/>
                     <RUI.Form ref="form" className="horizonal" onSubmit={this.submitHandler} rules={this.state.rules}>
                         <RUI.Form.Row>
                             <p style={{paddingBottom:'5px',fontSize:'16px',fontWeight:'bold',borderBottom: "1px dashed #dadada"}}>基本设置</p>
                         </RUI.Form.Row>
                         {/*可以随意DOM元素*/}
+                        {
+                            this.state.hide && (<div className="username">
+                                <RUI.Form.Control
+                                    rowType="username"
+                                    name="user"
+                                    type="input"
+                                    value={this.state.value}
+                                    placeholder="最多输入15个字"
+                                />
+                            </div>)
+                        }
                        <div>
                            <RUI.Form.Row label="活动名称：" >
                                <RUI.Form.Control
@@ -325,6 +385,7 @@ var Example = React.createClass({
                                <RUI.Form.Control
                                    rowType="time"
                                    name="start"
+                                   showTime={true}
                                    type="datePicker"
                                 />
                                <span className="split"></span>
@@ -379,6 +440,7 @@ var Example = React.createClass({
                                 name="reward"
                                 className="width_120"
                                 type="select"
+                                disable={this.state.disable}
                                 stuff={true}
                                 data={selectData}
                             />
@@ -414,7 +476,7 @@ var Example = React.createClass({
                                 actionData={this.formatUploadData}
                                 beforeEdit={this.uploadCheck}
                                 onUploadComplete={this.complete}
-
+                                disable={true}
                                 editable={{
                                     aspectRatio:1
                                 }}
@@ -431,6 +493,7 @@ var Example = React.createClass({
                                 rowType="desc"
                                 name="desc"
                                 type="textarea"
+                                disable={true}
                                 placeholder="文案描述"
                                 onChange={this.disable}
                             />

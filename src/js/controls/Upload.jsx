@@ -164,7 +164,7 @@ var UploadButton = React.createClass({
         this.props.onChange && this.props.onChange(null, this.props.index);
     },
     render:function() {
-        return <div className="rui-upload-button" disabled={this.props.disable ? 1 : 0} id={this._reactInternalInstance._rootNodeID}>
+        return <div className={className("rui-upload-button",this.props.disable ? 'disable' : '')} disabled={this.props.disable ? 1 : 0} id={this._reactInternalInstance._rootNodeID}>
             {this.props.multiple ? (
                 <div className={"rui-upload-button-content" + (this.props.file ? " has-image" : "")} onClick={this.clickHandler}>
                     {this.props.file && <UploadImage file={this.props.file} />}

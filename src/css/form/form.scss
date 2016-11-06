@@ -53,6 +53,10 @@
       width:100%;
       padding: 0 20px 0 10px
     }
+    .rui-datepicker .rui-spinner-input {
+      width:23px;
+      padding: 0;
+    }
     .rui-select {
       width:100%;
     }
@@ -176,4 +180,11 @@ $checkMaps: (
   float: left;
   display: inline;
   margin: 6px 5px 0 0;
+}
+
+.username {
+  background: #fafafa;
+  padding: 10px 0 10px 100px;
+  margin-bottom: 20px;
+  @extend %clearfix;
 }

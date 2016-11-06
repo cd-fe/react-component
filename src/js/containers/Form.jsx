@@ -23,7 +23,6 @@ var Form = React.createClass({
      * @see {@link module:mixins/ComponentBase}
      */
     mixins:[ComponentBase],
-    controls:[],
     fields : [],
     childContextTypes: {
         form:React.PropTypes.object
@@ -54,18 +53,33 @@ var Form = React.createClass({
             }
         };
     },
+    getInitialState : function() {
+        return {
+            controls : []
+        }
+    },
     //获取所有 control 实例
-    register:function(control) {
-        this.controls.push(control);
+    register:function(control,type) {
+        var controls = this.state.controls;
+        if(type == 'add') {
+            this.state.controls.push(control);
+        }else if(type == 'del') {
+            this.state.controls = controls.filter(function(item, index) {
+                return control.props.name != item.props.name
+            });
+        }
+        this.setState({});
     },
     getControl : function(str) {
         var exits;
         if(str) {
-            exits = this.controls.findIndex(function(item, index) {
+            exits = this.state.controls.findIndex(function(item, index) {
                 return item.props.name == str
             });
+        }else {
+            return this.state.controls;
         }
-        return exits > -1 ?  this.controls[exits] : null
+        return exits > -1 ?  this.state.controls[exits] : null
     },
     getSingleFieldValue : function(str) {
         let control = null;
@@ -83,7 +97,7 @@ var Form = React.createClass({
     },
     getAllFieldValues : function() {
         var array = [];
-        this.controls.forEach(function(item, index) {
+        this.state.controls.forEach(function(item, index) {
             var value = item && item.getValue && item.getValue();
             array.push({
                 name:item.props.name,
@@ -112,7 +126,7 @@ var Form = React.createClass({
         if(control) {
             rules = CF.getSingleFieldRules(control);
             if(rules) {
-                result = Check(control) && rules.callback && rules.callback(control);
+                result = Check(control,control.getValue()) && rules.callback && rules.callback(control,control.getValue());
             }else {
                 result = true;
             }
@@ -122,12 +136,12 @@ var Form = React.createClass({
     validateAllFields : function() {
         var pass,callback,result,value,rules,remote;
         this.fields = [];//清空
-        this.controls.forEach(function(item, index) {
+        this.state.controls.forEach(function(item, index) {
             value = item && item.getValue && item.getValue();
             rules = CF.getSingleFieldRules(item);
             if(rules) {
                 callback = rules.callback;
-                result = callback ? (Check(item) && callback(item)) : Check(item);
+                result = callback ? (Check(item,value) && callback(item,value)) : Check(item,value);
                 this.fields.push({
                     name:item.props.name,
                     value:value,
@@ -182,6 +196,13 @@ var Form = React.createClass({
     reset:function() {
         var form = ReactDOM.findDOMNode(this);
         form.reset();
+    },
+    componentWillUnmount : function() {
+        //必须清除
+        this.setState({
+            controls : []
+        });
+        //this.state.controls.length = 0
     },
     render:function() {
         var classes = className(this.props.className, this.getPropClass());
