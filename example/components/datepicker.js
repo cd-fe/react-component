@@ -15,7 +15,7 @@ var Example = React.createClass({
             <div className="example">
                 <h4 className="final-title">单个日历</h4>
                 <div>
-                    <RUI.DatePicker ref="singleDatePicker" />
+                    <RUI.DatePicker ref="singleDatePicker" disable={true} />
                     <RUI.Button onClick={this.getSinglePickerValue.bind(this, 'singleDatePicker')}>获取结果</RUI.Button>
                 </div>
                 <h4 className="final-title">带时间</h4>
