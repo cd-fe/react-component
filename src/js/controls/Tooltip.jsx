@@ -98,11 +98,13 @@ module.exports = React.createClass({
         $(this.parentNode).unbind('mouseleave', this.onMouseLeave);
     },
     onMouseEnter: function () {
-        this.resetTimer(function () {
-            this.setState({
-                show: false
-            });
-        }.bind(this), this.props.duration);
+        if(this.props.autoHide) {
+            this.resetTimer(function () {
+                this.setState({
+                    show: false
+                });
+            }.bind(this), this.props.duration);
+        }
 
         this.setState({
             show: true
