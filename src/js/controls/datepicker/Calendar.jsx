@@ -39,19 +39,57 @@ module.exports = React.createClass({
             });
         }
     },
+    checkSuper:function(targetTime) {
+        var formatter = new RUI.DateFormatter();
+        if(this.props.min !== null && isFinite(this.props.min)) {
+            var date = new Date(targetTime);
+            formatter.setTime(this.toDate(date.getTime()));
+            formatter.getSource().setDate(formatter.getCurrentMonthDays());
+            if(formatter.compare(this.props.min) < 0) {
+                return 'min';
+            }
+        }
+        if(this.props.max !== null && isFinite(this.props.max)) {
+            var date = new Date(targetTime);
+            formatter.setTime(this.toDate(date.getTime()));
+            formatter.getSource().setDate(1);
+            if(formatter.compare(this.props.max)  > 0) {
+                return 'max';
+            }
+        }
+
+        return false;
+    },
+    maxResult:function(time) {
+        var max = 4070793600000; // 2099 年
+        var min = 0;
+
+        if(this.props.min !== null && isFinite(this.props.min)) {
+            min = this.props.min;
+        }
+        if(this.props.max !== null && isFinite(this.props.max)) {
+            max = this.props.max;
+        }
+
+        return Math.min(max, Math.max(min, time));
+    },
     prevMonth: function () {
         var formatter = new DateFormatter();
         formatter.setTime(this.state.value);
         formatter.dateTo('m', -1);
 
-        if(this.props.range) {
-            var event = new Event('change');
-            event.data = formatter.getTime();
-            this.dispatchEvent(event);
-        }else {
-            this.setState({
-                value: formatter.getTime()
-            });
+        var hasSuper = this.checkSuper(formatter.getTime());
+        if(!hasSuper) {
+            var time = formatter.getTime();
+            if (this.props.range) {
+                var event = new Event('change');
+                event.data = this.maxResult(time);
+                this.dispatchEvent(event);
+            } else {
+                this.setState({
+                    value: this.maxResult(time)
+                });
+            }
         }
     },
     nextMonth: function () {
@@ -59,14 +97,18 @@ module.exports = React.createClass({
         formatter.setTime(this.state.value);
         formatter.dateTo('m', 1);
 
-        if(this.props.range) {
-            var event = new Event('change');
-            event.data = formatter.getTime();
-            this.dispatchEvent(event);
-        }else {
-            this.setState({
-                value: formatter.getTime()
-            });
+        var hasSuper = this.checkSuper(formatter.getTime());
+        if(!hasSuper) {
+            var time = formatter.getTime();
+            if (this.props.range) {
+                var event = new Event('change');
+                event.data = this.maxResult(time);
+                this.dispatchEvent(event);
+            } else {
+                this.setState({
+                    value: this.maxResult(time)
+                });
+            }
         }
     },
     onItemClick: function (value, event) {
@@ -126,40 +168,53 @@ module.exports = React.createClass({
                     date.dateTo('d', index - currentIndex);
 
                     var classes = [];
+                    var hasSuper = false;
                     if (index <= firstIndex || index > lastIndex) {
                         classes.push('disabled');
                     }
 
-                    if(_this.props.range == 'end') {
-                        var formatStartTime = new Date(_this.props.source.start);
-                        if(date.compare(formatStartTime) < 0) {
+                    if(_this.props.max !== null && isFinite(_this.props.max)) {
+                        if(date.compare(_this.props.max) > 0) {
                             classes.push('disabled');
+                            hasSuper = true;
+                        }
+                    }
+                    if(_this.props.min !== null && isFinite(_this.props.min)) {
+                        if(date.compare(_this.props.min) < 0) {
+                            classes.push('disabled');
+                            hasSuper = true;
                         }
                     }
 
-                    if(_this.props.range == 'start') {
-                        var formatEndTime = new Date(_this.props.source.end);
-                        if(date.compare(formatEndTime) > 0) {
-                            if(index == currentIndex) {
-                                debugger;
+                    if(!hasSuper) {
+                        if(_this.props.range == 'end') {
+                            var formatStartTime = new Date(_this.props.source.start);
+                            if(date.compare(formatStartTime) < 0) {
+                                classes.push('disabled');
                             }
-                            classes.push('disabled');
                         }
-                    }
 
-                    if (_this.props.range == 'start') {
-                        if (date.getTime() >= monthValue.getTime() && date.getTime() <= _this.props.source.end) {
-                            classes.push('ranged');
+                        if(_this.props.range == 'start') {
+                            var formatEndTime = new Date(_this.props.source.end);
+                            if(date.compare(formatEndTime) > 0) {
+                                classes.push('disabled');
+                            }
                         }
-                    }
-                    if (_this.props.range == 'end') {
-                        if (date.getTime() <= monthValue.getTime() && date.getTime() >= _this.props.source.start) {
-                            classes.push('ranged');
-                        }
-                    }
 
-                    if (index == currentIndex) {
-                        classes.push('selected');
+                        if (_this.props.range == 'start') {
+                            if (date.getTime() >= monthValue.getTime() && date.getTime() <= _this.props.source.end) {
+                                classes.push('ranged');
+                            }
+                        }
+                        if (_this.props.range == 'end') {
+                            if (date.getTime() <= monthValue.getTime() && date.getTime() >= _this.props.source.start) {
+                                classes.push('ranged');
+                            }
+                        }
+
+                        if (index == currentIndex) {
+                            classes.push('selected');
+                        }
                     }
 
                     return <CalendarItem key={"calendar-"+row+column} value={date.getTime()} className={classes.join(" ")}
@@ -168,11 +223,18 @@ module.exports = React.createClass({
             </tr>;
         });
 
+        var previewDate = new DateFormatter();
+
+        previewDate.setTime(this.state.value);
+        var prevMonthDate = previewDate.dateTo('m', -1).getTime();
+        previewDate.setTime(this.state.value);
+        var nextMonthDate = previewDate.dateTo('m', 1).getTime();
+
         return <div className={"rui-datepicker-calendar"}>
             <div className={"rui-datepicker-calendar-title"}>
-                <a href="javascript:;" className={"rui-datepicker-calendar-left"} onClick={this.prevMonth}></a>
+                {this.checkSuper(prevMonthDate) != 'min' && <a href="javascript:;" className={"rui-datepicker-calendar-left"} onClick={this.prevMonth}></a>}
                 <span>{monthValue.format(this.state.value)}</span>
-                <a href="javascript:;" className={"rui-datepicker-calendar-right"} onClick={this.nextMonth}></a>
+                {this.checkSuper(nextMonthDate) != 'max' && <a href="javascript:;" className={"rui-datepicker-calendar-right"} onClick={this.nextMonth}></a>}
             </div>
             <table className={"rui-datepicker-calendar-table"}>
                 <thead>

@@ -128,7 +128,28 @@ module.exports = React.createClass({
              *      // event.data === instance.getValue()
              * }
              */
-            onChange: null
+            onChange: null,
+            /**
+             * @instance
+             * @default false
+             * @type boolean
+             * @desc 是否禁用选择
+             */
+            disable: false,
+            /**
+             * @instance
+             * @default null
+             * @type number
+             * @desc 可选择的最大时间
+             */
+            max: null,
+            /**
+             * @instance
+             * @default null
+             * @type number
+             * @desc 可选择的最小时间
+             */
+            min: null
         };
     },
     /**
@@ -203,6 +224,9 @@ module.exports = React.createClass({
         this.setState(update);
     },
     togglePopup: function () {
+        if(this.props.disable) {
+            return;
+        }
         this.setState({
             popup: !this.state.popup,
             value: this.state.value || Date.now(),
@@ -363,31 +387,21 @@ module.exports = React.createClass({
         }
 
         return <div className={classes}>
-            <Input mode="static" value={this.display()} onClick={this.togglePopup} placeholder="请选择日期"/>
+            <Input mode="static" value={this.display()} onClick={this.togglePopup} placeholder="请选择日期" disable={this.props.disable} />
             <Icon name="close" style={{position:'absolute', right:'33px', top:'7px'}} onClick={this.clearValues} />
             <Icon name="calendar" style={{position:'absolute',right:'10px',top:'6px'}} />
 
             <div className={defaultClass+'-popup'}>
-                {/*this.props.range && (<div className={defaultClass+'-row'}>
-                 <div className={"range-container"}>
-                 <div className={"left"}>
-                 <span>开始时间： </span><Input value={this.display('start')} onBlur={this.onStartTimeBlur}/>
-                 <span className="end">结束时间： </span><Input value={this.display('end')} onBlur={this.onEndTimeBlur}/>
-                 </div>
-                 <div className={"right"}>
-                 <Button onClick={this.rangeCalendarCancel}>取消</Button>
-                 <Button onClick={this.rangeCalendarSave} className="primary">保存</Button>
-                 </div>
-                 </div>
-                 </div>)*/}
                 <div className={defaultClass+'-row'} style={{height:this.props.showTime ? 275 : 'auto'}}>
                     {this.props.range ? (
                         <div className={defaultClass+'-row-range'}>
                             <Calendar source={{start:this.state.startValuePreview, end:this.state.endValuePreview}}
                                       value={this.state.startValuePreview || this.dateNow(Date.now())}
+                                      max={this.props.max} min={this.props.min}
                                       onChange={this.startCalendarChange} range={"start"} showTime={this.props.showTime}/>
                             <Calendar source={{start:this.state.startValuePreview, end:this.state.endValuePreview}}
                                       value={this.state.endValuePreview || (this.dateNow(Date.now() + (this.props.showTime ? 1000 : 86400 * 1000)))}
+                                      max={this.props.max} min={this.props.min}
                                       onChange={this.endCalendarChange} range={"end"} showTime={this.props.showTime}/>
                         </div>
                     ) : (
@@ -397,6 +411,8 @@ module.exports = React.createClass({
                             showTime={this.props.showTime}
                             onCancel={this.rangeCalendarCancel}
                             onSave={this.timeCalendarSave}
+                            max={this.props.max}
+                            min={this.props.min}
                             />
                     )}
                 </div>
