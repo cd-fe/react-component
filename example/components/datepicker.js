@@ -9,14 +9,20 @@ var Example = React.createClass({
         });
     },
     render:function() {
+        var minDate = new Date(2016,7,25);
+        var maxDate = new Date(2016,10,25);
         return <div className="example-input">
             <h2 className="title">日历<span>Datepicker</span></h2>
             <h3 className="sub-title">演示</h3>
             <div className="example">
                 <h4 className="final-title">单个日历</h4>
                 <div>
-                    <RUI.DatePicker ref="singleDatePicker" disable={true} />
+                    <RUI.DatePicker ref="singleDatePicker" />
                     <RUI.Button onClick={this.getSinglePickerValue.bind(this, 'singleDatePicker')}>获取结果</RUI.Button>
+                </div>
+                <h4 className="final-title">禁用状态</h4>
+                <div>
+                    <RUI.DatePicker disable={true} />
                 </div>
                 <h4 className="final-title">带时间</h4>
                 <div>
@@ -36,7 +42,13 @@ var Example = React.createClass({
                 </div>
                 <h4 className="final-title">日历开始结束</h4>
                 <div>
-                    <RUI.DatePicker startValue={''} endValue={''} formatter={new RUI.DateFormatter("Y-m-d")} range={true} onChange={this.datePickerChange} />
+                    <RUI.DatePicker
+                        startValue={''} endValue={''}
+                        formatter={new RUI.DateFormatter("Y-m-d")}
+                        range={true} onChange={this.datePickerChange}
+                        max={maxDate.getTime()}
+                        min={minDate.getTime()}
+                    />
                 </div>
                 <h4 className="final-title">外层设置范围</h4>
                 <div>

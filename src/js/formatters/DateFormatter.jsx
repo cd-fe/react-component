@@ -189,7 +189,7 @@ DateFormatter.prototype = {
      * @returns {number}
      */
     compare:function(value) {
-        return this.getTime() - (value.getTime()||this.getTime());
+        return this.getTime() - (typeof value == 'object' ? (value.getTime()||this.getTime()) : (value * 1 || this.getTime()));
     },
     isLeapYear:function() {
         return (0==this.getSource().getYear()%4&&((this.getSource().getYear()%100!=0)||(this.getSource().getYear()%400==0)));
