@@ -62,9 +62,14 @@ module.exports = React.createClass({
                     };
                 }
 
+                if(typeof this.props.disable != 'undefined') {
+                    props.disable = this.props.disable;
+                }
+
                 var itemProps = {
                     value: props.value || ""
                 };
+
                 if(typeof props.selected != 'undefined') {
                     itemProps.selected = props.selected ? 1 : 0;
                 }

@@ -92,6 +92,10 @@ module.exports = React.createClass({
                     }
                 }
 
+                if(typeof this.props.disable != 'undefined') {
+                    props.disable = this.props.disable;
+                }
+
                 if (this.state.value == child.props.value) {
                     props.selected = true;
                 } else {
