@@ -10,10 +10,18 @@
   }
 
   &.range {
-    width:190px;
+    width:213px;
 
     >.rui-input {
-      width:190px;
+      width:213px;
+    }
+
+    &.timestatus {
+      width:323px;
+
+      >.rui-input {
+        width:323px;
+      }
     }
   }
 
@@ -136,14 +144,14 @@
             color:#666;
           }
 
-          &.selected {
-            background:$primary;
-            color:#fff;
-          }
-
           &.disabled,&.disabled:hover {
             color:#ccc;
             background:#fff;
+          }
+
+          &.selected {
+            background:$primary;
+            color:#fff;
           }
         }
       }
@@ -172,6 +180,12 @@
     }
   }
 
+  >.rui-icon-close {
+    display:none;
+    pointer-events:auto;
+    cursor: pointer;
+  }
+
   &.active {
     >.rui-input {
       position:relative;
@@ -179,6 +193,10 @@
     }
     >.rui-icon-calendar {
       z-index:1101;
+    }
+    >.rui-icon-close {
+      z-index:1101;
+      display:block;
     }
     .rui-datepicker-popup {
       display:block;

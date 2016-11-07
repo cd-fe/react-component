@@ -87,6 +87,14 @@ module.exports = React.createClass({
             this.dispatchEvent(event);
         }
     },
+    toDate:function(time) {
+        var date = new Date(time);
+        date.setHours(0);
+        date.setSeconds(0);
+        date.setMinutes(0);
+        date.setMilliseconds(0);
+        return date.getTime();
+    },
     onSubmitClick:function() {
         var times = this.refs.time.getValue();
         if(times) {
@@ -110,7 +118,6 @@ module.exports = React.createClass({
         var currentIndex = currentMonthFirstDay.getDay() + monthValue.getSource().getDate();
         var firstIndex = currentMonthFirstDay.getDay();
         var lastIndex = currentMonthFirstDay.getDay() + monthValue.getCurrentMonthDays();
-
         var tds = rows.map(function (item, row) {
             return <tr key={"calendar-" + row}>
                 {columns.map(function (item, column) {
@@ -133,6 +140,9 @@ module.exports = React.createClass({
                     if(_this.props.range == 'start') {
                         var formatEndTime = new Date(_this.props.source.end);
                         if(date.compare(formatEndTime) > 0) {
+                            if(index == currentIndex) {
+                                debugger;
+                            }
                             classes.push('disabled');
                         }
                     }

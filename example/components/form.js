@@ -50,12 +50,18 @@ var Example = React.createClass({
                             <RUI.Radio value="0">女</RUI.Radio>
                             </RUI.Form.Control>
                         <RUI.Form.Control name="role" label="角色" type="select" data={selectData} />
+                        <RUI.Form.Control name="desc" label="描述" type="textarea" maxLength={100} />
                         <RUI.Form.Submit>保存</RUI.Form.Submit>
                     </RUI.Form>
                 </div>
                 <h4 className="final-title">验证</h4>
                 <div>
-
+                    <RUI.Form onSubmit={this.submitHandler}>
+                        <div style={{backgroundColor:'#d90000'}}>
+                            <RUI.Form.Control name="role" label="角色" type="select" data={selectData} />
+                        </div>
+                        <RUI.Form.Submit>保存</RUI.Form.Submit>
+                    </RUI.Form>
                 </div>
             </div>
             <h3 className="sub-title">源码</h3>

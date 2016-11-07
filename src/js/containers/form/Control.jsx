@@ -48,6 +48,10 @@ var Control = React.createClass({
              * @desc 表单行组件显示的文本内容
              */
             label: null,
+            contentClassName: "",
+            labelClassName: "",
+            contentStyle: {},
+            labelStyle: {}
         };
     },
     /**
@@ -59,13 +63,13 @@ var Control = React.createClass({
         return this.refs.content.getValue && (this.refs.content.getValue() || null);
     },
     render:function() {
-        var ControlMap = Control.findControlMap(this.props.type);
+        var ControlMap = Control.findControlMap(this.props.type, this.props);
 
         var props = omit(this.props, 'cname');
 
-        return <div {...this.props} className={className(this.props.className, this.getPropClass())}>
-            <Label>{this.props.label}</Label>
-            <Content>
+        return <div {...this.props} className={"clearfix " + className(this.props.className, this.getPropClass())}>
+            <Label className={this.props.labelClassName} style={this.props.labelStyle}>{this.props.label}</Label>
+            <Content className={this.props.contentClassName} style={this.props.contentStyle}>
                 <ControlMap.tag {...props} {...ControlMap.props} ref="content">
                     {this.props.children}
                 </ControlMap.tag>
@@ -74,7 +78,7 @@ var Control = React.createClass({
     }
 });
 
-Control.findControlMap = function(type) {
+Control.findControlMap = function(type, props) {
     var result = null;
 
     type = type || 'input';
@@ -105,7 +109,7 @@ Control.findControlMap = function(type) {
     }
 
     result.tag = RUI[result.tag];
-    result.props = result.props || {};
+    result.props = Object.assign(result.props || {}, omit(props, 'type', 'cname', 'label'));
 
     return result;
 };

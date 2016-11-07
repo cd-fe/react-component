@@ -43,6 +43,9 @@ DateFormatter.prototype = {
             var data = value;
             var reCat = /(\d{1,4})/gm;
             var t = data.match(reCat);
+            t = t.map(function(it) {
+                return it * 1;
+            });
             t[1] = t[1] - 1;
             eval('this._source = new Date('+t.join(',')+');');
         }

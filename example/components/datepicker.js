@@ -21,11 +21,12 @@ var Example = React.createClass({
                 <h4 className="final-title">带时间</h4>
                 <div>
                     <RUI.DatePicker ref="singleDatetimePicker" showTime={true} />
-                    <RUI.Button onClick={this.getSinglePickerValue.bind(this, 'singleDatetimePicker')}>获取结果</RUI.Button>
+                    <RUI.DatePicker ref="rangeDatetimePicker" showTime={true} range={true} />
+                    <RUI.Button onClick={this.getSinglePickerValue.bind(this, 'rangeDatetimePicker')}>获取结果</RUI.Button>
                 </div>
                 <h4 className="final-title">改变显示格式</h4>
                 <div>
-                    <RUI.DatePicker value={Date.now()} formatter={new RUI.DateFormatter("Y/m/d")} onChange={this.datePickerChange} />
+                    <RUI.DatePicker value={Date.now() + 86400 * 1000 * 30} formatter={new RUI.DateFormatter("Y/m/d")} onChange={this.datePickerChange} />
                 </div>
                 <h4 className="final-title">嵌套Tooltip</h4>
                 <div>
