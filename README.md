@@ -23,7 +23,7 @@
 * Tab
 * Accordion
 * AutoComplete
-* Progress ![Done][`]
+* Progress ![Done][1]
 * Tooltip ![Done][1]
 * Slider ![Done][1]
 * Button ![Done][1]
