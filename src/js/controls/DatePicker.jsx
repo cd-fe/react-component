@@ -224,10 +224,7 @@ module.exports = React.createClass({
         }
 
         if(!empty(update)) {
-            console.log('set state');
             this.setState(update);
-        }else {
-            console.log('not state');
         }
     },
     togglePopup: function () {
@@ -236,9 +233,9 @@ module.exports = React.createClass({
         }
         this.setState({
             popup: !this.state.popup,
-            value: this.state.value || Date.now(),
-            startValue: this.state.startValue || Date.now(),
-            endValue: this.state.endValue || Date.now()
+            valuePreview: this.state.value || Date.now(),
+            startValuePreview: this.state.startValue || Date.now(),
+            endValuePreview: this.state.endValue || Date.now()
         }, function() {
             var rootDom = $(ReactDOM.findDOMNode(this));
             var offset = rootDom.offset().top - window.scrollY;
@@ -381,7 +378,6 @@ module.exports = React.createClass({
         }
     },
     render: function () {
-        console.log('render', this._reactInternalInstance._rootNodeID);
         var defaultClass = this.getDefaultClass();
         var classes = className(this.props.className, this.getPropClass());
         if (this.state.popup) {
