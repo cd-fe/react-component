@@ -1,4 +1,11 @@
 var Example = React.createClass({
+    getInitialState:function() {
+        this.changeFormatter = new RUI.DateFormatter("Y/m/d");
+        this.formatter = new RUI.DateFormatter("Y-m-d");
+        return {
+            val:""
+        };
+    },
     getSinglePickerValue:function(ref) {
         RUI.DialogManager.alert(JSON.stringify(this.refs[ref].getValue()));
     },
@@ -12,6 +19,7 @@ var Example = React.createClass({
         var minDate = new Date(2016,7,25);
         var maxDate = new Date(2016,10,25);
         return <div className="example-input">
+            <RUI.Input onChange={(e)=>this.setState({val:e.target.value})} value={this.state.val} />
             <h2 className="title">日历<span>Datepicker</span></h2>
             <h3 className="sub-title">演示</h3>
             <div className="example">
@@ -32,11 +40,11 @@ var Example = React.createClass({
                 </div>
                 <h4 className="final-title">改变显示格式</h4>
                 <div>
-                    <RUI.DatePicker value={Date.now() + 86400 * 1000 * 30} formatter={new RUI.DateFormatter("Y/m/d")} onChange={this.datePickerChange} />
+                    <RUI.DatePicker formatter={this.changeFormatter} onChange={this.datePickerChange} />
                 </div>
                 <h4 className="final-title">嵌套Tooltip</h4>
                 <div>
-                    <RUI.DatePicker value={Date.now()} formatter={new RUI.DateFormatter("Y-m-d")} range={false}>
+                    <RUI.DatePicker formatter={this.formatter} range={false}>
                         <RUI.Tooltip align="top-center" trigger="click">嵌套使用，click触发</RUI.Tooltip>
                     </RUI.DatePicker>
                 </div>
@@ -44,7 +52,7 @@ var Example = React.createClass({
                 <div>
                     <RUI.DatePicker
                         startValue={''} endValue={''}
-                        formatter={new RUI.DateFormatter("Y-m-d")}
+                        formatter={this.formatter}
                         range={true} onChange={this.datePickerChange}
                         max={maxDate.getTime()}
                         min={minDate.getTime()}

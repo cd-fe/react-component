@@ -5,6 +5,7 @@
 
 import className from '../util/className.jsx';
 import omit from '../util/omit.jsx';
+import empty from '../util/empty.jsx';
 import ComponentBase from '../mixins/ComponentBase.jsx';
 import Input from './Input.jsx';
 import Calendar from './datepicker/Calendar.jsx';
@@ -209,19 +210,25 @@ module.exports = React.createClass({
     },
     componentWillReceiveProps: function (newProps) {
         var update = {};
-        if (newProps.value) {
+        if (newProps.value && newProps.value !== this.state.value) {
             update.value = newProps.value;
+            update.valuePreview = newProps.value;
         }
-        if (newProps.startValue) {
+        if (newProps.startValue && newProps.startValue !== this.state.startValue) {
             update.startValue = newProps.startValue;
             update.startValuePreview = newProps.startValue;
         }
-        if (newProps.endValue) {
+        if (newProps.endValue && newProps.endValue !== this.state.endValue) {
             update.endValue = newProps.endValue;
             update.endValuePreview = newProps.endValue;
         }
 
-        this.setState(update);
+        if(!empty(update)) {
+            console.log('set state');
+            this.setState(update);
+        }else {
+            console.log('not state');
+        }
     },
     togglePopup: function () {
         if(this.props.disable) {
@@ -374,6 +381,7 @@ module.exports = React.createClass({
         }
     },
     render: function () {
+        console.log('render', this._reactInternalInstance._rootNodeID);
         var defaultClass = this.getDefaultClass();
         var classes = className(this.props.className, this.getPropClass());
         if (this.state.popup) {

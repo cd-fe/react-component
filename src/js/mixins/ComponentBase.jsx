@@ -36,6 +36,11 @@ module.exports = {
         //) {
         //    return false;
         //}
+        if(this.props.cname == 'datepicker') {
+            if(equal(nextProps, this.props) && equal(nextState, this.state)) {
+                return false;
+            }
+        }
         return true;
     }
 };
