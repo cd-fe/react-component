@@ -11,6 +11,8 @@ import className from '../../util/className.jsx';
 import Check from './Check.jsx';
 import CF from './CommonFunc.jsx';
 
+var eventMap = {};
+
 var Control = React.createClass({
     /**
      * 基础方法
@@ -202,12 +204,16 @@ Control.findControlMap = function(rc) {
     result.props = Object.assign(result.props || {}, omit(props, 'type', 'cname', 'label','className')  );
 
     rules && rules.trigger && rules.trigger.split('|').forEach(function(evt) {
-        result.props[evt] = function(e) {
-           window.setTimeout(function() {
-               var value = rc.getValue();
-               Check(rc, value) && rules.callback && rules.callback(rc,value);
-           },0);
-        };
+        var id = rc._reactInternalInstance._rootNodeID + '.' + evt;
+        if(!eventMap[id]) {
+            eventMap[id] = function(e) {
+                window.setTimeout(function() {
+                    var value = rc.getValue();
+                    Check(rc, value) && rules.callback && rules.callback(rc,value);
+                },0);
+            };
+        }
+        result.props[evt] = eventMap[id];
     });
     return result;
 };

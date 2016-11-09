@@ -19,7 +19,6 @@ var Example = React.createClass({
         var minDate = new Date(2016,7,25);
         var maxDate = new Date(2016,10,25);
         return <div className="example-input">
-            <RUI.Input onChange={(e)=>this.setState({val:e.target.value})} value={this.state.val} />
             <h2 className="title">日历<span>Datepicker</span></h2>
             <h3 className="sub-title">演示</h3>
             <div className="example">
