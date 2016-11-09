@@ -21,12 +21,6 @@ var Example = React.createClass({
     uploadCheck : function(e) {
         return this.checkImgSizeAndType(e, 2);
     },
-    testClick : function() {
-        this.setState({
-            disable : false,
-            hide : false,
-        });
-    },
     formRules : function() {
         var _this = this;
         return {
@@ -285,7 +279,7 @@ var Example = React.createClass({
     },
     componentDidMount : function() {
         //执行某项表单元校验
-        this.refs.forms.validateSingleField('evt');
+        this.refs.form.validateSingleField('evt');
     },
     getInitialState : function() {
         return {
@@ -334,24 +328,9 @@ var Example = React.createClass({
         return <div className="example-form">
             <h2 className="title">表单<span>Form</span></h2>
             <h3 className="sub-title">演示</h3>
-            <RUI.Button className="primary" onClick={this.testClick}>测试</RUI.Button>
             <div className="example">
                 <h4 className="final-title">验证</h4>
                 <div>
-                    <RUI.Form ref="forms" className="horizonal" onSubmit={this.submitHandlers} rules={this.state.rules}>
-                        <div>
-                            <RUI.Form.Row label="活动名称：" >
-                                <RUI.Form.Control
-                                    rowType="activity"
-                                    name="evt"
-                                    type="input"
-                                    defaultValue="sd"
-                                    placeholder="最多输入15个字"
-                                />
-                            </RUI.Form.Row>
-                        </div>
-                    </RUI.Form>
-                    <hr/>
                     <RUI.Form ref="form" className="horizonal" onSubmit={this.submitHandler} rules={this.state.rules}>
                         <RUI.Form.Row>
                             <p style={{paddingBottom:'5px',fontSize:'16px',fontWeight:'bold',borderBottom: "1px dashed #dadada"}}>基本设置</p>

@@ -15,7 +15,6 @@ module.exports = React.createClass({
      * @see {@link module:mixins/TimerMixin}
      */
     mixins: [ComponentBase, TimerMixin],
-    _choose: null,
     getDefaultProps: function () {
         return {
             /**
