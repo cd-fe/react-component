@@ -168,25 +168,17 @@ var Form = React.createClass({
         });
         return data;
     },
-    submitHandler:function(e) {
-        var result = this.validateAllFields();
-        if(result) {
-            result = this.serializeObject(result);
-            return result;
-        }else {
-            e && e.nativeEvent.preventDefault();
-            return false;
-        }
-    },
     /**
      * 提交表单，该方法会触发 props.onSubmit 回调
      * @instance
      */
-    submit:function() {
-        var result = this.submitHandler();
-        if(result !== false) {
-            var form = ReactDOM.findDOMNode(this);
-            this.props.onSubmit(result);
+    submit:function(e) {
+        var result = this.validateAllFields();
+        if(result) {
+            //var form = ReactDOM.findDOMNode(this);
+            this.props.onSubmit(result, this);
+        }else {
+            e && e.nativeEvent.preventDefault();
         }
     },
     /**
@@ -206,7 +198,7 @@ var Form = React.createClass({
     },
     render:function() {
         var classes = className(this.props.className, this.getPropClass());
-        return <form {...this.props} className={classes} onSubmit={this.submitHandler}>
+        return <form {...this.props} className={classes}>
             {this.props.children}
         </form>;
     }

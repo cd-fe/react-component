@@ -260,7 +260,7 @@ var Example = React.createClass({
                 }
             },
             descType: {
-                required : true,
+                required : false,
                 validator: {
                     'descType' :{
                         rules: {
@@ -285,9 +285,9 @@ var Example = React.createClass({
         return {
             rules : this.formRules(),
             explain : this.props.explain,
-            numberDisable : true,
+            numberDisable : false,
             number : '',
-            disable : true,
+            disable : false,
             hide : true,
             list : ['http://10.2.50.38/images/ae13c4d4dcea406c133ebb6d6f31dca6_1477965048481.JPEG_614_614.JPEG']
         }
@@ -300,7 +300,7 @@ var Example = React.createClass({
     submitHandler:function(data, form) {
         //RUI.DialogManager.alert(JSON.stringify(data));
         console.dir(data);
-        return false;
+        //return false;
     },
     complete : function(res,s) {
         var form = this.refs.form;
@@ -311,12 +311,6 @@ var Example = React.createClass({
                 explain : ''
             });
         }
-    },
-    disable : function() {
-        //console.log('自定义');
-    },
-    submitHandlers : function() {
-
     },
     render:function() {
         var selectData = [
@@ -337,7 +331,7 @@ var Example = React.createClass({
                         </RUI.Form.Row>
                         {/*可以随意DOM元素*/}
                         {
-                            this.state.hide && (<div className="username">
+                            this.state.hide && (<div className="username" type="username">
                                 <RUI.Form.Control
                                     rowType="username"
                                     name="user"
@@ -348,7 +342,7 @@ var Example = React.createClass({
                             </div>)
                         }
                        <div>
-                           <RUI.Form.Row label="活动名称：" >
+                           <RUI.Form.Row label="活动名称："  type="activity">
                                <RUI.Form.Control
                                    rowType="activity"
                                    name="evt"
@@ -359,7 +353,7 @@ var Example = React.createClass({
                            </RUI.Form.Row>
                        </div>
 
-                        <RUI.Form.Row label="活动时间：">
+                        <RUI.Form.Row label="活动时间：" type="time">
                            <div>
                                <RUI.Form.Control
                                    rowType="time"
@@ -377,7 +371,7 @@ var Example = React.createClass({
                            </div>
                         </RUI.Form.Row>
 
-                        <RUI.Form.Row label="参与人数：">
+                        <RUI.Form.Row label="参与人数：" type="people">
                             <RUI.Form.Control
                                 rowType="people"
                                 defaultValue={"1"}
@@ -388,7 +382,7 @@ var Example = React.createClass({
                             </RUI.Form.Control>
                         </RUI.Form.Row>
 
-                        <RUI.Form.Row label="参与人数限制：">
+                        <RUI.Form.Row label="参与人数限制：" type="plimit">
                             <RUI.Form.Control
                                 rowType="plimit"
                                 defaultValue={"1"}
@@ -413,7 +407,7 @@ var Example = React.createClass({
                             <p style={{paddingBottom:'5px',fontSize:'16px',fontWeight:'bold',borderBottom: "1px dashed #dadada"}}>派奖方式</p>
                         </RUI.Form.Row>
 
-                        <RUI.Form.Row label="派奖方式：">
+                        <RUI.Form.Row label="派奖方式：" type="rewardType">
                             <RUI.Form.Control
                                 rowType="rewardType"
                                 name="reward"
@@ -426,7 +420,7 @@ var Example = React.createClass({
                             <span className="deco grey">参与活动即可抽奖</span>
                         </RUI.Form.Row>
 
-                        <RUI.Form.Row label="每日抽奖机会：">
+                        <RUI.Form.Row label="每日抽奖机会：" type="chance">
                             <span className="deco-l">每人每日有</span>
                             <RUI.Form.Control
                                 rowType="chance"
@@ -443,7 +437,7 @@ var Example = React.createClass({
                             <p style={{paddingBottom:'5px',fontSize:'16px',fontWeight:'bold',borderBottom: "1px dashed #dadada"}}>活动首页设置</p>
                         </RUI.Form.Row>
 
-                        <RUI.Form.Row label="图片设置：">
+                        <RUI.Form.Row label="图片设置：" type="cover">
                             <RUI.Form.Control
                                 rowType="cover"
                                 name="cover"
@@ -455,7 +449,7 @@ var Example = React.createClass({
                                 actionData={this.formatUploadData}
                                 beforeEdit={this.uploadCheck}
                                 onUploadComplete={this.complete}
-                                disable={true}
+                                disable={false}
                                 editable={{
                                     aspectRatio:1
                                 }}
@@ -467,18 +461,17 @@ var Example = React.createClass({
                             <p style={{paddingBottom:'5px',fontSize:'16px',fontWeight:'bold',borderBottom: "1px dashed #dadada"}}>文案描述</p>
                         </RUI.Form.Row>
 
-                        <RUI.Form.Row label="文案描述：">
+                        <RUI.Form.Row label="文案描述：" type="desc">
                             <RUI.Form.Control
                                 rowType="desc"
                                 name="desc"
                                 type="textarea"
-                                disable={true}
+                                disable={false}
                                 placeholder="文案描述"
-                                onChange={this.disable}
                             />
                         </RUI.Form.Row>
 
-                        <RUI.Form.Row label="描述类型：">
+                        <RUI.Form.Row label="描述类型：" type="descType">
                             <RUI.Form.Control
                                 rowType="descType"
                                 name="descType"
