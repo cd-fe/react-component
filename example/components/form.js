@@ -132,11 +132,28 @@ var Example = React.createClass({
                 }
             },
             people : {
-                required : false,
+                required : true,
                 validator : {
                     'people' : {
                         rules: {
-
+                            trigger: 'onChange',
+                            callback: function(rc,v) {
+                                var form = _this.refs.form;
+                                if(!v) {
+                                    rc.setState({
+                                        validateStatus : 'is-error',
+                                        explain : '请选择参与人数限制！'
+                                    });
+                                    return false;
+                                }else {
+                                    rc.setState({
+                                        validateStatus : '',
+                                        explain : ''
+                                    });
+                                    return true;
+                                }
+                                return true;
+                            }
                         }
                     }
                 }
@@ -374,7 +391,6 @@ var Example = React.createClass({
                         <RUI.Form.Row label="参与人数：" type="people">
                             <RUI.Form.Control
                                 rowType="people"
-                                defaultValue={"1"}
                                 name="people"
                                 type="radio">
                                 <RUI.Radio value="1">隐藏</RUI.Radio>
