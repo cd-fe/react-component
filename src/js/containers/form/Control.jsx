@@ -69,7 +69,7 @@ var Control = React.createClass({
      * @returns {*|null}
      */
     getValue:function() {
-        return this.refs.content.getValue && (this.refs.content.getValue() || null);
+        return this.refs.content.getValue && this.refs.content.getValue();
     },
     componentDidMount : function() {
         if(this.context.form) {
