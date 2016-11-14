@@ -12,7 +12,7 @@ const checksFunc = {
             case 'input':
             case 'datePicker':
             case 'textarea':
-                result = (!CF.isNull(value) && value != '');
+                result = (!CF.isNull(value) && value !== '');
                 break;
             case 'select':
                 result = (value.key != '请选择');
