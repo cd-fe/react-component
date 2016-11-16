@@ -215,6 +215,16 @@ Control.findControlMap = function(rc) {
         }
         result.props[evt] = eventMap[id];
     });
+
+   /* rules && rules.trigger && rules.trigger.split('|').forEach(function(evt) {
+        result.props[evt] = function(e) {
+           window.setTimeout(function() {
+               var value = rc.getValue();
+               Check(rc, value) && rules.callback && rules.callback(rc,value);
+           },0);
+        };
+    });*/
+
     return result;
 };
 

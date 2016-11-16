@@ -421,24 +421,6 @@ var Example = React.createClass({
                                </RUI.Form.Control>
                            </div>
                         </RUI.Form.Row>
-                        <RUI.Form.Row label="活动时间：">
-                            <div>
-                                <RUI.Form.Control
-                                    rowType="time"
-                                    name="start1"
-                                    showTime={true}
-                                    type="datePicker"
-                                    />
-                                <span className="split"></span>
-                                <RUI.Form.Control
-                                    rowType="time"
-                                    name="end1"
-                                    type="datePicker"
-                                    >
-                                </RUI.Form.Control>
-                            </div>
-                        </RUI.Form.Row>
-
                         <RUI.Form.Row label="参与人数：" type="people">
                             <RUI.Form.Control
                                 rowType="people"
