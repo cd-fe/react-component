@@ -203,7 +203,7 @@ Control.findControlMap = function(rc) {
     result.tag = RUI[result.tag];
     result.props = Object.assign(result.props || {}, omit(props, 'type', 'cname', 'label','className')  );
 
-    rules && rules.trigger && rules.trigger.split('|').forEach(function(evt) {
+    /*rules && rules.trigger && rules.trigger.split('|').forEach(function(evt) {
         var id = rc._reactInternalInstance._rootNodeID + '.' + evt;
         if(!eventMap[id]) {
             eventMap[id] = function(e) {
@@ -214,16 +214,16 @@ Control.findControlMap = function(rc) {
             };
         }
         result.props[evt] = eventMap[id];
-    });
+    });*/
 
-   /* rules && rules.trigger && rules.trigger.split('|').forEach(function(evt) {
+    rules && rules.trigger && rules.trigger.split('|').forEach(function(evt) {
         result.props[evt] = function(e) {
            window.setTimeout(function() {
                var value = rc.getValue();
                Check(rc, value) && rules.callback && rules.callback(rc,value);
            },0);
         };
-    });*/
+    });
 
     return result;
 };
