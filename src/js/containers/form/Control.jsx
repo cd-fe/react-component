@@ -220,6 +220,8 @@ Control.findControlMap = function(rc) {
         result.props[evt] = function(e) {
            window.setTimeout(function() {
                var value = rc.getValue();
+               console.log(value);
+               console.log(value);
                Check(rc, value) && rules.callback && rules.callback(rc,value);
            },0);
         };

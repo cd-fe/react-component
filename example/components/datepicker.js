@@ -1,3 +1,4 @@
+var timer = Date.now();
 var Example = React.createClass({
     getInitialState:function() {
         this.changeFormatter = new RUI.DateFormatter("Y/m/d");
@@ -5,6 +6,12 @@ var Example = React.createClass({
         return {
             val:""
         };
+    },
+    setChange : function(e) {
+        console.dir(e.data);
+        this.setState({
+            time : e.data
+        });
     },
     getSinglePickerValue:function(ref) {
         RUI.DialogManager.alert(JSON.stringify(this.refs[ref].getValue()));
@@ -33,7 +40,7 @@ var Example = React.createClass({
                 </div>
                 <h4 className="final-title">带时间</h4>
                 <div>
-                    <RUI.DatePicker ref="singleDatetimePicker" showTime={true} />
+                    <RUI.DatePicker ref="singleDatetimePicker" onChange={this.setChange} showTime={true} value={this.state.time || timer} />
                     <RUI.DatePicker ref="rangeDatetimePicker" showTime={true} range={true} />
                     <RUI.Button onClick={this.getSinglePickerValue.bind(this, 'rangeDatetimePicker')}>获取结果</RUI.Button>
                 </div>

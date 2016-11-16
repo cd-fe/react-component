@@ -1,3 +1,4 @@
+var timer = Date.now();
 var Example = React.createClass({
     formatUploadData:function(file) {
         var data = (file || "").split(',');
@@ -103,7 +104,10 @@ var Example = React.createClass({
                                 msg: '请选择开始时间'
                             },
                             trigger: 'onChange',
-                            callback: function(rc) {
+                            callback: function(rc,v) {
+                                _this.setState({
+                                    time : v
+                                });
                                 return true;
                             }
                         }
@@ -410,6 +414,7 @@ var Example = React.createClass({
                                    rowType="time"
                                    name="start"
                                    showTime={true}
+                                   value={this.state.time}
                                    type="datePicker"
                                 />
                                <span className="split"></span>
