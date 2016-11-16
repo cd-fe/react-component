@@ -128,6 +128,38 @@ var Example = React.createClass({
                                 return true;
                             }
                         }
+                    },
+                    'start1' : {
+                        rules: {
+                            required: {
+                                msg: '请选择开始时间'
+                            },
+                            trigger: 'onChange',
+                            callback: function(rc) {
+                                return true;
+                            }
+                        }
+                    },
+                    'end1' :{
+                        rules: {
+                            required: {
+                                msg: '请选择结束时间'
+                            },
+                            trigger: 'onChange',
+                            callback: function(rc) {
+                                var form = _this.refs.form;
+                                var start = form.getSingleFieldValue('start');
+                                var end = form.getSingleFieldValue('end');
+                                if(start > end) {
+                                    form.setFieldCheckStatus('end',{
+                                        validateStatus : 'is-error',
+                                        explain : '结束时间不能小于开始时间'
+                                    });
+                                    return false;
+                                }
+                                return true;
+                            }
+                        }
                     }
                 }
             },
@@ -300,6 +332,7 @@ var Example = React.createClass({
     },
     getInitialState : function() {
         return {
+            val: "",
             rules : this.formRules(),
             explain : this.props.explain,
             numberDisable : false,
@@ -342,6 +375,7 @@ var Example = React.createClass({
             <div className="example">
                 <h4 className="final-title">验证</h4>
                 <div>
+                    <RUI.Input onChange={(e)=>this.setState({val:e.target.value})} value={this.state.val} />
                     <RUI.Form ref="form" className="horizonal" onSubmit={this.submitHandler} rules={this.state.rules}>
                         <RUI.Form.Row>
                             <p style={{paddingBottom:'5px',fontSize:'16px',fontWeight:'bold',borderBottom: "1px dashed #dadada"}}>基本设置</p>
@@ -386,6 +420,23 @@ var Example = React.createClass({
                                >
                                </RUI.Form.Control>
                            </div>
+                        </RUI.Form.Row>
+                        <RUI.Form.Row label="活动时间：">
+                            <div>
+                                <RUI.Form.Control
+                                    rowType="time"
+                                    name="start1"
+                                    showTime={true}
+                                    type="datePicker"
+                                    />
+                                <span className="split"></span>
+                                <RUI.Form.Control
+                                    rowType="time"
+                                    name="end1"
+                                    type="datePicker"
+                                    >
+                                </RUI.Form.Control>
+                            </div>
                         </RUI.Form.Row>
 
                         <RUI.Form.Row label="参与人数：" type="people">
