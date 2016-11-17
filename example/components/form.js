@@ -1,3 +1,4 @@
+var timer = Date.now();
 var Example = React.createClass({
     formatUploadData:function(file) {
         var data = (file || "").split(',');
@@ -103,7 +104,7 @@ var Example = React.createClass({
                                 msg: '请选择开始时间'
                             },
                             trigger: 'onChange',
-                            callback: function(rc) {
+                            callback: function(rc,v) {
                                 return true;
                             }
                         }
@@ -114,43 +115,13 @@ var Example = React.createClass({
                                 msg: '请选择结束时间'
                             },
                             trigger: 'onChange',
-                            callback: function(rc) {
+                            callback: function(rc,v) {
                                 var form = _this.refs.form;
                                 var start = form.getSingleFieldValue('start');
-                                var end = form.getSingleFieldValue('end');
-                                if(start > end) {
-                                    form.setFieldCheckStatus('end',{
-                                        validateStatus : 'is-error',
-                                        explain : '结束时间不能小于开始时间'
-                                    });
-                                    return false;
-                                }
-                                return true;
-                            }
-                        }
-                    },
-                    'start1' : {
-                        rules: {
-                            required: {
-                                msg: '请选择开始时间'
-                            },
-                            trigger: 'onChange',
-                            callback: function(rc) {
-                                return true;
-                            }
-                        }
-                    },
-                    'end1' :{
-                        rules: {
-                            required: {
-                                msg: '请选择结束时间'
-                            },
-                            trigger: 'onChange',
-                            callback: function(rc) {
-                                var form = _this.refs.form;
-                                var start = form.getSingleFieldValue('start');
-                                var end = form.getSingleFieldValue('end');
-                                if(start > end) {
+                                _this.setState({
+                                    time : v
+                                });
+                                if(start > v) {
                                     form.setFieldCheckStatus('end',{
                                         validateStatus : 'is-error',
                                         explain : '结束时间不能小于开始时间'
@@ -416,6 +387,8 @@ var Example = React.createClass({
                                <RUI.Form.Control
                                    rowType="time"
                                    name="end"
+                                   showTime={true}
+                                   value={this.state.time || timer}
                                    type="datePicker"
                                >
                                </RUI.Form.Control>
