@@ -12,7 +12,6 @@ import Check from './Check.jsx';
 import CF from './CommonFunc.jsx';
 
 var eventMap = {};
-
 var Control = React.createClass({
     /**
      * 基础方法
@@ -103,8 +102,6 @@ var Control = React.createClass({
         return html;
     },
     render:function() {
-
-        console.log('render');
         var ControlMap = Control.findControlMap(this);
 
         var filters = CF.filterArray( Object.keys(this.props),Object.keys(ControlMap.props)).filter(function(item, index){
@@ -153,11 +150,12 @@ Control.MakeControlByType = function(type) {
     var result = null;
     switch(type) {
         case 'input':
+        case 'datePicker':
         case 'upload':
             result = {
                 tag:type.substring(0, 1).toUpperCase() + type.substring(1),
                 props:{
-                    type:'type'
+                    type:type.substring(0, 1).toUpperCase() + type.substring(1),
                 }
             };
             break;
@@ -220,12 +218,15 @@ Control.findControlMap = function(rc) {
 
     rules && rules.trigger && rules.trigger.split('|').forEach(function(evt) {
         result.props[evt] = function(e) {
-           window.setTimeout(function() {
-               var value = rc.getValue();
-               console.log(value);
-               console.log(value);
-               Check(rc, value) && rules.callback && rules.callback(rc,value);
-           },0);
+            if(rc.props.type === 'datePicker') {
+                var value = rc.getValue();
+                Check(rc, value) && rules.callback && rules.callback(rc,value);
+            }else {
+                window.setTimeout(function() {
+                    var value = rc.getValue();
+                    Check(rc, value) && rules.callback && rules.callback(rc,value);
+                },0);
+            }
         };
     });
 
