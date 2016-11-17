@@ -36,7 +36,7 @@ module.exports = {
         //) {
         //    return false;
         //}
-        if(this.props.cname == 'datepicker') {
+        if(this.props.cname == 'datepicker' || this.props.cname == 'control') {
             if(equal(nextProps, this.props) && equal(nextState, this.state)) {
                 return false;
             }

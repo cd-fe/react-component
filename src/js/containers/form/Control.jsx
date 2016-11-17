@@ -103,6 +103,8 @@ var Control = React.createClass({
         return html;
     },
     render:function() {
+
+        console.log('render');
         var ControlMap = Control.findControlMap(this);
 
         var filters = CF.filterArray( Object.keys(this.props),Object.keys(ControlMap.props)).filter(function(item, index){
