@@ -150,12 +150,14 @@ Control.MakeControlByType = function(type) {
     var result = null;
     switch(type) {
         case 'input':
+        case 'textarea':
+        case 'select':
         case 'datePicker':
         case 'upload':
             result = {
                 tag:type.substring(0, 1).toUpperCase() + type.substring(1),
                 props:{
-                    type:type.substring(0, 1).toUpperCase() + type.substring(1),
+                    type:type.substring(0, 1).toUpperCase() + type.substring(1)
                 }
             };
             break;
@@ -218,14 +220,14 @@ Control.findControlMap = function(rc) {
 
     rules && rules.trigger && rules.trigger.split('|').forEach(function(evt) {
         result.props[evt] = function(e) {
-            if(rc.props.type === 'datePicker') {
-                var value = rc.getValue();
-                Check(rc, value) && rules.callback && rules.callback(rc,value);
-            }else {
+            if(rc.props.type === 'input' || rc.props.type === 'textarea') {
                 window.setTimeout(function() {
                     var value = rc.getValue();
                     Check(rc, value) && rules.callback && rules.callback(rc,value);
                 },0);
+            }else {
+                var value = rc.getValue();
+                Check(rc, value) && rules.callback && rules.callback(rc,value);
             }
         };
     });
