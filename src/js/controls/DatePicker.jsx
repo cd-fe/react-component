@@ -150,7 +150,14 @@ module.exports = React.createClass({
              * @type number
              * @desc 可选择的最小时间
              */
-            min: null
+            min: null,
+            /**
+             * @instance
+             * @default false
+             * @type boolean
+             * @desc 是否允许清除
+             */
+            useClear: false
         };
     },
     /**
@@ -392,7 +399,7 @@ module.exports = React.createClass({
 
         return <div className={classes}>
             <Input mode="static" value={this.display()} onClick={this.togglePopup} placeholder="请选择日期" disable={this.props.disable} />
-            <Icon name="close" style={{position:'absolute', right:'33px', top:'7px'}} onClick={this.clearValues} />
+            {this.props.useClear && <Icon name="close" style={{position:'absolute', right:'33px', top:'7px'}} onClick={this.clearValues} />}
             <Icon name="calendar" style={{position:'absolute',right:'10px',top:'6px'}} />
 
             <div className={defaultClass+'-popup'}>
