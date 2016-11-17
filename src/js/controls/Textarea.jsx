@@ -81,6 +81,16 @@ module.exports = React.createClass({
     getValue: function () {
         return this.state.value;
     },
+    /**
+     * 设置当前内容
+     * @instance
+     * @param value
+     */
+    setValue: function(value) {
+        this.setState({
+            value:value
+        });
+    },
     autoSizeHandler:function(value) {
         // TODO
     },
@@ -107,12 +117,15 @@ module.exports = React.createClass({
     },
     render: function () {
         var props = omit(this.props, 'type', 'onChange', 'value', 'readonly');
-        var showNumber = this.props.maxLengthHandler(this.state.value, this.props.maxLength);
-
+        var showNumber = this.props.maxLength && this.props.maxLengthHandler(this.state.value, this.props.maxLength);
+        if (this.props.disable) {
+            props.disabled = true;
+        }
         return <div className="rui-textarea-container">
             {props.resize && (
                 <RUI.Icon name="resize" />
             )}
+
             <textarea ref="textarea" {...props}
                 style={props.resize ? {resize:'vertical'} : {}}
                 value={this.state.value}

@@ -1,0 +1,150 @@
+@import './_default.scss';
+@import './_loading.scss';
+@import '../mixin/clearfix.scss';
+
+.rui-form {
+  &.horizonal {
+    .rui-form-label {
+      float: left;
+      .required {
+        display: inline-block;
+        margin-right: 4px;
+        vertical-align: middle;
+        font {
+          family: SimSun;
+          style : normal;
+          size:12px;
+        }
+        color: #f50;
+      }
+    }
+    .rui-form-content {
+      float: left;
+    }
+  }
+  &.vertical {
+    .rui-form-content {
+      @extend %clearfix;
+    }
+  }
+}
+
+.rui-row {
+  @extend %clearfix;
+  display: block;
+  margin: 0 0 20px 0;
+}
+.rui-button {
+  &:not(:first-child) {
+    margin-left : 10px;
+  }
+  .rui-row &:first-child {
+    margin-left:$lableWidth;
+  }
+}
+
+.rui-form-unit {
+  position: relative;
+  float:left;
+  zoom: 1;
+  .input-wrapper {
+    width:100%;
+    .rui-input {
+      width:100%;
+      padding: 0 20px 0 10px
+    }
+    .rui-datepicker .rui-spinner-input {
+      width:23px;
+      padding: 0;
+    }
+    .rui-select {
+      width:100%;
+    }
+  }
+  &:after {
+    position: absolute;
+    display: inline-block;
+    top: 8px;
+    right: 8px;
+    content: "";
+    width: 15px;
+    height: 15px;
+    line-height: 15px;
+  }
+}
+
+.rui-form-label {
+  width:$lableWidth;
+  text-align: $lableTextAlign;
+  font-weight: 700;
+  line-height:32px;
+  .inline & {
+    display:none;
+  }
+}
+$checkMaps: (
+    success: (
+        border-color : #00bf57,
+        color : #00bf57,
+        box-shadow : 0 0 0 2px rgba(177,235,204,.38),
+        background-position: 0 0
+    ),
+    error: (
+        border-color : #f34e4b,
+        color : #f34e4b,
+        box-shadow : 0 0 0 2px rgba(255,85,0,.2),
+        background-position: 0 -16px
+    ),
+    warning: (
+        border-color : #ff9010,
+        color : #ff9010,
+        box-shadow : 0 0 0 2px rgba(255,85,0,.2),
+        background-position: 0 -32px
+    ),
+    validating: (
+        border-color : #ff9010,
+        color : #ff9010,
+        box-shadow : 0 0 0 2px rgba(255,85,0,.2)
+    )
+);
+@mixin check-status {
+  @each $label, $map in $checkMaps {
+
+    .is-#{$label} {
+      .rui-input {
+        &,&:focus,&:hover {
+          outline: 0;
+          @if ($label != success and $label != validating){
+            border-color: map-get($map,border-color);
+            box-shadow: map-get($map,box-shadow);
+          }
+        }
+      }
+      .form-explain {
+        margin-top:3px;
+        @if $label != validating {
+          color:map-get($map,color);
+        }
+      }
+      &.has-feedback:after {
+        @if $label != validating {
+          background: url('../../img/tip_status.png') 0 0 no-repeat;
+          background-position:map-get($map,background-position);
+        }@else {
+          font-family: anticon;
+          visibility: visible;
+          text-align: center;
+          font-size: 14px;
+          text-rendering: optimizeLegibility;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+          -webkit-animation: loadingCircle 1s infinite linear;
+          animation: loadingCircle 1s infinite linear;
+          content: "\E6AE";
+          color: #999;
+        }
+      }
+    }
+  }
+}
+@include check-status;

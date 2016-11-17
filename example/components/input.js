@@ -4,6 +4,11 @@ var Example = React.createClass({
             init:"在这儿显示初始字符"
         }
     },
+    componentDidMount:function() {
+        setTimeout(()=>{
+            this.refs.async.setValue("0123456789");
+        }, 10);
+    },
     onInputChange:function(e) {
         RUI.DialogManager.alert("change:" + e.target.value, "提示");
     },
@@ -35,14 +40,14 @@ var Example = React.createClass({
             <div className="example">
                 <h4 className="final-title">输入框</h4>
                 <div>
-                    <RUI.Input value={this.state.init} onChange={this.onInputChange} /><br/>
+                    <RUI.Input value={this.state.init} disable={true} onChange={this.onInputChange} /><br/>
                     <RUI.Input mode="static" value={"不可修改"}/><br/>
                     <RUI.Input className="medium" placeholder="保留正常结点属性"/><br/>
                     <RUI.Input grid={24} onEnter={this.onEnterHandler} />
                 </div>
                 <h4 className="final-title">文本域</h4>
                 <div>
-                    <RUI.Textarea value={this.state.init} resize={true} />
+                    <RUI.Textarea value={this.state.init} resize={true} ref="async" />
                 </div>
                 <h4 className="final-title">字数提示</h4>
                 <div>
@@ -50,7 +55,7 @@ var Example = React.createClass({
                 </div>
                 <h4 className="final-title">自定义字数提示规则</h4>
                 <div>
-                    <RUI.Textarea maxLength={140} maxLengthHandler={this.customMaxLength} placeholder="一个汉字算两个字符" />
+                    <RUI.Textarea disable={true} maxLength={140} maxLengthHandler={this.customMaxLength} placeholder="一个汉字算两个字符" />
                 </div>
                 <h4 className="final-title">根据内容自动缩放</h4>
                 <div>

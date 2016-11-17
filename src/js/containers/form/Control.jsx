@@ -1,5 +1,5 @@
 /**
- * 表单行组件
+ * 表单元组件
  * @module containers/form/Control
  */
 
@@ -8,17 +8,10 @@ import ComponentBase from '../../mixins/ComponentBase.jsx';
 import omit from '../../util/omit.jsx';
 import className from '../../util/className.jsx';
 
-var Label = React.createClass({
-    render:function() {
-        return <label className={"rui-form-label"}>{this.props.children}</label>;
-    }
-});
+import Check from './Check.jsx';
+import CF from './CommonFunc.jsx';
 
-var Content = React.createClass({
-    render:function() {
-        return <div className={"rui-form-content"}>{this.props.children}</div>
-    }
-});
+var eventMap = {};
 
 var Control = React.createClass({
     /**
@@ -26,6 +19,9 @@ var Control = React.createClass({
      * @see {@link module:mixins/ComponentBase}
      */
     mixins:[ComponentBase],
+    contextTypes:{
+        form:React.PropTypes.object
+    },
     getDefaultProps:function() {
         return {
             /**
@@ -37,22 +33,37 @@ var Control = React.createClass({
             cname:'control',
             /**
              * @instance
-             * @default input
+             * @default null
              * @type string
              * @desc 表单行内的表单输入类型，可选值有 input, password, checkbox, radio 等
              */
-            type: 'input',
+            type: null,
             /**
              * @instance
              * @type string
              * @desc 表单行组件显示的文本内容
              */
             label: null,
-            contentClassName: "",
-            labelClassName: "",
-            contentStyle: {},
-            labelStyle: {}
+            /**
+             * @instance
+             * @type string
+             * @desc 验证状态，可选值有is-success, is-error, is-warning, is-validating
+             */
+            validateStatus : '',
+            /**
+             * @instance
+             * @type string
+             * @desc 表单组件验证描述
+             */
+            explain : ''
+
         };
+    },
+    getInitialState : function() {
+        return {
+            validateStatus : this.props.validateStatus,
+            explain : this.props.explain
+        }
     },
     /**
      * 获取当前表单行的值
@@ -60,56 +71,159 @@ var Control = React.createClass({
      * @returns {*|null}
      */
     getValue:function() {
-        return this.refs.content.getValue && (this.refs.content.getValue() || null);
+        return this.refs.content.getValue && this.refs.content.getValue();
+    },
+    componentDidMount : function() {
+        if(this.context.form) {
+            this.context.form.register(this, 'add');
+        }
+    },
+    componentWillUnmount : function() {
+        if(this.context.form) {
+            this.context.form.register(this, 'del');
+        }
+    },
+    buildMsg : function() {
+        var status = this.state.validateStatus;
+        var type = this.props.type;
+        var html = null;
+
+        switch(status) {
+            case 'is-warning' :
+                html = <div className="form-explain">{this.state.explain}</div>;
+                break;
+            case 'is-error' :
+                html = <div className="form-explain">{this.state.explain}</div>;
+                break;
+            case 'is-validating' :
+                break;
+            case 'is-success' :
+                break;
+        }
+        return html;
     },
     render:function() {
-        var ControlMap = Control.findControlMap(this.props.type, this.props);
+        var ControlMap = Control.findControlMap(this);
 
-        var props = omit(this.props, 'cname');
+        var filters = CF.filterArray( Object.keys(this.props),Object.keys(ControlMap.props)).filter(function(item, index){
+            return /^on.+/.test(item)
+         });
 
-        return <div {...this.props} className={"clearfix " + className(this.props.className, this.getPropClass())}>
-            <Label className={this.props.labelClassName} style={this.props.labelStyle}>{this.props.label}</Label>
-            <Content className={this.props.contentClassName} style={this.props.contentStyle}>
-                <ControlMap.tag {...props} {...ControlMap.props} ref="content">
+        filters = filters.concat(['cname','className']);
+
+        var props = omit(this.props, filters);
+
+        //if(!ControlMap && this.props.children instanceof Array) {
+        //    throw new Error('custom Form.Control have to own single child.');
+        //}
+        var cls;
+        if(this.state.validateStatus) {
+            cls = "rui-form-unit " + (this.state.validateStatus)
+        }else {
+            cls = "rui-form-unit";
+        }
+        if(this.props.type == 'input' || this.props.type == 'password') {
+            cls = cls + ' has-feedback'
+        }
+
+        return <div {...this.props} className={className(this.props.className, this.getPropClass()) + " " + cls}>
+            <span className="input-wrapper">
+                {ControlMap ? (<ControlMap.tag    {...ControlMap.props} {...props}  ref="content">
                     {this.props.children}
-                </ControlMap.tag>
-            </Content>
+                </ControlMap.tag>) : (
+                    React.Children.map(this.props.children, function(child, index) {
+                        if(child.props && typeof child.props.name != 'undefined') {
+                            return React.cloneElement(child, Object.assign({
+                                ref:"content"
+                            }, child.props));
+                        }
+                        return null;
+                    })
+                )}
+            </span>
+            {
+               this.buildMsg()
+            }
         </div>;
     }
 });
-
-Control.findControlMap = function(type, props) {
+Control.MakeControlByType = function(type) {
     var result = null;
-
-    type = type || 'input';
-    
-    if(type == 'password') {
-        result = {
-            tag:'Input',
-            props:{
-                type:'password'
-            }
-        };
+    switch(type) {
+        case 'input':
+        case 'upload':
+            result = {
+                tag:type.substring(0, 1).toUpperCase() + type.substring(1),
+                props:{
+                    type:'type'
+                }
+            };
+            break;
+        case 'password':
+            result = {
+                tag:'Input',
+                props:{
+                    type:'password'
+                }
+            };
+            break;
+        case 'checkbox':
+            result = {
+                tag:'CheckboxGroup',
+                props:{
+                    type:'CheckboxGroup'
+                }
+            };
+            break;
+        case 'radio':
+            result = {
+                tag:'RadioGroup',
+                props:{
+                    type:'RadioGroup'
+                }
+            };
+            break;
     }
-    if(type == 'checkbox') {
-        result = {
-            tag:'CheckboxGroup'
-        };
+    return result
+};
+Control.findControlMap = function(rc) {
+    var props = rc.props;
+    if(!props.type) {
+        return;
     }
-    if(type == 'radio') {
-        result = {
-            tag:'RadioGroup'
-        };
-    }
-
+    var type = rc.props.type;
+    var result = this.MakeControlByType(type);
     if(!result) {
         result = {
             tag:type.substring(0, 1).toUpperCase() + type.substring(1)
         };
     }
+    var rules = CF.getSingleFieldRules(rc);
 
     result.tag = RUI[result.tag];
-    result.props = Object.assign(result.props || {}, omit(props, 'type', 'cname', 'label'));
+    result.props = Object.assign(result.props || {}, omit(props, 'type', 'cname', 'label','className')  );
+
+    rules && rules.trigger && rules.trigger.split('|').forEach(function(evt) {
+        var id = rc._reactInternalInstance._rootNodeID + '.' + evt;
+        if(!eventMap[id]) {
+            eventMap[id] = function(e) {
+                window.setTimeout(function() {
+                    var value = rc.getValue();
+                    Check(rc, value) && rules.callback && rules.callback(rc,value);
+                },0);
+            };
+        }
+        result.props[evt] = eventMap[id];
+    });
+
+   /* rules && rules.trigger && rules.trigger.split('|').forEach(function(evt) {
+        result.props[evt] = function(e) {
+           window.setTimeout(function() {
+               var value = rc.getValue();
+               Check(rc, value) && rules.callback && rules.callback(rc,value);
+           },0);
+        };
+    });*/
 
     return result;
 };

@@ -119,6 +119,6 @@ module.exports = React.createClass({
             onBlur={this.blurHandler}
             onKeyDown={this.keyDownHandler}
             className={className(this.props.className, this.getPropClass())}
-        ></input>;
+            ></input>;
     }
 });

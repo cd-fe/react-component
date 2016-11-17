@@ -82,7 +82,7 @@ module.exports = React.createClass({
     render: function () {
         var children = null;
         if (this.props.children) {
-            children = this.props.children.map(function (child, index) {
+            children = React.Children.map(this.props.children, function (child, index) {
                 var props = {
                     key: index
                 };
@@ -90,6 +90,10 @@ module.exports = React.createClass({
                     if (child.props.hasOwnProperty(key)) {
                         props[key] = child.props[key];
                     }
+                }
+
+                if(typeof this.props.disable != 'undefined') {
+                    props.disable = this.props.disable;
                 }
 
                 if (this.state.value == child.props.value) {

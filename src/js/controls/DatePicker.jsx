@@ -5,6 +5,7 @@
 
 import className from '../util/className.jsx';
 import omit from '../util/omit.jsx';
+import empty from '../util/empty.jsx';
 import ComponentBase from '../mixins/ComponentBase.jsx';
 import Input from './Input.jsx';
 import Calendar from './datepicker/Calendar.jsx';
@@ -216,19 +217,22 @@ module.exports = React.createClass({
     },
     componentWillReceiveProps: function (newProps) {
         var update = {};
-        if (newProps.value) {
+        if (newProps.value && newProps.value !== this.state.value) {
             update.value = newProps.value;
+            update.valuePreview = newProps.value;
         }
-        if (newProps.startValue) {
+        if (newProps.startValue && newProps.startValue !== this.state.startValue) {
             update.startValue = newProps.startValue;
             update.startValuePreview = newProps.startValue;
         }
-        if (newProps.endValue) {
+        if (newProps.endValue && newProps.endValue !== this.state.endValue) {
             update.endValue = newProps.endValue;
             update.endValuePreview = newProps.endValue;
         }
 
-        this.setState(update);
+        if(!empty(update)) {
+            this.setState(update);
+        }
     },
     togglePopup: function () {
         if(this.props.disable) {
@@ -236,9 +240,9 @@ module.exports = React.createClass({
         }
         this.setState({
             popup: !this.state.popup,
-            value: this.state.value || Date.now(),
-            startValue: this.state.startValue || Date.now(),
-            endValue: this.state.endValue || Date.now()
+            valuePreview: this.state.value || Date.now(),
+            startValuePreview: this.state.startValue || Date.now(),
+            endValuePreview: this.state.endValue || Date.now()
         }, function() {
             var rootDom = $(ReactDOM.findDOMNode(this));
             var offset = rootDom.offset().top - window.scrollY;

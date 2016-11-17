@@ -6,7 +6,7 @@ var Example = React.createClass({
             <div className="example">
                 <div><RUI.Button>
                     <span>上方Tooltip</span>
-                    <RUI.Tooltip align="top-center">Tooltip</RUI.Tooltip>
+                    <RUI.Tooltip align="top-center" autoHide={false}>Tooltip</RUI.Tooltip>
                 </RUI.Button></div>
                 <div><RUI.Button>
                     <span>下方Tooltip</span>

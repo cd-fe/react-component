@@ -12,7 +12,6 @@
     }
 }
 
-
 .clearfix:after{
   content: " ";
   display: block;
@@ -212,4 +211,43 @@
     width:240px;
     height:320px;
   }
+}
+//form
+
+.width_80 {
+  width:80px;
+}
+.width_120 {
+  width:120px;
+}
+.desc{
+  float: left;
+  font-style: normal;
+  margin:8px 5px 0;
+}
+.grey {
+  font-style: normal;
+  color:#cacaca;
+}
+.split {
+  float: left;
+  width:10px;
+  height:1px;
+}
+.deco {
+  float: left;
+  display: inline;
+  margin: 6px 0 0 5px;
+}
+.deco-l {
+  float: left;
+  display: inline;
+  margin: 6px 5px 0 0;
+}
+
+.username {
+  background: #fafafa;
+  padding: 10px 0 10px 100px;
+  margin-bottom: 20px;
+  @extend .clearfix;
 }

@@ -48,7 +48,7 @@ module.exports = React.createClass({
     render: function () {
         var children = [];
         if (this.props.children) {
-            children = this.props.children.map(function (child, index) {
+            children = React.Children.map(this.props.children, function (child, index) {
                 var props = clone(child.props);
                 if (props && !empty(props)) {
                     if (props.onChange) {
@@ -62,7 +62,22 @@ module.exports = React.createClass({
                     };
                 }
 
-                this.groupValues[index] = {value: props.value || "", selected: props.selected ? 1 : 0};
+                if(typeof this.props.disable != 'undefined') {
+                    props.disable = this.props.disable;
+                }
+
+                var itemProps = {
+                    value: props.value || ""
+                };
+
+                if(typeof props.selected != 'undefined') {
+                    itemProps.selected = props.selected ? 1 : 0;
+                }
+                else if(typeof props.defaultSelected != 'undefined') {
+                    itemProps.defaultSelected = props.defaultSelected ? 1 : 0;
+                }
+
+                this.groupValues[index] = itemProps;
 
                 props.key = index;
                 return React.cloneElement(child, props);
