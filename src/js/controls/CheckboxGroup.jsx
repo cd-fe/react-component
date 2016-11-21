@@ -15,7 +15,10 @@ module.exports = React.createClass({
      * @see {@link module:mixins/ComponentBase}
      */
     mixins: [ComponentBase],
-    groupValues: [],
+    getInitialState: function() {
+        this.groupValues = [];
+        return {};
+    },
     getDefaultProps: function () {
         return {
             /**

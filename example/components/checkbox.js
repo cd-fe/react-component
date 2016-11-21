@@ -3,6 +3,7 @@ var Example = React.createClass({
         RUI.DialogManager.alert(JSON.stringify(e.data));
     },
     groupChange:function(e) {
+        console.log(e.data);
         RUI.DialogManager.alert(JSON.stringify(e.data));
         this.setState({
             a:1
@@ -27,6 +28,12 @@ var Example = React.createClass({
                         <RUI.Checkbox value="type_2" defaultSelected={0}>初始未选</RUI.Checkbox>
                         <RUI.Checkbox value="type_3" defaultSelected={0}>分组测试</RUI.Checkbox>
                         <RUI.Checkbox value="type_4" defaultSelected={0} disable={true}>禁用状态</RUI.Checkbox>
+                    </RUI.CheckboxGroup>
+                </div>
+                <div>
+                    <RUI.CheckboxGroup ref="checkboxGroup" onChange={this.groupChange}>
+                        <RUI.Checkbox value="type_1" defaultSelected={1}>初始已选</RUI.Checkbox>
+                        <RUI.Checkbox value="type_2" defaultSelected={0}>初始未选</RUI.Checkbox>
                     </RUI.CheckboxGroup>
                 </div>
             </div>
