@@ -1,3 +1,12 @@
+var CustomControl = React.createClass({
+    render:function() {
+        return <div>
+            <p>这是一个自定义的Control</p>
+            <RUI.Input ref="input" />
+        </div>;
+    }
+});
+
 var timer = Date.now();
 var Example = React.createClass({
     formatUploadData:function(file) {
@@ -346,6 +355,16 @@ var Example = React.createClass({
             <div className="example">
                 <h4 className="final-title">验证</h4>
                 <div>
+                    <div>
+                        <RUI.Form>
+                            <RUI.Form.Row>
+                                <RUI.Form.Control name="test">
+                                    <CustomControl />
+                                    <RUI.Input />
+                                </RUI.Form.Control>
+                            </RUI.Form.Row>
+                        </RUI.Form>
+                    </div>
                     <RUI.Input onChange={(e)=>this.setState({val:e.target.value})} value={this.state.val} />
                     <RUI.Form ref="form" className="horizonal" onSubmit={this.submitHandler} rules={this.state.rules}>
                         <RUI.Form.Row>

@@ -50,7 +50,8 @@ var Form = React.createClass({
              */
             onSubmit:function() {
                 return true;
-            }
+            },
+            rules:{}
         };
     },
     getInitialState : function() {
