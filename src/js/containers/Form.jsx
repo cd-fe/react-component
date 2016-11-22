@@ -176,7 +176,7 @@ var Form = React.createClass({
         var result = this.validateAllFields();
         if(result) {
             //var form = ReactDOM.findDOMNode(this);
-            this.props.onSubmit(result, this);
+            (!this.props.onSubmit(result, this)) && e && e.nativeEvent.preventDefault();
         }else {
             e && e.nativeEvent.preventDefault();
         }
@@ -198,7 +198,7 @@ var Form = React.createClass({
     },
     render:function() {
         var classes = className(this.props.className, this.getPropClass());
-        return <form {...this.props} className={classes}>
+        return <form {...this.props} onSubmit={this.submit} className={classes}>
             {this.props.children}
         </form>;
     }

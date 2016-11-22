@@ -25,6 +25,29 @@ var Example = React.createClass({
     formRules : function() {
         var _this = this;
         return {
+            enter : {
+                required : true,
+                validator : {
+                    'enter' : {
+                        rules: {
+                            required: {
+                                msg: '姓名不能为空'
+                            },
+                            filter: {
+                                reg: 'number',//验证规则
+                                msg: '姓名格式不正确'
+                            },
+                            trigger: 'onBlur|onChange',
+                            callback: function(rc,v) {
+                                _this.setState({
+                                    value : v
+                                });
+                                return true;
+                            }
+                        }
+                    }
+                }
+            },
             username : {
                 required : true,
                 validator : {
@@ -321,7 +344,7 @@ var Example = React.createClass({
     submitHandler:function(data, form) {
         //RUI.DialogManager.alert(JSON.stringify(data));
         console.dir(data);
-        //return false;
+        return false;
     },
     complete : function(res,s) {
         var form = this.refs.form;
@@ -344,13 +367,23 @@ var Example = React.createClass({
             <h2 className="title">表单<span>Form</span></h2>
             <h3 className="sub-title">演示</h3>
             <div className="example">
+                <h4 className="final-title">表单Enter</h4>
+                <div>
+                    <RUI.Form ref="forms" className="horizonal" onSubmit={this.submitHandler} rules={this.state.rules}>
+                        <RUI.Form.Control
+                            rowType="enter"
+                            name="enter"
+                            type="input"
+                            defaultValue='test'
+                            placeholder="最多输入15个字"
+                        />
+                        <RUI.Form.Submit>提交</RUI.Form.Submit>
+                    </RUI.Form>
+                </div>
+                <br/>
                 <h4 className="final-title">验证</h4>
                 <div>
-                    <RUI.Input onChange={(e)=>this.setState({val:e.target.value})} value={this.state.val} />
                     <RUI.Form ref="form" className="horizonal" onSubmit={this.submitHandler} rules={this.state.rules}>
-                        <RUI.Form.Row>
-                            <p style={{paddingBottom:'5px',fontSize:'16px',fontWeight:'bold',borderBottom: "1px dashed #dadada"}}>基本设置</p>
-                        </RUI.Form.Row>
                         {/*可以随意DOM元素*/}
                         {
                             this.state.hide && (<div className="username" type="username">
