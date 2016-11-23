@@ -1,0 +1,70 @@
+@import './function';
+.dp-n{
+  display: none;
+}
+.rui-tab{
+  .type-card{
+      border-bottom: 1px solid #dfdfdf;
+      position: relative;
+      display: flex;
+      height: 36px;
+      .add-icon{
+        position: absolute;
+        width: 22px;
+        height: 22px;
+        border: 1px solid #dfdfdf;
+        border-radius: 3px;
+        right: 0;
+        color: #999;
+        line-height: 22px;
+        text-align: center;
+        font-size: 22px;
+        cursor: pointer;
+        background-position: center;
+        background-size: 12px 12px;
+        pointer-events: auto;
+      }
+      .header-span{
+        display: flex;
+        flex-direction: row;
+        position: absolute;
+        top: -1px;
+
+        .span-btn{
+          height: 36px;
+          padding: 0 20px;
+          display: flex;
+          border: 1px solid #dfdfdf;
+          background-color:#f7f7f7;
+          border-bottom: none;
+          text-align: center;
+          justify-content: center;
+          align-items: center;
+          margin-right: 10px;
+          border-top-left-radius:5px ;
+          border-top-right-radius: 5px;
+          cursor: pointer;
+          .close-icon{
+            display: none;
+            width: 10px;
+            height: 10px;
+            background: url('../img/icon/close.png')no-repeat;
+            background-size: contain;
+            margin-left: 10px;
+            margin-right:-10px;
+            cursor: pointer;
+          }
+          &.active{
+            border-bottom: 1px solid #fff;
+            background-color: #fff;
+            color: #459bfb;
+            .close-icon{
+              display: block;
+            }
+          }
+        }
+      }
+
+
+  }
+}

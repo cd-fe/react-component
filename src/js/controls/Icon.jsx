@@ -42,6 +42,7 @@ module.exports = React.createClass({
              * success
              * error
              * resize
+             * upload-add
              */
             name: ''
         };
