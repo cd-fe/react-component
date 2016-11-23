@@ -47,11 +47,11 @@ var Example = React.createClass({
                 </div>
                 <h4 className="final-title">文本域</h4>
                 <div>
-                    <RUI.Textarea value={this.state.init} resize={true} ref="async" />
+                    <RUI.Textarea value={this.state.init} resize={'both'} ref="async" />
                 </div>
                 <h4 className="final-title">字数提示</h4>
                 <div>
-                    <RUI.Textarea maxLength={140} resize={true} />
+                    <RUI.Textarea maxLength={140} resize={'vertical'} />
                 </div>
                 <h4 className="final-title">自定义字数提示规则</h4>
                 <div>
@@ -59,7 +59,7 @@ var Example = React.createClass({
                 </div>
                 <h4 className="final-title">根据内容自动缩放</h4>
                 <div>
-                    <RUI.Textarea autoSize={true} value="// JUST TODO" />
+                    <RUI.Textarea resize={'horizontal'} autoSize={true} value="// JUST TODO" />
                 </div>
             </div>
             <h3 className="sub-title">源码</h3>
