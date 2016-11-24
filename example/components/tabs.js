@@ -4,7 +4,7 @@
 var Tabs = React.createClass({
     getInitialState(){
         return {
-            tab:[{ title: 'Tab 1', content: <div>Hello<span>World</span></div>},
+            tab:[{ title: <span><RUI.Icon name="add"></RUI.Icon>Tab1</span>, content: <div>Hello<span>World</span></div>},
                 { title: 'Tab 2', content: 'Content of Tab 2'},
                 { title: 'Tab 3', content: 'Content of Tab 3'},
                 { title: 'Tab 4', content: 'Content of Tab 4'},
@@ -73,6 +73,15 @@ var Tabs = React.createClass({
                         <RUI.TabPane title="标题2">我是第2个标签</RUI.TabPane>
                         <RUI.TabPane title="标题3">我是第3个标签</RUI.TabPane>
                     </RUI.Tab>
+                    <h4 className="final-title">type="normal"</h4>
+                    <RUI.Tab
+                        type="normal"
+                        onChange={this.tabClick}
+                    >
+                        <RUI.TabPane title="标题1"></RUI.TabPane>
+                        <RUI.TabPane title="标题2"></RUI.TabPane>
+                        <RUI.TabPane title="标题3"></RUI.TabPane>
+                    </RUI.Tab>
                     <h4 className="final-title">type="line"(默认样式), 允许自定义class(此处定义了没有任何样式的class)</h4>
                     <RUI.Tab
                         type="line"
@@ -84,15 +93,7 @@ var Tabs = React.createClass({
                         <RUI.TabPane title="标题2">我是第2个标签</RUI.TabPane>
                         <RUI.TabPane title="标题3">我是第3个标签</RUI.TabPane>
                     </RUI.Tab>
-                    <h4 className="final-title">type="normal"</h4>
-                    <RUI.Tab
-                        type="normal"
-                        onChange={this.tabClick}
-                    >
-                        <RUI.TabPane title="标题1"></RUI.TabPane>
-                        <RUI.TabPane title="标题2"></RUI.TabPane>
-                        <RUI.TabPane title="标题3"></RUI.TabPane>
-                    </RUI.Tab>
+
                 </div>
 
 
