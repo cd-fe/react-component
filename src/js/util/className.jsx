@@ -32,7 +32,7 @@ combine.removeClass = function(target, className) {
 };
 
 combine.hasClass = function(target, className) {
-    return target.className.indexOf(className) >= 0;
+    return (" " + target.className + " ").indexOf(" " + className + " ") >= 0;
 };
 
 module.exports = combine;
