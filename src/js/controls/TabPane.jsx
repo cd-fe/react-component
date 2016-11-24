@@ -12,14 +12,7 @@ module.exports = React.createClass({
              * @type string
              * @desc 组件名称
              */
-            cname: 'tab-pane',
-            /**
-             * @instance
-             * @default false
-             * @type boolean
-             * @desc 设置按钮是否禁用
-             */
-            disable: false,
+            cname: 'tab-pane'
         };
     },
     render(){

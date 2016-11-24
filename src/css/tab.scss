@@ -1,13 +1,108 @@
 @import './function';
+$tab-blue: #4a9df8;
+@mixin card-common {
+  border-bottom: 1px solid #dfdfdf;
+  position: relative;
+  display: flex;
+  height: 36px;
+}
+@mixin header-span-common {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  top: -1px;
+}
+@mixin span-btn-common {
+  height: 36px;
+  padding: 0 20px;
+  display: flex;
+
+
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+  cursor: pointer;
+}
+@mixin card-span-btn-common {
+  @include span-btn-common;
+  border: 1px solid #dfdfdf;
+  transition: background-color .3s ease-in-out,color .3s ease-in-out;
+  border-bottom: none;
+  background-color:#f7f7f7;
+  border-top-left-radius:5px ;
+  border-top-right-radius: 5px;
+}
+@mixin hover-common {
+  &:hover{
+    color: $tab-blue;
+  }
+}
 .dp-n{
   display: none;
 }
 .rui-tab{
-  .type-card{
-      border-bottom: 1px solid #dfdfdf;
-      position: relative;
-      display: flex;
-      height: 36px;
+  .m-r10{
+    margin-right: 10px;
+  }
+  .m-r10 .rui-button,.m-r10.rui-button{
+    border: none 0 !important;
+  }
+  .tab-mark {
+    position:relative;
+    &:before{
+      position: absolute;
+      width: 0;
+      height: 0;
+      content: "";
+      border-top: 6px solid $tab-blue;
+      border-right: 6px solid transparent;
+      border-left: 6px solid transparent;
+      right: 50%;
+      margin-right:-6px;
+      bottom: -6px;
+      z-index: 0;
+    }
+  }
+  .close-icon{
+    display: none;
+  }
+  .line{
+    @include card-common;
+    .header-span{
+      @include header-span-common;
+      .span-btn{
+        @include hover-common;
+        @include span-btn-common;
+        border:none;
+        background-color: #fff;
+        transition: color .3s ease-in;
+        &.active{
+          border-bottom: 2px solid $tab-blue;
+          transition: border-bottom .3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+          color: $tab-blue;
+        }
+      }
+    }
+  }
+  .card{
+    @include card-common;
+    .header-span{
+      @include header-span-common;
+      .span-btn{
+        @include card-span-btn-common;
+        @include hover-common;
+        &.active{
+          border-bottom: 1px solid #fff;
+          transition: background-color .3s ease-in-out;
+          background-color: #fff;
+          color: $tab-blue;
+        }
+      }
+    }
+  }
+  .editable-card{
+    @include card-common;
       .add-icon{
         position: absolute;
         width: 22px;
@@ -25,39 +120,24 @@
         pointer-events: auto;
       }
       .header-span{
-        display: flex;
-        flex-direction: row;
-        position: absolute;
-        top: -1px;
-
+        @include header-span-common;
         .span-btn{
-          height: 36px;
-          padding: 0 20px;
-          display: flex;
-          border: 1px solid #dfdfdf;
-          background-color:#f7f7f7;
-          border-bottom: none;
-          text-align: center;
-          justify-content: center;
-          align-items: center;
-          margin-right: 10px;
-          border-top-left-radius:5px ;
-          border-top-right-radius: 5px;
-          cursor: pointer;
+          @include card-span-btn-common;
+          @include hover-common;
           .close-icon{
-            display: none;
             width: 10px;
             height: 10px;
-            background: url('../img/icon/close.png')no-repeat;
-            background-size: contain;
             margin-left: 10px;
             margin-right:-10px;
+            background-size: 10px 10px;
             cursor: pointer;
+            pointer-events: auto;
           }
           &.active{
             border-bottom: 1px solid #fff;
             background-color: #fff;
-            color: #459bfb;
+            transition: background-color .3s ease-in-out;
+            color: $tab-blue;
             .close-icon{
               display: block;
             }
