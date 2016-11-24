@@ -114,7 +114,9 @@ module.exports = React.createClass({
         classes = array.join(" ");
 
         classes += ' ' + this.getToggleResult();
-        return <label className={classes} selected={this.props.selected}>
+
+        var props = require('../util/omit.jsx')(this.props, 'onChange');
+        return <label {...props} className={classes} selected={this.props.selected}>
             <span className="rui-switch-normalbg"></span>
             <span className="rui-switch-activebg"></span>
             <span className="rui-switch-square"></span>
