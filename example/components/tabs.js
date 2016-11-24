@@ -10,7 +10,6 @@ var Tabs = React.createClass({
                 { title: 'Tab 4', content: 'Content of Tab 4'},
                 { title: 'Tab 5', content: 'Content of Tab 5'},
             ],
-            selected:1,
             output:"目前没有",
             shouldShowXOnlyOnePane:true,
             maxPaneLength:10
@@ -96,9 +95,10 @@ var Tabs = React.createClass({
 
                 </div>
 
-
-
-
+                <h3 className="sub-title">源码</h3>
+                <div className="source">
+                    <textarea defaultValue={require('raw!./tabs.js')} />
+                </div>
             </div>
         )
     }
