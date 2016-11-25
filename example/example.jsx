@@ -33,6 +33,7 @@ var Root = React.createClass({
                     <Route path="form" component={loader(require('bundle?lazy!babel?presets=react!./components/form.js'))}></Route>
                     <Route path="spinner" component={loader(require('bundle?lazy!babel?presets=react!./components/spinner.js'))}></Route>
                     <Route path="scrollview" component={loader(require('bundle?lazy!babel?presets=react!./components/scrollview.js'))}></Route>
+                    <Route path="tabs" component={loader(require('bundle?lazy!babel?presets=react!./components/tabs.js'))}></Route>
                 </Route>
             </Route>
         </Router>;
