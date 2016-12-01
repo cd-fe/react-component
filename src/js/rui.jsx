@@ -25,6 +25,8 @@ import Tree from './controls/Tree.jsx';
 import Slider from './controls/Slider.jsx';
 import Form from './containers/Form.jsx';
 import ScrollView from './containers/ScrollView.jsx';
+import Tab from './containers/Tab.jsx';
+import TabPane from './controls/TabPane.jsx';
 import ImageEditor from './controls/ImageEditor.jsx';
 
 import DataSource from './data/DataSource.jsx';
@@ -71,6 +73,8 @@ var RUI = {
     Slider:Slider,
     Form:Form,
     ScrollView:ScrollView,
+    Tab:Tab,
+    TabPane:TabPane,
     ImageEditor:ImageEditor,
 
     DataSource:DataSource,

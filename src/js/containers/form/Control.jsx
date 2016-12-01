@@ -127,9 +127,20 @@ var Control = React.createClass({
 
         return <div {...this.props} className={className(this.props.className, this.getPropClass()) + " " + cls}>
             <span className="input-wrapper">
-                {ControlMap ? (<ControlMap.tag    {...ControlMap.props} {...props}  ref="content">
+                {ControlMap ? (
+                    (typeof ControlMap.tag == 'function' ? React.createElement : React.cloneElement)(
+                        ControlMap.tag,
+                        {
+                            ...ControlMap.props,
+                            ...props,
+                            ref:"content"
+                        },
+                        this.props.children
+                    )
+                /*<ControlMap.tag    {...ControlMap.props} {...props}  ref="content">
                     {this.props.children}
-                </ControlMap.tag>) : (
+                </ControlMap.tag>*/
+                ) : (
                     React.Children.map(this.props.children, function(child, index) {
                         if(child.props && typeof child.props.name != 'undefined') {
                             return React.cloneElement(child, Object.assign({
@@ -190,19 +201,23 @@ Control.MakeControlByType = function(type) {
 };
 Control.findControlMap = function(rc) {
     var props = rc.props;
-    if(!props.type) {
-        return;
-    }
     var type = rc.props.type;
     var result = this.MakeControlByType(type);
-    if(!result) {
+    if(result) {
         result = {
-            tag:type.substring(0, 1).toUpperCase() + type.substring(1)
+            tag:RUI[result.tag]
         };
+    }else {
+        var children = React.Children.toArray(rc.props.children);
+        if(children.length) {
+            result = {
+                tag: children[0]
+            };
+        }else {
+            throw new Error('Form.Control have to set a valid type or own child less one.');
+        }
     }
-    var rules = CF.getSingleFieldRules(rc);
 
-    result.tag = RUI[result.tag];
     result.props = Object.assign(result.props || {}, omit(props, 'type', 'cname', 'label','className')  );
 
     /*rules && rules.trigger && rules.trigger.split('|').forEach(function(evt) {
@@ -217,6 +232,7 @@ Control.findControlMap = function(rc) {
         }
         result.props[evt] = eventMap[id];
     });*/
+    var rules = CF.getSingleFieldRules(rc);
 
     rules && rules.trigger && rules.trigger.split('|').forEach(function(evt) {
         result.props[evt] = function(e) {

@@ -2,6 +2,7 @@ var path = require('path');
 var project = require('./package.json');
 var node_modules = path.resolve(__dirname, 'node_modules');
 var react = path.resolve(node_modules, 'react/dict/react.js');
+var autoprefixer = require("autoprefixer");
 var mousewheel = path.resolve(node_modules, 'jquery-mousewheel/jquery.mousewheel.js');
 
 module.exports = {
@@ -36,10 +37,12 @@ module.exports = {
             },
             {
                 test:/\.(scss|sass)?$/,
-                loader:'style?singleton!css!sass'
+                exclude:/(node_modules)/,
+                loader:'style?singleton!css!postcss!sass'
             },
             {
                 test:/\.css?$/,
+                //注意，因为例如ImageEditor.jsx/Slider.jsx代码中引用了node_modules下的css，所以此处不能排除掉node_modules目录
                 loader:'style?singleton!css'
             },
             {
@@ -48,5 +51,6 @@ module.exports = {
             }
         ],
         noParse:[react, mousewheel]
-    }
+    },
+    postcss: [ autoprefixer({ browsers: ['> 0.1%'] }) ],
 };

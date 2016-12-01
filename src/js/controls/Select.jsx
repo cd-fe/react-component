@@ -6,6 +6,7 @@
 import className from '../util/className.jsx';
 import ComponentBase from '../mixins/ComponentBase.jsx';
 import TimerMixin from '../mixins/TimerMixin.jsx';
+import omit from '../util/omit.jsx';
 import '../../css/select.scss';
 
 module.exports = React.createClass({
@@ -289,8 +290,10 @@ module.exports = React.createClass({
             style.zIndex = '1049';
             optCls += ' one'
         }
+
+        var props = omit(this.props, 'onChange', 'className', 'data', 'stuff', 'disable', 'cname', 'callback');
         return (
-            <div className={final} onChange={this.props.onChange}>
+            <div {...props} className={final} onChange={this.props.onChange}>
                 <i className="arrow"></i>
                 <span ref="choose" className="placeholder">{this.state.value.key}</span>
                 <div className="rui-select-options-wrap" style={style}>

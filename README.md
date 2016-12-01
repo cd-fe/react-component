@@ -20,7 +20,7 @@
 * Form ![Done][1]
 * Dialog ![Done][1]
 * Upload ![Done][1]
-* Tab
+* Tab ![Done][1]
 * Accordion
 * AutoComplete
 * Progress ![Done][1]

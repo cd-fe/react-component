@@ -33,11 +33,11 @@ module.exports = React.createClass({
             mode: 'dynamic',
             /**
              * @instance
-             * @default false
-             * @type boolean
+             * @default none
+             * @type string
              * @desc 是否使用垂直改变文本域大小功能
              */
-            resize:false,
+            resize:'none',
             autoSize:false,
             /**
              * @instance
@@ -122,12 +122,12 @@ module.exports = React.createClass({
             props.disabled = true;
         }
         return <div className="rui-textarea-container">
-            {props.resize && (
+            {/*(props.resize && ['both', 'vertical', 'horizontal'].indexOf(props.resize) > -1) ? (
                 <RUI.Icon name="resize" />
-            )}
+            ) : null*/}
 
             <textarea ref="textarea" {...props}
-                style={props.resize ? {resize:'vertical'} : {}}
+                style={props.resize ? {resize:(['both', 'vertical', 'horizontal'].indexOf(props.resize) > -1 ? props.resize : 'none')} : {}}
                 value={this.state.value}
                 onChange={this.changeHandler}
                 className={className(this.props.className, this.getPropClass())}
