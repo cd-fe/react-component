@@ -290,7 +290,6 @@ module.exports = React.createClass({
             style.zIndex = '1049';
             optCls += ' one'
         }
-
         var props = omit(this.props, 'onChange', 'className', 'data', 'stuff', 'disable', 'cname', 'callback');
         return (
             <div {...props} className={final} onChange={this.props.onChange}>

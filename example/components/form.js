@@ -48,9 +48,6 @@ var Example = React.createClass({
                             },
                             trigger: 'onBlur|onChange',
                             callback: function(rc,v) {
-                                _this.setState({
-                                    value : v
-                                });
                                 return true;
                             }
                         }
@@ -322,6 +319,11 @@ var Example = React.createClass({
             list : ['http://10.2.50.38/images/ae13c4d4dcea406c133ebb6d6f31dca6_1477965048481.JPEG_614_614.JPEG']
         }
     },
+    changeName : function(e) {
+        this.setState({
+            value : e.target.value
+        });
+    },
     doNumber : function(e){
         this.setState({
             number:e.target.value
@@ -377,6 +379,7 @@ var Example = React.createClass({
                                     rowType="username"
                                     name="user"
                                     type="input"
+                                    onChange={this.changeName}
                                     value={this.state.value}
                                     placeholder="最多输入15个字"
                                 />
