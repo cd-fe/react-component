@@ -187,7 +187,7 @@ module.exports = React.createClass({
                         _this.open();
                     }
                 }, 200);
-               _this.scrollLists(ul);
+                _this.scrollLists(ul);
             });
             $(node).bind('mouseleave', function () {
                 if ((!_this.state.disable) && _this.__timer) {
@@ -215,7 +215,7 @@ module.exports = React.createClass({
         var _this = this;
 
         this.isShowLists() && this.close();
-        this.props.stuff && (this.state.choosedKey = e.key);
+        this.props.stuff && (this.refs.choose.innerHTML = e.key);
 
         this.setState({
             value : e
@@ -223,8 +223,8 @@ module.exports = React.createClass({
             if (_this.dispatchEvent) {
                 _this.dispatchEvent('change', _this.getValue());
             }
-            _this.props.callback && _this.props.callback(e);
         });
+        _this.props.callback && _this.props.callback(e);
     },
     handleFilter: function (source) {
         var _this = this, res;
@@ -290,12 +290,11 @@ module.exports = React.createClass({
             style.zIndex = '1049';
             optCls += ' one'
         }
-
         var props = omit(this.props, 'onChange', 'className', 'data', 'stuff', 'disable', 'cname', 'callback');
         return (
             <div {...props} className={final} onChange={this.props.onChange}>
                 <i className="arrow"></i>
-                <span ref="choose" className="placeholder">{this.state.choosedKey}</span>
+                <span ref="choose" className="placeholder">{this.state.value.key}</span>
                 <div className="rui-select-options-wrap" style={style}>
                     <div ref="options" className={optCls}>
                         {this.getFilterHtml()}

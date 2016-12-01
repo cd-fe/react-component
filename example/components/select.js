@@ -1,6 +1,7 @@
 var Example = React.createClass({
     getInitialState: function () {
         return {
+            selected :{key:'查看2222',value:'1'},
             data: [{key:'查看',value:'1'}]
         };
     },
@@ -9,6 +10,7 @@ var Example = React.createClass({
     },
     onClickHandler:function(e) {
         this.setState({
+            selected : {key:'查看6',value:'3'},
             data : [
                 {key:'查看1',value:'1'},
                 {key:'查看2',value:'2'},
@@ -62,7 +64,7 @@ var Example = React.createClass({
                 <div>
                     <RUI.Select
                         data={this.state.data}
-                        value={{key:'查看',value:'1'}}
+                        value={this.state.selected}
                         stuff={true}
                         offset={'0'}
                         callback={this.selectCallback}
