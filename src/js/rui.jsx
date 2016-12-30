@@ -4,6 +4,7 @@ import Button from './controls/Button.jsx';
 import Link from './controls/Link.jsx';
 import Icon from './controls/Icon.jsx';
 import Input from './controls/Input.jsx';
+import AddonInput from './controls/AddonInput.jsx';
 import Upload from './controls/Upload.jsx';
 import Spinner from './controls/Spinner.jsx';
 import Textarea from './controls/Textarea.jsx';
@@ -52,6 +53,7 @@ var RUI = {
     Link:Link,
     Icon:Icon,
     Input:Input,
+    AddonInput:AddonInput,
     Upload:Upload,
     Spinner:Spinner,
     Textarea:Textarea,

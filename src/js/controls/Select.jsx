@@ -7,6 +7,7 @@ import className from '../util/className.jsx';
 import ComponentBase from '../mixins/ComponentBase.jsx';
 import TimerMixin from '../mixins/TimerMixin.jsx';
 import omit from '../util/omit.jsx';
+import bytesLength from '../util/bytelength.jsx';
 import '../../css/select.scss';
 
 module.exports = React.createClass({
@@ -111,7 +112,14 @@ module.exports = React.createClass({
              * @type boolean
              * @desc 是否禁用
              */
-            disable: false
+            disable: false,
+            /**
+             * @instance
+             * @default false
+             * @type boolean
+             * @desc 是否根据内容自动调整宽度
+             */
+            autoWidth: false
         };
     },
     getInitialState: function () {
@@ -131,13 +139,39 @@ module.exports = React.createClass({
         typeof nextProps.data != 'undefined' && (newProps.data = nextProps.data);
         typeof nextProps.value != 'undefined' && (newProps.value = nextProps.value);
         typeof nextProps.disable != 'undefined' && (newProps.disable = nextProps.disable);
-        this.setState(newProps);
+        this.setState(newProps, this.autoWidth.bind(this));
     },
     getThisNode : function() {
         return ReactDOM.findDOMNode(this);
     },
     componentDidMount: function () {
-        this.doEvent()
+        this.doEvent();
+        this.autoWidth();
+    },
+    autoWidth:function() {
+        if(this.props.autoWidth) {
+            var data = this.props.data;
+            var maxLength = 0;
+            var maxItem = "";
+            (data || []).forEach(function(item, index) {
+                var currentLength = bytesLength(item.key);
+                if(currentLength > maxLength) {
+                    maxItem = item.key;
+                    maxLength = currentLength;
+                }
+            });
+
+            if(maxLength && maxItem) {
+                var label = document.createElement('label');
+                label.innerHTML = maxItem;
+                label.style.opacity = "0";
+                document.body.appendChild(label);
+                var width = label.offsetWidth || label.clientWidth || label.width || 0;
+                document.body.removeChild(label);
+                var node = ReactDOM.findDOMNode(this);
+                width && (node.style.width = (width + 34) + 'px'); // 34 = paddingleft+paddingright+iconwidth
+            }
+        }
     },
     onMouseLeave: function () {
         this.close();

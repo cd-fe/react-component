@@ -34,6 +34,14 @@ var Example = React.createClass({
         return Math.max(0, 140 - len);
     },
     render:function() {
+        var AddonInputSearchSelect = <RUI.Select
+            autoWidth={true}
+            data={[{key:'请选择',value:'0'},{key:'订单号',value:'1'},{key:'商品编号',value:'2'}]}
+        />;
+        var AddonInputEmailSelect = <RUI.Select
+            autoWidth={true}
+            data={[{key:'@gmail.com',value:'1'},{key:'@163.com',value:'2'},{key:'@sina.com.cn',value:'3'}]}
+        />;
         return <div className="example-input">
             <h2 className="title">输入框<span>Input</span></h2>
             <h3 className="sub-title">演示</h3>
@@ -44,6 +52,14 @@ var Example = React.createClass({
                     <RUI.Input mode="static" value={"不可修改"}/><br/>
                     <RUI.Input className="medium" placeholder="保留正常结点属性"/><br/>
                     <RUI.Input grid={24} onEnter={this.onEnterHandler} />
+                </div>
+                <h4 className="final-title">前后缀</h4>
+                <div>
+                    <RUI.AddonInput before="http://" after=".com" /><br/>
+                    <RUI.AddonInput after=".html" /><br/>
+                    <RUI.AddonInput before="用户名：" /><br/>
+                    <RUI.AddonInput before={AddonInputSearchSelect} /><br/>
+                    <RUI.AddonInput after={AddonInputEmailSelect} />
                 </div>
                 <h4 className="final-title">文本域</h4>
                 <div>
