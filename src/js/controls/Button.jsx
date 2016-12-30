@@ -54,10 +54,22 @@ module.exports = React.createClass({
             }.bind(this), 350);
         }
     },
+    mouseOverHandler:function(e) {
+        if(!this.props.disable) {
+            var node = ReactDOM.findDOMNode(this);
+            className.addClass(node, 'hover');
+        }
+    },
+    mouseOutHandler:function(e) {
+        if(!this.props.disable) {
+            var node = ReactDOM.findDOMNode(this);
+            className.removeClass(node, 'hover');
+        }
+    },
     render: function () {
         var classes = className(this.props.className, this.getPropClass());
         var props = require('../util/omit.jsx')(this.props, 'onClick');
-        return <a {...props} onClick={this.clickHandler} className={classes}>
+        return <a {...props} onClick={this.clickHandler} onMouseOver={this.mouseOverHandler} onMouseOut={this.mouseOutHandler} className={classes}>
             {this.props.icon && (
                 <Icon name={this.props.icon} />
             )}
