@@ -429,8 +429,12 @@ module.exports = React.createClass({
             }
 
             this.edit(index, list);
+
+            this.props.onChange && this.props.onChange(list, this);
         }else {
             this.edit(index, files);
+
+            this.props.onChange && this.props.onChange(files, this);
         }
     },
     edit:function(index, list) {
